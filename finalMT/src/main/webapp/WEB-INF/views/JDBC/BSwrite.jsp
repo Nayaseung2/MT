@@ -1,0 +1,179 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style type="text/css">
+	.BSContainer{ width:100%;height:1500px;}
+	.icon{width:850px;height:80px;margin-left:160px;}
+	.BSframe{border:1px solid black;margin-left:auto;margin-right:auto;
+		border-radius:10px;width:1200px;height:1200px;}
+	.showBSname{width:1200px;height:150px;background: rgba(235, 104, 100, 0.5);border-radius:5px 5px 0px 0px;}	
+	.profileImg{width:80px;height:80px;margin-left:100px;}
+	.BStitle{position:relative;left:100px;bottom:60px;}
+	.BStext{color:white;}
+	#BStexta{text-decoration:none;color:white;}
+	.memberInfo{width:1000px;height:650px;border-radius:0px 0px 5px 5px;}
+	.myInfo{margin-left:20px;margin-top:10px;width:200px;height:200px;border:1px solid #b3b3b3;}
+	.idnickname{margin-left:15px; }
+	.introduction{border-radius:5px; width:170px; border:1px solid lightgray;margin-left:15px;height:60px;}
+	.bottomBox{margin-left:20px;
+		width:200px;
+		height:200px;
+		border:1px solid #b3b3b3;
+		cursor:pointer;}
+	.bottomBox td{border-bottom:1px dotted lightgray;}
+	.bottom{color:black; text-decoration:none; margin-left:15px;}
+	.showRightPart{position:relative; width:940px; height:800px; 
+	left:240px;bottom:640px;}
+	
+	/* 글쓰기 테이블 */
+	.writeTable{
+		margin-left:30px;
+		width:750px;
+	}
+	.writeTable th{
+		width:100px;
+		height:30px;
+		text-align:center;
+	}
+	.writeTable tr{
+		height:35px;
+	}
+	.equal{
+		width:20px;
+	}
+	/* 이미지 올리기 */
+	.inputImg{
+		margin-left:30px;
+		border:1px solid lightgray;
+	}/*  */
+	.okay{
+		width:100px;
+		height:30px;
+		background:rgba(235, 104, 100, 0.5);
+		border:none;
+		color:white;
+		float:right;
+		margin-right:500px;
+	}
+</style>
+<title>글쓰기</title>
+<script src="<%= request.getContextPath()%>/resources/ckeditor/ckeditor.js">
+	
+</script>
+</head>
+<body>
+	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
+<div class="BSContainer">
+<div class="icon">
+<a href="index.jsp"><img src="<%=request.getContextPath() %>/resources/images/logo.png" style="width:200px;"></a>
+</div>
+<div class="BSframe">
+<div class="showBSname">
+<br>
+<!-- 회원 이미지 넣기 -->
+<div class="profileImg">
+<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/images/img.jpg"style="width:80px; height:80px;">
+<div class="BStitle">
+<label class="BStext"><a id="BStexta" href="showMyBS.me">모두의 TV</a></label><br>
+<label class="BStext">모두의 TV</label><br>
+</div>
+</div>
+</div>
+<!-- 회원정보관리  -->
+<div class="memberInfo">
+<!-- 좌측 회원 정보,자기소개등 보기 -->
+<div class="myInfo">
+<br>
+<label class="idnickname"><b>아이디</b></label><br>
+<span class="idnickname">닉네임</span>
+<span class="glyphicon glyphicon-cog" style="float:right;"><a style="text-decoration:none; color:black; cursor:pointer;" id="showManage"><b>관리</b></a></span><br>
+<input class="introduction" type="text" value="자기소개가 없습니다." readonly>
+<br><br> <br>  
+<label style="margin-left:15px;">방송국 방문 : 0명</label>
+</div>
+<br>
+<button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='BSwrite.me'">글쓰기</button>
+<br><br>
+<table class="bottomBox">
+	<tr>
+		<td>
+			<p><a class="bottom">즐겨찾기 BJ</a></p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p><a class="bottom">일반 게시판</a></p>
+			<p><a class="bottom">방명록</a></p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p><a class="bottom">수익관리</a></p>
+		</td>
+	</tr>
+</table>
+</div>
+<!-- 오른쪽 부분 -->
+<div class="showRightPart">
+<h4 style="margin-left:30px;">글쓰기</h4>
+<form method="post">
+	<table class="writeTable" >
+		<tr>
+			<th><span class="glyphicon glyphicon-asterisk"></span>게시판</th>
+			<td class="equal"><b>:</b></td>
+			<td>
+				<select name="boardType">
+					<option>게시판을 선택하세요</option>
+					<option value="normal">일반게시판</option>
+				</select>&nbsp;
+				<input type="radio" id="board" name="boardType">
+				<label for="board">게시판 공지</label>
+				<input type="radio" id="BSboard" name="boardType">
+				<label for="BSboard">방송국 게시판 공지</label>
+			</td>
+		</tr>
+		<tr>
+			<th><span class="glyphicon glyphicon-asterisk"></span>제목</th>
+			<td class="equal"><b>:</b></td>
+			<td><input type="text" size="70" style="border:1px solid lightgray;"></td>
+		</tr>
+		<tr>
+			<th><span class="glyphicon glyphicon-asterisk"></span>내용</th>
+			<td class="equal"><b>:</b></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td colspan="3" style="height:330px;">
+				<textarea name="inputArticleContents" class="ckeditor" rows="30" cols="50">
+				
+				</textarea>			
+			</td>
+		</tr>
+	</table>
+	<input type="file" class="inputImg" name="Boardfile" onchange="LoadImg(this);" >
+	<br>
+		<button type="submit"class="okay">확인</button>
+</form>
+</div>
+</div>
+</div>
+<script>
+function LoadImg(value){
+	console.log("얍 : "+value);
+	if(value.files && value.files[0]){
+		var reader = new FileReader();
+		reader.readAsDataURL(value.files[0]);
+		cosole.log(value.files[0])
+	}
+}
+</script>
+</body>
+</html>
