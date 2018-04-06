@@ -48,13 +48,32 @@
 	border-radius: 30px;
 }
 
-.csArea {
-	margin-top: 6%;
+table {
+	border-top:2px solid #F08080;
+	border-bottom:2px solid #F08080;
+	padding-left: 3%;
 }
 
-.csBtn {
+#listArea {
+	width:80%;
+	font-size: 20px;
 	margin-top: 3%;
 }
+
+#listArea th {
+	text-align: center;
+	border-bottom:2px solid #F08080;
+	height: 65px;
+}
+
+#listArea tr {
+	height: 60px;
+	text-: 3%;
+}
+
+
+
+
 
 </style>
 
@@ -130,27 +149,66 @@
 
 		<div class="rightNav">
 					
-					
-			<div align="center" class="csArea">
-				<img src="${ contextPath }/resources/images/help/customer-service.png"/>
-				<br/><br/>
-				<h1>문의하신 내용이 정상적으로 접수되었습니다.</h1>
-				<h3>문의하신 내용에 대한 답변은 마이페이지에서 확인하실 수 있습니다.<br/>모두의 TV 고객센터를 이용해주셔서 감사합니다.</h3>
-			</div>					
-					
-			<div class="csBtn" align="center">
-				<button class="btn btn-danger" style="font-size:20px;" onclick="goMain();">메인으로</button>
-			</div>		
-			
+			<h1 style="font-family: 'Hanna', sans-serif;">공지사항</h1>		
+			<br/>
+				<div class="tableArea">
+					<table align="center" id="listArea">
+						<!-- table header -->
+						<tr>
+							<th>1</th>
+							<th colspan="2">[안내] 모두의 TV 개인정보처리방침 개정안내</th>
+							<th>297</th>
+							<th>2018.04.06</th>
+						</tr>
+						<tr>
+							<td align="center">4</td>
+							<td style="padding-left: 3%;">[안내] 모두의 TV 개인정보처리방침 개정안내</td>
+							<td align="center">모두의 TV</td>
+							<td align="center">297</td>
+							<td align="center">2018.04.02</td>
+						</tr>
+						<tr>
+							<td align="center">3</td>
+							<td style="padding-left: 3%;">[안내] 장애인 비난/비하/멸시 방송 모니터링 강화</td>
+							<td align="center">모두의 TV</td>
+							<td align="center">165</td>
+							<td align="center">2018.04.02</td>
+						</tr>
+						<tr>
+							<td align="center">2</td>
+							<td style="padding-left: 3%;">[안내] 3월 5주차 TV조선/ 채널A 방송 송출 불가 프로그램</td>
+							<td align="center">모두의 TV</td>
+							<td align="center">243</td>
+							<td align="center">2018.04.02</td>
+						</tr>
+						<tr>
+							<td align="center">1</td>
+							<td style="padding-left: 3%;">[안내] 모두의 TV가 서비스를 시작합니다!</td>
+							<td align="center">모두의 TV</td>
+							<td align="center">122</td>
+							<td align="center">2018.04.02</td>
+						</tr>
+					</table>
+				</div>
+				<br/>
+			</div>
 			<script>
 			
-				function goMain(){
+				$(function(){
 					
-					location.href="${ contextPath }/index.jsp";
-				}
+					$("#listArea td").mouseenter(function(){
+							//tr의 css를 변경
+						$(this).parent().css({"background":"#F08080", "cursor":"pointer", "color":"white"});
+							
+					}).mouseout(function(){
+						
+						$(this).parent().css({"background":"white", "color":"black"});
+						
+					});
+				});
 			
-			</script>		
-					
+			</script> 
+							
 						
 					
 
@@ -166,7 +224,7 @@
 	<br />
 	<br />
 	<br />
-    <jsp:include page="../common/footer.jsp"/>
+	<jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>
