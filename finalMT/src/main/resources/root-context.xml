@@ -30,7 +30,7 @@
 		
 	<bean id="sqlSessionTemplet" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSession"/>
-	</bean>		
+	</bean>		 
 		
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/> <!-- 솔트값 랜덤으로 암호화 -->
 	

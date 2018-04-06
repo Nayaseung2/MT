@@ -17,5 +17,5 @@ public class AfterAdvice {
 		System.out.println("트랜잭션 처리 완료");
 		
 	}
-	
+	 
 }
