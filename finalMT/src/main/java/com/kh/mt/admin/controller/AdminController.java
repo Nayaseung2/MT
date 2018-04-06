@@ -20,7 +20,7 @@ public class AdminController {
 	@RequestMapping("adminMain.ad")
 	public ModelAndView adminMain(ModelAndView mv){
 		
-		ArrayList<Integer> list = as.allMenuList(); 
+		ArrayList<Integer> list = as.allMenuList();
 		
 		
 		

@@ -15,7 +15,7 @@ public class AdminDaoImpl implements AdminDao{
 	public ArrayList<Integer> allMenuList() {
 		
 		
-		 
+		
 		
 		return null;
 	}

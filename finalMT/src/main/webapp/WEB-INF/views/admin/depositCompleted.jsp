@@ -80,7 +80,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="view.ad?view=admin/reportManagement"><i class="fa fa-edit fa-fw"></i> 신고 관리</a>
+                            <a href="view.ad?view=admin/reportManagement"><i class="fa fa-edit fa-fw"></i> 신고 관리</a> 
                         </li>
                        	<li>
                             <a href="view.ad?view=admin/contactManagement"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>

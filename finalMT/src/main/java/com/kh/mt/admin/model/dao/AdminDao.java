@@ -4,6 +4,6 @@ import java.util.ArrayList;
 
 public interface AdminDao {
 
-	ArrayList<Integer> allMenuList(); 
+	ArrayList<Integer> allMenuList();
 
 }
