@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
-<html>
+<html> 
 
 <head>
 
@@ -60,30 +60,30 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu" style="margin-top: 50px;">
                         <li>
-                            <a href="view.ad?view=admin/admin"><i class="fa fa-home fa-fw"></i> HOME</a>
+                            <a href="adminMain.ad"><i class="fa fa-home fa-fw"></i> HOME</a>
                         </li>
                         <li>
-                            <a href="view.ad?view=admin/memberManagement"><i class="fa fa-bar-chart-o fa-fw"></i> 회원 관리</a>
+                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 회원 관리</a>
                         </li>
                         <li>
-                            <a href="view.ad?view=admin/revenueManagement"><i class="fa fa-table fa-fw"></i> 수익 관리</a>
+                            <a href="revenueMg.ad"><i class="fa fa-table fa-fw"></i> 수익 관리</a>
                         </li>
                         <li>
                             <a href="tables.html"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="view.ad?view=admin/withdrawalControl">출금 신청</a>
+                                    <a href="withdrawal.ad">출금 신청</a>
                                 </li>
                                 <li>
-                                    <a href="view.ad?view=admin/depositCompleted">출금 완료</a>
+                                    <a href="deposit.ad">출금 완료</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="view.ad?view=admin/reportManagement"><i class="fa fa-edit fa-fw"></i> 신고 관리</a>
+                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 신고 관리</a>
                         </li>
                        	<li>
-                            <a href="view.ad?view=admin/contactManagement"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
+                            <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
                         </li>
                     </ul>
                 </div>
