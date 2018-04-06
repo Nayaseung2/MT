@@ -2,7 +2,7 @@ package com.kh.mt.helpcenter.model.vo;
 
 public class HelpMainVo implements java.io.Serializable {
 	
-	//고객센터 - 자주묻는 질문 
+	//고객센터 - 자주묻는 질문 sdf
 	
 	/**
 	 * 

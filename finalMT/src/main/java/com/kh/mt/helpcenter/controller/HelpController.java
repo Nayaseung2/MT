@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HelpController {
 	
+	//asd
+	
 	// 메뉴바에서 고객센터 메인(=자주묻는질문)으로 페이지 이동
 	@RequestMapping(value="helpmain.hp")
 	public String showHelpCenterMain() {
