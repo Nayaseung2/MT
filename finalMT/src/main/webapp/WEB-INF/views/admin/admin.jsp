@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -37,7 +38,10 @@
 </head>
 
 <body>
-
+	<script>
+		
+		
+	</script>
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -49,7 +53,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
+                <a class="navbar-brand" href="index.jsp"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -131,7 +135,7 @@
                                     <i class="fa fa-desktop fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">129</div>
+                                    <div class="huge"><c:out value="${ list.allList.BJ }"/></div>
                                     <div>방송중인 BJ</div>
                                 </div>
                             </div>
@@ -153,11 +157,11 @@
                                     <i class="fa fa-won fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">528,600원</div>
+                                    <div class="huge"><fmt:formatNumber value="${ list.allList.MT }" type="currency" groupingUsed="true"/></div>
                                     <div>오늘의 수입</div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">자세히</span>
@@ -175,7 +179,7 @@
                                     <i class="fa fa-bomb fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">20건</div>
+                                    <div class="huge"><c:out value="${ list.allList.REPORT }건"/></div>
                                     <div>신고 수</div>
                                 </div>
                             </div>
@@ -197,7 +201,7 @@
                                     <i class="fa fa-plus-circle fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">57</div>
+                                    <div class="huge"><c:out value="${ list.allList.NEWM }명"/></div>
                                     <div>신규회원</div>
                                 </div>
                             </div>
@@ -241,7 +245,7 @@
                                     <i class="fa fa-question fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">125건</div>
+                                    <div class="huge"><c:out value="${ list.allList.PERSONAL }건"/></div>
                                     <div>들어온 문의</div>
                                 </div>
                             </div>
