@@ -1,6 +1,6 @@
 package com.kh.mt.admin.controller;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.mt.admin.model.service.AdminService;
 
-@Controller
+@Controller 
 public class AdminController {
 	@Autowired
 	private AdminService as;
@@ -20,10 +20,11 @@ public class AdminController {
 	@RequestMapping("adminMain.ad")
 	public ModelAndView adminMain(ModelAndView mv){
 		
-		ArrayList<Integer> list = as.allMenuList();
+		HashMap<String, HashMap<String, String>> list = as.allMenuList(); 
 		
-		
-		
+		//System.out.println("controller list: " + list);
+		 
+		mv.addObject("list", list);
 		
 		mv.setViewName("admin/admin");
 		
@@ -33,6 +34,10 @@ public class AdminController {
 	//회원관리 화면
 	@RequestMapping("memberMg.ad")
 	public ModelAndView memberMg(ModelAndView mv){
+		
+		HashMap<String, HashMap<String, String>> list = as.memberList();
+		
+		mv.addObject("list", list);
 		
 		mv.setViewName("admin/memberManagement");
 		
@@ -51,10 +56,6 @@ public class AdminController {
 	//출금신청 화면
 	@RequestMapping("withdrawal.ad")
 	public ModelAndView withdrawal(ModelAndView mv){
-		
-		ArrayList<Integer> list = as.allMenuList();
-		
-		
 		
 		
 		mv.setViewName("admin/withdrawalControl");

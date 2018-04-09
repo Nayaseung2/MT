@@ -46,18 +46,18 @@
 <div class="LoginOuter">
 <br><br><br>
 <div class="loginContainer">
-<form method="post">
+<form method="post" action="loginCheck.me">
 <div class="input">
 <img src="${contextPath }/resources/images/logo.png" style="width:300px;">
 <br><br>
 <label style="font-size:16px; margin-left:30px;">로그인 후에 이용하실 수 있습니다.</label>
 <br><br>
-<input placeholder="아이디" name="userId" class="inputArea"><br>
+<input placeholder="아이디" name="mId" class="inputArea" type="text"><br>
 <br>
-<input placeholder="비밀번호" name="userPwd" class="inputArea"><br><br><br>
+<input placeholder="비밀번호" name="mPwd" type="password"  class="inputArea"><br><br><br>
 <button type="submit" class="loginBtn" >로그인</button>
 <br>
-<p style="float:right; margin-right:100px;"><span class="glyphicon glyphicon-asterisk"></span><a href="showJoinPage.me">회원가입하기</a></p>
+<p style="float:right; margin-right:100px;"><span class="glyphicon glyphicon-asterisk"></span><a href="showJoinPage1.me">회원가입하기</a></p>
 </div>
 </form>
 </div>

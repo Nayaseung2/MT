@@ -6,146 +6,145 @@ import org.springframework.stereotype.Component;
 
 @Component //bean으로 인식
 public class Member implements java.io.Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7781937753446844677L;
 	
-	private int mid;
-	private String userId;
-	private String userPwd;
-	private String userName;
+	private String mcode;
+	private String mId;
+	private String mPwd;
+	private String mName;
+	private String nickName;
 	private String email;
-	private String birthDay;
-	private String gender;
-	private String phone;
-	private String address;
-	private Date enrollDate;
-	private Date modifyDate;
+	private String account1;
+	private String account2;
+	private String account;
+	private String joinDate;
+	private String updateDate;
 	private String status;
-	
+	private String a_status;
+	private int peach;
+	private String videoYN;
 	public Member(){}
-	
-	public Member(int mid, String userId, String userPwd, String userName, String email, String birthDay, String gender,
-			String phone, String address, Date enrollDate, Date modifyDate, String status) {
+	public Member(String mcode, String mId, String mPwd, String mName, String nickName, String email, String account1,
+			String account2, String account, String joinDate, String updateDate, String status, String a_status,
+			int peach, String videoYN) {
 		super();
-		this.mid = mid;
-		this.userId = userId;
-		this.userPwd = userPwd;
-		this.userName = userName;
+		this.mcode = mcode;
+		this.mId = mId;
+		this.mPwd = mPwd;
+		this.mName = mName;
+		this.nickName = nickName;
 		this.email = email;
-		this.birthDay = birthDay;
-		this.gender = gender;
-		this.phone = phone;
-		this.address = address;
-		this.enrollDate = enrollDate;
-		this.modifyDate = modifyDate;
+		this.account1 = account1;
+		this.account2 = account2;
+		this.account = account;
+		this.joinDate = joinDate;
+		this.updateDate = updateDate;
 		this.status = status;
+		this.a_status = a_status;
+		this.peach = peach;
+		this.videoYN = videoYN;
 	}
-
-	public int getMid() {
-		return mid;
+	public String getMcode() {
+		return mcode;
 	}
-
-	public void setMid(int mid) {
-		this.mid = mid;
+	public void setMcode(String mcode) {
+		this.mcode = mcode;
 	}
-
-	public String getUserId() {
-		return userId;
+	public String getmId() {
+		return mId;
 	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setmId(String mId) {
+		this.mId = mId;
 	}
-
-	public String getUserPwd() {
-		return userPwd;
+	public String getmPwd() {
+		return mPwd;
 	}
-
-	public void setUserPwd(String userPwd) {
-		this.userPwd = userPwd;
+	public void setmPwd(String mPwd) {
+		this.mPwd = mPwd;
 	}
-
-	public String getUserName() {
-		return userName;
+	public String getmName() {
+		return mName;
 	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setmName(String mName) {
+		this.mName = mName;
 	}
-
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public String getBirthDay() {
-		return birthDay;
+	public String getAccount1() {
+		return account1;
 	}
-
-	public void setBirthDay(String birthDay) {
-		this.birthDay = birthDay;
+	public void setAccount1(String account1) {
+		this.account1 = account1;
 	}
-
-	public String getGender() {
-		return gender;
+	public String getAccount2() {
+		return account2;
 	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setAccount2(String account2) {
+		this.account2 = account2;
 	}
-
-	public String getPhone() {
-		return phone;
+	public String getAccount() {
+		return account;
 	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setAccount(String account) {
+		this.account = account;
 	}
-
-	public String getAddress() {
-		return address;
+	public String getJoinDate() {
+		return joinDate;
 	}
-
-	public void setAddress(String address) {
-		this.address = address;
+	public void setJoinDate(String joinDate) {
+		this.joinDate = joinDate;
 	}
-
-	public Date getEnrollDate() {
-		return enrollDate;
+	public String getUpdateDate() {
+		return updateDate;
 	}
-
-	public void setEnrollDate(Date enrollDate) {
-		this.enrollDate = enrollDate;
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
 	}
-
-	public Date getModifyDate() {
-		return modifyDate;
-	}
-
-	public void setModifyDate(Date modifyDate) {
-		this.modifyDate = modifyDate;
-	}
-
 	public String getStatus() {
 		return status;
 	}
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
+	public String getA_status() {
+		return a_status;
+	}
+	public void setA_status(String a_status) {
+		this.a_status = a_status;
+	}
+	public int getPeach() {
+		return peach;
+	}
+	public void setPeach(int peach) {
+		this.peach = peach;
+	}
+	public String getVideoYN() {
+		return videoYN;
+	}
+	public void setVideoYN(String videoYN) {
+		this.videoYN = videoYN;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	@Override
 	public String toString() {
-		return "Member [mid=" + mid + ", userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName
-				+ ", email=" + email + ", birthDay=" + birthDay + ", gender=" + gender + ", phone=" + phone
-				+ ", address=" + address + ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", status="
-				+ status + "]";
+		return "Member [mcode=" + mcode + ", mId=" + mId + ", mPwd=" + mPwd + ", mName=" + mName + ", nickName="
+				+ nickName + ", email=" + email + ", account1=" + account1 + ", account2=" + account2 + ", account="
+				+ account + ", joinDate=" + joinDate + ", updateDate=" + updateDate + ", status=" + status
+				+ ", a_status=" + a_status + ", peach=" + peach + ", videoYN=" + videoYN + "]";
 	}
+	
 	
 	
 }

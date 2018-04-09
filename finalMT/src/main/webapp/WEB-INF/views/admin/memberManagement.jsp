@@ -124,7 +124,7 @@
                                     <i class="fa fa-qq fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">5524명</div>
+                                    <div class="huge"><c:out value="${ list.list.TOTAL }명"/></div>
                                     <div>총 회원</div>
                                 </div>
                             </div>
@@ -138,8 +138,8 @@
                                 <div class="col-xs-3">
                                     <i class="fa fa-desktop fa-5x"></i>
                                 </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">129명</div>
+                                <div class="col-xs-9 text-right"> 
+                                    <div class="huge"><c:out value="${ list.list.BJ }명"/></div>
                                     <div>방송중인 BJ</div>
                                 </div>
                             </div>
