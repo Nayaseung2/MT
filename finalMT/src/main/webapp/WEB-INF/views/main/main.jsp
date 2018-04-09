@@ -30,7 +30,7 @@
                     
                         <div class="single-video">
                             <div class="video-img">
-                                <a href="single-video.html">
+                                <a href="testLiveBj.lb">
 								<img class="lazy" data-src="${contextPath }/resources/images/thumbnails/1.jpg" alt="Video" />
 								 <noscript>
 									<img src="${contextPath }/resources/images/thumbnails/1.jpg" alt="video" />
@@ -39,7 +39,7 @@
                                 <span class="video-duration">8.17</span>
                             </div>
                             <div class="video-content">
-                                <h4><a href="single-video.html" class="video-title">Greek-Style Pasta Bake (Pasticcio) - English Video</a></h4>
+                                <h4><a href="testLiveBj.lb" class="video-title">Greek-Style Pasta Bake (Pasticcio) - English Video</a></h4>
                                 <div class="video-counter">
                                     <div class="video-viewers">
                                         <span class="fa fa-eye view-icon"></span>

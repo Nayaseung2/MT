@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
 
@@ -78,7 +78,7 @@
                                             <li><a href="${ contextPath }/showJoinPage.me">회원가입</a> <span class="arrow"></span></li>
                                             </c:if>
 											<c:if test="${test eq 1}">
-												<li><a href="#">피치결제</a> <span class="arrow"></span></li>
+												<li><a href="${ contextPath }/payform.pay">피치결제</a> <span class="arrow"></span></li>
 												<li><a href="${ contextPath }/showMyBS.me" target="blank">방송국가기</a> <span class="arrow"></span></li>
 												<li><a href="${contextPath }/bjPayMain.bjp">내수익관리</a> <span class="arrow"></span></li>
 												<li><a href="#">myPage</a> <span class="arrow"></span></li>

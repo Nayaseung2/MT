@@ -5,9 +5,11 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias='Member' type="com.kh.mt.member.model.vo.Member"/>
+		<typeAlias alias='Pay' type="com.kh.mt.pay.model.vo.Pay"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource='mappers/member-mapper.xml' />
+		<mapper resource='mappers/pay-mapper.xml' />
 	</mappers>
 
 </configuration>
