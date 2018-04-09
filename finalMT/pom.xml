@@ -241,8 +241,21 @@
 			<version>1.0.2</version>
 		</dependency>
 
-
-
+		<!-- 이메일 인증 javax mail.jar -->
+		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<dependency>
+    		<groupId>javax.mail</groupId>
+    		<artifactId>mail</artifactId>
+    		<version>1.4.7</version>
+		</dependency>
+		<!-- 계좌인증을 위해 json -->
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+    		<groupId>org.json</groupId>
+    		<artifactId>json</artifactId>
+    		<version>20160810</version>
+		</dependency>
+		
 	</dependencies>
 
 

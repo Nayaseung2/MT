@@ -3,4 +3,37 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   	<mapper namespace="Member">
+  		<resultMap type="Member" id="memberResultSet" >
+  			<id property="mcode" column="MCODE"/>
+  			<result property="mId" column="MID"/>
+  			<result property="mPwd" column="MPWD"/>
+  			<result property="mName" column="MNAME"/>
+  			<result property="nickName" column="M_NICKNAME"/>
+  			<result property="email" column="EMAIL"/>
+  			<result property="account" column="ACCOUNT"/>
+  			<result property="joinDate" column="JOIN_DATE"/>
+  			<result property="updateDate" column="UPDATE_DATE"/>
+  			<result property="status" column="MSTATUS"/>
+  			<result property="a_status" column="A_STATUS"/>
+  			<result property="peach" column="PEACH"/>
+  			<result property="videoYN" column="VIDEO_YN"/>
+  		</resultMap>
+  		
+  		<insert id="insertMember">
+  			INSERT INTO MEMBER
+  			VALUES(SEQ_MCODE.NEXTVAL,#{mId},#{mPwd},#{mName},#{nickName},
+  			#{email},#{account},SYSDATE,SYSDATE,'Y','N',0,NULL)
+  		</insert>
+  		
+  		<select id="loginCheck" resultMap="memberResultSet" parameterType="Member">
+  			SELECT * FROM MEMBER WHERE MID = #{mId} AND MSTATUS = 'Y'
+  		</select>
+  		<select id="overlapCheck" parameterType="string" resultType="string">
+  			SELECT MID FROM MEMBER WHERE MID=#{mId}
+  		</select>
+  			<select id="selectPwd" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT MPWD FROM MEMBER WHERE MID = #{mId} AND MSTATUS='Y'
+		
+	</select>
+  		
   	</mapper>
