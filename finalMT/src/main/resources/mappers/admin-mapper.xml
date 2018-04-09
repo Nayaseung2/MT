@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="Admin">
+  	
+  	
+  	
+  	<!-- 관리자 메인화면 -->
+  	<select id="allMenuList" resultType="hashmap">
+	SELECT COUNT(*) bj, (SELECT SUM(PRICE)
+						FROM PAYHISTORY
+						WHERE TO_CHAR(PAY_DATE) = TO_CHAR(SYSDATE)) mt,
+						(SELECT COUNT(*) FROM BOARD WHERE B_TYPE = '44' AND B_STATUS = 'Y') report,
+						(SELECT COUNT(*) FROM MEMBER WHERE TO_CHAR(JOIN_DATE) =	TO_CHAR(SYSDATE)) newm,
+						<!-- 출금 신청 해야함. -->
+						(SELECT COUNT(*) FROM BOARD WHERE B_TYPE = 'personal' AND B_STATUS = 'Y') personal
+	FROM JDBC
+	WHERE STATUS = 'Y'
+	GROUP BY 2
+  	</select>
+  	
+  	
+  	
+  </mapper>
