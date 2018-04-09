@@ -56,7 +56,7 @@ public class HelpController {
 		return "helpcenter/helpNoticeDetail";
 	}
 	
-	
+	//sdf
 	// 01. 게시글 목록
     @RequestMapping("list.do")
     public ModelAndView list(ModelAndView mav) throws Exception{

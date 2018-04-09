@@ -4,6 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="QnA">
 
+<!-- sdf -->
+
 	<resultMap type="HelpMainVo" id="helpMainResultSet">
 		<id property="b_code" column="B_CODE"/>
 		
