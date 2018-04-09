@@ -22,8 +22,8 @@
 	
 	
 <!-- 01. 게시글 전체 목록 조회 -->
-    <select id="listAll" resultType="helpMainResultSet">
-        SELECT B_CODE, B_TYPE, B_TITLE, B_CONTENT, BWRITER
+    <select id="listAll" resultMap="helpMainResultSet" parameterType="HelpMainVo">
+        SELECT *
 		FROM BOARD
         ORDER BY B_CODE ASC;
     </select>
