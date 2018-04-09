@@ -20,7 +20,7 @@
 	WHERE STATUS = 'Y'
 	GROUP BY 2
   	</select> 
-  	
+  	 
   	<select id="memberList" resultType="hashmap">
   		SELECT COUNT(*) TOTAL, COUNT(VIDEO_YN) BJ
   		FROM MEMBER

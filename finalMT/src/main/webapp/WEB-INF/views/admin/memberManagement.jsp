@@ -138,7 +138,7 @@
                                 <div class="col-xs-3">
                                     <i class="fa fa-desktop fa-5x"></i>
                                 </div>
-                                <div class="col-xs-9 text-right">
+                                <div class="col-xs-9 text-right"> 
                                     <div class="huge"><c:out value="${ list.list.BJ }명"/></div>
                                     <div>방송중인 BJ</div>
                                 </div>

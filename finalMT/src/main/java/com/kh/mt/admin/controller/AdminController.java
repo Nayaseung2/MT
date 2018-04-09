@@ -23,7 +23,7 @@ public class AdminController {
 		HashMap<String, HashMap<String, String>> list = as.allMenuList(); 
 		
 		//System.out.println("controller list: " + list);
-		
+		 
 		mv.addObject("list", list);
 		
 		mv.setViewName("admin/admin");

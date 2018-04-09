@@ -28,7 +28,7 @@ public class AdminSerivceImpl implements AdminService{
 		
 		list = ad.memberList();
 		
-		
+		 
 		return list;
 	}
 

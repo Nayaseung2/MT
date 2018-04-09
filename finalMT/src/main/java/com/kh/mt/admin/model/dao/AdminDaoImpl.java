@@ -30,7 +30,7 @@ public class AdminDaoImpl implements AdminDao{
 		list.put("list", sqlSession.selectOne("Admin.memberList"));
 		
 		System.out.println("dao memberListL "+list);
-		
+		 
 		return list;
 	}
 	
