@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.mt.admin.model.service.AdminService;
 
-@Controller
+@Controller 
 public class AdminController {
 	@Autowired
 	private AdminService as;

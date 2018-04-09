@@ -19,7 +19,7 @@ public class AdminSerivceImpl implements AdminService{
 		allMenuList = ad.allMenuList();
 		
 		
-		return allMenuList;
+		return allMenuList; 
 	}
 
 	@Override

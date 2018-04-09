@@ -21,7 +21,7 @@ public class AdminDaoImpl implements AdminDao{
 		System.out.println("dao list확인: " + list);
 		
 		return list;
-	}
+	} 
 
 	@Override
 	public HashMap<String, HashMap<String, String>> memberList() {

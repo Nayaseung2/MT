@@ -19,7 +19,7 @@
 	FROM JDBC
 	WHERE STATUS = 'Y'
 	GROUP BY 2
-  	</select>
+  	</select> 
   	
   	
   	

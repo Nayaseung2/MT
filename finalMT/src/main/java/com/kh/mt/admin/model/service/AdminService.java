@@ -8,3 +8,4 @@ public interface AdminService {
 
 	HashMap<String, HashMap<String, String>> memberList(); 
 } 
+ 

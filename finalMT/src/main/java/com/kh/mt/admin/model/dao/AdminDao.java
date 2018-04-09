@@ -8,4 +8,5 @@ public interface AdminDao {
 
 	HashMap<String, HashMap<String, String>> memberList();
 
+	
 }
