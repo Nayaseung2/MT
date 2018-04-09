@@ -21,6 +21,12 @@
 	GROUP BY 2
   	</select> 
   	
+  	<select id="memberList" resultType="hashmap">
+  		SELECT COUNT(*) TOTAL, COUNT(VIDEO_YN) BJ
+  		FROM MEMBER
+  		WHERE MSTATUS = 'Y'
+  		AND VIDEO_YN = 'Y'
+  	</select>
   	
   	
   </mapper>

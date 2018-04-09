@@ -37,7 +37,7 @@ public class AdminController {
 		
 		HashMap<String, HashMap<String, String>> list = as.memberList();
 		
-		
+		mv.addObject("list", list);
 		
 		mv.setViewName("admin/memberManagement");
 		
