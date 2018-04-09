@@ -10,8 +10,10 @@ import com.kh.mt.helpcenter.model.vo.HelpMainVo;
 //sdfsdfs
 @Repository
 public class HelpDaoImpl implements HelpDao{
+	
 	@Autowired
 	private SqlSession session;
+	
 	// 자주묻는 게시판 불러오기
 	/*public List<HelpMainVo> selectHelpMain(SqlSessionTemplate sqlSession, HelpMainVo hm) {
 		return sqlSession.selectList("QnA.selectList");
@@ -19,8 +21,10 @@ public class HelpDaoImpl implements HelpDao{
 	
 	// 01. 게시글 전체 목록
     public ArrayList<HelpMainVo> listAll() throws Exception {
+    	
     	ArrayList<HelpMainVo> list = null; 
-    	list = session.selectList("QnA.listAll");
+    	
+    	System.out.println("daoListAll: " + session.selectList("QnA.listAll"));
     	
     	return null;
     }

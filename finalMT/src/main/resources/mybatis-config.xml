@@ -5,10 +5,12 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias='Member' type="com.kh.mt.member.model.vo.Member"/>
+		<typeAlias alias='HelpMainVo' type="com.kh.mt.helpcenter.model.vo.HelpMainVo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource='mappers/member-mapper.xml' />
 		<mapper resource='mappers/admin-mapper.xml' /> 
+		<mapper resource='mappers/help-mapper.xml' /> 
 	</mappers>
 
 </configuration>

@@ -8,6 +8,6 @@ public interface HelpDao {
 	
 //sdf
 	// 01. 게시글 전체 목록
-    public ArrayList<HelpMainVo> listAll() throws Exception;
+    ArrayList<HelpMainVo> listAll() throws Exception;
 	
 }
