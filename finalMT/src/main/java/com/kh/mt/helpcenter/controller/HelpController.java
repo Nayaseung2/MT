@@ -1,12 +1,19 @@
 package com.kh.mt.helpcenter.controller;
 
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.kh.mt.helpcenter.model.sevice.HelpService;
+import com.kh.mt.helpcenter.model.sevice.HelpServiceImpl;
+import com.kh.mt.helpcenter.model.vo.HelpMainVo;
 @Controller
 public class HelpController {
-	
-	//asdsdf
-	
+	@Autowired
+	private HelpService hs = new HelpServiceImpl();
 	// 메뉴바에서 고객센터 메인(=자주묻는질문)으로 페이지 이동
 	@RequestMapping(value="helpmain.hp")
 	public String showHelpCenterMain() {
@@ -50,7 +57,15 @@ public class HelpController {
 	}
 	
 	
-	
+	// 01. 게시글 목록
+    @RequestMapping("list.do")
+    public ModelAndView list(ModelAndView mav) throws Exception{
+        ArrayList<HelpMainVo> list = hs.listAll();
+        // ModelAndView - 모델과 뷰
+        mav.setViewName("board/list"); // 뷰를 list.jsp로 설정
+        mav.addObject("list", list); // 데이터를 저장
+        return mav; // list.jsp로 List가 전달된다.
+    }
 	
 	
 	
