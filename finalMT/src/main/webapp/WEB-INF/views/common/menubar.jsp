@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -7,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
+
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
 
@@ -47,7 +46,7 @@
 0 = 로그인 하지 않았을떄
 1 = 회원로그인
 2 = 관리자 로그인 -->
-<c:set var="test" value="1"/>
+<c:set var="test" value="0"/>
         <!-- Navigation area starts -->
         <div class="main-menu">
             <!-- Start Navigation -->
@@ -74,21 +73,24 @@
                                         <ul class="nav navbar-nav">
                                             <li><a href="index.jsp">Home</a><span class="arrow"></span></li>
                                             <li><a href="${ contextPath }/helpmain.hp">고객센터</a> <span class="arrow"></span></li>
-                                            <c:if test="${test eq 0}">
-                                            <li><a href="${ contextPath }/showLoginPage.me">로그인</a> <span class="arrow"></span></li>
-                                            <li><a href="${ contextPath }/showJoinPage.me">회원가입</a> <span class="arrow"></span></li>
+                                            <%-- <c:if test="${test eq 0}"> --%>
+                                            <c:if test="${empty loginUser }">
+                                            <li><a href="${contextPath }/showLoginPage.me">로그인</a> <span class="arrow"></span></li>
+                                            <li><a href="${contextPath }/showJoinPage1.me">회원가입</a> <span class="arrow"></span></li>
                                             </c:if>
-											<c:if test="${test eq 1}">
-												<li><a href="${ contextPath }/payform.pay">피치결제</a> <span class="arrow"></span></li>
-												<li><a href="${ contextPath }/showMyBS.me" target="blank">방송국가기</a> <span class="arrow"></span></li>
-												<li><a href="${contextPath }/bjPayMain.bjp">내수익관리</a> <span class="arrow"></span></li>
-												<li><a href="#">myPage</a> <span class="arrow"></span></li>
-											</c:if>
-											<c:if test="${test eq 2}">
-												<li><a href="#">관리자페이지</a> <span class="arrow"></span></li>
-												<li><a href="#">신고내역</a> <span class="arrow"></span></li>
-												<li><a href="#">문의내역</a> <span class="arrow"></span></li>
-											</c:if>
+                                 <%-- <c:if test="${test eq 1}"> --%>
+                                 <c:if test="${!empty loginUser }">
+                                    <li><a href="${contextPath }/payform.pay">피치결제</a> <span class="arrow"></span></li>
+                                    <li><a href="#" target="blank">방송국가기</a> <span class="arrow"></span></li>
+                                    <li><a href="${contextPath }/bjPayMain.bjp">내수익관리</a> <span class="arrow"></span></li>
+                                    <li><a href="#">myPage</a> <span class="arrow"></span></li>
+                                    <li><a href="logout.me">Logout</a> <span class="arrow"></span></li>
+                                 </c:if>
+                                 <c:if test="${test eq 2}"> 
+                                    <li><a href="#">관리자페이지</a> <span class="arrow"></span></li>
+                                    <li><a href="#">신고내역</a> <span class="arrow"></span></li>
+                                    <li><a href="#">문의내역</a> <span class="arrow"></span></li>
+                                 </c:if>
                                             
                                            
                                         </ul>
