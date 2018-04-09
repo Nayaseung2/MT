@@ -207,7 +207,7 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 					
 			<h1 style="font-family: 'Hanna', sans-serif;">1:1 문의하기</h1>		
 			<div style="float:right;">
-				<img src="${ contextPath }/resources/images/ask.png" width="80%"/>
+				<img src="${ contextPath }/resources/images/help/ask.png" width="80%"/>
 			</div>
 			<br/>
 			<div class="qInput">
@@ -247,7 +247,7 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 					</tr>
 					<tr>
 						<td class="tableList">작성자</td>
-						<td colspan="3"><input type="text" id="qName" size="10px" value=" 숭덩이" style="height:50px;
+						<td colspan="3"><input type="text" id="qName" size="18px" value=" 숭덩이 (sloth9159)" style="height:50px;
 								border:3px solid hsl(0, 100%, 90%);" readonly/></td>
 					</tr>
 					<tr>
@@ -291,12 +291,10 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 
 	</div>
 	<!-- 위에 배너 빼고 전체 div 끝 -->
+	<br/>
+	<br/>
 
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
+	 <jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>

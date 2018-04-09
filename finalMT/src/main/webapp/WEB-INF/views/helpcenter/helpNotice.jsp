@@ -207,15 +207,17 @@ table {
 						
 					});
 				});
-			
-			</script> 
-							
-						
+				
+				$(function(){
 					
-
+					$("#listArea td").click(function(){
+						
+						location.href="${ contextPath }/helpnoticedetail.hp";
+					});
+				});
+				
+			</script> 
 		</div>
-
-
 
 	</div>
 	<!-- 위에 배너 빼고 전체 div 끝 -->
@@ -225,6 +227,7 @@ table {
 	<br />
 	<br />
 	<br />
+	<jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>

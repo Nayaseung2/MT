@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
+ <!-- sdf -->
 <style>
 
 @import url(//fonts.googleapis.com/earlyaccess/hanna.css);
@@ -308,16 +308,11 @@ outer {
 					<button type="button" class="btn btn-danger" id="search">Search</button>
 					<br clear="both" /> <br /> <b style="font-size: 18px; color: rgb(135, 0, 0);
 						font-family: 'Nanum Gothic', sans-serif;">
-						best 키워드 _ 피치결제 / 방송국 / 신고하기 </b>
+						Best 키워드 _ 피치 / 방송국 / 방송 / 신고 </b>
 				</div>
 				<br />
-
 			</div>
-
 			<br />
-
-
-
 
 
 			<!-- Pure CSS Menu -->
@@ -384,23 +379,187 @@ outer {
 
 				<div class='css3-tab-content tab-two'>
 					<!-- start slipsum code -->
-					<h1>22222222222</h1>
+					<h1 style="font-family: 'Hanna', sans-serif;">방송/시청관련 QnA</h1>
+					<hr/>
+					<table class="QnAtable">
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">회원가입을 하시면 됩니다.</td>
+						</tr>
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">sdf</td>
+						</tr>
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">sdf</td>
+						</tr>
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">sdf</td>
+						</tr>
+					</table>
 				</div>
+				
+				<script>
+				
+					$(".answer").hide();
+					
+					$(document).on("click", ".answer_", function(){
+						$(this).next().toggle();
+					});
+				
+				</script>
 
 				<div class='css3-tab-content tab-three'>
 					<!-- start slipsum code -->
-					<h1>333333333333</h1>
+					<h1 style="font-family: 'Hanna', sans-serif;">피치관련 QnA</h1>
+					<hr/>
+					<table class="QnAtable">
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">회원가입을 하시면 됩니다.</td>
+						</tr>
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">sdf</td>
+						</tr>
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">sdf</td>
+						</tr>
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">sdf</td>
+						</tr>
+					</table>
 				</div>
+				
+				<script>
+				
+					$(".answer").hide();
+					
+					$(document).on("click", ".answer_", function(){
+						$(this).next().toggle();
+					});
+				
+				</script>
 
 				<div class='css3-tab-content tab-four'>
 					<!-- start slipsum code -->
-					<h1>44444444444</h1>
+					<h1 style="font-family: 'Hanna', sans-serif;">결제관련 QnA</h1>
+					<hr/>
+					<table class="QnAtable">
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">회원가입을 하시면 됩니다.</td>
+						</tr>
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">sdf</td>
+						</tr>
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">sdf</td>
+						</tr>
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">sdf</td>
+						</tr>
+					</table>
 				</div>
+				
+				<script>
+				
+					$(".answer").hide();
+					
+					$(document).on("click", ".answer_", function(){
+						$(this).next().toggle();
+					});
+				
+				</script>
 
 				<div class='css3-tab-content tab-five'>
 					<!-- start slipsum code -->
-					<h1>5555555555</h1>
+					<h1 style="font-family: 'Hanna', sans-serif;">기 타 QnA</h1>
+					<hr/>
+					<table class="QnAtable">
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">회원가입을 하시면 됩니다.</td>
+						</tr>
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">sdf</td>
+						</tr>
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">sdf</td>
+						</tr>
+						<tr class="answer_">
+							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+							<td style="padding-left:3%;"><b>회원가입?</b></td>
+						</tr>
+						<tr class="answer">
+							<td colspan="2" class="answerArea">sdf</td>
+						</tr>
+					</table>
 				</div>
+				
+				<script>
+				
+					$(".answer").hide();
+					
+					$(document).on("click", ".answer_", function(){
+						$(this).next().toggle();
+					});
+				
+				</script>
 			</div>
 
 
@@ -410,12 +569,9 @@ outer {
 
 	</div>
 	<!-- 위에 배너 빼고 전체 div 끝 -->
-
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
+	
+	
+    <jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>
