@@ -163,7 +163,7 @@ var PeerManager = (function () {
     peerRenegociate: function(remoteId) {
       offer(remoteId);
     },
-
+ 
     send: function(type, payload) {
       socket.emit(type, payload);
     }

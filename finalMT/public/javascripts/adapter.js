@@ -14,7 +14,7 @@
 mozRTCSessionDescription, webkitRTCPeerConnection, MediaStreamTrack */
 /* exported trace,requestUserMedia */
 'use strict';
- 
+   
 var RTCPeerConnection = null;
 var getUserMedia = null;
 var attachMediaStream = null;

@@ -3,7 +3,7 @@ module.exports = function(io, streams) {
   io.on('connection', function(client) {
     console.log('-- ' + client.id + ' joined --');
     client.emit('id', client.id);
-
+ 
     client.on('message', function (details) {
       var otherClient = io.sockets.connected[details.to];
 

@@ -10,7 +10,7 @@ module.exports = function(app, streams) {
 			footer: 'bj 심성보',
 			id: req.params.id
 		});
-	}; 
+	};  
 	var index2 = function(req, res) {
 		res.render('index2', { 
 			title: '연습 RTC', 
