@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -336,12 +340,23 @@ outer {
 					<h1 style="font-family: 'Hanna', sans-serif;">계정관련 QnA</h1>
 					<hr/>
 					<table class="QnAtable">
-						<tr class="answer_">
+						<c:forEach var="item" items="${ list }" begin="0" end="4" step="1">
+
+							<tr class="answer_">
+								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
+							</tr>
+							<tr class="answer">
+								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
+							</tr>
+							
+						</c:forEach>
+						<!-- <tr class="answer_">
 							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
 							<td style="padding-left:3%;"><b>회원가입?</b></td>
 						</tr>
 						<tr class="answer">
-							<td colspan="2" class="answerArea">회원가입을 하시면 됩니다.</td>
+							<td colspan="2" class="answerArea">sdf</td>
 						</tr>
 						<tr class="answer_">
 							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
@@ -356,14 +371,7 @@ outer {
 						</tr>
 						<tr class="answer">
 							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
+						</tr> -->
 					</table>
 				</div>
 				
@@ -384,10 +392,10 @@ outer {
 					<table class="QnAtable">
 						<tr class="answer_">
 							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
+							<td style="padding-left:3%;">sdf</b></td>
 						</tr>
 						<tr class="answer">
-							<td colspan="2" class="answerArea">회원가입을 하시면 됩니다.</td>
+							<td colspan="2" class="answerArea">as</td>
 						</tr>
 						<tr class="answer_">
 							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>

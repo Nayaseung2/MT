@@ -17,12 +17,18 @@ public class HelpController {
 	private HelpService hs;
 	
 	
-	// 메뉴바에서 고객센터 메인(=자주묻는질문)으로 페이지 이동
-	/*@RequestMapping(value="helpmain.hp")
-	public String showHelpCenterMain() {
-	
-		return "helpcenter/helpMain";
-	}*/
+	// 고객센터 메인화면(=자주묻는 질문)
+	@RequestMapping(value="helpmain.hp")
+	public ModelAndView showHelpCenterMain(ModelAndView mv) throws Exception{
+		
+        ArrayList<HelpMainVo> list = hs.listAll();
+
+        mv.addObject("list", list);
+        
+        mv.setViewName("helpcenter/helpMain");
+        
+        return mv; 
+    }
 	
 	// 메뉴바에서 고객센터 1:1문의로 페이지 이동
 	@RequestMapping(value="helppersonal.hp")
@@ -59,27 +65,8 @@ public class HelpController {
 		return "helpcenter/helpNoticeDetail";
 	}
 	
-	//sdf
-	// 01. 게시글 목록
-	/*@RequestMapping(value="helpmain.hp")
-    public ModelAndView list(ModelAndView mav) throws Exception{
-		
-        ArrayList<HelpMainVo> list = hs.listAll();
-        // ModelAndView - 모델과 뷰
-        mav.setViewName("helpcenter/helpMain"); // 뷰를 list.jsp로 설정
-        mav.addObject("list", list); // 데이터를 저장
-        
-        return mav; // helpmain.hp로 List 전달
-    }*/
 	
-	@RequestMapping(value="helpmain.hp")
-	public ArrayList<HelpMainVo> showHelpCenterMain() throws Exception{
-		
-        ArrayList<HelpMainVo> list = hs.listAll();
-        // ModelAndView - 모델과 뷰
-        
-        return list; // helpmain.hp로 List 전달
-    }
+
 	
 	
 	
