@@ -1,5 +1,5 @@
 var PeerManager = (function () {
-	
+	//
   var localId,
       config = {
         peerConnectionConfig: {

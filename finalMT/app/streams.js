@@ -12,7 +12,7 @@ module.exports = function() {
     this.name = name;
     this.id = id;
   }
-
+////
   return {
     addStream : function(id, name) {
       var stream = new Stream(id, name);

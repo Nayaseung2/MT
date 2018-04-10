@@ -1,5 +1,5 @@
 module.exports = function(app, streams) {
-
+//
 	// GET home 
 	var index = function(req, res) {
 		res.render('index', { 
