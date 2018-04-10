@@ -159,7 +159,7 @@ var PeerManager = (function () {
       peer = peerDatabase[remoteId] || addPeer(remoteId);
       send('init', remoteId, null);
     },
-
+ 
     peerRenegociate: function(remoteId) {
       offer(remoteId);
     },

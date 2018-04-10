@@ -10,7 +10,7 @@
 			optional: []
         }
     };
-
+ 
     app.factory('camera', ['$rootScope', '$window', function($rootScope, $window){
     	var camera = {};
     	camera.preview = $window.document.getElementById('localVideo');

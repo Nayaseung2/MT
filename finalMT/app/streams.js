@@ -22,7 +22,7 @@ module.exports = function() {
     removeStream : function(id) {
       var index = 0;
       while(index < streamList.length && streamList[index].id != id){
-        index++;
+        index++; 
       }
       streamList.splice(index, 1);
     },

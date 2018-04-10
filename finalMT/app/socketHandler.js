@@ -9,7 +9,7 @@ module.exports = function(io, streams) {
 
       if (!otherClient) {
         return;
-      }
+      } 
         delete details.to;
         details.from = client.id;
         otherClient.emit('message', details);

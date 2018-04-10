@@ -270,7 +270,7 @@
 
 		$('#message-button').click(function() {
 			var roomId = $("#room").text();
-  	   	    	
+  	   	    	 
 			var msg = $('#message-input').val();
 			$('#message-input').val('');
 			socket.emit('user', {
