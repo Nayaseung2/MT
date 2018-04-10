@@ -8,7 +8,7 @@
         video: {
 			mandatory: {},
 			optional: []
-        }
+        } 
     };
   
     app.factory('camera', ['$rootScope', '$window', function($rootScope, $window){
