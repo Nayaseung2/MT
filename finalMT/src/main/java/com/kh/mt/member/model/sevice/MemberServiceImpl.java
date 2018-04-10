@@ -8,6 +8,7 @@ import org.springframework.transaction.TransactionDefinition;
 
 import com.kh.mt.member.model.dao.MemberDao;
 import com.kh.mt.member.model.vo.Member;
+import com.kh.mt.member.model.vo.NaverLoginMember;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -33,5 +34,18 @@ public class MemberServiceImpl implements MemberService {
 		return DBuserId;
 	}
 
+	//naver로그인 id 중복체크
+	@Override
+	public Member selectOne(String email) {
+		Member m = null;
+		m=md.selecOne(email);
+		return m;
+	}
+
+	//naver 아이디 input
+	@Override
+	public void insertNaverMember(NaverLoginMember nlm) {
+		int result=md.insertNaverMember(nlm);
+	}
 	
 }
