@@ -1,0 +1,45 @@
+<div class="localStream" ng-controller="LocalStreamController as localStream">
+	<p><%= username %>: <input ng-model="localStream.name"/></p>
+	<video id="localVideo" muted="muted" autoplay="true"></video>
+	
+	
+	
+	<li id='checkOnair' ng-click="localStream.toggleCam()" style='width:100px;display:none'>
+		<a id='checkOn' href>{{ localStream.cameraIsOn ? '방송중지' : '방송시작' }}</a>
+	</li>
+	
+	
+	<div ng-show="localStream.cameraIsOn">		
+		<p><%= share %>:</p>
+		<a id='link'>{{ localStream.link }}</a>
+	</div>
+	
+	<li id='checkOnair2' ng-click="rtc.loadData()" style="width: 100px;">
+        <a id='onair' href>방송하기</a>
+    </li>
+    
+</div>
+
+<script>
+	
+	count =1;
+	
+	//로딩과 동시에 내화면 보이기
+ 	$(function(){
+     $('#checkOn').trigger('click')})
+ 
+   	//방송시작 방송정지 display
+     $('#onair').click(function(){
+     	
+     	var roomId = $("#room").text();
+  	    console.log("roomId : "+roomId)
+     
+     	$('#checkOnair').css('display','block');
+     	
+     	$('#checkOnair2').css('display','none');
+     	
+     })
+     
+     
+     
+</script>

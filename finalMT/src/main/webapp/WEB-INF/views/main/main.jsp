@@ -86,7 +86,7 @@
                 <div class="col-sm-6 col-md-3 themeix-half">
                     <div class="single-video">
                         <div class="video-img">
-                                <a href="single-video.html">
+                                <a href="https://localhost:3000">
 								<img class="lazy" alt="Video" src="${contextPath }/resources/images/thumbnails/6.jpg" style="display: inline;">
 								 <noscript>
 									&lt;img src="${contextPath }/resources/images/thumbnails/6.jpg" alt="video" /&gt;
