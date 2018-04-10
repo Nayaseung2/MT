@@ -1,10 +1,13 @@
 package com.kh.mt.admin.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.kh.mt.member.model.vo.Member;
 
 @Repository
 public class AdminDaoImpl implements AdminDao{
@@ -32,6 +35,15 @@ public class AdminDaoImpl implements AdminDao{
 		System.out.println("dao memberListL "+list);
 		 
 		return list;
+	}
+
+	@Override
+	public ArrayList<Member> userAllList() {
+		
+		ArrayList<Member> mlist = (ArrayList) sqlSession.selectList("Member.userAllList");
+		
+		
+		return mlist;
 	}
 	
 }
