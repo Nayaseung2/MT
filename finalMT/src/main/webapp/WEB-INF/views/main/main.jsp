@@ -30,7 +30,7 @@
                     
                         <div class="single-video">
                             <div class="video-img">
-                                <a href="testLiveBj.lb">
+                                <a href="https://localhost:3000">
 								<img class="lazy" data-src="${contextPath }/resources/images/thumbnails/1.jpg" alt="Video" />
 								 <noscript>
 									<img src="${contextPath }/resources/images/thumbnails/1.jpg" alt="video" />
