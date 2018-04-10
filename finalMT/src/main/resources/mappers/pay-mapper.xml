@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="Pay">
+ 	<resultMap id="memberResultSet" type="Pay">
+      <id property="pay_code" column="PAY_CODE"/>
+      <result property="mcode" column="MCODE"/>   
+      <result property="price" column="PRICE"/>   
+      <result property="peach_code" column="PEACH_CODE"/>  
+      <result property="pay_date" column="PAY_DATE"/>  
+   </resultMap>
+   
+   <insert id="insertPayList">
+   		INSERT INTO PAYHISTORY
+   		VALUES(#{pay_code}, #{mcode}, #{price}, #{peach_code}, SYSDATE)
+   </insert>
+   <select id="selectPeach" resultType="_int" parameterType="_int">
+   	SELECT PEACH FROM MEMBER WHERE MCODE=#{mcode}
+   </select>
+   <update id="updatePeach">
+   
+   
+   
+   </update>
+ 
+ 
+ 
+ 
+ </mapper> 

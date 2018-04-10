@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
+<!-- sdf -->
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/hanna.css);
 
@@ -238,7 +238,7 @@ label {
 					
 			<h1 style="font-family: 'Hanna', sans-serif;">신고하기</h1>		
 				<div style="float:right;">
-					<img src="${ contextPath }/resources/images/report.png"/>
+					<img src="${ contextPath }/resources/images/help/report.png"/>
 				</div>
 				<br/>
 				<div class="qInput">
@@ -260,7 +260,7 @@ label {
 				
 					<tr>
 						<td class="tableList">작성자</td>
-						<td colspan="3"><input type="text" id="qName" size="10px" value=" 숭덩이" style="height:50px;
+						<td colspan="3"><input type="text" id="qName" size="18px" value=" 숭덩이 (sloth9159)" style="height:50px;
 								border:3px solid hsl(0, 100%, 90%);" readonly/></td>
 					</tr>
 					<tr>
@@ -307,6 +307,7 @@ label {
 			
 				function submit(){
 					
+					alert("[ 모두의 TV 알림 ] \n사실에 의거하지않은 신고자는 불이익을 받을 수 있습니다.");
 					location.href="${ contextPath }/helpanswer.hp";
 				}
 			
@@ -321,7 +322,9 @@ label {
 	<br />
 	<br />
 	<br />
-	<br />
+	<br />	 
+	<jsp:include page="../common/footer.jsp"/>
+	
 
 </body>
 </html>

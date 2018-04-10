@@ -6,9 +6,13 @@
 	<typeAliases>
 		<typeAlias alias='Member' type="com.kh.mt.member.model.vo.Member"/>
 		<typeAlias alias='NaverLoginMember' type="com.kh.mt.member.model.vo.NaverLoginMember"/>
+		<typeAlias alias='Pay' type="com.kh.mt.pay.model.vo.Pay"/>
+		<typeAlias alias='HelpMainVo' type="com.kh.mt.helpcenter.model.vo.HelpMainVo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource='mappers/member-mapper.xml' />
+		<mapper resource='mappers/admin-mapper.xml' /> 
+    <mapper resource='mappers/pay-mapper.xml' />
+		<mapper resource='mappers/help-mapper.xml' /> 
 	</mappers>
-
 </configuration>

@@ -19,6 +19,7 @@
   			<result property="videoYN" column="VIDEO_YN"/>
   		</resultMap>
   		
+  		
   		<insert id="insertMember">
   			INSERT INTO MEMBER
   			VALUES(SEQ_MCODE.NEXTVAL,#{mId},#{mPwd},#{mName},#{nickName},
@@ -45,4 +46,11 @@
            VALUES(SEQ_MCODE.NEXTVAL,#{email},NULL,#{ename},#{ename},
            #{email},NULL,SYSDATE,SYSDATE,'Y','N',0,NULL)
         </insert>
+  		
+  		<select id="userAllList" resultMap="memberResultSet">
+  			SELECT *
+  			FROM MEMBER
+  			WHERE MSTATUS = 'Y'
+  		</select>
+  		
   	</mapper>

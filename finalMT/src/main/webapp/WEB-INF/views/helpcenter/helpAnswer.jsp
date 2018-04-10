@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
+<!-- sdf -->
 <style>
 
 @import url(//fonts.googleapis.com/earlyaccess/hanna.css);
@@ -132,7 +132,7 @@
 					
 					
 			<div align="center" class="csArea">
-				<img src="${ contextPath }/resources/images/customer-service.png"/>
+				<img src="${ contextPath }/resources/images/help/customer-service.png"/>
 				<br/><br/>
 				<h1>문의하신 내용이 정상적으로 접수되었습니다.</h1>
 				<h3>문의하신 내용에 대한 답변은 마이페이지에서 확인하실 수 있습니다.<br/>모두의 TV 고객센터를 이용해주셔서 감사합니다.</h3>
@@ -166,6 +166,7 @@
 	<br />
 	<br />
 	<br />
+    <jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>
