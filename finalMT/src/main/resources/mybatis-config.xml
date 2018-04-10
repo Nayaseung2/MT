@@ -5,6 +5,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias='Member' type="com.kh.mt.member.model.vo.Member"/>
+		<typeAlias alias='NaverLoginMember' type="com.kh.mt.member.model.vo.NaverLoginMember"/>
 		<typeAlias alias='Pay' type="com.kh.mt.pay.model.vo.Pay"/>
 		<typeAlias alias='HelpMainVo' type="com.kh.mt.helpcenter.model.vo.HelpMainVo"/>
 	</typeAliases>
