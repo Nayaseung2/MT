@@ -1,5 +1,6 @@
 package com.kh.mt.admin.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.mt.admin.model.service.AdminService;
+import com.kh.mt.member.model.vo.Member;
 
 @Controller 
 public class AdminController {
@@ -36,8 +38,12 @@ public class AdminController {
 	public ModelAndView memberMg(ModelAndView mv){
 		
 		HashMap<String, HashMap<String, String>> list = as.memberList();
+		ArrayList<Member> mlist = as.userAllList();
+		
+		System.out.println("controller mlist: " + mlist);
 		
 		mv.addObject("list", list);
+		mv.addObject("mlist", mlist);
 		
 		mv.setViewName("admin/memberManagement");
 		

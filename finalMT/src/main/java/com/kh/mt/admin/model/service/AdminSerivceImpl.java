@@ -1,11 +1,13 @@
 package com.kh.mt.admin.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.mt.admin.model.dao.AdminDao;
+import com.kh.mt.member.model.vo.Member;
 
 @Service
 public class AdminSerivceImpl implements AdminService{
@@ -30,6 +32,16 @@ public class AdminSerivceImpl implements AdminService{
 		
 		 
 		return list;
+	}
+
+	@Override
+	public ArrayList<Member> userAllList() {
+		ArrayList<Member> mlist = null;
+		
+		mlist = ad.userAllList();
+		
+		
+		return mlist;
 	}
 
 }

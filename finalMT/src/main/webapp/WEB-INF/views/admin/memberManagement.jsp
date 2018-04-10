@@ -227,13 +227,13 @@
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
-	                                  <c:forEach var="i" begin="0" end="20">
+	                                  <c:forEach var="m" items="${ mlist }">
 	                                  	<tr>
-	                                  		<td>${ i }</td>
-	                                  		<td>${ i }</td>
-	                                  		<td>${ i }</td>
-	                                  		<td>${ i }</td>
-	                                  		<td>N</td>
+	                                  		<td>${ m.mId }</td>
+	                                  		<td>${ m.mName }</td>
+	                                  		<td>${ m.mName }</td>
+	                                  		<td>${ m.peach }</td>
+	                                  		<td>${ m.a_status }</td>
 	                                  	</tr>
 	                                  </c:forEach>
 	                                </tbody>
