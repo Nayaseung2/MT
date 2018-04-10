@@ -35,10 +35,14 @@
   			<select id="selectPwd" resultType="java.lang.String" parameterType="java.lang.String">
 		SELECT MPWD FROM MEMBER WHERE MID = #{mId} AND MSTATUS='Y'
 		
-	</select>
-  		
+		</select>
   		<select id="userAllList" resultMap="memberResultSet">
   			SELECT *
+  			FROM MEMBER
+  			WHERE MSTATUS = 'Y'
+  		</select>
+  		<select id="memberListCount" resultType="_int">
+  			SELECT COUNT(*)
   			FROM MEMBER
   			WHERE MSTATUS = 'Y'
   		</select>

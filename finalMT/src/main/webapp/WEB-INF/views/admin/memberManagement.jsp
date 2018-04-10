@@ -239,6 +239,39 @@
 	                                </tbody>
 	                            </table>
 	                            <!-- /.table-responsive -->
+	                            <!-- pageing -->
+	                            <div id="pagingArea" align="center">
+									<c:if test="${ pi.currentPage <= 1 }">
+										[이전] &nbsp;
+									</c:if>
+									<c:if test="${ pi.currentPage > 1 }">
+										<c:url var="blistBack" value="/memberMg.ad">
+											<c:param name="newCurrentPage" value="${ pi.currentPage -1 }"/>
+										</c:url>
+										<a href="${ blistBack }">[이전]</a>
+									</c:if>
+									
+									<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+										<c:if test="${ p eq pi.currentPage }">
+											<font color="red" size="4"><b>[${ p }]</b></font>
+										</c:if>
+										<c:if test="${ p ne pi.currentPage }"><!-- ne: eq반대 -->
+											<c:url var="blistCheck" value="/memberMg.ad">
+												<c:param name="newCurrentPage" value="${ p }"/>
+											</c:url>
+											<a href="${ blistCheck }">${ p }</a>
+										</c:if>
+									</c:forEach>
+									<c:if test="${ pi.currentPage >= pi.maxPage }">
+										&nbsp; [다음]
+									</c:if>
+									<c:if test="${ pi.currentPage < pi.maxPage }">
+										<c:url var="blistEnd" value="memberMg.ad">
+											<c:param name="newCurrentPage" value="${ pi.currentPage + 1 }"/>
+										</c:url>
+										&nbsp; <a href="${ blistEnd }">[다음]</a>
+									</c:if>
+								</div>
 	                        </div>
 	                        <!-- /.panel-body -->
 	                    </div>
@@ -249,23 +282,26 @@
         
     </div>
     <!-- /#wrapper -->
+  	<script>
+  	
+  	</script>
 
     <!-- jQuery -->
-    <script src="/test/resources/vendor/jquery/jquery.min.js"></script>
+    <script src="/mt/resources/admin/vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="/test/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/mt/resources/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="/test/resources/vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="/mt/resources/admin/vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="/test/resources/vendor/raphael/raphael.min.js"></script>
-    <script src="/test/resources/vendor/morrisjs/morris.min.js"></script>
-    <script src="/test/resources/data/morris-data.js"></script>
+    <script src="/mt/resources/admin/vendor/raphael/raphael.min.js"></script>
+    <script src="/mt/resources/admin/vendor/morrisjs/morris.min.js"></script>
+    <script src="/mt/resources/admin/data/morris-data.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="/test/resources/dist/js/sb-admin-2.js"></script>
+    <script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
 
 </body>
 </html>
