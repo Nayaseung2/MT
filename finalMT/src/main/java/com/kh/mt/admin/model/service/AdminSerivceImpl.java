@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.mt.admin.model.dao.AdminDao;
+import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
 
 @Service
@@ -35,13 +36,22 @@ public class AdminSerivceImpl implements AdminService{
 	}
 
 	@Override
-	public ArrayList<Member> userAllList() {
+	public ArrayList<Member> userAllList(PageInfo pi) {
 		ArrayList<Member> mlist = null;
 		
-		mlist = ad.userAllList();
+		mlist = ad.userAllList(pi);
 		
 		
 		return mlist;
+	}
+
+	@Override
+	public int mlistCount() {
+		int result = 0;
+		
+		result = ad.mlistCount();
+		
+		return result;
 	}
 
 }
