@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import com.kh.mt.helpcenter.model.vo.HelpMainVo;
 
 public interface HelpService {
-//asd
-	 // 01. 게시글 전체 목록
+
+	// 고객센터 메인화면(=자주묻는 질문)
 	ArrayList<HelpMainVo> listAll() throws Exception;
 
 }
