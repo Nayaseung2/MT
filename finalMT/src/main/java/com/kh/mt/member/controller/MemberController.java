@@ -1,6 +1,12 @@
 package com.kh.mt.member.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -11,6 +17,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.mt.member.model.sevice.MemberService;
 import com.kh.mt.member.model.vo.Member;
+import com.kh.mt.member.model.vo.NaverLoginMember;
 
 @Controller
 public class MemberController {
@@ -184,4 +192,118 @@ public class MemberController {
 		}
 		return buffer.toString();
 	}
+	
+	//네이버 로그인
+		@RequestMapping(value="naverLogin.me")
+		public ModelAndView naverLogin(ModelAndView mv,SessionStatus status,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException{
+			request.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html; charset=UTF-8");
+			Member m=null;
+			Member m1=null;
+			 String clientId = "fEGqjOAbb6lpxv2QAw23";
+			 String clientSecret = "Kbc33qwgbM";
+		     String code = request.getParameter("code");
+		     String state = request.getParameter("state");
+		     String redirectURI = URLEncoder.encode("http://localhost:8001/p/naverLogin", "UTF-8");
+		     String apiURL;
+		     apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
+		     apiURL += "client_id=" + clientId;
+		     apiURL += "&client_secret=" + clientSecret;
+		     apiURL += "&redirect_uri=" + redirectURI;
+		     apiURL += "&code=" + code;
+		     apiURL += "&state=" + state;
+		     String token=null;
+		     String[] arrtoken =null;
+		     int check1=0;
+		     
+		     try {
+		         URL url = new URL(apiURL);
+		         HttpURLConnection con = (HttpURLConnection)url.openConnection();
+		         con.setRequestMethod("GET");
+		         int responseCode = con.getResponseCode();
+		         BufferedReader br;
+		         check1=responseCode;
+		         if(responseCode==200) { // 정상 호출
+		            br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		         } else {  // 에러 발생
+		            br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+		         }
+		         String inputLine;
+		         while ((inputLine = br.readLine()) != null) {
+		            token+=inputLine;
+		         }
+		         br.close();
+
+		      } catch (Exception e) {
+		         System.out.println(e);
+		      }
+		     
+		     arrtoken = token.split("\"");
+		      String actoken= arrtoken[3];
+		      String retoken=  arrtoken[7];
+		      //1차 로그인 판별
+		      if(check1==200) {
+
+		         String token1 = actoken;// 네이버 로그인 접근 토큰;
+		         String header = "Bearer " + token1; // Bearer 다음에 공백 추가
+		         String[] arrprofile = null;
+		         String profile="";
+		         try {
+		            String apiURL1 = "https://openapi.naver.com/v1/nid/me";
+		            URL url = new URL(apiURL1);
+		            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+		            con.setRequestMethod("GET");
+		            con.setRequestProperty("Authorization", header);
+		            int responseCode = con.getResponseCode();
+		            BufferedReader br;
+		            if(responseCode==200) { // 정상 호출
+		               br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		            } else {  // 에러 발생
+		               br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+		            }
+		            String inputLine;
+		            // StringBuffer response1 = new StringBuffer();
+		            while ((inputLine = br.readLine()) != null) {
+		               profile+=inputLine;
+		            }
+		            br.close();
+
+		         } catch (Exception e) {
+		            System.out.println(e);
+		         }
+		         if(!actoken.equals("invalid_request")) {
+		        	 arrprofile = profile.split("\"");
+		        	 String message=arrprofile[7];
+		        	 
+		        	 int idnum1 = profile.indexOf("\"id\":");
+		             String id1 =profile.substring(idnum1+6);
+		    
+		             int idnum2 = id1.indexOf("\"");
+		             String id = id1.substring(0,idnum2);
+		    
+		             int enum1 = profile.indexOf("\"email\":");
+		             String email1 =profile.substring(enum1+9);
+		    
+		             int enum2 = email1.indexOf("\"");
+		             String email = email1.substring(0,enum2);
+		             int ename1=email.indexOf("@");
+		             String ename=email.substring(0,ename1);
+		             NaverLoginMember nlm=new NaverLoginMember(id,email,ename);
+		             m =ms.selectOne(email);
+		             if(m!=null){
+		            		 mv.addObject("loginUser",m);
+		            		 status.setComplete();
+		            		 mv.setViewName("main/main");
+		            	 }else{
+		            		 ms.insertNaverMember(nlm);
+		            		 m1=ms.selectOne(email);
+		            		 mv.addObject("loginUser",m1);
+		            		 status.setComplete();
+		            		 mv.setViewName("main/main");
+		            	 }
+		             }
+		         }
+		      
+		      return mv;
+			}
 }
