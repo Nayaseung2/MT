@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.mt.helpcenter.model.sevice.HelpService;
@@ -19,13 +20,22 @@ public class HelpController {
 	
 	// 고객센터 메인화면(=자주묻는 질문)
 	@RequestMapping(value="helpmain.hp")
-	public ModelAndView showHelpCenterMain(ModelAndView mv) throws Exception{
+	public @ResponseBody ModelAndView showHelpCenterMain(ModelAndView mv, String b_type) throws Exception{
 		
-        ArrayList<HelpMainVo> list = hs.listAll();
+		mv.setViewName("helpcenter/helpMain");
+		if(b_type != null) {
+			mv.setViewName("jsonView");
+		}
+		if(b_type == null) {
+			b_type = "qna1";
+		} 
+		
+        ArrayList<HelpMainVo> list = hs.listAll(b_type);
 
         mv.addObject("list", list);
         
-        mv.setViewName("helpcenter/helpMain");
+
+        	
         
         return mv; 
     }

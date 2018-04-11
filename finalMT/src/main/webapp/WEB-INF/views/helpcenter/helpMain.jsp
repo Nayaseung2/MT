@@ -321,18 +321,18 @@ outer {
 
 			<!-- Pure CSS Menu -->
 			<div class='css3-tab'>
-				<input type='radio' name='a' id='tabOne' tabindex="1" checked>
-				<input type='radio' name='a' id='tabTwo' tabindex="2"> <input
-					type='radio' name='a' id='tabThree' tabindex="3"> <input
-					type='radio' name='a' id='tabFour' tabindex="4"> <input
-					type='radio' name='a' id='tabFive' tabindex="5">
+				<input type='radio' name='a' class="qnaType" id='tabOne' tabindex="1" value="qna1" checked>
+				<input type='radio' name='a' class="qnaType" id='tabTwo' tabindex="2" value="qna2"> 
+				<input type='radio' name='a' class="qnaType" id='tabThree' tabindex="3" value="qna3"> 
+				<input type='radio' name='a' class="qnaType" id='tabFour' tabindex="4" value="qna4"> 
+				<input type='radio' name='a' class="qnaType" id='tabFive' tabindex="5" value="qna5">
 
 				<div class="css3-tab-nav" style="font-family: 'Nanum Gothic', sans-serif;">
-					<label for='tabOne' style="font-size: 18px;">계정관련</label> <label
-						for='tabTwo' style="font-size: 18px;">방송/시청관련</label> <label
-						for='tabThree' style="font-size: 18px;">피치관련</label> <label
-						for='tabFour' style="font-size: 18px;">결제관련</label> <label
-						for='tabFive' style="font-size: 18px;">기 &nbsp; 타</label>
+					<label for='tabOne' style="font-size: 18px;">계정관련</label> 
+					<label for='tabTwo' style="font-size: 18px;">방송/시청관련</label> 
+					<label for='tabThree' style="font-size: 18px;">피치관련</label> 
+					<label for='tabFour' style="font-size: 18px;">결제관련</label> 
+					<label for='tabFive' style="font-size: 18px;">기 &nbsp; 타</label>
 				</div>
 
 				<div class='css3-tab-content tab-one'>
@@ -340,8 +340,7 @@ outer {
 					<h1 style="font-family: 'Hanna', sans-serif;">계정관련 QnA</h1>
 					<hr/>
 					<table class="QnAtable">
-						<c:forEach var="item" items="${ list }" begin="0" end="4" step="1">
-
+						<c:forEach var="item" items="${ list }" begin="0" end="10" step="1">
 							<tr class="answer_">
 								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
 								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
@@ -349,33 +348,43 @@ outer {
 							<tr class="answer">
 								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
 							</tr>
-							
 						</c:forEach>
-						<!-- <tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr> -->
 					</table>
 				</div>
 				
 				<script>
+					/* $(function(){
+						var type = "${list[0].b_type}";
+						$(".qnaType").attr("checked", "");
+						
+					
+					}); */
+					
+					 $(".qnaType").click(function(){
+					 	
+						 var b_type = $(this).val();
+						 
+						 $.ajax({
+				             
+					            url : "helpmain.hp",
+					            type : "GET",
+					           /*  dataType : "json", */
+					            data : {"b_type": b_type},
+					            success : function(data){
+					            	console.log(data);
+					            },
+					            error : function(data){
+					                alert("error");
+					            }
+					             
+					     });
+					 });
+
+					
+					/* $(".qnaType").click(function(){
+						
+						location.href="helpmain.hp?b_type="+$(this).val();
+					}); */
 				
 					$(".answer").hide();
 					
@@ -390,7 +399,18 @@ outer {
 					<h1 style="font-family: 'Hanna', sans-serif;">방송/시청관련 QnA</h1>
 					<hr/>
 					<table class="QnAtable">
-						<tr class="answer_">
+					
+						<c:forEach var="item" items="${ list }" begin="6" end="10" step="1">
+								<tr class="answer_">
+									<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+									<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
+								</tr>
+								<tr class="answer">
+									<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
+								</tr>
+						</c:forEach>
+					
+						<!-- <tr class="answer_">
 							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
 							<td style="padding-left:3%;">sdf</b></td>
 						</tr>
@@ -417,7 +437,7 @@ outer {
 						</tr>
 						<tr class="answer">
 							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
+						</tr> -->
 					</table>
 				</div>
 				
