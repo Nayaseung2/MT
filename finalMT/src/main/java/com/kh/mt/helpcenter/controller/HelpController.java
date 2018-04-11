@@ -23,9 +23,11 @@ public class HelpController {
 	public @ResponseBody ModelAndView showHelpCenterMain(ModelAndView mv, String b_type) throws Exception{
 		
 		mv.setViewName("helpcenter/helpMain");
+		
 		if(b_type != null) {
 			mv.setViewName("jsonView");
 		}
+		
 		if(b_type == null) {
 			b_type = "qna1";
 		} 
@@ -34,11 +36,22 @@ public class HelpController {
 
         mv.addObject("list", list);
         
-
-        	
-        
         return mv; 
     }
+	
+	// 자주묻는질문에서 검색
+	@RequestMapping(value="helpsearch.hp")
+	public ModelAndView showHelpCenterSearch(ModelAndView mv, String word) {
+		
+		mv.setViewName("helpcenter/helpSearch");
+		
+		ArrayList<HelpMainVo> sList = hs.sList(word);
+		
+		mv.addObject("sList", sList);
+		
+		return mv;
+		
+	}
 	
 	// 메뉴바에서 고객센터 1:1문의로 페이지 이동
 	@RequestMapping(value="helppersonal.hp")

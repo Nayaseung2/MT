@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,6 +11,7 @@
 <title>Insert title here</title>
 <!-- sdf -->
 <style>
+
 @import url(//fonts.googleapis.com/earlyaccess/hanna.css);
 
 .outer {
@@ -247,7 +252,7 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 					</tr>
 					<tr>
 						<td class="tableList">작성자</td>
-						<td colspan="3"><input type="text" id="qName" size="18px" value=" 숭덩이 (sloth9159)" style="height:50px;
+						<td colspan="3"><input type="text" id="qName" size="18px" value="${ loginUser.mId }" style="height:50px;
 								border:3px solid hsl(0, 100%, 90%);" readonly/></td>
 					</tr>
 					<tr>

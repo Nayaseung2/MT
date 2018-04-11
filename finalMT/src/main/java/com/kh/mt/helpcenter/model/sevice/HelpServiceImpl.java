@@ -15,6 +15,7 @@ public class HelpServiceImpl implements HelpService{
 	private HelpDao hd;
 
 	// 고객센터 메인화면(=자주묻는 질문)
+	@Override
     public ArrayList<HelpMainVo> listAll(String b_type) throws Exception {
         
     	ArrayList<HelpMainVo> list = null;
@@ -22,6 +23,17 @@ public class HelpServiceImpl implements HelpService{
     	list = hd.listAll(b_type);
     	
     	return list;
-    } 
+    }
+
+    // 자주묻는 질문 검색
+	@Override
+	public ArrayList<HelpMainVo> sList(String word) {
+
+		ArrayList<HelpMainVo> sList = null;
+		
+		sList = hd.sList(word);
+		
+		return sList;
+	} 
 	
 }
