@@ -82,8 +82,13 @@
 <div class="profileImg">
 <img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/images/img.jpg"style="width:80px; height:80px;">
 <div class="BStitle">
-<label class="BStext"><a id="BStexta" href="showMyBS.me">모두의 TV</a></label><br>
-<label class="BStext">모두의 TV</label><br>
+<c:if test="${!empty jdbcInfo.jdbc_name }">
+<label class="BStext"><a id="BStexta"href="#">${jdbcInfo.jdbc_name }</a></label><br>
+</c:if>
+<c:if test="${empty jdbcInfo.jdbc_name }">
+<label class="BStext"><a id="BStexta"href="#">모두의TV</a></label><br>
+</c:if>
+<label class="BStext">${loginUser.nickName }</label><br>
 </div>
 </div>
 </div>
