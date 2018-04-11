@@ -269,7 +269,7 @@
 										<c:url var="blistEnd" value="memberMg.ad">
 											<c:param name="newCurrentPage" value="${ pi.currentPage + 1 }"/>
 										</c:url>
-										&nbsp; <a href="${ blistEnd }">[다음]</a>
+										&nbsp; <button onclick="return jump()">[다음]</button>
 									</c:if>
 								</div>
 	                        </div>
@@ -283,7 +283,21 @@
     </div>
     <!-- /#wrapper -->
   	<script>
-  	
+  		function jump(){
+  			$.ajax({
+  				url: "memberMg.ad",
+  				type: "get",
+  				data:{"newCurrentPage": ${pi.currentPage + 1}},
+  				success:function(data){
+  					console.log(data.mlist);
+  				},
+  				error:function(data){
+  					console.log("에러!");
+  				}
+  			});
+  			
+  			return false;
+  		}
   	</script>
 
     <!-- jQuery -->
