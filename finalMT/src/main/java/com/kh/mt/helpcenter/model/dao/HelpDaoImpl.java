@@ -16,9 +16,9 @@ public class HelpDaoImpl implements HelpDao{
 	private SqlSessionTemplate sqlSession;
 	
 	// 고객센터 메인화면(=자주묻는 질문)
-    public ArrayList<HelpMainVo> listAll() throws Exception {
+    public ArrayList<HelpMainVo> listAll(String b_type) throws Exception {
     	
-    	ArrayList<HelpMainVo> list = (ArrayList)sqlSession.selectList("QnA.listAll");
+    	ArrayList<HelpMainVo> list = (ArrayList)sqlSession.selectList("QnA.listAll", b_type);
     	
     	System.out.println("dao's listAll : " + list);
     	

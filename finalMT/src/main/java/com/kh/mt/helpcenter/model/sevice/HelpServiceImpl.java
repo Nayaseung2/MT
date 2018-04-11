@@ -15,11 +15,11 @@ public class HelpServiceImpl implements HelpService{
 	private HelpDao hd;
 
 	// 고객센터 메인화면(=자주묻는 질문)
-    public ArrayList<HelpMainVo> listAll() throws Exception {
+    public ArrayList<HelpMainVo> listAll(String b_type) throws Exception {
         
     	ArrayList<HelpMainVo> list = null;
     	
-    	list = hd.listAll();
+    	list = hd.listAll(b_type);
     	
     	return list;
     } 

@@ -20,7 +20,7 @@
 	
 	
 	<!-- 고객센터 메인화면(=자주묻는 질문) -->
-    <select id="listAll" resultMap="helpMainResultSet" >
+    <select id="listAll" parameterType="java.lang.String" resultMap="helpMainResultSet" >
         SELECT B_CODE, B_TYPE, B_TITLE, B_CONTENT
 		FROM BOARD
 		WHERE B_TYPE = #{ b_type }
