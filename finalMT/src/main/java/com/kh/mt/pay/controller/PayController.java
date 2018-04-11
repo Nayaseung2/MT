@@ -21,16 +21,18 @@ public class PayController {
 	
 	//pay 페이지
 	@RequestMapping("payform.pay")
-	public ModelAndView PayForm(ModelAndView mv){
-						
-						
+	public ModelAndView PayForm(ModelAndView mv, String mcode){
+		System.out.println(mcode);			
+		int peach = ps.selectPeach(mcode);		
+		
+		mv.addObject("peach", peach);
 		mv.setViewName("pay/payform");
 		return mv;
 	}
 	
 	//pay ajax 페이지
 	@RequestMapping("paysuccess.pay")
-	public ModelAndView PaySuccess(String mcode,String pay_code, int price, String peach_code ,ModelAndView mv){
+	public ModelAndView PaySuccess(String mcode,String pay_code, int price, int peach_code ,ModelAndView mv){
 		Pay p = new Pay();
 		p.setPay_code(pay_code);
 		p.setMcode(mcode);
