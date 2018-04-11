@@ -16,6 +16,7 @@ public class HelpDaoImpl implements HelpDao{
 	private SqlSessionTemplate sqlSession;
 	
 	// 고객센터 메인화면(=자주묻는 질문)
+	@Override
     public ArrayList<HelpMainVo> listAll(String b_type) throws Exception {
     	
     	ArrayList<HelpMainVo> list = (ArrayList)sqlSession.selectList("QnA.listAll", b_type);
@@ -24,4 +25,15 @@ public class HelpDaoImpl implements HelpDao{
     	
     	return list;
     }
+
+	// 자주묻는 질문 검색
+	@Override
+	public ArrayList<HelpMainVo> sList(String word) {
+
+		ArrayList<HelpMainVo> sList = (ArrayList)sqlSession.selectList("QnA.sList", word);;
+		
+		System.out.println("dao's sList : " + sList);
+		
+		return sList;
+	}
 }

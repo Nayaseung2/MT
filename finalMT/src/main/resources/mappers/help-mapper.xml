@@ -27,7 +27,12 @@
 		ORDER BY B_CODE ASC
     </select>
 
-
+	<!-- 자주묻는 질문 검색 -->
+    <select id="sList" parameterType="java.lang.String" resultMap="helpMainResultSet" >
+        SELECT B_TITLE, B_CONTENT, BWRITER
+		FROM BOARD
+		WHERE BWRITER = '관리자' AND B_TITLE LIKE '%' || #{ word } || '%'
+    </select>
 
 
 

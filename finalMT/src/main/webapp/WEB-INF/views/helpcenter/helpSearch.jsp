@@ -52,24 +52,10 @@
 	border-radius: 30px;
 }
 
-.searchArea {
-	background-color: rgb(255, 233, 228);
-	height: 140px;
-}
-
 .form-group {
 	margin-top: 2%;
 	margin-left: 1%;
 	margin-bottom: 5%;
-}
-
-#search {
-	display: inline-block;
-	float: left;
-	margin-right: 1%;
-	margin-top: 1%; height : 60px;
-	font-size: 30px;
-	height: 60px;
 }
 
 .nav-pills {
@@ -92,9 +78,9 @@
 	float: left;
 }
 
-.css3-tab input[type='radio'] {
+/* .css3-tab input[type='radio'] {
 	display: none;
-}
+} */
 
 .css3-tab .css3-tab-nav {
 	display: table;
@@ -302,65 +288,21 @@ outer {
 
 		<div class="rightNav">
 		
-			<h1 style="font-family: 'Hanna', sans-serif;">자주묻는 질문</h1>		
+			<h1 style="font-family: 'Hanna', sans-serif;">검색 결과</h1>		
 			<br/>
-
-			<div class="searchArea">
-				<div class="form-group">
-					<input type="text" class="form-control" id="search"
-						style="width: 88%;">
-					<button onclick="goSearch();" type="button" class="btn btn-danger" id="search">Search</button>
-					<br clear="both"/> 
-					<br/> 
-					<b style="font-size: 18px; color: rgb(135, 0, 0); font-family: 'Nanum Gothic', sans-serif;">
-						Best 키워드 _ 피치 / 방송국 / 방송 / 신고 
-					</b>
-				</div>
-				<br/>
-			</div>
-			<br/>
-			
-				<script>
-					
-					function goSearch(){
-						
-						location.href="${ contextPath }/helpsearch.hp?word=" + $("#search").val();
-					}
-
-				</script>
-				
-				<!-- <script>
-				
-					function goSearch(){
-					
-						alert("검색어를 입력해주세요!");
-					}
-					
-				</script> -->
-				
 
 			<!-- Pure CSS Menu -->
 			<div class='css3-tab'>
-				<input type='radio' name='a' class="qnaType" id='tabOne' tabindex="1" value="qna1" checked>
-				<input type='radio' name='a' class="qnaType" id='tabTwo' tabindex="2" value="qna2"> 
-				<input type='radio' name='a' class="qnaType" id='tabThree' tabindex="3" value="qna3"> 
-				<input type='radio' name='a' class="qnaType" id='tabFour' tabindex="4" value="qna4"> 
-				<input type='radio' name='a' class="qnaType" id='tabFive' tabindex="5" value="qna5">
-
-				<div class="css3-tab-nav" style="font-family: 'Nanum Gothic', sans-serif;">
-					<label for='tabOne' style="font-size: 18px;">계정관련</label> 
-					<label for='tabTwo' style="font-size: 18px;">방송/시청관련</label> 
-					<label for='tabThree' style="font-size: 18px;">피치관련</label> 
-					<label for='tabFour' style="font-size: 18px;">결제관련</label> 
-					<label for='tabFive' style="font-size: 18px;">기 &nbsp; 타</label>
-				</div>
 
 				<div class='css3-tab-content tab-one'>
 					<!-- start slipsum code -->
 					<h1 style="font-family: 'Hanna', sans-serif;">계정관련 QnA</h1>
 					<hr/>
 					<table class="QnAtable">
-						<c:forEach var="item" items="${ list }" begin="0" end="10" step="1">
+						<tr>
+							<td>sdf</td>
+						</tr>
+						<c:forEach var="item" items="${ sList }" begin="0" end="10" step="1">
 							<tr class="answer_">
 								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
 								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
@@ -371,25 +313,7 @@ outer {
 						</c:forEach>
 					</table>
 				</div>
-				
 				<script>
-					
-					 $(".qnaType").click(function(){
-					 	
-						 var b_type = $(this).val();
-						 
-						 $.ajax({
-				            url : "helpmain.hp",
-				            type : "GET",
-				            data : {"b_type": b_type},
-				            success : function(data){
-				            	console.log(data);
-				            },
-				            error : function(data){
-				                alert("error");
-				            }
-					     });
-					 });
 				
 					$(".answer").hide();
 					
@@ -397,117 +321,9 @@ outer {
 						$(this).next().toggle();
 					});
 				
-				</script>
+				</script>	
+			
 
-				<div class='css3-tab-content tab-two'>
-					<!-- start slipsum code -->
-					<h1 style="font-family: 'Hanna', sans-serif;">방송/시청관련 QnA</h1>
-					<hr/>
-					<table class="QnAtable">
-					
-						<c:forEach var="item" items="${ list }" begin="0" end="10" step="1">
-							<tr class="answer_">
-								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
-							</tr>
-							<tr class="answer">
-								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
-							</tr>
-						</c:forEach>
-					
-					</table>
-				</div>
-				
-				<script>
-				
-					$(".answer").hide();
-					
-					$(document).on("click", ".answer_", function(){
-						$(this).next().toggle();
-					});
-				
-				</script>
-
-				<div class='css3-tab-content tab-three'>
-					<!-- start slipsum code -->
-					<h1 style="font-family: 'Hanna', sans-serif;">피치관련 QnA</h1>
-					<hr/>
-					<table class="QnAtable">
-						<c:forEach var="item" items="${ list }" begin="0" end="10" step="1">
-							<tr class="answer_">
-								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
-							</tr>
-							<tr class="answer">
-								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
-							</tr>
-						</c:forEach>
-					</table>
-				</div>
-				
-				<script>
-				
-					$(".answer").hide();
-					
-					$(document).on("click", ".answer_", function(){
-						$(this).next().toggle();
-					});
-				
-				</script>
-
-				<div class='css3-tab-content tab-four'>
-					<!-- start slipsum code -->
-					<h1 style="font-family: 'Hanna', sans-serif;">결제관련 QnA</h1>
-					<hr/>
-					<table class="QnAtable">
-						<c:forEach var="item" items="${ list }" begin="0" end="10" step="1">
-							<tr class="answer_">
-								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
-							</tr>
-							<tr class="answer">
-								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
-							</tr>
-						</c:forEach>
-					</table>
-				</div>
-				
-				<script>
-				
-					$(".answer").hide();
-					
-					$(document).on("click", ".answer_", function(){
-						$(this).next().toggle();
-					});
-				
-				</script>
-
-				<div class='css3-tab-content tab-five'>
-					<!-- start slipsum code -->
-					<h1 style="font-family: 'Hanna', sans-serif;">기 타 QnA</h1>
-					<hr/>
-					<table class="QnAtable">
-						<c:forEach var="item" items="${ list }" begin="0" end="10" step="1">
-							<tr class="answer_">
-								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
-							</tr>
-							<tr class="answer">
-								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
-							</tr>
-						</c:forEach>
-					</table>
-				</div>
-				
-				<script>
-				
-					$(".answer").hide();
-					
-					$(document).on("click", ".answer_", function(){
-						$(this).next().toggle();
-					});
-				
-				</script>
 			</div>
 		</div>
 
