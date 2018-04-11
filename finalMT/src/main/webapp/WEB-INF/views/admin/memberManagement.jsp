@@ -241,36 +241,18 @@
 	                            <!-- /.table-responsive -->
 	                            <!-- pageing -->
 	                            <div id="pagingArea" align="center">
-									<c:if test="${ pi.currentPage <= 1 }">
-										[이전] &nbsp;
-									</c:if>
-									<c:if test="${ pi.currentPage > 1 }">
-										<c:url var="blistBack" value="/memberMg.ad">
-											<c:param name="newCurrentPage" value="${ pi.currentPage -1 }"/>
-										</c:url>
-										<a href="${ blistBack }">[이전]</a>
-									</c:if>
+									<button onclick="return next('minus')">[이전]</button>
 									
 									<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 										<c:if test="${ p eq pi.currentPage }">
-											<font color="red" size="4"><b>[${ p }]</b></font>
+											<font color="red" size="4" id="page"><b>${ p }</b></font>
 										</c:if>
 										<c:if test="${ p ne pi.currentPage }"><!-- ne: eq반대 -->
-											<c:url var="blistCheck" value="/memberMg.ad">
-												<c:param name="newCurrentPage" value="${ p }"/>
-											</c:url>
 											<a href="${ blistCheck }">${ p }</a>
 										</c:if>
 									</c:forEach>
-									<c:if test="${ pi.currentPage >= pi.maxPage }">
-										&nbsp; [다음]
-									</c:if>
-									<c:if test="${ pi.currentPage < pi.maxPage }">
-										<c:url var="blistEnd" value="memberMg.ad">
-											<c:param name="newCurrentPage" value="${ pi.currentPage + 1 }"/>
-										</c:url>
-										&nbsp; <button onclick="return jump()">[다음]</button>
-									</c:if>
+									
+									&nbsp; <button onclick="return next('plus')">[다음]</button>
 								</div>
 	                        </div>
 	                        <!-- /.panel-body -->
@@ -279,24 +261,46 @@
 	                </div>
 	        	</div>
         </div>
-        
     </div>
     <!-- /#wrapper -->
   	<script>
-  		function jump(){
-  			$.ajax({
-  				url: "memberMg.ad",
-  				type: "get",
-  				data:{"newCurrentPage": ${pi.currentPage + 1}},
-  				success:function(data){
-  					console.log(data.mlist);
-  				},
-  				error:function(data){
-  					console.log("에러!");
-  				}
-  			});
+  		function next(value){
+  			var page = Number($("#page").text());
   			
-  			return false;
+  			if(page >= 1 && page <= ${pi.maxPage}){
+	  			if(value === 'plus'){
+	  				if(page == ${pi.maxPage}){
+	  					return;
+	  				}
+	  				page += 1;
+	  			}else {
+	  				if(page == 1){
+	  					return;
+	  				}
+	  				page -= 1;
+	  				
+	  			}
+	  			$.ajax({
+	  				url: "memberMg.ad",
+	  				type: "get",
+	  				data:{"newCurrentPage":page},
+	  				success:function(data){
+	  					var list = data.list.mlist;
+	  					
+	  					$("tbody").html("");
+	  					
+	  					for(var i = 0; i < list.length; i++){
+		  					$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mName+"</td><td>"+list[i].peach+"</td><td>"+list[i].a_status+"</td></tr>");
+	  					}
+	  					
+	  					$("#page").text(page);
+	  				},
+	  				error:function(data){
+	  					console.log("에러!");
+	  				}
+	  			});
+  				return false;
+  			}
   		}
   	</script>
 
@@ -310,9 +314,9 @@
     <script src="/mt/resources/admin/vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="/mt/resources/admin/vendor/raphael/raphael.min.js"></script>
+   <!--  <script src="/mt/resources/admin/vendor/raphael/raphael.min.js"></script>
     <script src="/mt/resources/admin/vendor/morrisjs/morris.min.js"></script>
-    <script src="/mt/resources/admin/data/morris-data.js"></script>
+    <script src="/mt/resources/admin/data/morris-data.js"></script> -->
 
     <!-- Custom Theme JavaScript -->
     <script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
