@@ -19,6 +19,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,6 +42,12 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
+	//메인페이지로 가기
+	@RequestMapping(value="showMainPage.me")
+	public String showshowMainPage() {
+		
+		return "main/main";
+	}
 	@RequestMapping(value="showLoginPage.me")
 	public String showLoginPage() {
 		
@@ -59,11 +66,11 @@ public class MemberController {
 	}
 	//로그인 체크
 	@RequestMapping(value="loginCheck.me")
-	public ModelAndView loginCheck(Member m,ModelAndView mv,SessionStatus status) {
+	public ModelAndView loginCheck(Member m,ModelAndView mv,SessionStatus status,HttpServletRequest request) {
 		Member loginUser= ms.loginCheck(m);
 		mv.addObject("loginUser", loginUser);
-		status.setComplete();
-		
+		HttpSession session =request.getSession();
+		session.setAttribute("loginUser", loginUser);
 		mv.setViewName("main/main");
 		return mv;
 	}

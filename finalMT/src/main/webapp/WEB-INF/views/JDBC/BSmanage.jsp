@@ -145,11 +145,16 @@
 				<!-- 회원 이미지 넣기 -->
 				<div class="profileImg">
 					<img alt="회원 이미지"
-						src="<%=request.getContextPath()%>/resources/images/img.jpg"
+						src="<%=request.getContextPath()%>/resources/images/logo.png"
 						style="width: 80px; height: 80px;">
 					<div class="BStitle">
-						<label class="BStext"><a id="BStexta" href="showMyBS.me">모두의 TV</a></label><br>
-						<label class="BStext">모두의 TV</label><br>
+						<c:if test="${!empty jdbcInfo.jdbc_name }">
+<label class="BStext"><a id="BStexta"href="#">${jdbcInfo.jdbc_name }</a></label><br>
+</c:if>
+<c:if test="${empty jdbcInfo.jdbc_name }">
+<label class="BStext"><a id="BStexta"href="#">모두의TV</a></label><br>
+</c:if>
+<label class="BStext">${loginUser.nickName }</label><br>
 					</div>
 				</div>
 			</div>
@@ -204,22 +209,22 @@
 					기본정보
 				</h4>
 				<hr>
-				<form>
+				<form action="insertJDBCstation.JDBC" method="post"  encType="multipart/form-data">
 					<table class="insertBSTable" >
 						<tr>
 							<th>방송국 이름</th>
-							<td><input type="text" size="30" name="title" style="margin-left:10px;"><br>
+							<td><input type="text" size="30" name="jdbc_name" style="margin-left:10px;"><br>
 								<p style="margin-left:10px;">*방송국과 방송 화면에 보이는 이름입니다.(최대 한글 6자 영문 12자)<p></td>
 						</tr>
 						<tr>
 							<th>방송국 소개</th>
-							<td><input type="text" size="50" name="introduce" style="margin-left:10px;">
+							<td><input type="text" size="50" name="jdbc_introduce" style="margin-left:10px;">
 								<p style="margin-left:10px;">*방송국 웹페이지 상단에 들어가는 소개입니다.</p> 
 								<p style="margin-left:10px;">*방송국을 설명할 수 있는 문구를 넣으실 수 있습니다.(최대 한글 32자 영문 64자)</p></td>
 						</tr>
 						<tr>
 							<th>방송국 로고</th>
-							<td><input type="file" size="50" name="fileLogo" style="margin-left:10px;">
+							<td><input type="file" size="50" name="jdbcLogo" style="margin-left:10px;">
 								<ul>
 									<li>최적의 로고 이미지 사이즈는 74x61px 입니다.</li>
 									<li>최대 200KB크기의 그림파일 (JPG,GIF,PNG)를 올릴 수 있습니다.</li>
@@ -227,44 +232,36 @@
 								</ul></td>
 						</tr>
 						<tr>
-							<th>닉네임 설정</th>
-							<td><input type="text" name="nickName" size="30" style="margin-left:10px;">
-								<ul>
-									<li>방송 채팅이나 게시물 작성시 보이는 닉네임입니다.(최대 한글 6자 영문 12자)</li>
-									<li>닉네임 변경 시, 24시간 후에 재변경이 가능합니다.</li>
-								</ul></td>
-						</tr>
-						<tr>
 							<th>관심 분야</th>
 							<td>
 								<div style="width: 400px; height: 70px; margin-left:20px;">
-									<input type="checkbox" name="interest" id="game" value="게임"> 
+									<input type="checkbox" name="jdbc_interest" id="game" value="게임"> 
 									<label for='game'>게임</label> &nbsp;
-									<input type="checkbox" name="interest" id="talking" value="토크"> 
+									<input type="checkbox" name="jdbc_interest" id="talking" value="토크"> 
 									<label for='talking'>토크</label>&nbsp; 
-									<input type="checkbox" name="interest" id="eating" value="먹방"> 
+									<input type="checkbox" name="jdbc_interest" id="eating" value="먹방"> 
 									<label for='eating'>먹방</label>&nbsp; 
-									<input type="checkbox" name="interest" id="sports" value="스포츠"> 
+									<input type="checkbox" name="jdbc_interest" id="sports" value="스포츠"> 
 									<label for='sports'>스포츠</label>&nbsp; 
-									<input type="checkbox" name="interest" id="music" value="음악"> 
+									<input type="checkbox" name="jdbc_interest" id="music" value="음악"> 
 									<label for='music'>음악</label> &nbsp;
-									<input type="checkbox" name="interest" id="stock" value="주식"> 
+									<input type="checkbox" name="jdbc_interest" id="stock" value="주식"> 
 									<label for='stock'>주식</label> &nbsp;
-									<input type="checkbox" name="interest" id="pet" value="펫"> 
+									<input type="checkbox" name="jdbc_interest" id="pet" value="펫"> 
 									<label for='pet'>펫</label> &nbsp;&nbsp;
-									<input type="checkbox" name="interest" id="hobby" value="취미"> 
+									<input type="checkbox" name="jdbc_interest" id="hobby" value="취미"> 
 									<label for='hobby'>취미</label> &nbsp;
-									<input type="checkbox" name="interest" id="study" value="학습"> 
+									<input type="checkbox" name="jdbc_interest" id="study" value="학습"> 
 									<label for='study'>학습</label> &nbsp;
 								</div>
 							</td>
 						</tr>
 					</table>
 					<button type="submit" class="check"><span class="glyphicon glyphicon-ok"></span>확인</button>
+					<input type="hidden" value="${loginUser.mId }" name="mid" >
 				</form>
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>

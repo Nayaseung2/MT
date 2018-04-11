@@ -46,10 +46,15 @@
 <br>
 <!-- 회원 이미지 넣기 -->
 <div class="profileImg">
-<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/images/img.jpg"style="width:80px; height:80px;">
+<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/images/logo.png"style="width:80px; height:80px;">
 <div class="BStitle">
-<label class="BStext"><a id="BStexta"href="#">모두의 TV</a></label><br>
-<label class="BStext">모두의 TV</label><br>
+<c:if test="${!empty jdbcInfo.jdbc_name }">
+<label class="BStext"><a id="BStexta"href="#">${jdbcInfo.jdbc_name }</a></label><br>
+</c:if>
+<c:if test="${empty jdbcInfo.jdbc_name }">
+<label class="BStext"><a id="BStexta"href="#">모두의TV</a></label><br>
+</c:if>
+<label class="BStext">${loginUser.nickName }</label><br>
 </div>
 </div>
 </div>
@@ -60,7 +65,7 @@
 <br>
 <label class="idnickname"><b>아이디</b></label><br>
 <span class="idnickname">닉네임</span>
-<span class="glyphicon glyphicon-cog" style="float:right;"><a style="text-decoration:none; color:black;" id="showManage" href="BSmanage.me"><b>관리</b></a></span><br>
+<span class="glyphicon glyphicon-cog" style="float:right;"><a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
 <input class="introduction" type="text" value="자기소개가 없습니다." readonly>
 <br><br> <br>  
 <label style="margin-left:15px;">방송국 방문 : 0명</label>

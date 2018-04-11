@@ -71,7 +71,7 @@
                                     
                                     <div id="menu" class="header-menu">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="index.jsp">Home</a><span class="arrow"></span></li>
+                                            <li><a href="showMainPage.me">Home</a><span class="arrow"></span></li>
                                             <li><a href="${ contextPath }/helpmain.hp">고객센터</a> <span class="arrow"></span></li>
                                             <%-- <c:if test="${test eq 0}"> --%>
                                             <c:if test="${empty loginUser }">
@@ -81,7 +81,7 @@
                                  <%-- <c:if test="${test eq 1}"> --%>
                                  <c:if test="${!empty loginUser }">
                                     <li><a href="${contextPath }/payform.pay">피치결제</a> <span class="arrow"></span></li>
-                                    <li><a href="#" target="blank">방송국가기</a> <span class="arrow"></span></li>
+                                    <li><a href="showJDBCPage.JDBC" target="blank">방송국가기</a> <span class="arrow"></span></li>
                                     <li><a href="${contextPath }/bjPayMain.bjp">내수익관리</a> <span class="arrow"></span></li>
                                     <li><a href="#">myPage</a> <span class="arrow"></span></li>
                                     <li><a href="logout.me">Logout</a> <span class="arrow"></span></li>
