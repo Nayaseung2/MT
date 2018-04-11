@@ -8,4 +8,6 @@ public interface PayDao {
 
 	int insertPayList(SqlSessionTemplate sqlSession, Pay p);
 
+	int selectPeach(SqlSessionTemplate sqlSession, String mcode);
+
 }

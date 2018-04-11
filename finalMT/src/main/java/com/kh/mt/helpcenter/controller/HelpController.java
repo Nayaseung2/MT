@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.mt.helpcenter.model.sevice.HelpService;
@@ -17,12 +18,40 @@ public class HelpController {
 	private HelpService hs;
 	
 	
-	// 메뉴바에서 고객센터 메인(=자주묻는질문)으로 페이지 이동
-	/*@RequestMapping(value="helpmain.hp")
-	public String showHelpCenterMain() {
+	// 고객센터 메인화면(=자주묻는 질문)
+	@RequestMapping(value="helpmain.hp")
+	public @ResponseBody ModelAndView showHelpCenterMain(ModelAndView mv, String b_type) throws Exception{
+		
+		mv.setViewName("helpcenter/helpMain");
+		
+		if(b_type != null) {
+			mv.setViewName("jsonView");
+		}
+		
+		if(b_type == null) {
+			b_type = "qna1";
+		} 
+		
+        ArrayList<HelpMainVo> list = hs.listAll(b_type);
+
+        mv.addObject("list", list);
+        
+        return mv; 
+    }
 	
-		return "helpcenter/helpMain";
-	}*/
+	// 자주묻는질문에서 검색
+	@RequestMapping(value="helpsearch.hp")
+	public ModelAndView showHelpCenterSearch(ModelAndView mv, String word) {
+		
+		mv.setViewName("helpcenter/helpSearch");
+		
+		ArrayList<HelpMainVo> sList = hs.sList(word);
+		
+		mv.addObject("sList", sList);
+		
+		return mv;
+		
+	}
 	
 	// 메뉴바에서 고객센터 1:1문의로 페이지 이동
 	@RequestMapping(value="helppersonal.hp")
@@ -59,27 +88,8 @@ public class HelpController {
 		return "helpcenter/helpNoticeDetail";
 	}
 	
-	//sdf
-	// 01. 게시글 목록
-	/*@RequestMapping(value="helpmain.hp")
-    public ModelAndView list(ModelAndView mav) throws Exception{
-		
-        ArrayList<HelpMainVo> list = hs.listAll();
-        // ModelAndView - 모델과 뷰
-        mav.setViewName("helpcenter/helpMain"); // 뷰를 list.jsp로 설정
-        mav.addObject("list", list); // 데이터를 저장
-        
-        return mav; // helpmain.hp로 List 전달
-    }*/
 	
-	@RequestMapping(value="helpmain.hp")
-	public ArrayList<HelpMainVo> showHelpCenterMain() throws Exception{
-		
-        ArrayList<HelpMainVo> list = hs.listAll();
-        // ModelAndView - 모델과 뷰
-        
-        return list; // helpmain.hp로 List 전달
-    }
+
 	
 	
 	

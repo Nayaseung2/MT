@@ -25,7 +25,7 @@
 </head>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
-
+<c:if test="${!empty loginUser }">
 
 	<div class="container" style="margin-top: 5%;">
 		<div class="row">
@@ -33,17 +33,17 @@
 				<div align="left" style="width: 50%; height: 30%;">
 					&nbsp;&nbsp;&nbsp;
 					<img src="${contextPath }/resources/images/pay/peach.png" style="width: 20%">&nbsp;&nbsp;&nbsp;
-					<label style="font-size: 200%;">&nbsp;&nbsp;&nbsp;보유 피치 수 : 10개</label>
+					<label style="font-size: 200%;">&nbsp;&nbsp;&nbsp;보유 피치 수 : ${peach}개</label>
 				</div>
 				<br><br>
 				<table style="text-align: center;">
 					<tr  style="padding: 3%">
 						<td style="width: 15%; padding: 1%;"><img src="${contextPath }/resources/images/pay/peach.png" ></td>
 						<td><h3>피치 10개</h3><h3>1,100원</h3></td>
-						<td><button onclick="pay(1100, '10');" class="w3-btn w3-white w3-border w3-border-blue w3-round-large">구매하기</button></td>
+						<td><button onclick="pay(1100, 10);" class="w3-btn w3-white w3-border w3-border-blue w3-round-large">구매하기</button></td>
 						<td style="width: 15%; padding: 1%;"><img src="${contextPath }/resources/images/pay/peach2.png"></td>
 						<td><h3>피치 30개</h3><h3>3,300원</h3></td>
-						<td><button class="w3-btn w3-white w3-border w3-border-blue w3-round-large">구매하기</button></td>
+						<td><button onclick="pay(3300, 30);" class="w3-btn w3-white w3-border w3-border-blue w3-round-large">구매하기</button></td>
 					</tr>
 					<tr>
 						<td style="height: 15%; width: 15%;"></td><td></td><td></td><td></td><td></td><td></td>
@@ -51,10 +51,10 @@
 					<tr style="padding: 3%">
 						<td style="width: 15%; padding: 1%;"><img src="${contextPath }/resources/images/pay/peach3.png" ></td>
 						<td><h3>피치 100개</h3><h3>11,000원</h3></td>
-						<td><button class="w3-btn w3-white w3-border w3-border-blue w3-round-large">구매하기</button></td>
+						<td><button onclick="pay(11000, 100);" class="w3-btn w3-white w3-border w3-border-blue w3-round-large">구매하기</button></td>
 						<td style="width: 15%; padding: 1%;"><img src="${contextPath }/resources/images/pay/peach4.png"></td>
 						<td><h3>피치 500개</h3><h3>55,000원</h3></td>
-						<td><button class="w3-btn w3-white w3-border w3-border-blue w3-round-large">구매하기</button></td>
+						<td><button onclick="pay(55000, 500);" class="w3-btn w3-white w3-border w3-border-blue w3-round-large">구매하기</button></td>
 					</tr>
 				
 				</table>
@@ -90,16 +90,16 @@
 	    		url : "paysuccess.pay",
 				type : "post",
 				data:{
-					mcode : 1,
+					mcode : ${loginUser.mcode},
 					pay_code : rsp.merchant_uid,
 					price : peach,
 					peach_code : payname
 				},success:function(data){
-					console.log(data);
+					location.reload();
 				}
 				
 	    	}).done(function(data) {
-	    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+	    		/* //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
 	    		if ( everythings_fine ) {
 	    			
 	    			var msg = '결제가 완료되었습니다.';
@@ -112,7 +112,7 @@
 	    		} else {
 	    			//[3] 아직 제대로 결제가 되지 않았습니다.
 	    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-	    		}
+	    		} */
 	    	});
 	    } else {
 	        var msg = '결제에 실패하였습니다.';
@@ -166,8 +166,15 @@
                     </div>
 
 <br><br><br>
-
-
+</c:if>
+<c:if test="${empty loginUser }">
+		<script type="text/javascript">
+			$(function(){
+				alert("test");
+				document.location.href="/mt/index.jsp";
+			});
+		</script>
+</c:if>
 
 <jsp:include page="../common/footer.jsp"/>
     

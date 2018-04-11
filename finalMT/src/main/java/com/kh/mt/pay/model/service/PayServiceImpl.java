@@ -21,6 +21,13 @@ public class PayServiceImpl implements PayService{
 		int result = pd.insertPayList(sqlSession, p);
 		
 	}
+
+	@Override
+	public int selectPeach(String mcode) {
+		int peach = pd.selectPeach(sqlSession, mcode);
+		return peach;
+		
+	}
 	
 	
 

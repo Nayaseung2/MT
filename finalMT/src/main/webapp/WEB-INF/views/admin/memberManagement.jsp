@@ -239,6 +239,21 @@
 	                                </tbody>
 	                            </table>
 	                            <!-- /.table-responsive -->
+	                            <!-- pageing -->
+	                            <div id="pagingArea" align="center">
+									<button onclick="return next('minus')">[이전]</button>
+									
+									<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+										<c:if test="${ p eq pi.currentPage }">
+											<font color="red" size="4" id="page"><b>${ p }</b></font>
+										</c:if>
+										<c:if test="${ p ne pi.currentPage }"><!-- ne: eq반대 -->
+											<a href="${ blistCheck }">${ p }</a>
+										</c:if>
+									</c:forEach>
+									
+									&nbsp; <button onclick="return next('plus')">[다음]</button>
+								</div>
 	                        </div>
 	                        <!-- /.panel-body -->
 	                    </div>
@@ -246,26 +261,65 @@
 	                </div>
 	        	</div>
         </div>
-        
     </div>
     <!-- /#wrapper -->
+  	<script>
+  		function next(value){
+  			var page = Number($("#page").text());
+  			
+  			if(page >= 1 && page <= ${pi.maxPage}){
+	  			if(value === 'plus'){
+	  				if(page == ${pi.maxPage}){
+	  					return;
+	  				}
+	  				page += 1;
+	  			}else {
+	  				if(page == 1){
+	  					return;
+	  				}
+	  				page -= 1;
+	  				
+	  			}
+	  			$.ajax({
+	  				url: "memberMg.ad",
+	  				type: "get",
+	  				data:{"newCurrentPage":page},
+	  				success:function(data){
+	  					var list = data.list.mlist;
+	  					
+	  					$("tbody").html("");
+	  					
+	  					for(var i = 0; i < list.length; i++){
+		  					$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mName+"</td><td>"+list[i].peach+"</td><td>"+list[i].a_status+"</td></tr>");
+	  					}
+	  					
+	  					$("#page").text(page);
+	  				},
+	  				error:function(data){
+	  					console.log("에러!");
+	  				}
+	  			});
+  				return false;
+  			}
+  		}
+  	</script>
 
     <!-- jQuery -->
-    <script src="/test/resources/vendor/jquery/jquery.min.js"></script>
+    <script src="/mt/resources/admin/vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="/test/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/mt/resources/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="/test/resources/vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="/mt/resources/admin/vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="/test/resources/vendor/raphael/raphael.min.js"></script>
-    <script src="/test/resources/vendor/morrisjs/morris.min.js"></script>
-    <script src="/test/resources/data/morris-data.js"></script>
+   <!--  <script src="/mt/resources/admin/vendor/raphael/raphael.min.js"></script>
+    <script src="/mt/resources/admin/vendor/morrisjs/morris.min.js"></script>
+    <script src="/mt/resources/admin/data/morris-data.js"></script> -->
 
     <!-- Custom Theme JavaScript -->
-    <script src="/test/resources/dist/js/sb-admin-2.js"></script>
+    <script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
 
 </body>
 </html>

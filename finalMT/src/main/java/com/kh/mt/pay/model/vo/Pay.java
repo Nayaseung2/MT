@@ -8,10 +8,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class Pay implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	
 	private String pay_code;
 	private String mcode;
 	private int price;
-	private String peach_code;
+	private int peach_code;
 	private Date pay_date;
 	
 	
@@ -20,7 +27,7 @@ public class Pay implements Serializable{
 	}
 
 
-	public Pay(String pay_code, String mcode, int price, String peach_code, Date pay_date) {
+	public Pay(String pay_code, String mcode, int price, int peach_code, Date pay_date) {
 		super();
 		this.pay_code = pay_code;
 		this.mcode = mcode;
@@ -60,12 +67,12 @@ public class Pay implements Serializable{
 	}
 
 
-	public String getPeach_code() {
+	public int getPeach_code() {
 		return peach_code;
 	}
 
 
-	public void setPeach_code(String peach_code) {
+	public void setPeach_code(int peach_code) {
 		this.peach_code = peach_code;
 	}
 
