@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.mt.admin.model.service.AdminService;
@@ -48,7 +49,7 @@ public class AdminController {
 		currentPage = 1;
 		
 		limit = 1;
-		
+		System.out.println("controller: "+newCurrentPage);
 		if(newCurrentPage != null){
 			currentPage = Integer.parseInt(newCurrentPage);
 		}
@@ -77,6 +78,20 @@ public class AdminController {
 		mv.addObject("mlist", mlist);
 		
 		mv.setViewName("admin/memberManagement");
+		
+		if(newCurrentPage != null){
+			mv.clear();
+			HashMap hMap = new HashMap();
+			hMap.put("mlist", mlist);
+			hMap.put("pi", pi);
+			mv.addObject("mlist", hMap);
+			
+			mv.setViewName("jsonView");
+			
+			return mv;
+		}
+		
+		System.out.println(mv.getViewName());
 		
 		return mv;
 	}
