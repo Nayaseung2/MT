@@ -6,5 +6,7 @@ public interface PayService {
 
 	void insertPayList(Pay p);
 
+	int selectPeach(String mcode);
+
 
 }
