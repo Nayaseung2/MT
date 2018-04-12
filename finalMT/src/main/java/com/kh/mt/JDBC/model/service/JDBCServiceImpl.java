@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.mt.JDBC.model.dao.JDBCDao;
 import com.kh.mt.JDBC.model.vo.JDBC;
+import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
 import com.kh.mt.member.model.dao.MemberDao;
 
 @Service
@@ -34,6 +35,35 @@ public class JDBCServiceImpl implements JDBCService {
 	public void updateJDBCstation(JDBC j) {
 		int result=jd.updateJDBCstation(j);
 	}
+
+	//방송국 로고 유무 체크
+	@Override
+	public JDBCLogoFile selectJDBCLogo(JDBCLogoFile f) {
+		JDBCLogoFile getJDBCLogo=null;
+		getJDBCLogo=jd.selectJDBCLogo(f);
+		return getJDBCLogo;
+	}
+
+	//방송국 로고 파일 insert
+	@Override
+	public void insertJDBCLogoFile(JDBCLogoFile f) {
+		int result = jd.insertJDBCLogoFile(f);
+	}
+
+	//방송국 로고파일이 있을 시 로고 파일 업데이트
+	@Override
+	public void updateJDBCLogoFile(JDBCLogoFile f) {
+		int result = jd.updateJDBCLogoFile(f);
+	}
+
+	//menubar에서 방송국 가기 눌렀을 때 정보 불러오기
+	@Override
+	public JDBC selectForShow(String mId) {
+		JDBC j =null;
+		j=jd.selectForShow(mId);
+		return j;
+	}
+
 
 	
 

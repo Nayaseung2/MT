@@ -76,11 +76,12 @@ public class MemberController {
 	}
 	
 	//로그아웃
-	@RequestMapping(value="logout.me", method=RequestMethod.GET)
-	public String logout(SessionStatus status){
-		status.setComplete();
-		return "main/main";
-	}
+		@RequestMapping(value="logout.me", method=RequestMethod.GET)
+		public String logout(SessionStatus status,HttpServletRequest request){
+			//status.setComplete();
+			request.getSession().invalidate();
+			return "main/main";
+		}
 	//회원가입
 	@RequestMapping(value="joinMember.me")
 	public String insertMeber(Member m,Model model) {
