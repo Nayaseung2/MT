@@ -214,6 +214,10 @@ outer {
 	height: 100px;
 }
 
+.serArea {
+	margin-top: 6%;
+}
+
 </style>
 
 <script
@@ -261,58 +265,87 @@ outer {
 			<button class="sideBtn" onclick="report();"><i class="fa fa-frown-o fa-2x"></i>&nbsp;&nbsp; 신고하기</button>
 		</div>
 		
-		<script>
-			
-			function personal(){
+		<c:if test="${ empty loginUser }">
+			<script>
 				
-				location.href="${ contextPath }/helppersonal.hp";
-			}
-			
-			function helpMain(){
+				function personal(){
+					
+					alert("로그인이 필요한 서비스입니다.");
+				}
 				
-				location.href="${ contextPath }/helpmain.hp";				
-			}
+				function helpMain(){
+					
+					location.href="${ contextPath }/helpmain.hp";				
+				}
+			
+				function notice(){
+					
+					location.href="${ contextPath }/helpnotice.hp";	
+				}
+				
+				function report(){
+					
+					alert("로그인이 필요한 서비스입니다.");
+				}
+				
+			</script>
+		</c:if> 
 		
-			function notice(){
+		<c:if test="${ !empty loginUser }">
+			<script>
 				
-				location.href="${ contextPath }/helpnotice.hp";	
-			}
-			
-			function report(){
+				function personal(){
+					
+					location.href="${ contextPath }/helppersonal.hp";
+				}
 				
-				location.href="${ contextPath }/helpreport.hp"
-			}
+				function helpMain(){
+					
+					location.href="${ contextPath }/helpmain.hp";				
+				}
 			
-			
-		</script>
+				function notice(){
+					
+					location.href="${ contextPath }/helpnotice.hp";	
+				}
+				
+				function report(){
+					
+					location.href="${ contextPath }/helpreport.hp"
+				}
+				
+			</script>
+		</c:if>
 
 		<div class="rightNav">
 		
 			<h1 style="font-family: 'Hanna', sans-serif;">검색 결과</h1>		
-			<br/>
-
-			<!-- Pure CSS Menu -->
 			<div class='css3-tab'>
-
-				<div class='css3-tab-content tab-one'>
-					<!-- start slipsum code -->
-					<h1 style="font-family: 'Hanna', sans-serif;">계정관련 QnA</h1>
-					<hr/>
-					<table class="QnAtable">
-						<tr>
-							<td>sdf</td>
-						</tr>
-						<c:forEach var="item" items="${ sList }" begin="0" end="10" step="1">
-							<tr class="answer_">
-								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
-							</tr>
-							<tr class="answer">
-								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
-							</tr>
-						</c:forEach>
-					</table>
-				</div>
+			
+					<c:if test="${ !empty sList }">
+						<table class="QnAtable">
+							<c:forEach var="item" items="${ sList }" begin="0" end="10" step="1">
+								<tr class="answer_">
+									<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+									<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
+								</tr>
+								<tr class="answer">
+									<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
+								</tr>
+							</c:forEach>
+						</table>
+					</c:if>
+					
+					<c:if test="${ empty sList }">
+					
+						<div align="center" class="serArea">
+							<img src="${ contextPath }/resources/images/help/file.png"/>
+							<br/><br/>
+							<h2>검색결과가 없습니다!<br/>다른 키워드로 검색해주세요.</h2>
+						</div>
+						
+					</c:if>
+					
 				<script>
 				
 					$(".answer").hide();
@@ -322,11 +355,13 @@ outer {
 					});
 				
 				</script>	
-			
-
 			</div>
 		</div>
-
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		
 	</div>
 	<!-- 위에 배너 빼고 전체 div 끝 -->
 	

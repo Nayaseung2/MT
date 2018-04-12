@@ -12,4 +12,7 @@ public interface HelpService {
 	// 자주묻는 질문 검색
 	ArrayList<HelpMainVo> sList(String word);
 
+	// 1:1 문의글 
+	void personal(HelpMainVo hm);
+
 }

@@ -205,7 +205,6 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 				location.href="${ contextPath }/helpreport.hp"
 			}
 			
-			
 		</script>
 
 		<div class="rightNav">
@@ -225,73 +224,88 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 				* 문의하신 내용에 대한 답변은 myPage에서 확인하실 수 있습니다.<br/>
 				* 임시점검 시간 및 휴무 시에는 답변이 늦어질 수 있으니 양해 부탁 드립니다.
 			</h4>
-			
 			<br/>	
 			
 				<br/>
 				<br/>
-				<table class="qTable" align="center">
-				
-					<tr>
-						<!-- <td class="tableList"><i class="fa fa-check-circle fa-2x"></i></td>	  -->
-						<td colspan="3" style="height: 70px;">
-							<input type="radio" name="qRadio" id="qRadio1" value="qRadio1" checked="checked">
-								<label for="qRadio1" style="font-size: 20px;"> <span></span>	계정관련 </label>
-							<input type="radio" name="qRadio" id="qRadio2" value="qRadio2">
-								<label for="qRadio2" style="font-size: 20px;"> <span></span> 방송/시청관련 </label>
-							<input type="radio" name="qRadio" id="qRadio3" value="qRadio3">
-								<label for="qRadio3" style="font-size: 20px;"> <span></span> 피치관련 </label>
-							<input type="radio" name="qRadio" id="qRadio4" value="qRadio4">
-								<label for="qRadio4" style="font-size: 20px;"> <span></span> 결제관련 </label>
-							<input type="radio" name="qRadio" id="qRadio5" value="qRadio5">
-								<label for="qRadio5" style="font-size: 20px;"> <span></span> 기 타 </label>
-						</td>
-					</tr>
-					<tr>
-						<td><div style="height: 30px;"></div></td>
-					</tr>
-					<tr>
-						<td class="tableList">작성자</td>
-						<td colspan="3"><input type="text" id="qName" size="18px" value="${ loginUser.mId }" style="height:50px;
-								border:3px solid hsl(0, 100%, 90%);" readonly/></td>
-					</tr>
-					<tr>
-						<td><div style="height: 30px;"></div></td>
-					</tr>
-					<tr>
-						<td class="tableList">제목</td>
-						<td colspan="3"><input type="text" id="qTitle" size="52px" style="height:50px;
-								border:3px solid hsl(0, 100%, 90%);"/></td>
-					</tr>	
-					<tr>
-						<td><div style="height: 30px;"></div></td>
-					</tr>
-					<tr>
-						<td class="tableList">내용</td>
-						<td colspan="3"><textarea id="qContent" rows="10" style="width:70%; resize: none;
-									border:3px solid hsl(0, 100%, 90%); /* border-radius: 20px; */"></textarea></td>
-					</tr>
-				
-				</table>
-				<br/>
-				<br/>
-				<div class="qBtn">
-					<button type="submit" class="btn btn-danger" style="font-size:20px;" onclick="submit();">등록하기</button>&nbsp;&nbsp;
-					<button type="reset" class="btn btn-danger" style="font-size:20px;">취소하기</button>	
-				</div>
+				<form action="helpanswer.hp" method="post">
+					<table class="qTable" align="center">
+						<tr>
+							<td colspan="3" style="height: 70px;">
+								<input type="radio" name="qRadio" id="qRadio1" value="qRadio1" checked="checked">
+									<label for="qRadio1" style="font-size: 20px;"> <span></span> 계정관련 </label>
+								<input type="radio" name="qRadio" id="qRadio2" value="qRadio2">
+									<label for="qRadio2" style="font-size: 20px;"> <span></span> 방송/시청관련 </label>
+								<input type="radio" name="qRadio" id="qRadio3" value="qRadio3">
+									<label for="qRadio3" style="font-size: 20px;"> <span></span> 피치관련 </label>
+								<input type="radio" name="qRadio" id="qRadio4" value="qRadio4">
+									<label for="qRadio4" style="font-size: 20px;"> <span></span> 결제관련 </label>
+								<input type="radio" name="qRadio" id="qRadio5" value="qRadio5">
+									<label for="qRadio5" style="font-size: 20px;"> <span></span> 기 타 </label>
+							</td>
+						</tr>
+						<tr>
+							<td><div style="height: 30px;"></div></td>
+						</tr>
+						<tr>
+							<td class="tableList">작성자</td>
+							<td colspan="3">
+								<input type="text" name="mId" id="mId" size="18px" value="${ loginUser.mId }" 
+								style="height:50px; border:3px solid hsl(0, 100%, 90%);" readonly/>
+							</td>
+						</tr>
+						<tr>
+							<td><div style="height: 30px;"></div></td>
+						</tr>
+						<tr>
+							<td class="tableList">제목</td>
+							<td colspan="3">
+								<input type="text" name="qTitle" id="qTitle" size="52px" style="height:50px; border:3px solid hsl(0, 100%, 90%);"/>
+							</td>
+						</tr>	
+						<tr>
+							<td><div style="height: 30px;"></div></td>
+						</tr>
+						<tr>
+							<td class="tableList">내용</td>
+							<td colspan="3">
+								<textarea name="qContent" id="qContent" rows="10" style="width:70%; resize: none; border:3px solid hsl(0, 100%, 90%);"></textarea>
+							</td>
+						</tr>
+					</table>
+					<br/>
+					<br/>
+					<div class="qBtn">
+						<button type="submit" class="btn btn-danger" style="font-size:20px;">등록하기</button>&nbsp;&nbsp;
+						<button type="reset" class="btn btn-danger" style="font-size:20px;">취소하기</button>	
+					</div>
+				</form>
 				<br/>
 				<br/>	
 			</div>		
-					
-			<script>
 			
-				function submit(){
-					
-					location.href="${ contextPath }/helpanswer.hp";
-				}
+				<!-- <script>
+				
+					function goWrite(){
+						
+						location.href="${ contextPath }/helpanswer.hp";
+					}
+				
+				</script> -->
+				
+			 <%-- <c:if test="${ empty qTitle }">
+				<script>
+				
+					function goWrite(){
+						
+						alert("sdf");
+					}
+				
+				</script>
 			
-			</script>
-
+			</c:if>  --%>
+			
+			
 		</div>
 
 	</div>
