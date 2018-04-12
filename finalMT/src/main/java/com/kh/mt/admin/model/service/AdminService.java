@@ -14,6 +14,10 @@ public interface AdminService {
 
 	ArrayList<Member> userAllList(PageInfo pi);
 
-	int mlistCount(); 
+	int mlistCount();
+
+	Member searchMember(String search);
+
+	ArrayList<Member> searchBJ(PageInfo pi); 
 } 
  

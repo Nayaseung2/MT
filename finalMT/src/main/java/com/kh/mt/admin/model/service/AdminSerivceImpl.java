@@ -54,4 +54,20 @@ public class AdminSerivceImpl implements AdminService{
 		return result;
 	}
 
+	@Override
+	public Member searchMember(String search) {
+		
+		Member m = ad.searchMember(search);
+		
+		
+		return m;
+	}
+
+	@Override
+	public ArrayList<Member> searchBJ(PageInfo pi) {
+		ArrayList<Member> list = ad.searchBJ(pi);
+		
+		return list;
+	}
+
 }
