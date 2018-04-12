@@ -242,64 +242,54 @@ label {
 				</div>
 				<br/>
 				<div class="qInput">
-				<!-- <br/><br/><br/>
-				<h3 style="font-family: 'Hanna', sans-serif; margin-left: 5%;">1:1문의 이렇게 사용해 주세요.</h3>	
-				<br/>
-				<h4 style="font-family: 'Hanna', sans-serif; margin-left: 10%;">
-					* 고객님께서 궁금하신 사항을 FAQ에서 찾지 못하셨을 경우 1:1 문의를 이용해주세요.<br/>
-					* 1:1 문의에 등록된 내용은 본인만 확인 할 수 있습니다.<br/>
-					* 문의하신 내용에 대한 답변은 myPage에서 확인하실 수 있습니다.<br/>
-					* 임시점검 시간 및 휴무 시에는 답변이 늦어질 수 있으니 양해 부탁 드립니다.
-				</h4> -->
-			
-			<br/>	
-			
-				<br/>
-				<br/>
-				<table class="rTable" align="center">
-				
-					<tr>
-						<td class="tableList">작성자</td>
-						<td colspan="3"><input type="text" id="qName" size="18px" value=" 숭덩이 (sloth9159)" style="height:50px;
-								border:3px solid hsl(0, 100%, 90%);" readonly/></td>
-					</tr>
-					<tr>
-						<td><div style="height: 30px;"></div></td>
-					</tr>
-					<tr>
-						<td class="tableList">제목</td>
-						<td colspan="3"><input type="text" id="qTitle" size="52px" style="height:50px;
-								border:3px solid hsl(0, 100%, 90%);"/></td>
-					</tr>	
-					<tr>
-						<td><div style="height: 30px;"></div></td>
-					</tr>
-					<tr>
-						<td class="tableList">신고<br/>내용</td>
-						<td colspan="3">
-							<textarea id="qContent" rows="10" style="width:73%; resize: none;
-									border:3px solid hsl(0, 100%, 90%);"></textarea>
-						</td>
-					</tr>
-					<tr>
-						<td class="tableList">스크<br/>린샷</td>
-						<td colspan="3">
-							<div class="form-group form_file">
-							  <input class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width: 40%;">
-							  <span class="file_load">
-						        <input type="file" id="find_file01"><label class="btn-default" for="find_file01">찾아보기</label>
-							  </span>
-							</div>
-						</td>
-					</tr>
-				</table>
-				<br/>
-				<br/>
-				<div class="qBtn">
-					<button type="submit" class="btn btn-danger" style="font-size:20px;" onclick="submit();">등록하기</button>&nbsp;&nbsp;
-					<button type="reset" class="btn btn-danger" style="font-size:20px;">취소하기</button>	
-				</div>
-				<br/>
+					<br/>	
+					<br/>
+					<br/>
+					<form action="helpreportpost.hp" method="post">
+						<table class="rTable" align="center">
+							<tr>
+								<td class="tableList">작성자</td>
+								<td colspan="3"><input type="text" id="mId" name="mId" size="18px" value="${ loginUser.mId }" style="height:50px;
+										border:3px solid hsl(0, 100%, 90%);" readonly/></td>
+							</tr>
+							<tr>
+								<td><div style="height: 30px;"></div></td>
+							</tr>
+							<tr>
+								<td class="tableList">제목</td>
+								<td colspan="3"><input type="text" id="rTitle" name="rTitle" size="52px" style="height:50px;
+										border:3px solid hsl(0, 100%, 90%);"/></td>
+							</tr>	
+							<tr>
+								<td><div style="height: 30px;"></div></td>
+							</tr>
+							<tr>
+								<td class="tableList">신고<br/>내용</td>
+								<td colspan="3">
+									<textarea id="rContent" name="rContent" rows="10" style="width:73%; resize: none;
+											border:3px solid hsl(0, 100%, 90%);"></textarea>
+								</td>
+							</tr>
+							<tr>
+								<td class="tableList">스크<br/>린샷</td>
+								<td colspan="3">
+									<div class="form-group form_file">
+									  <input class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width: 40%;">
+									  <span class="file_load">
+								        <input type="file" name="photo" id="find_file01"><label class="btn-default" for="find_file01">찾아보기</label>
+									  </span>
+									</div>
+								</td>
+							</tr>
+						</table>
+						<br/>
+						<br/>
+						<div class="qBtn">
+							<button type="submit" class="btn btn-danger" style="font-size:20px;" onclick="submit();">등록하기</button>&nbsp;&nbsp;
+							<button type="reset" class="btn btn-danger" style="font-size:20px;">취소하기</button>	
+						</div>
+					</form>
+					<br/>
 				<br/>	
 			</div>		
 					
@@ -308,7 +298,6 @@ label {
 				function submit(){
 					
 					alert("[ 모두의 TV 알림 ] \n사실에 의거하지않은 신고자는 불이익을 받을 수 있습니다.");
-					location.href="${ contextPath }/helpanswer.hp";
 				}
 			
 			</script>

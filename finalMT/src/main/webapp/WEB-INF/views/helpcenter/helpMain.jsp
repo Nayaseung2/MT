@@ -275,30 +275,58 @@ outer {
 			<button class="sideBtn" onclick="report();"><i class="fa fa-frown-o fa-2x"></i>&nbsp;&nbsp; 신고하기</button>
 		</div>
 		
-		<script>
-			
-			function personal(){
+		<c:if test="${ empty loginUser }">
+			<script>
 				
-				location.href="${ contextPath }/helppersonal.hp";
-			}
-			
-			function helpMain(){
+				function personal(){
+					
+					alert("로그인이 필요한 서비스입니다.");
+				}
 				
-				location.href="${ contextPath }/helpmain.hp";				
-			}
+				function helpMain(){
+					
+					location.href="${ contextPath }/helpmain.hp";				
+				}
+			
+				function notice(){
+					
+					location.href="${ contextPath }/helpnotice.hp";	
+				}
+				
+				function report(){
+					
+					alert("로그인이 필요한 서비스입니다.");
+				}
+				
+			</script>
+		</c:if> 
 		
-			function notice(){
+		<c:if test="${ !empty loginUser }">
+			<script>
 				
-				location.href="${ contextPath }/helpnotice.hp";	
-			}
-			
-			function report(){
+				function personal(){
+					
+					location.href="${ contextPath }/helppersonal.hp";
+				}
 				
-				location.href="${ contextPath }/helpreport.hp"
-			}
+				function helpMain(){
+					
+					location.href="${ contextPath }/helpmain.hp";				
+				}
 			
-			
-		</script>
+				function notice(){
+					
+					location.href="${ contextPath }/helpnotice.hp";	
+				}
+				
+				function report(){
+					
+					location.href="${ contextPath }/helpreport.hp"
+				}
+				
+			</script>
+		</c:if>
+		
 
 		<div class="rightNav">
 		
@@ -307,8 +335,7 @@ outer {
 
 			<div class="searchArea">
 				<div class="form-group">
-					<input type="text" class="form-control" id="search"
-						style="width: 88%;">
+					<input type="text" class="form-control" id="search" name="word" style="width: 88%;">
 					<button onclick="goSearch();" type="button" class="btn btn-danger" id="search">Search</button>
 					<br clear="both"/> 
 					<br/> 
@@ -354,6 +381,7 @@ outer {
 					<label for='tabFour' style="font-size: 18px;">결제관련</label> 
 					<label for='tabFive' style="font-size: 18px;">기 &nbsp; 타</label>
 				</div>
+				
 
 				<div class='css3-tab-content tab-one'>
 					<!-- start slipsum code -->

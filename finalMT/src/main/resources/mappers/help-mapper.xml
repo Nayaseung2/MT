@@ -31,10 +31,15 @@
     <select id="sList" parameterType="java.lang.String" resultMap="helpMainResultSet" >
         SELECT B_TITLE, B_CONTENT, BWRITER
 		FROM BOARD
-		WHERE BWRITER = '관리자' AND B_TITLE LIKE '%' || #{ word } || '%'
+		WHERE BWRITER = 'qna' AND (B_TITLE LIKE '%' || #{ word } || '%' OR B_CONTENT LIKE '%' || #{ word } || '%')
     </select>
 
-
-
+	<!-- 1:1문의글 등록 -->
+	<select id="personal">
+		INSERT INTO BOARD
+   		VALUES( seq_bcode.nextval || #{ bwriter }, NULL, 'personal', #{ b_title }, #{ b_content }, #{ bwriter }, SYSDATE, SYSDATE, 1, 'Y')
+	</select>
+	
+	
 
 </mapper>
