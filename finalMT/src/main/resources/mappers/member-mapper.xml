@@ -57,4 +57,11 @@
   			WHERE MSTATUS = 'Y'
   		</select>
   		
+  		<select id="BJList" resultMap="memberResultSet">
+  			SELECT *
+  			FROM MEMBER
+  			WHERE MSTATUS = 'Y'
+  			AND VIDEO_YN = 'Y'
+  		</select>
+  		
   	</mapper>

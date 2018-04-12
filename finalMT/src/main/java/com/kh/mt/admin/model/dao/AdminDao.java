@@ -16,5 +16,9 @@ public interface AdminDao {
 
 	int mlistCount();
 
+	Member searchMember(String search);
+
+	ArrayList<Member> searchBJ(PageInfo pi);
+
 	
 }

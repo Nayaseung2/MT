@@ -47,6 +47,7 @@ public class AdminDaoImpl implements AdminDao{
 		
 		mlist = (ArrayList) sqlSession.selectList("Member.userAllList", null, rowBounds);
 		
+		System.out.println("dao userAllList: "+ mlist);
 		
 		return mlist;
 	}
@@ -58,6 +59,29 @@ public class AdminDaoImpl implements AdminDao{
 		result = sqlSession.selectOne("Member.memberListCount");
 		
 		return result;
+	}
+
+	@Override
+	public Member searchMember(String search) {
+		
+		Member m = sqlSession.selectOne("Member.loginCheck", search);
+		
+		System.out.println(m);
+		
+		return m;
+	}
+
+	@Override
+	public ArrayList<Member> searchBJ(PageInfo pi) {
+
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		ArrayList<Member> list = (ArrayList)sqlSession.selectList("Member.BJList", null, rowBounds);
+		
+		System.out.println("BJList: " + list);
+		
+		return list;
 	}
 	
 }
