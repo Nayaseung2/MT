@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <!DOCTYPE html>
 <html>
-<head>
+<head>  
 <meta charset="UTF-8">
 <title>방송국 개인 정보 관리</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -162,17 +162,23 @@
 			<div class="memberInfo">
 				<!-- 좌측 회원 정보,자기소개등 보기 -->
 				<div class="myInfo">
-					<br> <label class="idnickname"><b>아이디</b></label><br> 
-					<span class="idnickname">닉네임</span> 
-					<span class="glyphicon glyphicon-cog" style="float: right;"><a style="text-decoration: none; color: black; cursor: pointer;"id="showManage"><b>관리</b></a></span><br> <input class="introduction"
-						type="text" value="자기소개가 없습니다." readonly> <br>
-					<br> <br> <label style="margin-left: 15px;">방송국
-						방문 : 0명</label>
+				<br>
+					<label class="idnickname"><b>${loginUser.mId }</b></label><br>
+		<span class="idnickname">${loginUser.nickName }</span>
+					<span class="glyphicon glyphicon-cog" style="float: right;"><a style="text-decoration: none; color: black; cursor: pointer;"id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br> 
+					<c:if test="${empty jdbcInfo.jdbc_introduce }">
+					<input class="introduction" type="text" value="자기소개가 없습니다." readonly>
+					</c:if>
+					<c:if test="${!empty jdbcInfo.jdbc_introduce }">
+					<input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce }" readonly>
+					</c:if> 
+					<br><br><br> 
+					<label style="margin-left: 15px;">방송국 방문 : 0명</label>
 				</div>
 				<br>
 				<button
 					style="margin-left: 20px; border: 1px solid #ff6699; width: 200px; background: white; height: 40px;"
-					onclick="location.href='BSwrite.me'">글쓰기</button>
+					onclick="location.href='JDBCwrite.JDBC'">글쓰기</button>
 				<br>
 				<br>
 				<table class="bottomBox">

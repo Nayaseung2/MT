@@ -12,6 +12,16 @@
   			<result property="guest_book" column="GUEST_BOOK"/>
   			<result property="visitor" column="VISITOR"/>
   		</resultMap>
+  		<!-- UPLOADFILE COLUMNS -->
+  		<resultMap type="JDBClogo" id="JDBCLogoResultSet" >
+  			<id property="file_code" column="FILE_CODE"/>
+  			<result property="from_code" column="FROM_CODE"/>
+  			<result property="f_orname" column="F_ORNAME"/>
+  			<result property="f_rename" column="F_RENAME"/>
+  			<result property="filepath" column="FILEPATH"/>
+  			<result property="f_mcode" column="F_MCODE"/>
+  			<result property="upload_date" column="UPLOAD_DATE"/>
+  		</resultMap>
   		<select id="selectJDBCstation" parameterType="JDBC1" resultMap="JDBCResultSet">
   			SELECT * FROM JDBCSTATION WHERE MID=#{mid}
   		</select>
@@ -25,4 +35,22 @@
   			SET JDBC_NAME=#{jdbc_name}, JDBC_INTRODUCE=#{jdbc_introduce},JDBC_INTEREST=#{jdbc_interest}
   			WHERE MID=#{mid}
   		</update>
+  		<select id="selectJDBCLogo" parameterType="JDBClogo" resultMap="JDBCLogoResultSet">
+  			SELECT * FROM UPLOADFILE
+  			WHERE F_MCODE=#{f_mcode}
+  		</select>
+  		<insert id="insertJDBCLogo">
+  			INSERT INTO UPLOADFILE
+  			VALUES(#{from_code},#{f_orname},#{f_rename},#{filepath},#{f_mcode},SYSDATE,SEQ_FILECODE.NEXTVAL)
+  		</insert>
+  		<update id="updateJDBCLogo">
+  			UPDATE UPLOADFILE
+  			SET F_ORNAME=#{f_orname}, F_RENAME=#{f_rename},FILEPATH=#{filepath},UPLOAD_DATE=SYSDATE
+  			WHERE F_MCODE=#{f_mcode}
+  		</update>
+  		<select id="selectForShow" parameterType="string" resultMap="JDBCResultSet">
+  			SELECT * FROM JDBCSTATION
+  			WHERE MID=#{mId}
+  		
+  		</select>
 </mapper>

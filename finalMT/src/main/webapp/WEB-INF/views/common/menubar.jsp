@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
+<!DOCTYPE html>  
 <html>
 <head>
 <meta charset="UTF-8">
@@ -71,19 +71,18 @@
                                     
                                     <div id="menu" class="header-menu">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="showMainPage.me">Home</a><span class="arrow"></span></li>
+                                            <li><a href="index.jsp">Home</a><span class="arrow"></span></li>
                                             <li><a href="${ contextPath }/helpmain.hp">고객센터</a> <span class="arrow"></span></li>
                                             <%-- <c:if test="${test eq 0}"> --%>
                                             <c:if test="${empty loginUser }">
                                             <li><a href="${contextPath }/showLoginPage.me">로그인</a> <span class="arrow"></span></li>
                                             <li><a href="${contextPath }/showJoinPage1.me">회원가입</a> <span class="arrow"></span></li>
                                             </c:if>
+
                                  <%-- <c:if test="${test eq 1}"> --%>
                                  <c:if test="${!empty loginUser }">
-
                                     <li><a href="${contextPath }/payform.pay?mcode=${loginUser.mcode}">피치결제</a> <span class="arrow"></span></li>
-                                    <li><a href="showJDBCPage.JDBC" target="blank">방송국가기</a> <span class="arrow"></span></li>
-
+                                   	<li><a href="bringJDBC.JDBC?mId=${loginUser.mId }" target="blank">방송국가기</a> <span class="arrow"></span></li>
                                     <li><a href="${contextPath }/bjPayMain.bjp">내수익관리</a> <span class="arrow"></span></li>
                                     <li><a href="#">myPage</a> <span class="arrow"></span></li>
                                     <li><a href="logout.me">Logout</a> <span class="arrow"></span></li>
@@ -93,6 +92,7 @@
                                     <li><a href="#">신고내역</a> <span class="arrow"></span></li>
                                     <li><a href="#">문의내역</a> <span class="arrow"></span></li>
                                  </c:if>
+
                                             
                                            
                                         </ul>

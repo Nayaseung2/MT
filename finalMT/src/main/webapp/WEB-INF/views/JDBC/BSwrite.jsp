@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
-<head>
+<head>  
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -65,8 +65,8 @@
 	}
 </style>
 <title>글쓰기</title>
+<!-- ckeditor -->
 <script src="<%= request.getContextPath()%>/resources/ckeditor/ckeditor.js">
-	
 </script>
 </head>
 <body>
@@ -80,7 +80,7 @@
 <br>
 <!-- 회원 이미지 넣기 -->
 <div class="profileImg">
-<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/images/img.jpg"style="width:80px; height:80px;">
+<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/images/logo.png"style="width:80px; height:80px;">
 <div class="BStitle">
 <c:if test="${!empty jdbcInfo.jdbc_name }">
 <label class="BStext"><a id="BStexta"href="#">${jdbcInfo.jdbc_name }</a></label><br>
@@ -97,15 +97,20 @@
 <!-- 좌측 회원 정보,자기소개등 보기 -->
 <div class="myInfo">
 <br>
-<label class="idnickname"><b>아이디</b></label><br>
-<span class="idnickname">닉네임</span>
-<span class="glyphicon glyphicon-cog" style="float:right;"><a style="text-decoration:none; color:black; cursor:pointer;" id="showManage"><b>관리</b></a></span><br>
+<label class="idnickname"><b>${loginUser.mId }</b></label><br>
+<span class="idnickname">${loginUser.nickName }</span>
+<span class="glyphicon glyphicon-cog" style="float:right;"><a style="text-decoration:none; color:black; cursor:pointer;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
+<c:if test="${!empty jdbcInfo.jdbc_name }">
+<input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce}" readonly>
+</c:if>
+<c:if test="${empty jdbcInfo.jdbc_name }">
 <input class="introduction" type="text" value="자기소개가 없습니다." readonly>
+</c:if>
 <br><br> <br>  
 <label style="margin-left:15px;">방송국 방문 : 0명</label>
 </div>
 <br>
-<button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='BSwrite.me'">글쓰기</button>
+<button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button>
 <br><br>
 <table class="bottomBox">
 	<tr>
@@ -129,26 +134,23 @@
 <!-- 오른쪽 부분 -->
 <div class="showRightPart">
 <h4 style="margin-left:30px;">글쓰기</h4>
-<form method="post">
+<form method="post" action="insertBoard.board" encType="multipart/form-data">
 	<table class="writeTable" >
 		<tr>
 			<th><span class="glyphicon glyphicon-asterisk"></span>게시판</th>
 			<td class="equal"><b>:</b></td>
 			<td>
-				<select name="boardType">
-					<option>게시판을 선택하세요</option>
-					<option value="normal">일반게시판</option>
-				</select>&nbsp;
-				<input type="radio" id="board" name="boardType">
+				&nbsp;
+				<input type="radio" id="board" name="b_type" value="normalBoard">
 				<label for="board">게시판 공지</label>
-				<input type="radio" id="BSboard" name="boardType">
+				<input type="radio" id="BSboard" name="b_type" value="JDBCBoard">
 				<label for="BSboard">방송국 게시판 공지</label>
 			</td>
 		</tr>
 		<tr>
 			<th><span class="glyphicon glyphicon-asterisk"></span>제목</th>
 			<td class="equal"><b>:</b></td>
-			<td><input type="text" size="70" style="border:1px solid lightgray;"></td>
+			<td><input type="text" name="b_title" size="70" style="border:1px solid lightgray;"></td>
 		</tr>
 		<tr>
 			<th><span class="glyphicon glyphicon-asterisk"></span>내용</th>
@@ -157,28 +159,19 @@
 		</tr>
 		<tr>
 			<td colspan="3" style="height:330px;">
-				<textarea name="inputArticleContents" class="ckeditor" rows="30" cols="50">
-				
-				</textarea>			
+				<textarea name="b_content" class="ckeditor" rows="30" cols="50">
+				</textarea>
 			</td>
 		</tr>
 	</table>
-	<input type="file" class="inputImg" name="Boardfile" onchange="LoadImg(this);" >
+	<input type="file" class="inputImg" name="Boardfile">
 	<br>
 		<button type="submit"class="okay">확인</button>
+		<input type="hidden" name="bwriter" value="${loginUser.mId }"/>
 </form>
 </div>
 </div>
 </div>
-<script>
-function LoadImg(value){
-	console.log("얍 : "+value);
-	if(value.files && value.files[0]){
-		var reader = new FileReader();
-		reader.readAsDataURL(value.files[0]);
-		cosole.log(value.files[0])
-	}
-}
-</script>
+
 </body>
 </html>

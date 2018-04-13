@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Board">
+	<resultMap type="Board" id="BoardResultSet">
+	<id property="b_code" column="B_CODE"/>
+	<result property="v_code" column="V_CODE"/>
+	<result property="b_type" column="B_TYPE"/>
+	<result property="b_title" column="B_TITLE"/>
+	<result property="b_content" column="B_CONTENT"/>
+	<result property="bwriter" column="BWRITER"/>
+	<result property="b_create_date" column="B_CREATE_DATE"/>
+	<result property="b_update_date" column="B_UPDATE_DATE"/>
+	<result property="b_count" column="B_COUNT"/>
+	<result property="b_status" column="B_STATUS"/>
+	</resultMap>
+	<!-- UPLOADFILE COLUMNS -->
+  		<resultMap type="Boardfile" id="BoardFileResultSet" >
+  			<id property="file_code" column="FILE_CODE"/>
+  			<result property="from_code" column="FROM_CODE"/>
+  			<result property="f_orname" column="F_ORNAME"/>
+  			<result property="f_rename" column="F_RENAME"/>
+  			<result property="filepath" column="FILEPATH"/>
+  			<result property="f_mcode" column="F_MCODE"/>
+  			<result property="upload_date" column="UPLOAD_DATE"/>
+  		</resultMap>
+	<insert id="insertBoard">
+		INSERT INTO BOARD
+		VALUES(SEQ_BCODE.NEXTVAL,#{bwriter},#{b_type},#{b_title},#{b_content},#{bwriter},SYSDATE,SYSDATE,0,'Y')
+	</insert>
+	<insert id="insertBoardFile">
+		INSERT INTO UPLOADFILE
+  			VALUES(#{from_code},#{f_orname},#{f_rename},#{filepath},#{f_mcode},SYSDATE,SEQ_FILECODE.NEXTVAL)
+	</insert>
+</mapper>
