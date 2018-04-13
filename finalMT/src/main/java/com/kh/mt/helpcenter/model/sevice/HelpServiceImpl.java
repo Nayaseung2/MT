@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import com.kh.mt.board.model.vo.BoardFile;
 import com.kh.mt.helpcenter.model.dao.HelpDao;
 import com.kh.mt.helpcenter.model.vo.HelpMainVo;
 
@@ -46,6 +50,31 @@ public class HelpServiceImpl implements HelpService{
 
 		int result = hd.personal(sqlSession, hm);
 		
+	}
+
+	// 신고하기(제목/내용)
+	@Override
+	public void report(HelpMainVo hm) {
+
+		int result = hd.report(sqlSession, hm);
+	}
+
+	// 신고하기(파일)
+	@Override
+	public void reportFile(BoardFile bf) {
+
+		int result = hd.reportFile(sqlSession, bf);
+	}
+
+	// 공지글 목록
+	@Override
+	public ArrayList<HelpMainVo> nList() {
+		
+		ArrayList<HelpMainVo> nList = null;
+    	
+		nList = hd.nList();
+    	
+    	return nList;
 	} 
 	
 }

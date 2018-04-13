@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>모두의 TV</title>
 <!-- sdf -->
 <style>
 
@@ -74,9 +74,6 @@ table {
 	height: 60px;
 	text-: 3%;
 }
-
-
-
 
 
 </style>
@@ -186,40 +183,19 @@ table {
 					<table align="center" id="listArea">
 						<!-- table header -->
 						<tr>
-							<th>글번호</th>
 							<th>글제목</th>
 							<th>작성자</th>
 							<th>조회수</th>
 							<th>작성일</th>
 						</tr>
-						<tr>
-							<td align="center">4</td>
-							<td style="padding-left: 3%;">[안내] 모두의 TV 개인정보처리방침 개정안내</td>
-							<td align="center">모두의 TV</td>
-							<td align="center">297</td>
-							<td align="center">2018.04.02</td>
-						</tr>
-						<tr>
-							<td align="center">3</td>
-							<td style="padding-left: 3%;">[안내] 장애인 비난/비하/멸시 방송 모니터링 강화</td>
-							<td align="center">모두의 TV</td>
-							<td align="center">165</td>
-							<td align="center">2018.04.02</td>
-						</tr>
-						<tr>
-							<td align="center">2</td>
-							<td style="padding-left: 3%;">[안내] 3월 5주차 TV조선/ 채널A 방송 송출 불가 프로그램</td>
-							<td align="center">모두의 TV</td>
-							<td align="center">243</td>
-							<td align="center">2018.04.02</td>
-						</tr>
-						<tr>
-							<td align="center">1</td>
-							<td style="padding-left: 3%;">[안내] 모두의 TV가 서비스를 시작합니다!</td>
-							<td align="center">모두의 TV</td>
-							<td align="center">122</td>
-							<td align="center">2018.04.02</td>
-						</tr>
+						<c:forEach var="item" items="${ nList }" begin="0" end="10" step="1">
+							<tr>
+								<td style="padding-left: 3%;"><c:out value="${ item.b_title }"/></td>
+								<td align="center"><c:out value="${ item.bwriter }"/></td>
+								<td align="center"><c:out value="${ item.b_count }"/></td>
+								<td align="center"><c:out value="${ item.b_update_date }"/></td>
+							</tr>
+						</c:forEach>
 					</table>
 				</div>
 				<br/>
@@ -249,8 +225,6 @@ table {
 				
 			</script> 
 		</div>
-
-	</div>
 	<!-- 위에 배너 빼고 전체 div 끝 -->
 
 	<br />

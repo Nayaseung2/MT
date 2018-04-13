@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>모두의 TV</title>
 <!-- sdf -->
 <style>
 
@@ -186,68 +186,17 @@ table {
 					<table align="center" id="listArea">
 						<!-- table header -->
 						<tr>
-							<th>1</th>
-							<th colspan="2">[안내] 모두의 TV 개인정보처리방침 개정안내</th>
-							<th>297</th>
-							<th>2018.04.06</th>
+							<th colspan="3"><c:out value="${ nList.b_title }"/></th>
+							<th><c:out value="${ nList.b_update_date }"/></th>
 						</tr>
 						<tr>
-							<td align="center">4</td>
-							<td style="padding-left: 3%;">[안내] 모두의 TV 개인정보처리방침 개정안내</td>
-							<td align="center">모두의 TV</td>
-							<td align="center">297</td>
-							<td align="center">2018.04.02</td>
-						</tr>
-						<tr>
-							<td align="center">3</td>
-							<td style="padding-left: 3%;">[안내] 장애인 비난/비하/멸시 방송 모니터링 강화</td>
-							<td align="center">모두의 TV</td>
-							<td align="center">165</td>
-							<td align="center">2018.04.02</td>
-						</tr>
-						<tr>
-							<td align="center">2</td>
-							<td style="padding-left: 3%;">[안내] 3월 5주차 TV조선/ 채널A 방송 송출 불가 프로그램</td>
-							<td align="center">모두의 TV</td>
-							<td align="center">243</td>
-							<td align="center">2018.04.02</td>
-						</tr>
-						<tr>
-							<td align="center">1</td>
-							<td style="padding-left: 3%;">[안내] 모두의 TV가 서비스를 시작합니다!</td>
-							<td align="center">모두의 TV</td>
-							<td align="center">122</td>
-							<td align="center">2018.04.02</td>
+							<td colspan="4" rowspan="10"><c:out value="${ nList.b_content }"/></td>
 						</tr>
 					</table>
 				</div>
 				<br/>
 			</div>
-			<script>
-			
-				$(function(){
-					
-					$("#listArea td").mouseenter(function(){
-							//tr의 css를 변경
-						$(this).parent().css({"background":"#F08080", "cursor":"pointer", "color":"white"});
-							
-					}).mouseout(function(){
-						
-						$(this).parent().css({"background":"white", "color":"black"});
-						
-					});
-				});
-			
-			</script> 
-							
-						
-					
-
 		</div>
-
-
-
-	</div>
 	<!-- 위에 배너 빼고 전체 div 끝 -->
 
 	<br />

@@ -4,8 +4,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HelpMainVo implements java.io.Serializable {
-	//as
-	//고객센터 - 자주묻는 질문 sdf
 	
 	/**
 	 * 

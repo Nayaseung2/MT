@@ -8,8 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
- <!-- sdf sdf-->
+<title>모두의 TV</title>
 <style>
 
 @import url(//fonts.googleapis.com/earlyaccess/hanna.css);
