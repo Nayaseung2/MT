@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -122,30 +126,57 @@ table {
 			<button class="sideBtn" onclick="report();"><i class="fa fa-frown-o fa-2x"></i>&nbsp;&nbsp; 신고하기</button>
 		</div>
 		
-		<script>
-			
-			function personal(){
+		<c:if test="${ empty loginUser }">
+			<script>
 				
-				location.href="${ contextPath }/helppersonal.hp";
-			}
-			
-			function helpMain(){
+				function personal(){
+					
+					alert("로그인이 필요한 서비스입니다.");
+				}
 				
-				location.href="${ contextPath }/helpmain.hp";				
-			}
+				function helpMain(){
+					
+					location.href="${ contextPath }/helpmain.hp";				
+				}
+			
+				function notice(){
+					
+					location.href="${ contextPath }/helpnotice.hp";	
+				}
+				
+				function report(){
+					
+					alert("로그인이 필요한 서비스입니다.");
+				}
+				
+			</script>
+		</c:if> 
 		
-			function notice(){
+		<c:if test="${ !empty loginUser }">
+			<script>
 				
-				location.href="${ contextPath }/helpnotice.hp";	
-			}
-			
-			function report(){
+				function personal(){
+					
+					location.href="${ contextPath }/helppersonal.hp";
+				}
 				
-				location.href="${ contextPath }/helpreport.hp"
-			}
+				function helpMain(){
+					
+					location.href="${ contextPath }/helpmain.hp";				
+				}
 			
-			
-		</script>
+				function notice(){
+					
+					location.href="${ contextPath }/helpnotice.hp";	
+				}
+				
+				function report(){
+					
+					location.href="${ contextPath }/helpreport.hp"
+				}
+				
+			</script>
+		</c:if>
 
 		<div class="rightNav">
 					

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html ng-app="projectRtc">
+  <head>
+    <title><%= title %></title>
+    <base href="/" />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	
+<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="javascripts/adapter.js"></script>
+	<script type="text/javascript" src="javascripts/rtcClient.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js">
+	</script>
+	<script type="text/javascript" src="javascripts/app.js"></script>
+  </head>
+  <body>
+  	<h1><%= header %></h1>
+
+  		<div class="remoteStreams" ng-controller="RemoteStreamsController as rtc" style='width:100%'>
+		<h2 align='center'>Remote Streams</h2>
+	
+		<div id="remoteVideosContainer" style='margin:auto;'></div>
+
+		<table>
+    
+    	<tbody>
+    		<tr ng-repeat="stream in rtc.remoteStreams" ng-class="{'selected' : stream.isPlaying}">
+        		<td><a>{{stream.name}}</a></td>
+        		<td style='display:none'><a id='watcher'>{{stream.id}}</a></td>
+                <td id='view' ng-click="rtc.view(stream)"><a>View</a></td>
+                <td ng-click="rtc.call(stream)"><a>Call</a></td>
+    		</tr>
+		</tbody>
+		</table>
+
+
+		<div class="remoteStreams" style='width:100%;'>
+  	
+  	
+  	
+  	  	<div class='message1' style='margin:auto;'></div>
+		<div class='footer1'style='margin:auto;'>
+		
+					<input id='message-input' type='text'>
+			
+					<button id='message-button' type='submit'>전송</button>
+		
+		</div>
+	
+		
+		
+		
+  		<p class="footer"><%= footer %></p>
+  	 
+  	 
+  	 <script>
+  	 //로딩과 동시에 화면보이기
+     $(function(){
+     $('#view').trigger('click')})
+     
+     var socket = io();
+    
+     //대화방 1초뒤 참가 
+     var roomId='';
+     setTimeout(function() { 
+     //룸아이디 설정
+     roomId =$("#watcher").text() 
+     //방입장
+     console.log($("#watcher").text())
+     	socket.emit('join:room', {
+			roomId : roomId
+		});
+     					
+     }, 2000)
+  	
+
+		function writeMessage(type, name, message) {
+			var html = '<div>{MESSAGE}</div>';
+			var printName = '';
+			
+			
+			if(message=='감우성10개'){
+			$('<img>', {src: '../images/10.jpg'}).appendTo('.message1');
+			
+			}else if(message=='옥자'){
+			$('<img>', {src: '../images/okja.jpg'}).appendTo('.message1');
+			
+			}else if(message=='이다윤'){
+			$('<img>', {src: '../images/f.jpg'}).appendTo('.message1');
+			
+			}else if(message=='산낙지'){
+			$('<img>', {src: '../images/다운로드.jpg'}).appendTo('.message1');
+			
+			}else{
+			if (type == 'me') {
+				printName = "나 : "
+			} else {
+				printName = name + " : "
+			}
+			html = html.replace('{MESSAGE}', printName + message);
+			$(html).appendTo('.message1');
+			}
+		}
+
+		$('#message-button').click(function() {
+		
+			var msg = $('#message-input').val();
+			$('#message-input').val('');
+			socket.emit('user', {
+				name : name,
+				message : msg,
+				roomId : roomId
+			});
+			writeMessage('me', name, msg);
+		});
+
+		socket.on('message', function(data) {
+		console.log(data.message)
+			writeMessage('other', data.name, data.message);
+		});
+     
+     </script>
+
+  </body>
+</html>

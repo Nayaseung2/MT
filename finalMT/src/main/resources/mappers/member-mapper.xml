@@ -34,8 +34,8 @@
   		</select>
   			<select id="selectPwd" resultType="java.lang.String" parameterType="java.lang.String">
 		SELECT MPWD FROM MEMBER WHERE MID = #{mId} AND MSTATUS='Y'
-		
-	</select>
+
+      </select>
 	<!-- 네이버 아이디 로그인 체크용 -->
 		<select id="selectNaverOne" parameterType="string" resultMap="memberResultSet">
 			SELECT * FROM MEMBER WHERE MID=#{id} AND MSTATUS='Y'
@@ -46,11 +46,22 @@
            VALUES(SEQ_MCODE.NEXTVAL,#{email},NULL,#{ename},#{ename},
            #{email},NULL,SYSDATE,SYSDATE,'Y','N',0,NULL)
         </insert>
-  		
   		<select id="userAllList" resultMap="memberResultSet">
   			SELECT *
   			FROM MEMBER
   			WHERE MSTATUS = 'Y'
+  		</select>
+  		<select id="memberListCount" resultType="_int">
+  			SELECT COUNT(*)
+  			FROM MEMBER
+  			WHERE MSTATUS = 'Y'
+  		</select>
+  		
+  		<select id="BJList" resultMap="memberResultSet">
+  			SELECT *
+  			FROM MEMBER
+  			WHERE MSTATUS = 'Y'
+  			AND VIDEO_YN = 'Y'
   		</select>
   		
   	</mapper>

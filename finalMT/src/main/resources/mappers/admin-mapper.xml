@@ -22,11 +22,12 @@
   	</select> 
   	 
   	<select id="memberList" resultType="hashmap">
-  		SELECT COUNT(*) TOTAL, COUNT(VIDEO_YN) BJ
-  		FROM MEMBER
-  		WHERE MSTATUS = 'Y'
-  		AND VIDEO_YN = 'Y'
+  		SELECT COUNT(*) TOTAL, (SELECT COUNT(*) FROM MEMBER WHERE VIDEO_YN='Y') BJ 
+		FROM MEMBER
+		WHERE MSTATUS = 'Y'
+		GROUP BY 2
   	</select>
+  	
   	
   	
   </mapper>

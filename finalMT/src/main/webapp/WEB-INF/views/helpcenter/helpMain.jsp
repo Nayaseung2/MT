@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -271,30 +275,58 @@ outer {
 			<button class="sideBtn" onclick="report();"><i class="fa fa-frown-o fa-2x"></i>&nbsp;&nbsp; 신고하기</button>
 		</div>
 		
-		<script>
-			
-			function personal(){
+		<c:if test="${ empty loginUser }">
+			<script>
 				
-				location.href="${ contextPath }/helppersonal.hp";
-			}
-			
-			function helpMain(){
+				function personal(){
+					
+					alert("로그인이 필요한 서비스입니다.");
+				}
 				
-				location.href="${ contextPath }/helpmain.hp";				
-			}
+				function helpMain(){
+					
+					location.href="${ contextPath }/helpmain.hp";				
+				}
+			
+				function notice(){
+					
+					location.href="${ contextPath }/helpnotice.hp";	
+				}
+				
+				function report(){
+					
+					alert("로그인이 필요한 서비스입니다.");
+				}
+				
+			</script>
+		</c:if> 
 		
-			function notice(){
+		<c:if test="${ !empty loginUser }">
+			<script>
 				
-				location.href="${ contextPath }/helpnotice.hp";	
-			}
-			
-			function report(){
+				function personal(){
+					
+					location.href="${ contextPath }/helppersonal.hp";
+				}
 				
-				location.href="${ contextPath }/helpreport.hp"
-			}
+				function helpMain(){
+					
+					location.href="${ contextPath }/helpmain.hp";				
+				}
 			
-			
-		</script>
+				function notice(){
+					
+					location.href="${ contextPath }/helpnotice.hp";	
+				}
+				
+				function report(){
+					
+					location.href="${ contextPath }/helpreport.hp"
+				}
+				
+			</script>
+		</c:if>
+		
 
 		<div class="rightNav">
 		
@@ -303,71 +335,89 @@ outer {
 
 			<div class="searchArea">
 				<div class="form-group">
-					<input type="text" class="form-control" id="search"
-						style="width: 88%;">
-					<button type="button" class="btn btn-danger" id="search">Search</button>
-					<br clear="both" /> <br /> <b style="font-size: 18px; color: rgb(135, 0, 0);
-						font-family: 'Nanum Gothic', sans-serif;">
-						Best 키워드 _ 피치 / 방송국 / 방송 / 신고 </b>
+					<input type="text" class="form-control" id="search" name="word" style="width: 88%;">
+					<button onclick="goSearch();" type="button" class="btn btn-danger" id="search">Search</button>
+					<br clear="both"/> 
+					<br/> 
+					<b style="font-size: 18px; color: rgb(135, 0, 0); font-family: 'Nanum Gothic', sans-serif;">
+						Best 키워드 _ 피치 / 방송국 / 방송 / 신고 
+					</b>
 				</div>
-				<br />
+				<br/>
 			</div>
-			<br />
+			<br/>
+			
+				<script>
+					
+					function goSearch(){
+						
+						location.href="${ contextPath }/helpsearch.hp?word=" + $("#search").val();
+					}
 
+				</script>
+				
+				<!-- <script>
+				
+					function goSearch(){
+					
+						alert("검색어를 입력해주세요!");
+					}
+					
+				</script> -->
+				
 
 			<!-- Pure CSS Menu -->
 			<div class='css3-tab'>
-				<input type='radio' name='a' id='tabOne' tabindex="1" checked>
-				<input type='radio' name='a' id='tabTwo' tabindex="2"> <input
-					type='radio' name='a' id='tabThree' tabindex="3"> <input
-					type='radio' name='a' id='tabFour' tabindex="4"> <input
-					type='radio' name='a' id='tabFive' tabindex="5">
+				<input type='radio' name='a' class="qnaType" id='tabOne' tabindex="1" value="qna1" checked>
+				<input type='radio' name='a' class="qnaType" id='tabTwo' tabindex="2" value="qna2"> 
+				<input type='radio' name='a' class="qnaType" id='tabThree' tabindex="3" value="qna3"> 
+				<input type='radio' name='a' class="qnaType" id='tabFour' tabindex="4" value="qna4"> 
+				<input type='radio' name='a' class="qnaType" id='tabFive' tabindex="5" value="qna5">
 
 				<div class="css3-tab-nav" style="font-family: 'Nanum Gothic', sans-serif;">
-					<label for='tabOne' style="font-size: 18px;">계정관련</label> <label
-						for='tabTwo' style="font-size: 18px;">방송/시청관련</label> <label
-						for='tabThree' style="font-size: 18px;">피치관련</label> <label
-						for='tabFour' style="font-size: 18px;">결제관련</label> <label
-						for='tabFive' style="font-size: 18px;">기 &nbsp; 타</label>
+					<label for='tabOne' style="font-size: 18px;">계정관련</label> 
+					<label for='tabTwo' style="font-size: 18px;">방송/시청관련</label> 
+					<label for='tabThree' style="font-size: 18px;">피치관련</label> 
+					<label for='tabFour' style="font-size: 18px;">결제관련</label> 
+					<label for='tabFive' style="font-size: 18px;">기 &nbsp; 타</label>
 				</div>
+				
 
 				<div class='css3-tab-content tab-one'>
 					<!-- start slipsum code -->
 					<h1 style="font-family: 'Hanna', sans-serif;">계정관련 QnA</h1>
 					<hr/>
 					<table class="QnAtable">
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">회원가입을 하시면 됩니다.</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
+						<c:forEach var="item" items="${ list }" begin="0" end="10" step="1">
+							<tr class="answer_">
+								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
+							</tr>
+							<tr class="answer">
+								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
+							</tr>
+						</c:forEach>
 					</table>
 				</div>
 				
 				<script>
+					
+					 $(".qnaType").click(function(){
+					 	
+						 var b_type = $(this).val();
+						 
+						 $.ajax({
+				            url : "helpmain.hp",
+				            type : "GET",
+				            data : {"b_type": b_type},
+				            success : function(data){
+				            	console.log(data);
+				            },
+				            error : function(data){
+				                alert("error");
+				            }
+					     });
+					 });
 				
 					$(".answer").hide();
 					
@@ -382,34 +432,17 @@ outer {
 					<h1 style="font-family: 'Hanna', sans-serif;">방송/시청관련 QnA</h1>
 					<hr/>
 					<table class="QnAtable">
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">회원가입을 하시면 됩니다.</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
+					
+						<c:forEach var="item" items="${ list }" begin="0" end="10" step="1">
+							<tr class="answer_">
+								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
+							</tr>
+							<tr class="answer">
+								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
+							</tr>
+						</c:forEach>
+					
 					</table>
 				</div>
 				
@@ -428,34 +461,15 @@ outer {
 					<h1 style="font-family: 'Hanna', sans-serif;">피치관련 QnA</h1>
 					<hr/>
 					<table class="QnAtable">
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">회원가입을 하시면 됩니다.</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
+						<c:forEach var="item" items="${ list }" begin="0" end="10" step="1">
+							<tr class="answer_">
+								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
+							</tr>
+							<tr class="answer">
+								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
+							</tr>
+						</c:forEach>
 					</table>
 				</div>
 				
@@ -474,34 +488,15 @@ outer {
 					<h1 style="font-family: 'Hanna', sans-serif;">결제관련 QnA</h1>
 					<hr/>
 					<table class="QnAtable">
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">회원가입을 하시면 됩니다.</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
+						<c:forEach var="item" items="${ list }" begin="0" end="10" step="1">
+							<tr class="answer_">
+								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
+							</tr>
+							<tr class="answer">
+								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
+							</tr>
+						</c:forEach>
 					</table>
 				</div>
 				
@@ -520,34 +515,15 @@ outer {
 					<h1 style="font-family: 'Hanna', sans-serif;">기 타 QnA</h1>
 					<hr/>
 					<table class="QnAtable">
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">회원가입을 하시면 됩니다.</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
-						<tr class="answer_">
-							<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-							<td style="padding-left:3%;"><b>회원가입?</b></td>
-						</tr>
-						<tr class="answer">
-							<td colspan="2" class="answerArea">sdf</td>
-						</tr>
+						<c:forEach var="item" items="${ list }" begin="0" end="10" step="1">
+							<tr class="answer_">
+								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
+								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
+							</tr>
+							<tr class="answer">
+								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
+							</tr>
+						</c:forEach>
 					</table>
 				</div>
 				
@@ -561,15 +537,10 @@ outer {
 				
 				</script>
 			</div>
-
-
 		</div>
-
-
 
 	</div>
 	<!-- 위에 배너 빼고 전체 div 끝 -->
-	
 	
     <jsp:include page="../common/footer.jsp"/>
 

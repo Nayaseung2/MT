@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html ng-app="projectRtc">
+<head>
+<base href="/" />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+   
+   <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+   <script type="text/javascript" src="javascripts/adapter.js"></script>
+   <script type="text/javascript" src="javascripts/rtcClient.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js">
+   </script>
+   <script type="text/javascript" src="javascripts/app.js"></script>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<title>Insert title here</title>
+
+</head>
+<body>
+
+
+   <div class="slider-area ptb-40">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-8">
+               <div style="height: 500px; border: 1px solid black;" align="center" >
+               <video id="localVideo" muted="muted" autoplay="true" style='width:100%;height:100%'></video>
+               </div>
+               <div align="right">
+                   <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large"><i align="center" class="fa fa-apple"></i>&nbsp;&nbsp;피치</button>
+                  <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large"><i align="center" class="fa fa-apple"></i>&nbsp;&nbsp;피치</button>
+                  <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large"><i align="center" class="fa fa-thumbs-o-up"></i>&nbsp;&nbsp;구독하기</button>
+                  <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large"><i align="center" class="fa fa-warning"></i>&nbsp;&nbsp;신고하기</button>
+                  <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large"><i align="center" class="fa fa-send-o"></i>&nbsp;&nbsp;공유하기</button>
+                  <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large"><i align="center" class="fa fa-heart"></i></button>
+               </div>
+            </div>
+            
+            
+         
+         
+            <div class="col-md-3" >
+               <div class="chat-panel panel panel-default">
+                  <div class="panel-heading">
+                     <i class="fa fa-comments fa-fw"></i> 실시간 채팅
+                  
+                  </div>
+                  <!-- /.panel-heading -->
+                  <div class="panel-body" style="height: 460px; overflow: overlay;">
+                     <ul class="chat">
+                     <!-- 채팅 1명 시작 -->
+                        <li class="left clearfix">
+                        <span class="chat-img pull-left"></span>
+                           <div class="chat-body clearfix">
+                              <div class="header">
+                              <i class="fa fa-github-alt fa-fw"></i> 
+                                 <strong class="primary-font">오늘만 산다</strong> 
+                                 <small class="pull-right text-muted"> 
+                                 </small>
+                              </div>
+                              <p>안녕하세요 오늘도 화이팅입니다.</p>
+                           </div>
+                        </li>
+                        <!-- 1명 끝 -->
+                        <!-- 채팅 1명 시작 -->
+                        <li class="left clearfix">
+                        <span class="chat-img pull-left"></span>
+                           <div class="chat-body clearfix">
+                              <div class="header">
+                              <i class="fa fa-github-alt fa-fw"></i> 
+                                <strong class="primary-font">오능도 산다</strong> 
+                                 <small class="pull-right text-muted"> 
+                                 </small>
+                              </div>
+                              <p>응응 인정각</p>
+                           </div>
+                        </li>
+                        <!-- 1명 끝 -->
+                        <!-- 채팅 1명 시작 -->
+                        <li class="left clearfix">
+                        <span class="chat-img pull-left"></span>
+                           <div class="chat-body clearfix">
+                              <div class="header">
+                              <i class="fa fa-github-alt fa-fw"></i> 
+                                 <strong class="primary-font">아프리카 청춘이다</strong> 
+                                 <small class="pull-right text-muted"> 
+                                 </small>
+                              </div>
+                              <p>안녕하세요 모두의 티비 관리자 입니다.</p>
+                           </div>
+                        </li>
+                        <!-- 1명 끝 -->
+                        
+                        <!-- 채팅 1명 시작 -->
+                        <li class="left clearfix">
+                        <span class="chat-img pull-left"></span>
+                           <div class="chat-body clearfix">
+                              <div class="header">
+                              <i class="fa fa-github-alt fa-fw"></i> 
+                                 <strong class="primary-font">아프리카 청춘이다</strong> 
+                                 <small class="pull-right text-muted"> 
+                                 </small>
+                              </div>
+                              <p>오늘도 즐방 하세요~~!</p>
+                           </div>
+                        </li>
+                        <!-- 1명 끝 -->
+                        
+                     
+                        
+                     </ul>
+                  </div>
+                  <!-- /.panel-body -->
+                  <div class="panel-footer">
+                     <div class="input-group">
+                        <input id="btn-input" type="text" class="form-control input-sm"
+                           placeholder="채팅을 입력하세요..."> <span
+                           class="input-group-btn">
+                           <button class="btn btn-warning btn-sm" id="btn-chat">
+                              전송</button>
+                        </span>
+                     </div>
+                  </div>
+                  <!-- /.panel-footer -->
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+      <div class="container">
+        <div class="row">
+
+            <div class="col-md-12">
+               <hr>
+               <table>
+                  <tr>
+                     <td rowspan="3" style=" width: 15%; height:  15%; padding-right: 15px;">
+                     
+                     </td>
+                     <td><h1>킬당1000개 한시간 현재 10킬중!!</h1></td>
+                  </tr>
+                  <tr>
+                     <td><h3>BJ 감우성</h3></td>
+                  </tr>
+                  <tr>
+                    <td><h5>#배틀그라운두&nbsp;&nbsp;#감우성&nbsp;&nbsp;#못생김주의&nbsp;&nbsp;#남캠</h5></td>
+                  </tr>
+               
+               </table>
+         
+            
+               <hr>
+            </div>
+         </div>
+      </div> 
+
+    
+   
+    <!-- jQuery -->
+  
+
+
+     <div class="localStream" ng-controller="LocalStreamController as localStream">
+   <video id="localVideo" muted="muted" autoplay="true"></video>
+   
+   
+   
+   <li id='checkOnair' ng-click="localStream.toggleCam()" style='width:100px;display:none'>
+      <a id='checkOn' href>{{ localStream.cameraIsOn ? '방송중지' : '방송시작' }}</a>
+   </li>
+   
+   
+   <div ng-show="localStream.cameraIsOn">      
+      <a id='link'>{{ localStream.link }}</a>
+   </div>
+   
+   <li id='checkOnair2' ng-click="rtc.loadData()" style="width: 100px;">
+        <a id='onair' href>방송하기</a>
+    </li>
+    
+   </div>
+
+    <div class='message1'></div>
+   <div class='footer1'>
+      <table>
+         <tr>
+            <td width='10%'><input id='message-input' type='text'>
+            </td>
+           <td width='50%'>
+               <button id='message-button' type='submit'>전송</button>
+            </td>
+         </tr>
+      </table>
+   </div>
+   
+   <!-- 방번호 -->
+   <div id='room' style='display:none'></div>
+   
+     
+     <script>
+     count =0;
+   
+   //로딩과 동시에 내화면 보이기
+    $(function(){
+     $('#checkOn').trigger('click')})
+ 
+      //방송시작 방송정지 display
+     $('#onair').click(function(){
+        
+  
+     
+        $('#checkOnair').css('display','block');
+        
+        $('#checkOnair2').css('display','none');
+        
+     })
+     
+     
+     //소켓 연결
+     var socket = io();
+     
+     //메시지
+     var name = "bj 감우성";
+
+      function writeMessage(type, name, message) {
+         var html = '<div>{MESSAGE}</div>';
+         var printName = '';
+         
+         
+         if(message=='감우성10개'){
+        $('<img>', {src: '../images/10.jpg'}).appendTo('.message1');
+         
+         }else if(message=='옥자'){
+         $('<img>', {src: '../images/okja.jpg'}).appendTo('.message1');
+         
+         }else if(message=='이다윤'){
+         $('<img>', {src: '../images/f.jpg'}).appendTo('.message1');
+         
+         }else if(message=='산낙지'){
+         $('<img>', {src: '../images/다운로드.jpg'}).appendTo('.message1');
+         
+         }else{
+         if (type == 'me') {
+            printName = "나 : "
+         } else {
+            printName = name + " : "
+         }
+         html = html.replace('{MESSAGE}', printName + message);
+        $(html).appendTo('.message1');
+         }
+      }
+      
+     //방송시작후에만 채팅가능
+      
+      var roomId='세션에서아이디받아옴';
+        
+        setTimeout(function() { 
+        //룸아이디 설정
+        
+        roomId =$("#room").text(); 
+        //방입장
+         console.log(roomId)
+           socket.emit('join:room', {
+         roomId : roomId
+         });
+                    
+       }, 2000)
+
+      $('#message-button').click(function() {
+         var roomId = $("#room").text();
+                   
+          var msg = $('#message-input').val();
+         $('#message-input').val('');
+         socket.emit('user', {
+             name : name,
+            message : msg,
+            roomId : roomId
+         });
+         writeMessage('me', name, msg);
+      });
+
+      socket.on('message', function(data) {
+         writeMessage('other', data.name, data.message);
+      });
+     
+     </script>
+     
+     
+</body>
+</html> 
