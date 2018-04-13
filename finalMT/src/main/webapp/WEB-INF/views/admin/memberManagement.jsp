@@ -34,6 +34,11 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+    	.gType:hover {
+			cursor: pointer;    	
+    	}
+    </style>
 </head>
 
 <body>
@@ -114,6 +119,13 @@
                                 </div>
                             </div>
                         </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">자세히</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -129,6 +141,13 @@
                                 </div>
                             </div>
                         </div>
+                        <a onclick="location.reload()">
+                            <div class="panel-footer">
+                                <span class="pull-left">자세히</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -144,9 +163,16 @@
                                 </div>
                             </div>
                         </div>
+                        <a onclick="typeChange('searchBJ.ad');">
+                            <div class="panel-footer">
+                                <span class="pull-left">자세히</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
                     </div>
                 </div>
-                <a onclick="typeChange('searchBJ.ad');">
+                <a href="#">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-info">
                         <div class="panel-heading">
@@ -177,19 +203,19 @@
                            </button>
                            <ul class="dropdown-menu pull-right" role="menu" >
                                <li value="time">
-                               		<a href="#">시간별</a>
+                               		<a class="gType" onclick="graphChange('time')">시간별</a>
                                </li>
                                <li>
-                               		<a href="#">일별</a>
+                               		<a class="gType" onclick="graphChange('day')">일별</a>
                                </li>
                                <li>
-                              	 	<a href="#">주별</a>
+                              	 	<a class="gType" onclick="graphChange('week')">주별</a>
                                </li>
                                <li>
-                              	 	<a href="#">월별</a>
+                              	 	<a class="gType" onclick="graphChange('month')">월별</a>
                                </li>
                                <li>
-                               		<a href="#">년별</a>
+                               		<a class="gType" onclick="graphChange('year')">년별</a>
                                </li>
                            </ul>
                        </div>
@@ -204,11 +230,11 @@
 	        <div class="row">
 		        <div class="col-lg-12">
 	                    <div class="panel panel-default">
-	                        <div class="panel-heading type" id="memberMg.ad">회원 정보
+	                        <div class="panel-heading type" id="memberMg.ad"><span class="title">회원 정보</span>
 	                        	<div class="input-group custom-search-form" style="width: 30%; float: right;" >
-	                                <input type="text" class="form-control" placeholder="Search...">
+	                                <input type="text" class="form-control" placeholder="Search..." id="search">
 	                                <span class="input-group-btn">
-		                                <button class="btn btn-default" type="button">
+		                                <button class="btn btn-default" type="button" onclick="search();">
 		                                    <i class="fa fa-search"></i>
 		                                </button>
 	                            	</span>
@@ -261,8 +287,6 @@
   		function pageChange(value, type){
   			var page = Number($("#page").text());
 			var url = type;			
-  			
-			console.log($(".type").attr("id"));
 			
 			if(page >= 1 && page <= $("#maxPage").val()){
 	  			if(value === 'plus'){
@@ -302,14 +326,33 @@
   		}
   		
   		function typeChange(type){
-  			console.log("들어옴?");
   			$(".type").attr("id", type);
-  			
-  			console.log($(".type").attr("id"));
   			
   			pageChange("", type);
   		}
   		
+  		function search(){
+  			var userId = $("#search").val();
+  			
+  			$.ajax({
+  				url: "searchMember.ad",
+  				type: "get",
+  				data: {"userId": userId},
+  				success: function(data){
+  					var m = data.m;
+  					$("tbody").html("");
+  					$("#pagingArea").html("");
+  					
+  					$("tbody").append("<tr><td>"+m.mId+"</td><td>"+m.mName+"</td><td>"+m.mName+"</td><td>"+m.peach+"</td><td>"+m.a_status+"</td></tr>");
+  					$("#pagingArea").append("<button onclick='location.reload()'>전체보기</button>");
+  				}
+  			});
+  			
+  		}
+  		
+  		function graphChange(type){
+  			alert(type);
+  		}
   	</script>
 
     <!-- jQuery -->

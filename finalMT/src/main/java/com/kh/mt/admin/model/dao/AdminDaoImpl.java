@@ -22,17 +22,12 @@ public class AdminDaoImpl implements AdminDao{
 		
 		list.put("allList",sqlSession.selectOne("Admin.allMenuList"));
 		
-		
-		System.out.println("dao list확인: " + list);
-		
 		return list;
 	} 
 
 	@Override
 	public HashMap<String, String> memberList() {
 		HashMap<String, String> list = sqlSession.selectOne("Admin.memberList");
-		
-		System.out.println("dao memberListL "+list);
 	
 		return list;
 	}
@@ -44,8 +39,6 @@ public class AdminDaoImpl implements AdminDao{
 		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
 		
 		mlist = (ArrayList) sqlSession.selectList("Member.userAllList", null, rowBounds);
-		
-		System.out.println("dao userAllList: "+ mlist);
 		
 		return mlist;
 	}
@@ -64,11 +57,10 @@ public class AdminDaoImpl implements AdminDao{
 		
 		Member m = sqlSession.selectOne("Member.loginCheck", search);
 		
-		System.out.println(m);
-		
 		return m;
 	}
-
+	
+	
 	@Override
 	public ArrayList<Member> searchBJ(PageInfo pi) {
 
@@ -76,8 +68,6 @@ public class AdminDaoImpl implements AdminDao{
 		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
 		
 		ArrayList<Member> list = (ArrayList)sqlSession.selectList("Member.BJList", null, rowBounds);
-		
-		System.out.println("BJList: " + list);
 		
 		return list;
 	}
