@@ -29,13 +29,11 @@ public class AdminDaoImpl implements AdminDao{
 	} 
 
 	@Override
-	public HashMap<String, HashMap<String, String>> memberList() {
-		HashMap<String, HashMap<String, String>> list = new HashMap<String, HashMap<String, String>>();
-		
-		list.put("list", sqlSession.selectOne("Admin.memberList"));
+	public HashMap<String, String> memberList() {
+		HashMap<String, String> list = sqlSession.selectOne("Admin.memberList");
 		
 		System.out.println("dao memberListL "+list);
-		 
+	
 		return list;
 	}
 

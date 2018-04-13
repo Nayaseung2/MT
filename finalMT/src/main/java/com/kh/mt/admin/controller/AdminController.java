@@ -39,11 +39,9 @@ public class AdminController {
 	//회원관리 화면
 	@RequestMapping("memberMg.ad")
 	public ModelAndView memberMg(ModelAndView mv, String newCurrentPage){
-		HashMap<String, HashMap<String, String>> list = as.memberList();
+		HashMap<String, String> list = as.memberList();
 		
-		System.out.println(list.get("list").values());
-		
-		PageInfo pi = addPage(newCurrentPage); 
+		PageInfo pi = addPage(newCurrentPage, "member"); 
 		
 		ArrayList<Member> mlist = as.userAllList(pi);
 		
@@ -81,7 +79,8 @@ public class AdminController {
 	@RequestMapping("searchBJ.ad")
 	public ModelAndView searchBJ(ModelAndView mv, String newCurrentPage){
 		
-		PageInfo pi = addPage(newCurrentPage);
+		
+		PageInfo pi = addPage(newCurrentPage, "BJ");
 		
 		ArrayList<Member> BJList = as.searchBJ(pi);
 		
@@ -164,23 +163,27 @@ public class AdminController {
 	}
 	
 		
-	public PageInfo addPage(String newCurrentPage){
-		int currentPage;
-		int limit;
-		int maxPage;
-		int startPage;
-		int endPage;
-		int listCount;
-
-		currentPage = 1;
+	public PageInfo addPage(String newCurrentPage, String type){
+		HashMap<String, String> list = as.memberList();
 		
+		int currentPage = 1;
+		int limit = 0;
+		int maxPage = 0;
+		int startPage = 0;
+		int endPage = 0;
+		int listCount = 0;
+
 		limit = 2;
+		
+		if(type.equals("member")){
+			listCount = Integer.parseInt(String.valueOf(list.get("TOTAL")));
+		}else if(type.equals("BJ")){
+			listCount = Integer.parseInt(String.valueOf(list.get("BJ")));
+		}
 		
 		if(newCurrentPage != null){
 			currentPage = Integer.parseInt(newCurrentPage);
 		}
-		
-		listCount = as.mlistCount();
 		
 		maxPage = (int)((double)listCount / limit + 0.9);
 		
