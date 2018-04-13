@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>모두의 TV</title>
 <!-- sdf -->
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/hanna.css);
@@ -215,7 +215,7 @@ label {
 					<br/>	
 					<br/>
 					<br/>
-					<form action="helpreportpost.hp" method="post">
+					<form action="helpreportpost.hp" method="post" encType="multipart/form-data">
 						<table class="rTable" align="center">
 							<tr>
 								<td class="tableList">작성자</td>
@@ -246,7 +246,7 @@ label {
 									<div class="fileRegiBtn">
 										<input id="fileName" class="form-control" value="오른쪽의 버튼을 눌러 첨부파일을 등록하세요" disabled="disabled" 
 													style="width:60%; display: inline; text-align:center;">
-										<input type="file" id="myFileUp">
+										<input type="file" id="myFileUp" name="photo">
 										<label for="myFileUp">파일등록하기</label>
 									</div>
 								</td>
