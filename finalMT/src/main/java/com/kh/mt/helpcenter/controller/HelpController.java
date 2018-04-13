@@ -102,14 +102,14 @@ public class HelpController {
 		String onlyFileName = photo.getOriginalFilename().substring(0, photo.getOriginalFilename().indexOf(".")); // fileName
 	    String extension = photo.getOriginalFilename().substring(photo.getOriginalFilename().indexOf(".")); // .jpg
 	     
-	    /*String rename = onlyFileName + "_" + getCurrentDayTime() + extension;
+	 /*   String rename = onlyFileName + "_" + getCurrentDayTime() + extension;
 		
 		
 		try {
 			photo.transferTo(new File(filePath + "\\" + photo.getOriginalFilename()));
 			
 			
-			//BoardFile bf = new BoardFile();
+			BoardFile bf = new BoardFile();
 			bf.setF_orname(photo.getOriginalFilename());
 			bf.setF_rename(rename);
 			bf.setFilepath(filePath);

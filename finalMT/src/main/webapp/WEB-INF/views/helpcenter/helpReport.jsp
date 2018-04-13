@@ -79,67 +79,6 @@ label {
 	padding-right: 2%;
 }
 
-
-
-/* =========== */
-
-
-
-.form-group {
-    display: inline-block;
-    margin-bottom: 0;
-    vertical-align: middle;
-    width: 120%;
-}
-
-.form-control {
-    display: inline-block;
-    width: 100%;
-    height: 30px;
-    font-size: 12px;
-    line-height: 1.42857;
-    color: rgb(85, 85, 85);
-    background-color: #fff; /* rgb(255, 255, 255); */
-    background-image: none;
-    box-shadow: rgba(0, 0, 0, 0.0745098) 0 1px 1px inset;
-    padding: 6px 9px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(204, 204, 204);
-    border-image: initial;
-    border-radius: 2px;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.form-control[readonly], fieldset[disabled] .form-control {
-    background-color: rgb(238, 238, 238);
-    opacity: 1;
-}
-
-.form_file .file_load {
-    display: inline-block;
-    position: relative;
-    width: 65px;
-    height: 31px;
-    cursor: pointer;
-}
-
-.form_file .file_load [type="file"] {
-    display: inline-block;
-    position: absolute;
-    width: inherit;
-    height: inherit;
-    z-index: 1;
-    opacity: 0;
-}
-
-.form_file .file_load label {
-	display: inline-block;
-    position: relative;
-    z-index: 5;
-    cursor: pointer;
-}
-
 .btn-default {
     display: inline-block;
     margin-bottom: 0;
@@ -161,6 +100,37 @@ label {
     border-radius: 2px;
     color: rgb(51, 51, 51);
 }
+
+
+
+.fileRegiBtn label {
+
+	width: 12%;
+	display: inline-block; 
+	padding: .5em .75em; 
+	color: #ffffff; 
+	font-size: 14px; 
+	line-height: normal; 
+	vertical-align: middle; 
+	background-color: #FC7D01; 
+	cursor: pointer; 
+	border: 1px solid #ebebeb; 
+	border-bottom-color: #e2e2e2; 
+	border-radius: .25em;
+}
+
+.fileRegiBtn input[type="file"]{
+
+	display: inline-block;
+	width: 1px; 
+	height: 1px; 
+	padding: 0; 
+	margin: -1px; 
+	overflow: hidden; 
+	clip:rect(0,0,0,0); 
+	border: 0;
+}
+
 
 </style>
 
@@ -273,15 +243,54 @@ label {
 							<tr>
 								<td class="tableList">스크<br/>린샷</td>
 								<td colspan="3">
-									<div class="form-group form_file">
-									  <input class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width: 40%;">
-									  <span class="file_load">
-								        <input type="file" name="photo" id="find_file01"><label class="btn-default" for="find_file01">찾아보기</label>
-									  </span>
+									<div class="fileRegiBtn">
+										<input id="fileName" class="form-control" value="오른쪽의 버튼을 눌러 첨부파일을 등록하세요" disabled="disabled" 
+													style="width:60%; display: inline; text-align:center;">
+										<input type="file" id="myFileUp">
+										<label for="myFileUp">파일등록하기</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="tableList">미리<br/>보기</td>
+								<td colspan="3">
+									<div class="selectCover" style="padding-left: 0;">
+									 	<img id="cover" src="${ contextPath }/resources/images/help/no_img.png" style="width: 660px; height: 371px;"/>
 									</div>
 								</td>
 							</tr>
 						</table>
+						<script>
+							
+							function readURL(input) {
+
+						        if (input.files && input.files[0]) {
+						        	
+									if(!input.files[0].type.match("image.*")){
+										
+										alert("스크린샷 첨부는 이미지 확장자만 가능합니다.");
+										return;
+										
+									} else {
+
+								        var reader = new FileReader();
+								        reader.onload = function (e) {
+		
+							                $('#cover').attr('src', e.target.result);        //cover src로 붙여지고
+							                $('#fileName').val(input.files[0].name);    //파일선택 form으로 파일명이 들어온다
+							            }
+								        
+								        reader.readAsDataURL(input.files[0]);
+									}
+						        }
+						    }
+	
+							$("#myFileUp").change(function(){
+
+						        readURL(this);
+						    });
+						
+						</script>
 						<br/>
 						<br/>
 						<div class="qBtn">
