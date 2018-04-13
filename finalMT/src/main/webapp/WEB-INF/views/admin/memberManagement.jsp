@@ -34,8 +34,28 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <!-- jQuery -->
+    <script src="/mt/resources/admin/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/mt/resources/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/mt/resources/admin/vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+   <!--  <script src="/mt/resources/admin/vendor/raphael/raphael.min.js"></script>
+    <script src="/mt/resources/admin/vendor/morrisjs/morris.min.js"></script>
+    <script src="/mt/resources/admin/data/morris-data.js"></script> -->
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
+    
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    
     <style>
-    	.gType:hover {
+    	.gType:hover, .mType:hover {
 			cursor: pointer;    	
     	}
     </style>
@@ -119,7 +139,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a class="mType" href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">자세히</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -141,7 +161,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a onclick="location.reload()">
+                        <a class="mType" onclick="location.reload()">
                             <div class="panel-footer">
                                 <span class="pull-left">자세히</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -163,7 +183,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a onclick="typeChange('searchBJ.ad');">
+                        <a class="mType" onclick="typeChange('searchBJ.ad');">
                             <div class="panel-footer">
                                 <span class="pull-left">자세히</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -195,7 +215,7 @@
             
 	   		<div class="panel panel-default" style="margin-top: 30px;">
                <div class="panel-heading">
-                   <i class="fa fa-bar-chart-o fa-fw"></i> 접속자
+                   <i class="fa fa-bar-chart-o fa-fw"></i>
                    <div class="pull-right">
                        <div class="btn-group">
                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
@@ -223,7 +243,7 @@
                </div>
                <!-- /.panel-heading -->
                <div class="panel-body">
-                   <div id="morris-area-chart"></div>
+                   <div id="chart" style="width: 100%; height: 400px;"></div>
                </div>
                <!-- /.panel-body -->
 	        </div>
@@ -353,24 +373,22 @@
   		function graphChange(type){
   			alert(type);
   		}
+  		
+  		
+  		$(function(){
+  			$("#chart").highcharts({
+  				chart: {type: 'line'},
+  				title: {text: '시간별 접속자'},
+  				xAxis: {categories: [00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]},
+  				yAxis: {title: 't'},
+  				series: [
+  					{name: '인원수', data: [1, 0, 3, 15, 67, 42, 53, 51, 22, 44, 43, 22, 423, 888, 59, 103, 144, 222, 356, 84, 42, 72, 44, 124]}
+  				]
+  			});
+  		});
+  		
   	</script>
 
-    <!-- jQuery -->
-    <script src="/mt/resources/admin/vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/mt/resources/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/mt/resources/admin/vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-   <!--  <script src="/mt/resources/admin/vendor/raphael/raphael.min.js"></script>
-    <script src="/mt/resources/admin/vendor/morrisjs/morris.min.js"></script>
-    <script src="/mt/resources/admin/data/morris-data.js"></script> -->
-
-    <!-- Custom Theme JavaScript -->
-    <script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
 
 </body>
 </html>
