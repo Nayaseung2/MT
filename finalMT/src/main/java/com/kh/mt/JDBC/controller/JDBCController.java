@@ -17,7 +17,7 @@ import com.kh.mt.JDBC.model.service.JDBCService;
 import com.kh.mt.JDBC.model.vo.JDBC;
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
 import com.kh.mt.member.model.vo.Member;
-
+  
 @Controller
 public class JDBCController {
 	@Autowired

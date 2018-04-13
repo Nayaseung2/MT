@@ -8,7 +8,7 @@ import com.kh.mt.JDBC.model.dao.JDBCDao;
 import com.kh.mt.JDBC.model.vo.JDBC;
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
 import com.kh.mt.member.model.dao.MemberDao;
-
+  
 @Service
 public class JDBCServiceImpl implements JDBCService {
 	@Autowired

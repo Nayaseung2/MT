@@ -2,7 +2,7 @@
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
-<configuration>
+<configuration>  
 	<typeAliases>
 		<typeAlias alias='Member' type="com.kh.mt.member.model.vo.Member"/>
 		<typeAlias alias='NaverLoginMember' type="com.kh.mt.member.model.vo.NaverLoginMember"/>

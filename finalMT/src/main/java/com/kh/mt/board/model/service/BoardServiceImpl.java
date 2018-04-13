@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.kh.mt.board.model.dao.BoardDao;
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
-
+  
 @Service
 public class BoardServiceImpl implements BoardService{
 	@Autowired

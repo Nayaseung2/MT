@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <!DOCTYPE html>
 <html>
-<head>
+<head>  
 <meta charset="UTF-8">
 <title>방송국 개인 정보 관리</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">

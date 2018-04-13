@@ -1,9 +1,9 @@
-package com.kh.mt.board.model.vo;
-
+package com.kh.mt.JDBC.model.vo;
+   
 import org.springframework.stereotype.Component;
   
 @Component
-public class BoardFile implements java.io.Serializable{
+public class JDBCLogoFile implements java.io.Serializable{
 	private String file_code;
 	private String from_code;
 	private String f_orname;
@@ -12,10 +12,10 @@ public class BoardFile implements java.io.Serializable{
 	private String f_mcode;
 	private String upload_date;
 	
-	public BoardFile(){}
+	public JDBCLogoFile(){}
 
-	public BoardFile(String file_code, String from_code, String f_orname, String f_rename, String filepath,
-			String f_mcode, String upload_date) {
+	public JDBCLogoFile(String file_code, String from_code, String f_orname, String f_rename, String filepath,
+			String f_mcode, String upload_date, String mid) {
 		super();
 		this.file_code = file_code;
 		this.from_code = from_code;
@@ -84,9 +84,11 @@ public class BoardFile implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "BoardFile [file_code=" + file_code + ", from_code=" + from_code + ", f_orname=" + f_orname
+		return "JDBCLogoFile [file_code=" + file_code + ", from_code=" + from_code + ", f_orname=" + f_orname
 				+ ", f_rename=" + f_rename + ", filepath=" + filepath + ", f_mcode=" + f_mcode + ", upload_date="
 				+ upload_date + "]";
 	}
+
+	
 	
 }

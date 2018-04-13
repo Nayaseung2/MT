@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.mt.JDBC.model.vo.JDBC;
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
-
+  
 @Repository
 public class JDBCDaoImpl implements JDBCDao{
 	@Autowired

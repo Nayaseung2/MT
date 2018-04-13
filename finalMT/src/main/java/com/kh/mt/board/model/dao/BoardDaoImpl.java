@@ -11,7 +11,7 @@ import com.kh.mt.board.model.vo.BoardFile;
 public class BoardDaoImpl implements BoardDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	
+	  
 	//board insert
 	@Override
 	public int insertBoard(Board b) {

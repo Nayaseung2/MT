@@ -16,7 +16,7 @@ import com.kh.mt.board.model.service.BoardService;
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
 
-@Controller
+@Controller 
 public class BoardController {
 	@Autowired
 	BoardService bs;

@@ -8,5 +8,5 @@ public interface BoardService {
 	void insertBoard(Board b);
 
 	void insertBoardFile(BoardFile f);
-
+  
 }
