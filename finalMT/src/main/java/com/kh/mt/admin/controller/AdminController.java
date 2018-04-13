@@ -27,8 +27,6 @@ public class AdminController {
 		
 		HashMap<String, HashMap<String, String>> list = as.allMenuList(); 
 		
-		//System.out.println("controller list: " + list);
-		 
 		mv.addObject("list", list);
 		
 		mv.setViewName("admin/admin");
@@ -44,9 +42,6 @@ public class AdminController {
 		PageInfo pi = addPage(newCurrentPage, "member"); 
 		
 		ArrayList<Member> mlist = as.userAllList(pi);
-		
-		
-		System.out.println("controller mlist: " + mlist);
 		
 		mv.addObject("pi", pi);
 		mv.addObject("list", list);
@@ -70,7 +65,6 @@ public class AdminController {
 			return mv;
 		}
 		
-		System.out.println(mv.getViewName());
 		
 		return mv;
 	}
@@ -84,8 +78,6 @@ public class AdminController {
 		
 		ArrayList<Member> BJList = as.searchBJ(pi);
 		
-		System.out.println("controller BJ: " + BJList);
-		
 		HashMap list = new HashMap();
 		
 		list.put("pi", pi);
@@ -95,16 +87,14 @@ public class AdminController {
 		
 		mv.setViewName("jsonView");
 		
-		System.out.println("searchBJ 종료");
-		
 		return mv;
 	}
 	
 	//아이디로 회원 조회
 	@RequestMapping("searchMember.ad")
-	public ModelAndView searchMember(ModelAndView mv, String search){
+	public ModelAndView searchMember(ModelAndView mv, String userId){
 		
-		Member m = as.searchMember(search);
+		Member m = as.searchMember(userId);
 		
 		mv.addObject("m", m);
 		
@@ -125,7 +115,6 @@ public class AdminController {
 	//출금신청 화면
 	@RequestMapping("withdrawal.ad")
 	public ModelAndView withdrawal(ModelAndView mv){
-		
 		
 		mv.setViewName("admin/withdrawalControl");
 		
