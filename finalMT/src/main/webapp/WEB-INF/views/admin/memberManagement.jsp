@@ -124,7 +124,7 @@
                                     <i class="fa fa-qq fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge"><c:out value="${ list.list.TOTAL }명"/></div>
+                                    <div class="huge"><c:out value="${ list.TOTAL }명"/></div>
                                     <div>총 회원</div>
                                 </div>
                             </div>
@@ -139,14 +139,14 @@
                                     <i class="fa fa-desktop fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right"> 
-                                    <div class="huge"><c:out value="${ list.list.BJ }명"/></div>
+                                    <div class="huge"><c:out value="${ list.BJ }명"/></div>
                                     <div>방송중인 BJ</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a onclick="typeChange('searchBJ.ad');">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-info">
                         <div class="panel-heading">
@@ -204,7 +204,7 @@
 	        <div class="row">
 		        <div class="col-lg-12">
 	                    <div class="panel panel-default">
-	                        <div class="panel-heading">회원 정보
+	                        <div class="panel-heading type" id="memberMg.ad">회원 정보
 	                        	<div class="input-group custom-search-form" style="width: 30%; float: right;" >
 	                                <input type="text" class="form-control" placeholder="Search...">
 	                                <span class="input-group-btn">
@@ -241,18 +241,11 @@
 	                            <!-- /.table-responsive -->
 	                            <!-- pageing -->
 	                            <div id="pagingArea" align="center">
-									<button onclick="return next('minus')">[이전]</button>
-									
-									<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-										<c:if test="${ p eq pi.currentPage }">
-											<font color="red" size="4" id="page"><b>${ p }</b></font>
-										</c:if>
-										<c:if test="${ p ne pi.currentPage }"><!-- ne: eq반대 -->
-											<a href="${ blistCheck }">${ p }</a>
-										</c:if>
-									</c:forEach>
-									
-									&nbsp; <button onclick="return next('plus')">[다음]</button>
+									<button onclick="return pageChange('minus', $('.type').attr('id'))">[이전]</button>
+
+										<font color="red" size="4" id="page"><b>${ pi.currentPage }</b></font>
+
+									&nbsp; <button onclick="return pageChange('plus', $('.type').attr('id'))">[다음]</button>
 								</div>
 	                        </div>
 	                        <!-- /.panel-body -->
@@ -262,31 +255,35 @@
 	        	</div>
         </div>
     </div>
+    <input type="hidden" value="${ pi.maxPage }" id="maxPage"/>
     <!-- /#wrapper -->
   	<script>
-  		function next(value){
+  		function pageChange(value, type){
   			var page = Number($("#page").text());
+			var url = type;			
   			
-  			if(page >= 1 && page <= ${pi.maxPage}){
+			console.log($(".type").attr("id"));
+			
+			if(page >= 1 && page <= $("#maxPage").val()){
 	  			if(value === 'plus'){
-	  				if(page == ${pi.maxPage}){
+	  				if(page == $("#maxPage").val()){
 	  					return;
 	  				}
 	  				page += 1;
-	  			}else {
-	  				if(page == 1){
+	  			}else if(value === 'minus'){
+	  				if(page === 1){
 	  					return;
 	  				}
 	  				page -= 1;
-	  				
 	  			}
+	  			
 	  			$.ajax({
-	  				url: "memberMg.ad",
+	  				url: url,
 	  				type: "get",
 	  				data:{"newCurrentPage":page},
 	  				success:function(data){
 	  					var list = data.list.mlist;
-	  					
+	  					var pi = data.list.pi;
 	  					$("tbody").html("");
 	  					
 	  					for(var i = 0; i < list.length; i++){
@@ -294,6 +291,7 @@
 	  					}
 	  					
 	  					$("#page").text(page);
+	  					$("#maxPage").attr("value", pi.maxPage)
 	  				},
 	  				error:function(data){
 	  					console.log("에러!");
@@ -302,6 +300,16 @@
   				return false;
   			}
   		}
+  		
+  		function typeChange(type){
+  			console.log("들어옴?");
+  			$(".type").attr("id", type);
+  			
+  			console.log($(".type").attr("id"));
+  			
+  			pageChange("", type);
+  		}
+  		
   	</script>
 
     <!-- jQuery -->

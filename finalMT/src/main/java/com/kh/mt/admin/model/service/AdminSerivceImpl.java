@@ -26,8 +26,8 @@ public class AdminSerivceImpl implements AdminService{
 	}
 
 	@Override
-	public HashMap<String, HashMap<String, String>> memberList() {
-		HashMap<String, HashMap<String, String>> list = null;
+	public HashMap<String, String> memberList() {
+		HashMap<String, String> list = null;
 		
 		list = ad.memberList();
 		
