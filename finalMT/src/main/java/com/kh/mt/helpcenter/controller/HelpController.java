@@ -40,6 +40,7 @@ public class HelpController {
 		mv.setViewName("helpcenter/helpMain");
 		
 		if(b_type != null) {
+			
 			mv.setViewName("jsonView");
 		}
 		
@@ -50,6 +51,8 @@ public class HelpController {
         ArrayList<HelpMainVo> list = hs.listAll(b_type);
 
         mv.addObject("list", list);
+        //System.out.println("controller: " + mv.getViewName());
+        //System.out.println("list: " + list);
         
         return mv; 
     }
@@ -180,25 +183,17 @@ public class HelpController {
         return mv; 
 	}
 	
-	/*// 공지글 목록
+	// 공지글 상세보기
 	@RequestMapping(value="helpnoticedetail.hp")
-	public ModelAndView showHelpCenterNoticeDetail(ModelAndView mv) {
+	public ModelAndView showHelpCenterNoticeDetail(ModelAndView mv, String b_code) {
 		
 		mv.setViewName("helpcenter/helpNoticeDetail");
 		
-        ArrayList<HelpMainVo> nList = hs.nList();
+        ArrayList<HelpMainVo> nListDetail = hs.nListDetail(b_code);
 
-        mv.addObject("nList", nList);
+        mv.addObject("nListDetail", nListDetail);
         
-        return mv; 
-		
-	}*/
-	
-	// 공지글 상세보기
-	@RequestMapping(value="helpnoticedetail.hp")
-	public String showHelpCenterNoticeDetail() {
-		
-		return "helpcenter/helpNoticeDetail";
+        return mv;
 	}
 	
 	

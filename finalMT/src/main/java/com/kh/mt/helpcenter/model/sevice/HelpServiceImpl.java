@@ -75,6 +75,17 @@ public class HelpServiceImpl implements HelpService{
 		nList = hd.nList();
     	
     	return nList;
+	}
+
+	// 공지글 상세보기
+	@Override
+	public ArrayList<HelpMainVo> nListDetail(String b_code) {
+
+		ArrayList<HelpMainVo> nListDetail = null;
+    	
+		nListDetail = hd.nListDetail(b_code);
+    	
+    	return nListDetail;
 	} 
 	
 }
