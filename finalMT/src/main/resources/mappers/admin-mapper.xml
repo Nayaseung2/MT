@@ -28,6 +28,8 @@
 		GROUP BY 2
   	</select>
   	
-  	
+  	<select id="searchDay" resultType="java.lang.String">
+  		SELECT TO_CHAR(LAST_DAY(SYSDATE), 'RRRR-MM-DD') FROM DUAL
+  	</select>
   	
   </mapper>

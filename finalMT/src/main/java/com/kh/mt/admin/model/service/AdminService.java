@@ -18,6 +18,8 @@ public interface AdminService {
 
 	Member searchMember(String search);
 
-	ArrayList<Member> searchBJ(PageInfo pi); 
+	ArrayList<Member> searchBJ(PageInfo pi);
+
+	String searchDay(); 
 } 
  

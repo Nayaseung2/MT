@@ -70,4 +70,10 @@ public class AdminSerivceImpl implements AdminService{
 		return list;
 	}
 
+	@Override
+	public String searchDay() {
+		
+		return ad.searchDay();
+	}
+
 }
