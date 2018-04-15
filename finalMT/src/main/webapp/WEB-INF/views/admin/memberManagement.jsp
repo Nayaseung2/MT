@@ -376,14 +376,18 @@
   		
   		
   		$(function(){
+			var times = ${times};
   			$("#chart").highcharts({
   				chart: {type: 'line'},
   				title: {text: '시간별 접속자'},
   				xAxis: {categories: [00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]},
   				yAxis: {title: 't'},
   				series: [
-  					{name: '인원수', data: [1, 0, 3, 15, 67, 42, 53, 51, 22, 44, 43, 22, 423, 888, 59, 103, 144, 222, 356, 84, 42, 72, 44, 124]}
-  				]
+  					{name: '인원수', data: [
+						times[0], times[1], times[2], times[3], times[4], times[5], times[6], times[7], times[8], times[9]
+						, times[10], times[11], times[12], times[13], times[14], times[15], times[16], times[17], times[18], times[19]
+						, times[20], times[21], times[21], times[22]
+  					]}]
   			});
   		});
   		
