@@ -46,13 +46,19 @@
    		VALUES( seq_bcode.nextval || #{ bwriter }, NULL, 'report', #{ b_title }, #{ b_content }, #{ bwriter }, SYSDATE, SYSDATE, 1, 'Y')
 	</select>
 	
-	<!-- 공지글 상세보기 -->
+	<!-- 공지글 목록 -->
     <select id="nList" parameterType="java.lang.String" resultMap="helpMainResultSet" >
-        SELECT B_TYPE, B_TITLE, BWRITER, B_UPDATE_DATE, B_COUNT, B_STATUS
+        SELECT B_CODE, B_TYPE, B_TITLE, BWRITER, B_UPDATE_DATE, B_COUNT, B_STATUS
 		FROM BOARD
 		WHERE B_TYPE = 'notice' AND B_STATUS = 'Y'
 		ORDER BY B_UPDATE_DATE DESC
     </select>
-		
+    
+	<!-- 공지글 상세보기 -->
+    <select id="nListDetail" parameterType="java.lang.String" resultMap="helpMainResultSet" >
+        SELECT B_CODE, B_TYPE, B_TITLE, B_CONTENT, BWRITER, B_UPDATE_DATE, B_COUNT, B_STATUS
+		FROM BOARD
+		WHERE B_TYPE = 'notice' AND B_STATUS = 'Y' AND B_CODE = #{ b_code }
+    </select>		
 
 </mapper>

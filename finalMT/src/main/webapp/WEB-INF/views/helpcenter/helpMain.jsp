@@ -71,6 +71,15 @@
 	height: 60px;
 }
 
+#searchBtn {
+	display: inline-block;
+	float: left;
+	margin-right: 1%;
+	margin-top: 1%; height : 60px;
+	font-size: 30px;
+	height: 60px;
+}
+
 .nav-pills {
 	font-size: 30px;
 	width: 1000px;
@@ -335,7 +344,7 @@ outer {
 			<div class="searchArea">
 				<div class="form-group">
 					<input type="text" class="form-control" id="search" name="word" style="width: 88%;">
-					<button onclick="goSearch();" type="button" class="btn btn-danger" id="search">Search</button>
+					<button onclick="goSearch();" type="button" class="btn btn-danger" id="searchBtn">Search</button>
 					<br clear="both"/> 
 					<br/> 
 					<b style="font-size: 18px; color: rgb(135, 0, 0); font-family: 'Nanum Gothic', sans-serif;">
@@ -346,25 +355,23 @@ outer {
 			</div>
 			<br/>
 			
-				<script>
+			<script>
+			
+				function goSearch(){
 					
-					function goSearch(){
+					if($("#search").val() === ''){
 						
-						location.href="${ contextPath }/helpsearch.hp?word=" + $("#search").val();
-					}
-
-				</script>
-				
-				<!-- <script>
-				
-					function goSearch(){
-					
 						alert("검색어를 입력해주세요!");
+						location.reload();
+						
+					}else {
+						
+						location.href="${ contextPath }/helpsearch.hp?word=" + $("#search").val(); 
 					}
-					
-				</script> -->
+				}
 				
-
+			</script>
+	
 			<!-- Pure CSS Menu -->
 			<div class='css3-tab'>
 				<input type='radio' name='a' class="qnaType" id='tabOne' tabindex="1" value="qna1" checked>
@@ -401,28 +408,45 @@ outer {
 				
 				<script>
 					
-					 $(".qnaType").click(function(){
+				 $(".qnaType").click(function(){
 					 	
-						 var b_type = $(this).val();
-						 
-						 $.ajax({
-				            url : "helpmain.hp",
-				            type : "GET",
-				            data : {"b_type": b_type},
-				            success : function(data){
-				            	console.log(data);
-				            },
-				            error : function(data){
-				                alert("error");
-				            }
-					     });
-					 });
+					 var b_type = $(this).val();
+					 
+					 $.ajax({
+			            url : "helpmain.hp",
+			            type : "GET",
+			            data : {"b_type": b_type},
+			            success : function(data){
+			            	
+			            	console.log(data);
+			            	
+							// 덮어씌어지지않게 ' '으로  초기화
+							$(".QnAtable").html('');
+			            	
+			            	 var results = data.list;
+			                 var str = " ";
+			                 $.each(results, function(i){
+			                	 
+			                	 str += "<tr class='answer_'>";
+			                	 str += "<td style='width:7%; background: #F08080; color:white; text-align:center; font-size:40px;'>Q</td>";
+			                     str += "<td style='padding-left:3%;'><b>" + results[i].b_title + "</b></td></tr>";
+			                     str += "<tr class='answer'><td colspan='2' class='answerArea'>" + results[i].b_content + "</td></tr>";
+			                });
+			                $(".QnAtable").append(str); 
+			                
+			                $(".answer").hide();
+			            },
+			            error : function(data){
+			                alert("error");
+			            }
+				     });
+				 });
+			
+				$(".answer").hide();
 				
-					$(".answer").hide();
-					
-					$(document).on("click", ".answer_", function(){
-						$(this).next().toggle();
-					});
+				$(document).on("click", ".answer_", function(){
+					$(this).next().toggle();
+				});
 				
 				</script>
 
@@ -430,19 +454,7 @@ outer {
 					<!-- start slipsum code -->
 					<h1 style="font-family: 'Hanna', sans-serif;">방송/시청관련 QnA</h1>
 					<hr/>
-					<table class="QnAtable">
-					
-						<c:forEach var="item" items="${ list }" begin="0" end="10" step="1">
-							<tr class="answer_">
-								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
-							</tr>
-							<tr class="answer">
-								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
-							</tr>
-						</c:forEach>
-					
-					</table>
+					<table class="QnAtable"></table>
 				</div>
 				
 				<script>
@@ -459,17 +471,7 @@ outer {
 					<!-- start slipsum code -->
 					<h1 style="font-family: 'Hanna', sans-serif;">피치관련 QnA</h1>
 					<hr/>
-					<table class="QnAtable">
-						<c:forEach var="item" items="${ list }" begin="0" end="10" step="1">
-							<tr class="answer_">
-								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
-							</tr>
-							<tr class="answer">
-								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
-							</tr>
-						</c:forEach>
-					</table>
+					<table class="QnAtable"></table> 
 				</div>
 				
 				<script>
@@ -486,17 +488,7 @@ outer {
 					<!-- start slipsum code -->
 					<h1 style="font-family: 'Hanna', sans-serif;">결제관련 QnA</h1>
 					<hr/>
-					<table class="QnAtable">
-						<c:forEach var="item" items="${ list }" begin="0" end="10" step="1">
-							<tr class="answer_">
-								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
-							</tr>
-							<tr class="answer">
-								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
-							</tr>
-						</c:forEach>
-					</table>
+					<table class="QnAtable"></table> 
 				</div>
 				
 				<script>
@@ -513,17 +505,7 @@ outer {
 					<!-- start slipsum code -->
 					<h1 style="font-family: 'Hanna', sans-serif;">기 타 QnA</h1>
 					<hr/>
-					<table class="QnAtable">
-						<c:forEach var="item" items="${ list }" begin="0" end="10" step="1">
-							<tr class="answer_">
-								<td style="width:7%; background: #F08080; color:white; text-align:center; font-size:40px;">Q</td>
-								<td style="padding-left:3%;"><b><c:out value="${ item.b_title }"/></b></td>
-							</tr>
-							<tr class="answer">
-								<td colspan="2" class="answerArea"><c:out value="${ item.b_content }"/></td>
-							</tr>
-						</c:forEach>
-					</table>
+					<table class="QnAtable"></table> 
 				</div>
 				
 				<script>
@@ -537,7 +519,6 @@ outer {
 				</script>
 			</div>
 		</div>
-
 	</div>
 	<!-- 위에 배너 빼고 전체 div 끝 -->
 	

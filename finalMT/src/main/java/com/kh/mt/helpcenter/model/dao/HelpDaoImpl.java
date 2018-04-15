@@ -81,4 +81,15 @@ public class HelpDaoImpl implements HelpDao{
     	
     	return nList;
 	}
+
+	// 공지글 상세보기
+	@Override
+	public ArrayList<HelpMainVo> nListDetail(String b_code) {
+
+		ArrayList<HelpMainVo> nListDetail = (ArrayList)sqlSession.selectList("QnA.nListDetail", b_code);
+    	
+    	System.out.println("dao's nListDetail : " + nListDetail);
+    	
+    	return nListDetail;
+	}
 }

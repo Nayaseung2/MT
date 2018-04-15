@@ -188,12 +188,13 @@ table {
 							<th>조회수</th>
 							<th>작성일</th>
 						</tr>
-						<c:forEach var="item" items="${ nList }" begin="0" end="10" step="1">
+						<c:forEach var="item" items="${ nList }">
 							<tr>
 								<td style="padding-left: 3%;"><c:out value="${ item.b_title }"/></td>
 								<td align="center"><c:out value="${ item.bwriter }"/></td>
 								<td align="center"><c:out value="${ item.b_count }"/></td>
 								<td align="center"><c:out value="${ item.b_update_date }"/></td>
+								<td><input type="hidden" value="${ item.b_code }" id="b_code" name="b_code"></td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -212,14 +213,10 @@ table {
 						
 						$(this).parent().css({"background":"white", "color":"black"});
 						
-					});
-				});
-				
-				$(function(){
-					
-					$("#listArea td").click(function(){
+					}).click(function(){
 						
-						location.href="${ contextPath }/helpnoticedetail.hp";
+						var b_code = $(this).parent().children(":last").children().val();
+						location.href="${ contextPath }/helpnoticedetail.hp?b_code=" + b_code;
 					});
 				});
 				

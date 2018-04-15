@@ -75,9 +75,20 @@ table {
 	text-: 3%;
 }
 
+#listArea td {
+	height: 400px;
+	background: rgba(255, 99, 71, 0.05);
+	
+}
 
-
-
+.conArea {
+	font-family: 'Hanna', sans-serif;
+	font-size: 20px;
+	text-align: center;
+	background: white;
+	border: 0px solid white;
+	background: rgba(255, 99, 71, 0);
+}
 
 </style>
 
@@ -186,14 +197,31 @@ table {
 					<table align="center" id="listArea">
 						<!-- table header -->
 						<tr>
-							<th colspan="3"><c:out value="${ nList.b_title }"/></th>
-							<th><c:out value="${ nList.b_update_date }"/></th>
+							<th colspan="3"><c:out value="${ nListDetail[0].b_title }"/></th>
+							<th><c:out value="${ nListDetail[0].b_update_date }"/></th>
 						</tr>
 						<tr>
-							<td colspan="4" rowspan="10"><c:out value="${ nList.b_content }"/></td>
+							<td colspan="4" rowspan="10">
+								<pre class="conArea"><c:out value="${ nListDetail[0].b_content }"/></pre>
+							</td>
 						</tr>
 					</table>
 				</div>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<div align="center">
+					<button type="button" class="btn btn-danger" style="font-size:20px;" onclick="goList();">목록으로 돌아가기</button>
+				</div>
+				<script>
+				
+					function goList(){
+						
+						location.href="${ contextPath }/helpnotice.hp";	
+					}
+				
+				</script>
 				<br/>
 			</div>
 		</div>

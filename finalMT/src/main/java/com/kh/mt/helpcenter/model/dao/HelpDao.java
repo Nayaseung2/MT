@@ -26,5 +26,8 @@ public interface HelpDao {
 
 	// 공지글 목록
 	ArrayList<HelpMainVo> nList();
+
+	// 공지글 상세보기
+	ArrayList<HelpMainVo> nListDetail(String b_code);
 	
 }

@@ -83,10 +83,6 @@ label {
 	padding-right: 2%;
 }
 
-/* input[type="text"] {
-	border-radius: 20px;
-} */
-
 input[type="radio"] {
 	display: none;
 	width: 50px;
@@ -277,35 +273,12 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 					<br/>
 					<div class="qBtn">
 						<button type="submit" class="btn btn-danger" style="font-size:20px;">등록하기</button>&nbsp;&nbsp;
-						<button type="reset" class="btn btn-danger" style="font-size:20px;">취소하기</button>	
+						<button type="reset" class="btn btn-danger" style="font-size:20px;">모두지우기</button>	
 					</div>
 				</form>
 				<br/>
 				<br/>	
 			</div>		
-			
-				<!-- <script>
-				
-					function goWrite(){
-						
-						location.href="${ contextPath }/helpanswer.hp";
-					}
-				
-				</script> -->
-				
-			 <%-- <c:if test="${ empty qTitle }">
-				<script>
-				
-					function goWrite(){
-						
-						alert("sdf");
-					}
-				
-				</script>
-			
-			</c:if>  --%>
-			
-			
 		</div>
 
 	</div>
