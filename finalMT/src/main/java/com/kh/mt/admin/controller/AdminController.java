@@ -1,13 +1,17 @@
 package com.kh.mt.admin.controller;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.codec.multipart.SynchronossPartHttpMessageReader;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.mt.admin.model.service.AdminService;
@@ -42,10 +46,12 @@ public class AdminController {
 		PageInfo pi = addPage(newCurrentPage, "member"); 
 		
 		ArrayList<Member> mlist = as.userAllList(pi);
+		ArrayList<String> times = userCount();
 		
 		mv.addObject("pi", pi);
 		mv.addObject("list", list);
 		mv.addObject("mlist", mlist);
+		mv.addObject("times", times);
 		
 		mv.setViewName("admin/memberManagement");
 		
@@ -151,7 +157,7 @@ public class AdminController {
 		return mv;
 	}
 	
-		
+	//페이징 처리 메소드
 	public PageInfo addPage(String newCurrentPage, String type){
 		HashMap<String, String> list = as.memberList();
 		
@@ -186,5 +192,54 @@ public class AdminController {
 		
 		return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 	}
+	
+	//그래프 메소드
+	public  ArrayList<String> userCount(){
+		HashMap<String, Integer> htemp = new HashMap<String, Integer>();
+		ArrayList<String> temp = new ArrayList<String>();
+		TreeSet<String> tset = new TreeSet<String>();
+		
+		for(int i = 0; i < 24; i++){
+			if(i < 10){
+				htemp.put("0"+i, 0);
+				tset.add("0"+i);
+			}else {
+				htemp.put(""+i, 0);
+				tset.add(""+i);
+			}
+		}
+		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log"));
+			String line;
+			String block;
+		
+			while((line = reader.readLine()) != null){
+				block = line.substring(line.indexOf("[")+1, line.indexOf("]"));
+				String[] times = block.split(":");
+				
+				if(htemp.containsKey(times[0])){
+					htemp.put(times[0], htemp.get(times[0])+1);
+				}
+			}
+			
+			Iterator<String> it = tset.iterator();
+			
+			while(it.hasNext()){
+				String key = it.next();
+				temp.add(String.valueOf(htemp.get(key)));
+			}
+			
+			reader.close();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+		
+		return temp;
+	}
+	
 	
 }
