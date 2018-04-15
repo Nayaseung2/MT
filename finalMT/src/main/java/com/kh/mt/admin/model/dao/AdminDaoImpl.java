@@ -71,5 +71,10 @@ public class AdminDaoImpl implements AdminDao{
 		
 		return list;
 	}
+
+	@Override
+	public String searchDay() {
+		return sqlSession.selectOne("Admin.searchDay");
+	}
 	
 }

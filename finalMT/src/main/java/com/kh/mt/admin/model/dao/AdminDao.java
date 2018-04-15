@@ -20,5 +20,7 @@ public interface AdminDao {
 
 	ArrayList<Member> searchBJ(PageInfo pi);
 
+	String searchDay();
+
 	
 }

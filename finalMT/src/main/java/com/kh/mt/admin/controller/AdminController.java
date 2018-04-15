@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeSet;
@@ -109,6 +110,71 @@ public class AdminController {
 		return mv;
 	}
 	
+	
+	@RequestMapping("changeGraph.ad")
+	public ModelAndView changeGraph(ModelAndView mv, String type){
+		
+		if(type.equals("day")){
+			String temp = "";
+			String monthDay = as.searchDay();
+			String lastDay = monthDay.substring(monthDay.lastIndexOf("-")+1, monthDay.length());
+			String fileName = monthDay.substring(0, monthDay.lastIndexOf("-")+1);
+			String day = (new Date().toString().split(" "))[2];
+			
+			ArrayList<String> list = new ArrayList<String>();
+			BufferedReader reader = null;
+			String line = null;
+			
+			for(int i = 0; i < Integer.parseInt(lastDay); i++){
+				int count = 0;
+				
+				if(i < 10){
+					temp = "0"+(i+1);
+				}else {
+					temp = ""+(i+1);
+				}
+				
+				try {
+					
+					if(temp.equals(day)){
+						reader = new BufferedReader(new FileReader("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log"));
+					}else {
+						reader = new BufferedReader(new FileReader("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log." + fileName + temp));
+					}
+					
+					while((line = reader.readLine()) != null){
+						count++;
+					}
+					
+					list.add(String.valueOf(count));
+					
+				
+				} catch (FileNotFoundException e) {
+					list.add("0");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			mv.addObject("list", list);
+		}
+		
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//수익관리 화면
 	@RequestMapping("revenueMg.ad")
 	public ModelAndView revenueMg(ModelAndView mv){
@@ -198,8 +264,10 @@ public class AdminController {
 		HashMap<String, Integer> htemp = new HashMap<String, Integer>();
 		ArrayList<String> temp = new ArrayList<String>();
 		TreeSet<String> tset = new TreeSet<String>();
+		int min = 0;
+		int max = 24;
 		
-		for(int i = 0; i < 24; i++){
+		for(int i = min; i < max; i++){
 			if(i < 10){
 				htemp.put("0"+i, 0);
 				tset.add("0"+i);
