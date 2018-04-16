@@ -1,5 +1,104 @@
 package com.kh.mt.BJPayList.model.vo;
 
-public class BJPayList {
+import java.io.Serializable;
+import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
+public class BJPayList implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String mcode;
+	private int wd_code;
+	private int price;
+	private Date wd_date;
+	private String status;
+	private Date success_date;
+	private String account;
+	
+	public BJPayList() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public BJPayList(String mcode, int wd_code, int price, Date wd_date, String status, Date success_date,
+			String account) {
+		super();
+		this.mcode = mcode;
+		this.wd_code = wd_code;
+		this.price = price;
+		this.wd_date = wd_date;
+		this.status = status;
+		this.success_date = success_date;
+		this.account = account;
+	}
+
+	public String getMcode() {
+		return mcode;
+	}
+
+	public void setMcode(String mcode) {
+		this.mcode = mcode;
+	}
+
+	public int getWd_code() {
+		return wd_code;
+	}
+
+	public void setWd_code(int wd_code) {
+		this.wd_code = wd_code;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public Date getWd_date() {
+		return wd_date;
+	}
+
+	public void setWd_date(Date wd_date) {
+		this.wd_date = wd_date;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Date getSuccess_date() {
+		return success_date;
+	}
+
+	public void setSuccess_date(Date success_date) {
+		this.success_date = success_date;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	@Override
+	public String toString() {
+		return "BJPayList [mcode=" + mcode + ", wd_code=" + wd_code + ", price=" + price + ", wd_date=" + wd_date
+				+ ", status=" + status + ", success_date=" + success_date + ", account=" + account + "]";
+	}
+	
+	
+	
+	
 }

@@ -2,11 +2,32 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="bjPayList">
+<mapper namespace="BJPayList">
+	<resultMap type="BJPayList" id="BJPayListResultSet">
+		<id property="wd_code" column="WD_CODE" />
+		<result property="mcode" column="MCODE" />
+		<result property="price" column="PRICE" />
+		<result property="wd_date" column="WD_DATE" />
+		<result property="status" column="STATUS" />
+		<result property="success_date" column="SUCCESS_DATE" />
+		<result property="account" column="ACCOUNT" />
+	</resultMap>
 
-
-
-
-
+	 <select id="selectPeach" resultType="_int" parameterType="java.lang.String">
+	   	SELECT PEACH FROM MEMBER WHERE MCODE=#{mcode}
+	 </select>
+	 <select id="selectwdprice" resultType="_int" parameterType="java.lang.String">
+	   	SELECT NVL(SUM(PRICE), 0)FROM WITHDRAWAL WHERE MCODE=#{mcode} AND STATUS='Y'
+	 </select>
+	 <insert id="insertBJPayList" >
+	   	INSERT INTO WITHDRAWAL
+	   	VALUES(#{mcode}, SEQ_WD_CODE.NEXTVAL, #{price}, SYSDATE, 'N', SYSDATE, #{account})
+	 </insert>
+	 <update id="updatePeach" >
+   		UPDATE MEMBER SET PEACH = TO_NUMBER(#{peach_code}) WHERE MCODE = #{mcode}
+   	 </update>
+   	 <select id="selectWithdrawList" parameterType="java.lang.String" resultMap="BJPayListResultSet">
+   	 	SELECT * FROM WITHDRAWAL WHERE MCODE = #{mcode} ORDER BY WD_DATE ASC
+   	 </select>
 
 </mapper>

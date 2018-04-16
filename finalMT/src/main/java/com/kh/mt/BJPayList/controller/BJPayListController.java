@@ -1,11 +1,22 @@
 package com.kh.mt.BJPayList.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.mt.BJPayList.model.service.BJPayListService;
+import com.kh.mt.BJPayList.model.vo.BJPayList;
+
 @Controller
 public class BJPayListController {
+	
+	@Autowired
+	private BJPayListService bjp;
+	
 	
 	public BJPayListController() {
 		// TODO Auto-generated constructor stub
@@ -67,8 +78,13 @@ public class BJPayListController {
 	
 	//BJ 출금 관리 페이지
 	@RequestMapping("WithdrawList.bjp")
-	public ModelAndView WithdrawList(ModelAndView mv){
+	public ModelAndView WithdrawList(ModelAndView mv, String mcode){
 		
+		ArrayList<BJPayList> list= bjp.selectWithdrawList(mcode);
+		
+		
+		
+		mv.addObject("list", list);
 		mv.setViewName("bjPayList/WithdrawList");
 		return mv;
 				
@@ -96,8 +112,19 @@ public class BJPayListController {
 	//BJ 출금 신청하기
 
 	@RequestMapping("WithdrawForm.bjp")
-	public ModelAndView WithdrawForm(ModelAndView mv){
+	public ModelAndView WithdrawForm(ModelAndView mv, String mcode){
+		System.out.println("WithdrawForm mcode="+mcode);
 		
+		int peach = bjp.selectPeach(mcode);
+		System.out.println(peach);
+		
+		int wd_price = bjp.selectwdprice(mcode);
+		
+		HashMap<String, Integer> hmap = new HashMap<String, Integer>();
+		hmap.put("peach", peach);
+		hmap.put("wd_price", wd_price);
+		
+		mv.addObject("hmap", hmap);
 		mv.setViewName("bjPayList/WithdrawForm");
 		return mv;
 				
@@ -111,6 +138,33 @@ public class BJPayListController {
 		return mv;
 				
 	}
+	
+
+	//출금신청
+	@RequestMapping("WithdrawInsert.bjp")
+	public ModelAndView WithdrawInsert(ModelAndView mv, String mcode,String mid, String account, int peach){
+		BJPayList bjpvo = new BJPayList();
+		bjpvo.setAccount(account);
+		bjpvo.setMcode(mcode);
+		bjpvo.setPrice(peach*70);
+		
+		bjp.insertBJPayList(bjpvo);
+		
+		int peach2 = bjp.selectPeach(mcode);
+		System.out.println(peach2);
+		
+		int wd_price = bjp.selectwdprice(mcode);
+		
+		HashMap<String, Integer> hmap = new HashMap<String, Integer>();
+		hmap.put("peach", peach2);
+		hmap.put("wd_price", wd_price);
+		
+		mv.addObject("hmap", hmap);
+		mv.setViewName("bjPayList/WithdrawForm");
+		return mv;
+				
+	}
+	
 
 
 }

@@ -68,7 +68,7 @@
 	
 	<!-- bjPayListServlet 맵핑 -->
 	<servlet>
-		<servlet-name>bjPayList</servlet-name>
+		<servlet-name>BJPayList</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
@@ -78,7 +78,7 @@
 	</servlet>
 		
 	<servlet-mapping>
-		<servlet-name>bjPayList</servlet-name>
+		<servlet-name>BJPayList</servlet-name>
 		<url-pattern>*.bjp</url-pattern>
 	</servlet-mapping>
 	
