@@ -9,6 +9,7 @@
 <script src="https://github.com/muaz-khan/RTCMultiConnection/releases/download/3.4.3/RTCMultiConnection.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 <script src="https://cdn.webrtc-experiment.com:443/getScreenId.js"></script>
+<script src="https://webrtc.github.io/adapter/adapter-1.0.2.js"></script>
 <title>Insert title here</title>
 <style>
 	 	video {
@@ -18,60 +19,7 @@
             height:100%;
             max-height:100%;
         }
-        /* button,
-        input,
-        select {
-            font-weight: normal;
-            padding: 2px 4px;
-            text-decoration: none;
-            display: inline-block;
-            text-shadow: none;
-            font-size: 16px;
-            outline: none;
-        }
-        .make-center {
-            text-align: center;
-            padding: 5px 10px;
-        }
-        button, input, select {
-            font-family: Myriad, Arial, Verdana;
-            font-weight: normal;
-            border-top-left-radius: 3px;
-            border-top-right-radius: 3px;
-            border-bottom-right-radius: 3px;
-            border-bottom-left-radius: 3px;
-            padding: 4px 12px;
-            text-decoration: none;
-            color: rgb(27, 26, 26);
-            display: inline-block;
-            box-shadow: rgb(255, 255, 255) 1px 1px 0px 0px inset;
-            text-shadow: none;
-            background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0.05, rgb(241, 241, 241)), to(rgb(230, 230, 230)));
-            font-size: 20px;
-            border: 1px solid red;
-            outline:none;
-            vertical-align: middle;
-        }
-        button, select {
-            height: 35px;
-            margin: 0 5px;
-        }
-        button:hover, input:hover, select:hover {
-            background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(5%, rgb(221, 221, 221)), to(rgb(250, 250, 250)));
-            border: 1px solid rgb(142, 142, 142);
-        }
-        button:active, input:active, select:active, button:focus, input:focus, select:focus {
-            background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(5%, rgb(183, 183, 183)), to(rgb(255, 255, 255)));
-            border: 1px solid rgb(142, 142, 142);
-        }
-        button[disabled], iput[disabled], select[disabled] {
-            background: rgb(249, 249, 249);
-            border: 1px solid rgb(218, 207, 207);
-            color: rgb(197, 189, 189);
-        }
-        input, input:focus, input:active {
-            background: white;
-        } */
+       
 </style>
 </head>
 <body>
@@ -272,13 +220,15 @@
 	// 기본적으로 socket.io 서버는 자신의 URL에 배포되는 것으로 가정합니다.
 	connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 	// 서버가 없을 시 아래의 소스 사용 무하마드는 상히 친절하네 역시 MIT
-		// connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
-	connection.socketMessageEvent = 'scalable-screen-broadcast-demo';
+	
+	/* connection.socketMessageEvent = 'scalable-screen-broadcast-demo'; */
+	connection.socketMessageEvent = 'RTCMultiConnection-Message';
 	//사용자가 서버에 연결해야 다른 사용자도 이용 할 수 있다.
 	connection.connectSocket(function(socket) {
 	/* socket.on('logs', function(log) {
 	document.querySelector('h1').innerHTML = log.replace(/</g, '----').replace(/>/g, '___').replace(/----/g, '(<span style="color:red;">').replace(/___/g, '</span>)');
 	}); */
+	window.enableAdapter = true; 
 	// 이 이벤트는 브로드 캐스트가 이미 생성 된 경우에 발생합니다.
 		socket.on('join-broadcaster', function(hintsToJoinBroadcast) {
 			console.log('join-broadcaster', hintsToJoinBroadcast);
@@ -290,9 +240,11 @@
 			};
 			connection.join(hintsToJoinBroadcast.userid);
 		});
+	
 		socket.on('rejoin-broadcast', function(broadcastId) {
 			console.log('rejoin-broadcast', broadcastId);
-				console.log("몇명2");
+			console.log("몇명2");
+				
 			connection.attachStreams = [];
 			socket.emit('check-broadcast-presence', broadcastId, function(isBroadcastExists) {
     			if(!isBroadcastExists) {
@@ -310,7 +262,7 @@
 			// alert('Broadcast has been stopped.');
 				// location.reload();
 			console.error('broadcast-stopped', broadcastId);
-			alert('This broadcast has been stopped.');
+			alert('방송종료.');
 		});
 		// 이 이벤트는 브로드 캐스트가 없을 때 발생합니다.
 		socket.on('start-broadcasting', function(typeOfStreams) {
@@ -323,10 +275,10 @@
 			connection.session = typeOfStreams;
 			// "open" method here will capture media-stream
 			// we can skip this function always; it is totally optional here.
-				// we can use "connection.getUserMediaHandler" instead
+			// we can use "connection.getUserMediaHandler" instead
 			connection.open(connection.userid, function() {
     			showRoomURL(connection.sessionid);
-				});
+			});
 		});
 	});
 	window.onbeforeunload = function() {
@@ -338,29 +290,36 @@
 		if(connection.isInitiator && event.type !== 'local') {
 			return;
     	}
+		
     	if(event.mediaElement) {
 	    	event.mediaElement.pause();
 			delete event.mediaElement;
 		}
+    	
 		connection.isUpperUserLeft = false;
 		videoPreview.src = URL.createObjectURL(event.stream);
 		videoPreview.play();
+		
 		videoPreview.userid = event.userid;
+		
 		if(event.type === 'local') {
     		videoPreview.muted = true;
 		}
+		
 		if (connection.isInitiator == false && event.type === 'remote') {
     		// 그는 단지 미디어를 중계하고있다.
-	     		connection.dontCaptureUserMedia = true;
+	     	connection.dontCaptureUserMedia = true;
     		connection.attachStreams = [event.stream];
 			connection.sdpConstraints.mandatory = {
 	    		OfferToReceiveAudio: false,
     			OfferToReceiveVideo: false
 			};
-	 			var socket = connection.getSocket();
+			
+	 		var socket = connection.getSocket();
 			socket.emit('can-relay-broadcast');
+			
 			if(connection.DetectRTC.browser.name === 'Chrome') {
-		     		connection.getAllParticipants().forEach(function(p) {
+		     	connection.getAllParticipants().forEach(function(p) {
 		         		if(p + '' != event.userid + '') {
     	        		var peer = connection.peers[p].peer;
         	    			peer.getLocalStreams().forEach(function(localStream) {
@@ -373,7 +332,7 @@
         			}
     			});
 			}
-	      		if(connection.DetectRTC.browser.name === 'Firefox') {
+	        if(connection.DetectRTC.browser.name === 'Firefox') {
 	    		// Firefox가 removeStream 메소드를 지원하지 않습니다.
 	    		// 그것이 대체 해킹을 사용하는 이유입니다.
 	    		//참고 : 파이어 폭스는 리모트 미디어 스트림의 트랙을 대체 할 수없는 것으로 보인다.
@@ -382,8 +341,8 @@
 	        		if(p + '' != event.userid + '') {
 	            		connection.replaceTrack(event.stream, p);
 	        		}
-		     		});
-	  			}
+		    	});
+	  		}
 			// Firefox는 원격 MediaStream을 기록하기 위해 UN_ABLE 인 것처럼 보입니다
 			// WebAudio 솔루션은 단순히 오디오 만 녹음합니다.
 			// 그래서 파이어 폭스에서는 녹음을 건너 뜁니다.
@@ -404,16 +363,21 @@
 		}	
 		document.getElementById('open-or-join').disabled = true;
 		connection.session = {
+			data:true,
 			screen: true,
 			oneway: true
 		};
+		
 		var socket = connection.getSocket();
+		
 		socket.emit('check-broadcast-presence', broadcastId, function(isBroadcastExists) {
 			if(!isBroadcastExists) {
     		// 첫 번째 사람 (즉, 실제 방송사)은 자신의 사용자 ID를 설정해야합니다
     		connection.userid = broadcastId;
 			}
+			
 			console.log('check-broadcast-presence', broadcastId, isBroadcastExists);
+			
 			socket.emit('join-broadcast', {
     			broadcastId: broadcastId,
 	    		userid: connection.userid,
@@ -422,33 +386,9 @@
 		});
 	};
 	connection.onstreamended = function() {};
-	connection.onleave = function(event) {
-		if(event.userid !== videoPreview.userid) return;
-		var socket = connection.getSocket();
-		socket.emit('can-not-relay-broadcast');
-		connection.isUpperUserLeft = true;
-		if(allRecordedBlobs.length) {
-			//마지막으로 기록 된 것을 재생
-			var lastBlob = allRecordedBlobs[allRecordedBlobs.length - 1];
-			videoPreview.src = URL.createObjectURL(lastBlob);
-			videoPreview.play();
-			allRecordedBlobs = [];
-		}
-		else if(connection.currentRecorder) {
-			var recorder = connection.currentRecorder;
-			connection.currentRecorder = null;
-			recorder.stopRecording(function() {
-    		if(!connection.isUpperUserLeft) return;
-    			videoPreview.src = URL.createObjectURL(recorder.blob);
-    			videoPreview.play();
-			});
-		}
-		if(connection.currentRecorder) {
-			connection.currentRecorder.stopRecording();
-			connection.currentRecorder = null;
-		}
-	};
-	var allRecordedBlobs = [];
+	
+	
+	
 	function repeatedlyRecordStream(stream) {
 		if(!enableRecordings) {
 			return;
@@ -483,7 +423,7 @@
 			throw error;
 		});
 	};
-		function disableInputButtons() {
+	function disableInputButtons() {
 		document.getElementById('open-or-join').disabled = true;
 		document.getElementById('broadcast-id').disabled = true;
 	}
@@ -568,16 +508,15 @@
 	/* UI코드 */
 	
 	/*  채팅코드  */ 
-	/* document.getElementById('btn-input').onkeyup = function(e) {
+	 document.getElementById('btn-input').onkeyup = function(e) {
         if (e.keyCode != 13) return;
         // 먼저 input의 공백과 특수문자들 제거
         this.value = this.value.replace(/^\s+|\s+$/g, '');
         if (!this.value.length) return;
 		
-        var text11 = document.getElementById('btn-input');
-        connection.send(text11.value);
-    	appendDIV(text11.value);
-        text11.value = '';
+        connection.send(this.value);
+    	appendDIV(this.value);
+        this.value = '';
     };
     document.getElementById("btn-chat").click(function(){
     	var text11 = document.getElementById('btn-input');
@@ -587,14 +526,21 @@
     });
     
     function appendDIV(event) {
-        console.log('appendDIV', event);
+   		var chatContainer = document.querySelector('div.panel-body ul.chat'); 
+     	var div = document.createElement('p');
+        div.innerHTML = event.data || event;
+        chatContainer.append(div);
+		div.tabIndex = 0;
+		div.focus();
+                
+        document.getElementById('btn-input').focus();
+        console.log('appendDIV(ㅗㅗ)', event);
         if(event.data) {
             connection.Translator.TranslateText(event.data, function(event) {
-                 appendDIV(event);
+                 appendDIV(event.data);
             });
             return;
         } 
-   		var chatContainer = document.querySelector('div.panel-body ul.chat');
         /* var $mesli = $('<li class="left clearfix"></li>');
         var $span = $('<span class="chat-img pull-left"></span>');
         var $chat_body = $('<div class="chat-body clearfix" id="chat-body"></div>');
@@ -614,31 +560,18 @@
         chatContainer = $chat_body;
         
         var $mesli = document.createElement('<li class="left clearfix"></li>'); */
-     /*    var div = document.createElement('p');
-        div.innerHTML = event.data || event;
-        chatContainer.append(div);
-		div.tabIndex = 0;
-		div.focus();
-                
-        document.getElementById('btn-input').focus();
     }
     
-     RTCmulticonnection 코드 
-    connection.socketMessageEvent = 'textchat-translation-demo';
+      /* RTCmulticonnection 코드  */
+   	/*connection.socketMessageEvent = 'textchat-translation-demo';
         connection.session = {
+        	screen: true,
+    			oneway: true
             data: true
-        };
-        connection.sdpConstraints.mandatory = {
-            OfferToReceiveAudio: false,
-            OfferToReceiveVideo: false
-        };
-        connection.onmessage = appendDIV;
-        
-       // connection.onopen = function() {
-       //     document.getElementById('btn-input').disabled = false;
-       // }; 
+        }; */
+
+       connection.onmessage = appendDIV;
     
-        
         var roomid = params.roomid;
         if(!roomid && hashString.length) {
             roomid = hashString;
@@ -658,7 +591,6 @@
             })();
             disableInputButtons();
         }	    
-        */
         
 	</script>
 	
