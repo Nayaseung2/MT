@@ -2,6 +2,7 @@ package com.kh.mt.admin.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -76,5 +77,17 @@ public class AdminDaoImpl implements AdminDao{
 	public String searchDay() {
 		return sqlSession.selectOne("Admin.searchDay");
 	}
+
+	@Override
+	public String sysdate() {
+		return sqlSession.selectOne("Admin.sysdate");
+	}
+
+	@Override
+	public String lastDay(String date) {
+		
+		return sqlSession.selectOne("Admin.lastDay", date);
+	}
+	
 	
 }

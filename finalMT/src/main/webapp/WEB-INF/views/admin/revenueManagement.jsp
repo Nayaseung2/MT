@@ -5,35 +5,38 @@
 <html> 
 
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<title>수익 관리</title>
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+<!-- Bootstrap Core CSS -->
+<link href="/mt/resources/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- MetisMenu CSS -->
+<link href="/mt/resources/admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="/mt/resources/admin/dist/css/sb-admin-2.css" rel="stylesheet">
+<!-- Morris Charts CSS -->
+<link href="/mt/resources/admin/vendor/morrisjs/morris.css" rel="stylesheet">
+<!-- Custom Fonts -->
+<link href="/mt/resources/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Bootstrap Core CSS -->
-    <link href="/mt/resources/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- MetisMenu CSS -->
-    <link href="/mt/resources/admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<!-- jQuery -->
+<script src="/mt/resources/admin/vendor/jquery/jquery.min.js"></script>
 
-    <!-- Custom CSS -->
-    <link href="/mt/resources/admin/dist/css/sb-admin-2.css" rel="stylesheet">
+<!-- Bootstrap Core JavaScript -->
+<script src="/mt/resources/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Morris Charts CSS -->
-    <link href="/mt/resources/admin/vendor/morrisjs/morris.css" rel="stylesheet">
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/mt/resources/admin/vendor/metisMenu/metisMenu.min.js"></script>
 
-    <!-- Custom Fonts -->
-    <link href="/mt/resources/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<!-- Custom Theme JavaScript -->
+<script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+<script src="http://code.highcharts.com/highcharts.js"></script>
 </head>
 
 <body>
@@ -146,23 +149,21 @@
                     </div>
                 </div>
                 
-                <a href="#">
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-info">
+               	<div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <img src="resources/images/plusBtn.png" style="height: 75px;"/>
+                                    <i class="fa fa-won fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">추가하기</div>
-                                    <div></div>
+                                    <div class="huge">1,999,999,999</div>
+                                    <div>총 수입</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                </a>
 			</div>
             
             
@@ -183,13 +184,7 @@
                                		<a href="#">일별</a>
                                </li>
                                <li>
-                              	 	<a href="#">주별</a>
-                               </li>
-                               <li>
                               	 	<a href="#">월별</a>
-                               </li>
-                               <li>
-                               		<a href="#">년별</a>
                                </li>
                            </ul>
                        </div>
@@ -197,7 +192,7 @@
                </div>
                <!-- /.panel-heading -->
                <div class="panel-body">
-                   <div id="morris-area-chart"></div>
+                   <div id="chart" style="width: 100%; height: 400px;"></div>
                </div>
                <!-- /.panel-body -->
 	        </div>
@@ -226,15 +221,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  <c:forEach var="i" begin="0" end="20">
-                                  	<tr>
-                                  		<td>${ i }</td>
-                                  		<td>${ i }</td>
-                                  		<td>${ i }</td>
-                                  		<td>${ i }</td>
-                                  		<td>N</td>
-                                  	</tr>
-                                  </c:forEach>
+                                <c:forEach var="m" items="${ mlist }">
+                               		<tr>
+                               		
+                               		
+                                 	</tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->
@@ -249,23 +241,20 @@
         
     </div>
     <!-- /#wrapper -->
-
-    <!-- jQuery -->
-    <script src="/test/resources/vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/test/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/test/resources/vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="/test/resources/vendor/raphael/raphael.min.js"></script>
-    <script src="/test/resources/vendor/morrisjs/morris.min.js"></script>
-    <script src="/test/resources/data/morris-data.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="/test/resources/dist/js/sb-admin-2.js"></script>
-
+    <script>
+    	$(function(){
+			var times = ${times};
+			var chart = $("#chart").highcharts({
+				chart: {type: 'line'},
+				title: {text: '시간별'},
+				xAxis: {categories: [00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]},
+				yAxis: {title: 't'},
+				series: [
+					{name: '인원수', data: times}]
+			});
+		});
+    
+    </script>
+    
 </body>
 </html>

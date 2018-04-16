@@ -22,5 +22,7 @@ public interface AdminDao {
 
 	String searchDay();
 
-	
+	String sysdate();
+
+	String lastDay(String date);
 }

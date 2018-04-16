@@ -1,9 +1,12 @@
 package com.kh.mt.admin.controller;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,11 +21,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.mt.admin.model.service.AdminService;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
+import com.kh.mt.pay.model.vo.Pay;
 
 @Controller 
 public class AdminController {
 	@Autowired
 	private AdminService as;
+	
+	private BufferedReader reader = null;
 	
 	public AdminController(){}
 	
@@ -110,52 +116,25 @@ public class AdminController {
 		return mv;
 	}
 	
-	
+	//그래프 교체용
 	@RequestMapping("changeGraph.ad")
 	public ModelAndView changeGraph(ModelAndView mv, String type){
+		if(type.equals("Time")){
+			ArrayList<String> list = userCount();
+			
+			mv.addObject("list", list);
+		}
+
+		if(type.equals("Day")){
+			ArrayList<String> list = dayGraph();
+			
+			mv.addObject("list", list);
+		}
 		
-		if(type.equals("day")){
-			String temp = "";
-			String monthDay = as.searchDay();
-			String lastDay = monthDay.substring(monthDay.lastIndexOf("-")+1, monthDay.length());
-			String fileName = monthDay.substring(0, monthDay.lastIndexOf("-")+1);
-			String day = (new Date().toString().split(" "))[2];
+		if(type.equals("Month")){
 			
-			ArrayList<String> list = new ArrayList<String>();
-			BufferedReader reader = null;
-			String line = null;
-			
-			for(int i = 0; i < Integer.parseInt(lastDay); i++){
-				int count = 0;
+			ArrayList<String> list = monthGraph();
 				
-				if(i < 10){
-					temp = "0"+(i+1);
-				}else {
-					temp = ""+(i+1);
-				}
-				
-				try {
-					
-					if(temp.equals(day)){
-						reader = new BufferedReader(new FileReader("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log"));
-					}else {
-						reader = new BufferedReader(new FileReader("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log." + fileName + temp));
-					}
-					
-					while((line = reader.readLine()) != null){
-						count++;
-					}
-					
-					list.add(String.valueOf(count));
-					
-				
-				} catch (FileNotFoundException e) {
-					list.add("0");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			
 			mv.addObject("list", list);
 		}
 		
@@ -164,20 +143,11 @@ public class AdminController {
 		return mv;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	//수익관리 화면
 	@RequestMapping("revenueMg.ad")
-	public ModelAndView revenueMg(ModelAndView mv){
+	public ModelAndView revenueMg(ModelAndView mv, Pay pay){
+		
+		ArrayList<Pay> list = as.payList();
 		
 		mv.setViewName("admin/revenueManagement");
 		
@@ -259,7 +229,7 @@ public class AdminController {
 		return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 	}
 	
-	//그래프 메소드
+	//시간별 그래프 메소드
 	public  ArrayList<String> userCount(){
 		HashMap<String, Integer> htemp = new HashMap<String, Integer>();
 		ArrayList<String> temp = new ArrayList<String>();
@@ -308,6 +278,105 @@ public class AdminController {
 		
 		return temp;
 	}
+	
+	//일별 그래프 메소드
+	public ArrayList<String> dayGraph(){
+		BufferedReader reader = null;
+		String temp = "";
+		String monthDay = as.searchDay();
+		String day = (new Date().toString().split(" "))[2];
+		ArrayList<String> list = new ArrayList<String>();
+		String line = null;
+		
+		String lastDay = monthDay.substring(monthDay.lastIndexOf("-")+1, monthDay.length());
+		String fileName = monthDay.substring(0, monthDay.lastIndexOf("-")+1);
+		for(int i = 0; i < Integer.parseInt(lastDay); i++){
+			int count = 0;
+			
+			if(i < 9){
+				temp = "0"+(i+1);
+			}else {
+				temp = ""+(i+1);
+			}
+			
+			try {
+				
+				if(temp.equals(day)){
+					reader = new BufferedReader(new FileReader("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log"));
+				}else {
+					reader = new BufferedReader(new FileReader("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log." + fileName + temp));
+				}
+				
+				while((line = reader.readLine()) != null){
+					count++;
+				}
+				
+				list.add(String.valueOf(count));
+				
+			
+			} catch (FileNotFoundException e) {
+				list.add("0");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return list;
+	}
+	
+	//월별 그래프
+	public ArrayList<String> monthGraph(){
+		ArrayList<String> list = new ArrayList<String>();
+		Date d = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String temp = "";
+		String day = "";
+		String line = null;
+		String date = sdf.format(d);
+		String year = date.substring(0, date.indexOf("-"));
+		
+		for(int i = 0; i < 12; i++){
+			int count = 0;
+			if(i < 9){
+				temp = year+"-0"+(i+1);
+			}else {
+				temp = year+"-"+(i+1);
+			}
+			
+			for(int j = 0; j < 31; j++){
+				if(j < 9){
+					day = "-0"+(j+1);
+				}else {
+					day = "-"+(j+1);
+				}
+
+				try {
+					
+					if(j == Integer.parseInt(date.substring(date.lastIndexOf("-")+1, date.length()))){
+						reader = new BufferedReader(new FileReader("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log"));
+					}else {
+						reader = new BufferedReader(new FileReader("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log"+ "." + temp + day));
+					}
+					
+					while((line = reader.readLine()) != null){
+						count++;
+					}
+					
+				} catch (FileNotFoundException e) {
+					break;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			list.add(String.valueOf(count));
+		}
+		
+		return list;
+	}
+	
+	
 	
 	
 }

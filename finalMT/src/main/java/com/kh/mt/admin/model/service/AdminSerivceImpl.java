@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.mt.admin.model.dao.AdminDao;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
+import com.kh.mt.pay.model.vo.Pay;
 
 @Service
 public class AdminSerivceImpl implements AdminService{
@@ -74,6 +75,24 @@ public class AdminSerivceImpl implements AdminService{
 	public String searchDay() {
 		
 		return ad.searchDay();
+	}
+
+	@Override
+	public String sysdate() {
+		return ad.sysdate();
+	}
+
+	@Override
+	public String lastDay(String date) {
+		
+		
+		return ad.lastDay(date);
+	}
+
+	@Override
+	public ArrayList<Pay> payList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

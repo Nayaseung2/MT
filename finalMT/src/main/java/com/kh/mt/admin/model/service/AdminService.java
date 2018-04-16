@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
+import com.kh.mt.pay.model.vo.Pay;
 
 public interface AdminService {
 
@@ -20,6 +21,12 @@ public interface AdminService {
 
 	ArrayList<Member> searchBJ(PageInfo pi);
 
-	String searchDay(); 
+	String searchDay();
+
+	String sysdate();
+
+	String lastDay(String date);
+
+	ArrayList<Pay> payList(); 
 } 
  
