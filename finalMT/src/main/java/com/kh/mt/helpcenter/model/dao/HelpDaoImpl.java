@@ -42,9 +42,9 @@ public class HelpDaoImpl implements HelpDao{
 	@Override
 	public int personal(SqlSessionTemplate sqlSession, HelpMainVo hm) {
 
-		//System.out.println("dao's hm : " + hm);
-		
 		int result = sqlSession.insert("QnA.personal", hm);
+		
+		//System.out.println("dao's hm : " + hm);
 		
 		return result;
 	}
@@ -53,9 +53,9 @@ public class HelpDaoImpl implements HelpDao{
 	@Override
 	public int report(SqlSessionTemplate sqlSession, HelpMainVo hm) {
 		
-		//System.out.println("dao's hm : " + hm);
-		
 		int result1 = sqlSession.insert("QnA.report", hm);
+		
+		//System.out.println("dao's hm : " + hm);
 		
 		return result1;
 	}
@@ -64,9 +64,9 @@ public class HelpDaoImpl implements HelpDao{
 	@Override
 	public int reportFile(SqlSessionTemplate sqlSession, BoardFile bf) {
 		
-		//System.out.println("dao's bf : " + bf);
-		
 		int result2 = sqlSession.insert("Board.reportFile", bf);
+		
+		//System.out.println("dao's bf : " + bf);
 		
 		return result2;
 	}
@@ -77,7 +77,7 @@ public class HelpDaoImpl implements HelpDao{
 		
 		ArrayList<HelpMainVo> nList = (ArrayList)sqlSession.selectList("QnA.nList");
     	
-    	System.out.println("dao's nList : " + nList);
+    	//System.out.println("dao's nList : " + nList);
     	
     	return nList;
 	}
@@ -88,8 +88,19 @@ public class HelpDaoImpl implements HelpDao{
 
 		ArrayList<HelpMainVo> nListDetail = (ArrayList)sqlSession.selectList("QnA.nListDetail", b_code);
     	
-    	System.out.println("dao's nListDetail : " + nListDetail);
+    	//System.out.println("dao's nListDetail : " + nListDetail);
     	
     	return nListDetail;
+	}
+
+	// 총 공지글 수
+	@Override
+	public int nListTotal() {
+
+		int nListTotal = sqlSession.selectOne("QnA.nListTotal");
+		
+		System.out.println("dao's nListTotal : " + nListTotal);
+		
+		return nListTotal;
 	}
 }
