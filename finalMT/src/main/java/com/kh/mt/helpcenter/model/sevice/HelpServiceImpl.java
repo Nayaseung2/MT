@@ -86,6 +86,15 @@ public class HelpServiceImpl implements HelpService{
 		nListDetail = hd.nListDetail(b_code);
     	
     	return nListDetail;
+	}
+
+	// 총 공지글 수
+	@Override
+	public int nListTotal() {
+
+		int nListTotal = hd.nListTotal();
+		
+		return nListTotal;
 	} 
 	
 }

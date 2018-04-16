@@ -54,6 +54,13 @@
 		ORDER BY B_UPDATE_DATE DESC
     </select>
     
+    <!-- 총 공지 게시글 수 -->
+    <select id="nListTotal" resultType="_int">
+    	SELECT COUNT(*) TOTAL
+		FROM BOARD
+		WHERE B_TYPE = 'notice'
+    </select>
+    
 	<!-- 공지글 상세보기 -->
     <select id="nListDetail" parameterType="java.lang.String" resultMap="helpMainResultSet" >
         SELECT B_CODE, B_TYPE, B_TITLE, B_CONTENT, BWRITER, B_UPDATE_DATE, B_COUNT, B_STATUS

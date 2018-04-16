@@ -28,4 +28,7 @@ public interface HelpService {
 	// 공지글 상세보기
 	ArrayList<HelpMainVo> nListDetail(String b_code);
 
+	// 총 공지글 수
+	int nListTotal();
+
 }

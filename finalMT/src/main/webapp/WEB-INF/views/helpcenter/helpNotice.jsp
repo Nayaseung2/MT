@@ -200,8 +200,63 @@ table {
 					</table>
 				</div>
 				<br/>
+				<br/>
+				<div id="pagingArea" align="center">
+					<button class="btn btn-danger" style="font-size:16px;" onclick="return pageChange('minus')">[ 이전 ]</button>&nbsp;&nbsp;
+						<font color="red" size="4" id="page"><b>${ pi.currentPage }</b></font>
+					&nbsp;&nbsp; <button class="btn btn-danger" style="font-size:16px;" onclick="return pageChange('plus')">[ 다음 ]</button>
+				</div>
 			</div>
-			<script>
+			
+    <input type="text" value="${ pi.maxPage }" id="maxPage"/>
+  	<script>
+  	
+  		function pageChange(value){
+  			
+  			var page = Number($("#page").text());
+  			
+			if(page >= 1 && page <= $("#maxPage").val()){
+				
+	  			if(value === 'plus'){
+	  				
+	  				if(page == $("#maxPage").val()){
+	  					return;
+	  				}
+	  				
+	  				page += 1;
+	  				
+	  			}else if(value === 'minus'){
+	  				
+	  				if(page === 1){
+	  					
+	  					return;
+	  				}
+	  				
+	  				page -= 1;
+	  			}
+	  			
+	  			$.ajax({
+	  				url: "helpnotice.hp",
+	  				type: "get",
+	  				data:{"newCurrentPage":page},
+	  				success:function(data){
+
+	  					var list = data.nList;
+	  					var pi = data.pi;
+	  					console.log(list);
+	  					console.log(pi);
+	  					
+	  					$("#page").attr("value", pi.currentPage);
+	  					$("#maxPage").attr("value", pi.maxPage);
+	  				},
+	  				error:function(data){
+	  					console.log("에러!");
+	  				}	
+	  			}); 
+	  			
+  				return false;
+  			}
+  		}
 			
 				$(function(){
 					
