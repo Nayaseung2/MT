@@ -94,7 +94,7 @@
                             <a href="revenueMg.ad"><i class="fa fa-table fa-fw"></i> 수익 관리</a>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="withdrawal.ad">출금 신청</a>
@@ -223,19 +223,13 @@
                            </button>
                            <ul class="dropdown-menu pull-right" role="menu" >
                                <li value="time">
-                               		<a class="gType" onclick="graphChange('time')">시간별</a>
+                               		<a class="gType" onclick="graphChange('Time')">시간별</a>
                                </li>
                                <li>
-                               		<a class="gType" onclick="graphChange('day')">일별</a>
+                               		<a class="gType" onclick="graphChange('Day')">일별</a>
                                </li>
                                <li>
-                              	 	<a class="gType" onclick="graphChange('week')">주별</a>
-                               </li>
-                               <li>
-                              	 	<a class="gType" onclick="graphChange('month')">월별</a>
-                               </li>
-                               <li>
-                               		<a class="gType" onclick="graphChange('year')">년별</a>
+                              	 	<a class="gType" onclick="graphChange('Month')">월별</a>
                                </li>
                            </ul>
                        </div>
@@ -371,7 +365,6 @@
   		}
   		
   		function graphChange(type){
-  			console.log(type);
   			var newData = new Array();
   			var total = new Array();
   			
@@ -385,8 +378,7 @@
   					$.each(data.list, function(index, item){
   						newData.push(Number(item));
 						total.push(index+1);	
-  				       });	
-  					console.log(newData);
+  				    });	
   				},
   				error: function(){
   					console.log("error!");
@@ -396,27 +388,21 @@
   			$("#chart").html("");
   			$("#chart").highcharts({
   				chart: {type: 'line'},
-  				title: {text: '일별 접속자'},
+  				title: {text: type},
   				xAxis: {categories: total},
   				yAxis: {title: 't'},
-  				series: [
-  					{name: '인원수', data: newData}]
+  				series: [{name: '인원수', data: newData}]
   			});
-		  			
-  			
   		}
-  		
   		
   		$(function(){
 			var times = ${times};
-			console.log(times.length);
   			var chart = $("#chart").highcharts({
   				chart: {type: 'line'},
-  				title: {text: '시간별 접속자'},
+  				title: {text: 'Time'},
   				xAxis: {categories: [00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]},
   				yAxis: {title: 't'},
-  				series: [
-  					{name: '인원수', data: times}]
+  				series: [{name: '인원수', data: times}]
   			});
   		});
   		
