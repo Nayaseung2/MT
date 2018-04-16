@@ -26,10 +26,10 @@
 				<li><a href="${contextPath }/ProfitBj.bjp"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;&nbsp;&nbsp;수익 그래프</a></li>
 				<li><a href="${contextPath }/BlackList.bjp"><i class="fa fa-times"></i>&nbsp;&nbsp;&nbsp;&nbsp;블랙 회원 관리</a></li>
 				<li><a href="${contextPath }/MyFan.bjp"><i class="fa fa-heart"></i>&nbsp;&nbsp;&nbsp;&nbsp;내 팬 관리</a></li>
-				<li><a href="${contextPath }/WithdrawList.bjp"><i class="fa fa-won"></i>&nbsp;&nbsp;&nbsp;&nbsp;출금 신청 내역</a></li>
+				<li><a href="${contextPath }/WithdrawList.bjp?mcode=${loginUser.mcode}"><i class="fa fa-won"></i>&nbsp;&nbsp;&nbsp;&nbsp;출금 신청 내역</a></li>
 				<li><a href="${contextPath }/SeeUser.bjp"><i class="fa fa-gears"></i>&nbsp;&nbsp;&nbsp;&nbsp;시청자 관리 </a></li>
 				<li><a href="${contextPath }/LiveTime.bjp"><i class="fa fa-power-off"></i>&nbsp;&nbsp;&nbsp;&nbsp;방송 시간 관리</a></li>
-				<li><a href="${contextPath }/WithdrawForm.bjp"><i class="fa fa-sign-in"></i>&nbsp;&nbsp;&nbsp;&nbsp;출금 신청하기</a></li>
+				<li><a href="${contextPath }/WithdrawForm.bjp?mcode=${loginUser.mcode}"><i class="fa fa-sign-in"></i>&nbsp;&nbsp;&nbsp;&nbsp;출금 신청하기</a></li>
 				<li><a href="${contextPath }/Account.bjp"><i class="fa fa-sign-in"></i>&nbsp;&nbsp;&nbsp;&nbsp;계좌 인증 하기</a></li>
 				<li><a href="${contextPath }/broadcasting.JDBC"><i class="fa fa-youtube-play"></i>&nbsp;&nbsp;&nbsp;&nbsp;내 방송국 가기</a></li>
 

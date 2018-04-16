@@ -7,7 +7,7 @@
 		<typeAlias alias='Member' type="com.kh.mt.member.model.vo.Member"/>
 		<typeAlias alias='NaverLoginMember' type="com.kh.mt.member.model.vo.NaverLoginMember"/>
 		<typeAlias alias='Pay' type="com.kh.mt.pay.model.vo.Pay"/>
-		<typeAlias alias='bjPayList' type="com.kh.mt.BJPayList.model.vo.BJPayList"/>
+		<typeAlias alias='BJPayList' type="com.kh.mt.BJPayList.model.vo.BJPayList"/>
 		<typeAlias alias='HelpMainVo' type="com.kh.mt.helpcenter.model.vo.HelpMainVo"/>
 		<typeAlias alias='JDBC1' type="com.kh.mt.JDBC.model.vo.JDBC"/>
 		<typeAlias alias='JDBClogo' type="com.kh.mt.JDBC.model.vo.JDBCLogoFile"/>

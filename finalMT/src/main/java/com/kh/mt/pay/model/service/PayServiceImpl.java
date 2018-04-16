@@ -3,11 +3,12 @@ package com.kh.mt.pay.model.service;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.kh.mt.pay.model.dao.PayDao;
 import com.kh.mt.pay.model.vo.Pay;
 
-@Repository
+@Service
 public class PayServiceImpl implements PayService{
 
 	@Autowired
@@ -18,7 +19,9 @@ public class PayServiceImpl implements PayService{
 
 	@Override
 	public void insertPayList(Pay p) {
+		System.out.println("여기까지 오기는 하니...");
 		int result = pd.insertPayList(sqlSession, p);
+		System.out.println("service result"+result);
 		
 	}
 
