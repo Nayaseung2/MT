@@ -47,8 +47,8 @@
 	</select>
 	
 	<!-- 공지글 목록 -->
-    <select id="nList" parameterType="java.lang.String" resultMap="helpMainResultSet" >
-        SELECT B_CODE, B_TYPE, B_TITLE, BWRITER, B_UPDATE_DATE, B_COUNT, B_STATUS
+    <select id="nList" resultMap="helpMainResultSet" >
+        SELECT *
 		FROM BOARD
 		WHERE B_TYPE = 'notice' AND B_STATUS = 'Y'
 		ORDER BY B_UPDATE_DATE DESC
@@ -67,5 +67,11 @@
 		FROM BOARD
 		WHERE B_TYPE = 'notice' AND B_STATUS = 'Y' AND B_CODE = #{ b_code }
     </select>		
+    
+    <!-- 게시글 조회수 올리기 -->
+    <select id="updateCount" parameterType="java.lang.String" resultType="_int">
+    	UPDATE BOARD 
+    	SET B_COUNT=(SELECT B_COUNT FROM BOARD WHERE B_CODE = #{ b_code })+1 WHERE B_CODE = #{ b_code }
+    </select>
 
 </mapper>
