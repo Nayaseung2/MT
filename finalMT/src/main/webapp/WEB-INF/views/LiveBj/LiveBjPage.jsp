@@ -8,9 +8,12 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://github.com/muaz-khan/RTCMultiConnection/releases/download/3.4.3/RTCMultiConnection.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-<script src="https://cdn.webrtc-experiment.com:443/getScreenId.js"></script>
-<script src="https://webrtc.github.io/adapter/adapter-1.0.2.js"></script>
-<title>Insert title here</title>
+<!-- <script src="https://cdn.webrtc-experiment.com:443/getScreenId.js"></script> -->
+<script src="resources/js/rtcPeerConnection.js"></script>
+<script src="resources/js/getScreenId.js"></script>
+<script src="resources/js/adapter.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<title>방송기릿</title>
 <style>
 	 	video {
             object-fit: fill;
@@ -62,65 +65,7 @@
 						<!-- /.panel-heading -->
 						<div class="panel-body" style="height: 460px; overflow: overlay;">
 							<ul class="chat">
-							<%-- <!-- 채팅 1명 시작 -->
-								<li class="left clearfix">
-								<span class="chat-img pull-left"></span>
-									<div class="chat-body clearfix">
-										<div class="header">
-										<i class="fa fa-github-alt fa-fw"></i> 
-											<strong class="primary-font">오늘만 산다</strong> 
-											<small class="pull-right text-muted"> 
-											</small>
-										</div>
-										<p>안녕하세요 오늘도 화이팅입니다.</p>
-									</div>
-								</li>
-								<!-- 1명 끝 -->
-								<!-- 채팅 1명 시작 -->
-								<li class="left clearfix">
-								<span class="chat-img pull-left"></span>
-									<div class="chat-body clearfix">
-										<div class="header">
-										<i class="fa fa-github-alt fa-fw"></i> 
-											<strong class="primary-font">오능도 산다</strong> 
-											<small class="pull-right text-muted"> 
-											</small>
-										</div>
-										<p>응응 인정각</p>
-									</div>
-								</li>
-								<!-- 1명 끝 -->
-								<!-- 채팅 1명 시작 -->
-								<li class="left clearfix">
-								<span class="chat-img pull-left"></span>
-									<div class="chat-body clearfix">
-										<div class="header">
-										<i class="fa fa-github-alt fa-fw"></i> 
-											<strong class="primary-font">아프리카 청춘이다</strong> 
-											<small class="pull-right text-muted"> 
-											</small>
-										</div>
-										<p>안녕하세요 모두의 티비 관리자 입니다.</p>
-									</div>
-								</li>
-								<!-- 1명 끝 -->
-								<c:forEach begin="1" end="1" step="1">
-								
-								<!-- 채팅 1명 시작 -->
-								<li class="left clearfix">
-								<span class="chat-img pull-left"></span>
-									<div class="chat-body clearfix">
-										<div class="header">
-										<i class="fa fa-github-alt fa-fw"></i> 
-											<strong class="primary-font">아프리카 청춘이다</strong> 
-											<small class="pull-right text-muted"> 
-											</small>
-										</div>
-										<p>오늘도 즐방 하세요~~!</p>
-									</div>
-								</li>
-								<!-- 1명 끝 -->
-								</c:forEach> --%>
+							
 							</ul>
 						</div>
 						<!-- /.panel-body -->
@@ -287,10 +232,11 @@
 	};
 	var videoPreview = document.getElementById('video-preview');
 	connection.onstream = function(event) {
+		console.log("아니 이게뭐야 ?"+event);
 		if(connection.isInitiator && event.type !== 'local') {
 			return;
     	}
-		
+			
     	if(event.mediaElement) {
 	    	event.mediaElement.pause();
 			delete event.mediaElement;
@@ -353,7 +299,7 @@
 	};
 	//node.js 서버에 브로드 캐스트를 요청합니다.
 	// 브로드 캐스트를 사용할 수 있다면 간단하게 참여하십시오. 즉 "join-broadcaster"이벤트가 발생해야합니다.
-		// 브로드 캐스트가 없다면 간단히 만듭니다. 즉"start-broadcasting" 이벤트가 시작되어야합니다.
+	// 브로드 캐스트가 없다면 간단히 만듭니다. 즉"start-broadcasting" 이벤트가 시작되어야합니다.
 	document.getElementById('open-or-join').onclick = function() {
 		var broadcastId = document.getElementById('broadcast-id').value;
 		if (broadcastId.replace(/^\s+|\s+$/g, '').length <= 0) {
@@ -411,7 +357,7 @@
 			});
 		}, 30 * 1000); // 30-seconds
 	};
-	// getScreenId.js를 사용하여 모든 도메인에서 화면 캡처
+1	// getScreenId.js를 사용하여 모든 도메인에서 화면 캡처
 	// Chrome 확장 프로그램 YOUR-Self를 배포 할 필요가 없습니다.
 	connection.getScreenConstraints = function(callback) {
 		getScreenConstraints(function(error, screen_constraints) {
@@ -526,10 +472,39 @@
     });
     
     function appendDIV(event) {
-   		var chatContainer = document.querySelector('div.panel-body ul.chat'); 
+   		var chatContainer = document.querySelector('div.panel-body ul.chat');
+   		
+   		var chatli = document.createElement('li');
+   		chatli.setAttribute("id","chatli");
+   		chatli.setAttribute("class","left clearfix");
+   		var chat_span = document.createElement('span');
+   		chat_span.setAttribute("class","chat-img pull-left");
+   		var chat_body = document.createElement('div');
+   		chat_body.setAttribute('id', 'chat-body');
+   		chat_body.setAttribute('class', 'chat-body clearfix');
+   		var chat_header = document.createElement('div');
+   		chat_header.setAttribute("class", "header");
+   		chat_header.setAttribute("id", "chat-header");
+		var chat_i = document.createElement('i');
+		chat_i.setAttribute("class", "fa fa-github-alt fa-fw");
+   		var chat_strong = document.createElement('strong');
+   		chat_strong.setAttribute("class", "primary-font");
+   		chat_strong.innerHTML = "아프리카 청춘이다&nbsp&nbsp";
+		var chat_small = document.createElement('small');
+		chat_small.setAttribute('class', "pull-right text-muted");
+		chat_small.setAttribute('id', 'chat_box');
+   		
+		chatContainer.append(chatli);
+		chatli.append(chat_span);
+		chatli.append(chat_body);
+		chat_body.append(chat_header);
+		chat_header.append(chat_i);
+		chat_header.append(chat_strong);
+		chat_header.append(chat_small);
+		
      	var div = document.createElement('p');
         div.innerHTML = event.data || event;
-        chatContainer.append(div);
+        chat_small.append(div);
 		div.tabIndex = 0;
 		div.focus();
                 
@@ -541,34 +516,8 @@
             });
             return;
         } 
-        /* var $mesli = $('<li class="left clearfix"></li>');
-        var $span = $('<span class="chat-img pull-left"></span>');
-        var $chat_body = $('<div class="chat-body clearfix" id="chat-body"></div>');
-        var $header1 = $('<div class="header"></div>');
-        var $itag = $('<i class="fa fa-github-alt fa-fw"></i>');
-        var $strong = $('<strong class="primary-font"></strong>');
-        var $small1 = $('<small class="pull-right text-muted"></small>');
-        var $textP = $('<p></p>');
-        chatContainer.append($mesli);
-        $mesli.append($span);
-        $mesli.append($chat_body);
-        $chat_body.append($header1);
-        $header1.append($itag);
-        $strong.text("아프리카 청춘이다");
-        $header1.append($strong);
-        $header1.append($small1);
-        chatContainer = $chat_body;
-        
-        var $mesli = document.createElement('<li class="left clearfix"></li>'); */
     }
     
-      /* RTCmulticonnection 코드  */
-   	/*connection.socketMessageEvent = 'textchat-translation-demo';
-        connection.session = {
-        	screen: true,
-    			oneway: true
-            data: true
-        }; */
 
        connection.onmessage = appendDIV;
     
@@ -592,7 +541,37 @@
             disableInputButtons();
         }	    
         
+        /* chatContainer.innerHTML = '<li class="left clearfix" id="chatli"></li>';
+   		var chatli = document.getElementById("chatli");
+   		chatli.innerHTML = '<span class="chat-img pull-left"></span>';
+   		//chatli.innerHTML = '<div class="chat-body clearfix" id="chat-body"></div>';
+   		var chat_body = document.getElementById('chat-body');
+   		chat_body.innerHTML = '<div class="header" id="chat-header"></div>';
+   		var chat_header = document.getElementById("chat-header");
+   		chat_header.innerHTML = '<i class="fa fa-github-alt fa-fw"></i><strong class="primary-font">아프리카 청춘이다</strong><small class="pull-right text-muted" id="chat_box"></small>';
+   		chat_header.innerHTML = '<strong class="primary-font">아프리카 청춘이다</strong>';
+   		chat_header.innerHTML = '<small class="pull-right text-muted" id="chat_box"></small>'; 
+   		chatContainer.append(chatli);
+   		var chat_box = document.getElementById('chat_box');  */
 	</script>
 	
+        <!-- var $mesli = document.createElement('<li class="left clearfix"></li>'); */
+  
+   		var $mesli = $('<li class="left clearfix"></li>');
+        var $span = $('<span class="chat-img pull-left"></span>');
+        var $chat_body = $('<div class="chat-body clearfix" id="chat-body"></div>');
+        var $header1 = $('<div class="header"></div>');
+        var $itag = $('<i class="fa fa-github-alt fa-fw"></i>');
+        var $strong = $('<strong class="primary-font"></strong>');
+        var $small1 = $('<small class="pull-right text-muted" id="chat_box"></small>');
+        chatContainer.append($mesli);
+        $mesli.append($span);
+        $mesli.append($chat_body);
+        $chat_body.append($header1);
+        $header1.append($itag);
+        $strong.text("아프리카 청춘이다");
+        $header1.append($strong);
+        $header1.append($small1);
+        chatContainer = $chat_body;  -->
 </body>
 </html>
