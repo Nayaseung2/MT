@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.mt.admin.model.service.AdminService;
+import com.kh.mt.admin.model.vo.Revenue;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
 import com.kh.mt.pay.model.vo.Pay;
@@ -138,6 +139,20 @@ public class AdminController {
 			mv.addObject("list", list);
 		}
 		
+		if(type.equals("reTime")){
+			ArrayList<Integer> list = revenueTimeGraph();
+			
+			mv.addObject("list", list);
+		}
+		
+		if(type.equals("reDay")){
+			
+			
+			mv.addObject("list");
+			
+		}
+		
+		
 		mv.setViewName("jsonView");
 		
 		return mv;
@@ -145,14 +160,60 @@ public class AdminController {
 	
 	//수익관리 화면
 	@RequestMapping("revenueMg.ad")
-	public ModelAndView revenueMg(ModelAndView mv, Pay pay){
+	public ModelAndView revenueMg(ModelAndView mv, String newCurrentPage){
+		//전체 값 조회
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		PageInfo pi = addPage(newCurrentPage, "revenue");
+		ArrayList<Revenue> rlist = as.revenueList(pi);
+		ArrayList<Pay> plist = as.payList();				//결제 정보
 		
-		ArrayList<Pay> list = as.payList();
 		
-		mv.setViewName("admin/revenueManagement");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String sysdate = sdf.format(new Date());
+		
+		int day = 0;
+		int month = 0;
+		int total = 0;
+		
+		
+		for(int i = 0; i < plist.size(); i++){
+			if(String.valueOf(plist.get(i).getPay_date()).equals(sysdate)){
+				day += plist.get(i).getPrice();
+			}
+			total += plist.get(i).getPrice();
+		}
+		
+		String[] today = sysdate.split("-");
+		String dataDay = "";
+		
+		for(int i = 0; i < plist.size(); i++){
+			dataDay = String.valueOf((plist.get(i).getPay_date())).split("-")[1];
+			if(today[1].equals(dataDay)){
+				month += plist.get(i).getPrice();
+			}
+		}
+		
+		ArrayList<Integer> tlist = revenueTimeGraph(); //시간
+		
+		map.put("pi", pi);
+		map.put("rlist", rlist);
+		map.put("tlist", tlist);
+		map.put("day", day);
+		map.put("month", month);
+		map.put("total", total);
+		
+		mv.addObject("map", map);
+		
+		if(newCurrentPage == null){
+			mv.setViewName("admin/revenueManagement");
+		}else {
+			mv.setViewName("jsonView");
+		}
 		
 		return mv;
 	}
+	
+//--------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	//출금신청 화면
 	@RequestMapping("withdrawal.ad")
@@ -196,7 +257,7 @@ public class AdminController {
 	//페이징 처리 메소드
 	public PageInfo addPage(String newCurrentPage, String type){
 		HashMap<String, String> list = as.memberList();
-		
+		System.out.println(list);
 		int currentPage = 1;
 		int limit = 0;
 		int maxPage = 0;
@@ -204,12 +265,14 @@ public class AdminController {
 		int endPage = 0;
 		int listCount = 0;
 
-		limit = 2;
+		limit = 10;
 		
 		if(type.equals("member")){
 			listCount = Integer.parseInt(String.valueOf(list.get("TOTAL")));
 		}else if(type.equals("BJ")){
 			listCount = Integer.parseInt(String.valueOf(list.get("BJ")));
+		}else if(type.equals("revenue")){
+			listCount = Integer.parseInt(String.valueOf(list.get("REVENUE")));
 		}
 		
 		if(newCurrentPage != null){
@@ -229,7 +292,7 @@ public class AdminController {
 		return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 	}
 	
-	//시간별 그래프 메소드
+	//회원 관리 시간별 그래프 메소드
 	public  ArrayList<String> userCount(){
 		HashMap<String, Integer> htemp = new HashMap<String, Integer>();
 		ArrayList<String> temp = new ArrayList<String>();
@@ -279,7 +342,7 @@ public class AdminController {
 		return temp;
 	}
 	
-	//일별 그래프 메소드
+	//회원 관리 일별 그래프 메소드
 	public ArrayList<String> dayGraph(){
 		BufferedReader reader = null;
 		String temp = "";
@@ -324,7 +387,7 @@ public class AdminController {
 		return list;
 	}
 	
-	//월별 그래프
+	//회원 관리 월별 그래프
 	public ArrayList<String> monthGraph(){
 		ArrayList<String> list = new ArrayList<String>();
 		Date d = new Date();
@@ -376,7 +439,48 @@ public class AdminController {
 		return list;
 	}
 	
-	
+	//수익관리 시간별 그래프
+	@RequestMapping("revenueTime.ad")
+	public ArrayList<Integer> revenueTimeGraph(){
+		ArrayList<Pay> plist = as.payList();
+		HashMap<String, Integer> htemp = new HashMap<String, Integer>();
+		TreeSet<String> tset = new TreeSet<String>();
+		ArrayList<Integer> tlist = new ArrayList<Integer>();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String sysdate = sdf.format(new Date());
+		String[] today = sysdate.split("-");
+		
+		for(int i = 1; i < 24; i++){
+			if(i < 10){
+				htemp.put("0"+i, 0);
+				tset.add("0"+i);
+			}else {
+				htemp.put(""+i, 0);
+				tset.add(""+i);
+			}
+		}
+		String dataDay = "";
+		for(int i = 0; i < plist.size(); i++){
+			String dataHour = plist.get(i).getPay_time().split(":")[0];
+			dataDay = String.valueOf((plist.get(i).getPay_date())).split("-")[2];
+			if(today[2].equals(dataDay)){
+				if(htemp.containsKey(dataHour)){
+					int result = htemp.get(dataHour).intValue();
+					htemp.put(dataHour, result + plist.get(i).getPrice());
+				}
+			}
+		}
+		
+		Iterator<String> it = tset.iterator();
+		
+		while(it.hasNext()){
+			String key = it.next();
+			tlist.add(htemp.get(key));
+		}
+		
+		return tlist;
+	}
 	
 	
 }

@@ -4,7 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="Admin">
-  	
+  	<resultMap type="Revenue" id="revenueResultSet">
+      <result property="mId" column="MID"/>   
+      <result property="mName" column="MNAME"/>   
+      <result property="peach_code" column="PEACH_CODE"/>  
+      <result property="p_date" column="P_DATE"/>
+   </resultMap>
+  
   	
   	 
   	<!-- 관리자 메인화면 -->
@@ -16,13 +22,14 @@
 						(SELECT COUNT(*) FROM MEMBER WHERE TO_CHAR(JOIN_DATE) =	TO_CHAR(SYSDATE)) newm,
 						<!-- 출금 신청 해야함. -->
 						(SELECT COUNT(*) FROM BOARD WHERE B_TYPE = 'personal' AND B_STATUS = 'Y') personal
+						
 	FROM JDBC
 	WHERE STATUS = 'Y'
 	GROUP BY 2
   	</select> 
   	 
   	<select id="memberList" resultType="hashmap">
-  		SELECT COUNT(*) TOTAL, (SELECT COUNT(*) FROM MEMBER WHERE VIDEO_YN='Y') BJ 
+  		SELECT COUNT(*) TOTAL, (SELECT COUNT(*) FROM MEMBER WHERE VIDEO_YN='Y') BJ, (SELECT COUNT(*) FROM PAYHISTORY) REVENUE
 		FROM MEMBER
 		WHERE MSTATUS = 'Y'
 		GROUP BY 2
@@ -32,5 +39,10 @@
   		SELECT TO_CHAR(LAST_DAY(SYSDATE), 'RRRR-MM-DD') FROM DUAL
   	</select>
   	
+  	<select id="revenueList" resultMap="revenueResultSet">
+  		SELECT MID, MNAME, PEACH_CODE, TO_CHAR(PAY_DATE, 'RRRR-MM-DD-hh24:mm:ss') P_DATE
+		FROM MEMBER
+		JOIN PAYHISTORY USING(MCODE)
+  	</select>
   	
   </mapper>

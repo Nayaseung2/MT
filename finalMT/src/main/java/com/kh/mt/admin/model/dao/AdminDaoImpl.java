@@ -9,8 +9,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.mt.admin.model.vo.Revenue;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
+import com.kh.mt.pay.model.vo.Pay;
 
 @Repository
 public class AdminDaoImpl implements AdminDao{
@@ -87,6 +89,26 @@ public class AdminDaoImpl implements AdminDao{
 	public String lastDay(String date) {
 		
 		return sqlSession.selectOne("Admin.lastDay", date);
+	}
+
+	
+	//결제정보 리스트
+	@Override
+	public ArrayList<Pay> payList() {
+		ArrayList<Pay> list = (ArrayList) sqlSession.selectList("Pay.payList");
+		
+		return list;
+	}
+
+	//[수익]회원 리스트
+	@Override
+	public ArrayList<Revenue> revenueList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		ArrayList<Revenue> list = (ArrayList)sqlSession.selectList("Admin.revenueList", null, rowBounds);
+		
+		return list;
 	}
 	
 	
