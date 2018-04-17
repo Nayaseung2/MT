@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.mt.admin.model.dao.AdminDao;
+import com.kh.mt.admin.model.vo.Revenue;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
 import com.kh.mt.pay.model.vo.Pay;
@@ -91,8 +92,15 @@ public class AdminSerivceImpl implements AdminService{
 
 	@Override
 	public ArrayList<Pay> payList() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Pay> list = ad.payList();
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<Revenue> revenueList(PageInfo pi) {
+		ArrayList<Revenue> list = ad.revenueList(pi);
+		return list;
 	}
 
 }

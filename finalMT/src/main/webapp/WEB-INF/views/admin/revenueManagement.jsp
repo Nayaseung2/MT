@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html> 
 
@@ -111,7 +112,7 @@
                                     <i class="fa fa-won fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">528,600</div>
+                                    <div class="huge"><fmt:formatNumber value="${ map.day }" type="currency" groupingUsed="true"/></div>
                                     <div>오늘의 수입</div>
                                 </div>
                             </div>
@@ -126,22 +127,7 @@
                                     <i class="fa fa-won fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">905,101,000</div>
-                                    <div>이번주 수입</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-won fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">1,999,999,999</div>
+                                    <div class="huge"><fmt:formatNumber value="${ map.month }" type="currency" groupingUsed="true"/></div>
                                     <div>이번달 수입</div>
                                 </div>
                             </div>
@@ -157,7 +143,7 @@
                                     <i class="fa fa-won fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">1,999,999,999</div>
+                                    <div class="huge"><fmt:formatNumber value="${ map.total }" type="currency" groupingUsed="true"/></div>
                                     <div>총 수입</div>
                                 </div>
                             </div>
@@ -178,13 +164,13 @@
                            </button>
                            <ul class="dropdown-menu pull-right" role="menu" >
                                <li value="time">
-                               		<a href="#">시간별</a>
+                               		<a href="graphChange(reTime)">시간별</a>
                                </li>
                                <li>
-                               		<a href="#">일별</a>
+                               		<a href="graphChange(reDay)">일별</a>
                                </li>
                                <li>
-                              	 	<a href="#">월별</a>
+                              	 	<a href="graphChange(reMonth)">월별</a>
                                </li>
                            </ul>
                        </div>
@@ -198,7 +184,7 @@
 	        </div>
 	        <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">회원 정보
+                        <div class="panel-heading type" id="revenueMg.ad">회원 정보
                         	<div class="input-group custom-search-form" style="width: 30%; float: right;" >
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-btn">
@@ -221,15 +207,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="m" items="${ mlist }">
+                                <c:forEach var="m" items="${ map.rlist }">
                                		<tr>
-                               		
-                               		
+                               			<td><c:out value="${ m.mId }"/></td>
+                               			<td><c:out value="${ m.mName }"/></td>
+                               			<td><c:out value="${ m.peach_code }"/></td>
+                               			<td><c:out value="카드"/></td>
+                               			<td><c:out value="${ m.p_date }"/></td>
                                  	</tr>
                                 </c:forEach>
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->
+                             <div id="pagingArea" align="center">
+								<button onclick="return pageChange('minus', $('.type').attr('id'))">[이전]</button>
+
+									<font color="red" size="4" id="page"><b><c:out value="${ map.pi.currentPage }"/></b></font>
+
+								&nbsp; <button onclick="return pageChange('plus', $('.type').attr('id'))">[다음]</button>
+							</div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -240,19 +236,117 @@
         </div>
         
     </div>
+    <input type="hidden" value="${ map.pi.maxPage }" id="maxPage"/>
     <!-- /#wrapper -->
     <script>
     	$(function(){
-			var times = ${times};
+			var money = ${map.tlist};
 			var chart = $("#chart").highcharts({
 				chart: {type: 'line'},
 				title: {text: '시간별'},
 				xAxis: {categories: [00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]},
 				yAxis: {title: 't'},
 				series: [
-					{name: '인원수', data: times}]
+					{name: '금액', data: money}]
 			});
 		});
+    	
+    	function pageChange(value, type){
+  			var page = Number($("#page").text());
+			var url = type;		
+			
+			if(page >= 1 && page <= $("#maxPage").val()){
+	  			if(value === 'plus'){
+	  				if(page == $("#maxPage").val()){
+	  					return;
+	  				}
+	  				page += 1;
+	  			}else if(value === 'minus'){
+	  				if(page === 1){
+	  					return;
+	  				}
+	  				page -= 1;
+	  			}
+	  			
+	  			$.ajax({
+	  				url: url,
+	  				type: "get",
+	  				data:{"newCurrentPage":page},
+	  				success:function(data){
+	  					var list = data.map.rlist;
+	  					var pi = data.map.pi;
+	  					$("tbody").html("");
+	  					
+	  					for(var i = 0; i < list.length; i++){
+		  					$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].peach_code+"</td><td>카드</td><td>"+list[i].p_date+"</td></tr>");
+	  					}
+	  					
+	  					$("#page").text(page);
+	  					$("#maxPage").attr("value", pi.maxPage)
+	  				},
+	  				error:function(data){
+	  					console.log("에러!");
+	  				}
+	  			});
+  				return false;
+  			}
+  		}
+    	
+    	function typeChange(type){
+  			$(".type").attr("id", type);
+  			
+  			pageChange("", type);
+  		}
+  		
+  		function search(){
+  			var userId = $("#search").val();
+  			
+  			$.ajax({
+  				url: "searchMember.ad",
+  				type: "get",
+  				data: {"userId": userId},
+  				success: function(data){
+  					var m = data.m;
+  					$("tbody").html("");
+  					$("#pagingArea").html("");
+  					
+  					$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].peach_code+"</td><td>카드</td><td>"+list[i].p_date+"</td></tr>");
+  					$("#pagingArea").append("<button onclick='location.reload()'>전체보기</button>");
+  				}
+  			});
+  			
+  		}
+  		
+  		function graphChange(type){
+  			var newData = new Array();
+  			var total = new Array();
+  			
+  			$.ajax({
+  				url: "changeGraph.ad",
+  				type: "get",
+  				async: false,
+  				data: {"type": type},
+  				success: function(data){
+  					
+  					$.each(data.list, function(index, item){
+  						newData.push(Number(item));
+						total.push(index+1);	
+  				    });	
+  				},
+  				error: function(){
+  					console.log("error!");
+  				}
+  			});
+			
+  			$("#chart").html("");
+  			$("#chart").highcharts({
+  				chart: {type: 'line'},
+  				title: {text: type},
+  				xAxis: {categories: total},
+  				yAxis: {title: 't'},
+  				series: [{name: '인원수', data: newData}]
+  			});
+  		}
     
     </script>
     

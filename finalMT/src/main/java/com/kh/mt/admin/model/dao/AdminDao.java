@@ -3,8 +3,10 @@ package com.kh.mt.admin.model.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.mt.admin.model.vo.Revenue;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
+import com.kh.mt.pay.model.vo.Pay;
 
 public interface AdminDao {
 
@@ -25,4 +27,8 @@ public interface AdminDao {
 	String sysdate();
 
 	String lastDay(String date);
+
+	ArrayList<Pay> payList();
+
+	ArrayList<Revenue> revenueList(PageInfo pi);
 }

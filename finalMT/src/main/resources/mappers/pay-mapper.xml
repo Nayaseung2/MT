@@ -8,7 +8,8 @@
       <result property="mcode" column="MCODE"/>   
       <result property="price" column="PRICE"/>   
       <result property="peach_code" column="PEACH_CODE"/>  
-      <result property="pay_date" column="PAY_DATE"/>  
+      <result property="pay_date" column="PAY_DATE"/>
+      <result property="pay_time" column="PAY_TIME"/>
    </resultMap>
    
    <insert id="insertPayList" >
@@ -22,7 +23,10 @@
    		UPDATE MEMBER SET PEACH = TO_NUMBER(#{peach_code}) WHERE MCODE = #{mcode}
    </update>
  
- 
+	<select id="payList" resultMap="payResultSet">
+		SELECT MCODE, PRICE, PEACH_CODE, PAY_DATE, TO_CHAR(PAY_DATE, 'hh24:mm:ss') PAY_TIME
+		FROM PAYHISTORY
+	</select>
  
  
  </mapper> 
