@@ -3,6 +3,7 @@ package com.kh.mt.helpcenter.model.sevice;
 import java.util.ArrayList;
 
 import com.kh.mt.board.model.vo.BoardFile;
+import com.kh.mt.common.PageInfo;
 import com.kh.mt.helpcenter.model.vo.HelpMainVo;
 
 public interface HelpService {
@@ -23,7 +24,7 @@ public interface HelpService {
 	void reportFile(BoardFile bf);
 
 	// 공지글 목록
-	ArrayList<HelpMainVo> nList();
+	ArrayList<HelpMainVo> nList(PageInfo pi);
 
 	// 공지글 상세보기
 	ArrayList<HelpMainVo> nListDetail(String b_code);

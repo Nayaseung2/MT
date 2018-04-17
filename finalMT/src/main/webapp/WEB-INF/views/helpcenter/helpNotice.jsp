@@ -53,8 +53,8 @@
 }
 
 table {
-	border-top:2px solid #F08080;
-	border-bottom:2px solid #F08080;
+	border-top:5px solid #F08080;
+	border-bottom:5px solid #F08080;
 	padding-left: 3%;
 }
 
@@ -188,7 +188,7 @@ table {
 							<th>조회수</th>
 							<th>작성일</th>
 						</tr>
-						<c:forEach var="item" items="${ nList }">
+						<c:forEach var="item" items="${ hmap.nList }">
 							<tr>
 								<td style="padding-left: 3%;"><c:out value="${ item.b_title }"/></td>
 								<td align="center"><c:out value="${ item.bwriter }"/></td>
@@ -202,13 +202,27 @@ table {
 				<br/>
 				<br/>
 				<div id="pagingArea" align="center">
-					<button class="btn btn-danger" style="font-size:16px;" onclick="return pageChange('minus')">[ 이전 ]</button>&nbsp;&nbsp;
-						<font color="red" size="4" id="page"><b>${ pi.currentPage }</b></font>
-					&nbsp;&nbsp; <button class="btn btn-danger" style="font-size:16px;" onclick="return pageChange('plus')">[ 다음 ]</button>
+				
+					<button class="btn btn-danger" style="font-size:16px;" onclick="return pageChange('minus')"> 이전 </button>&nbsp;&nbsp;
+						
+						<!-- 가운데 나오는 페이지 숫자들 -->
+					<c:forEach var="p" begin="${ hmap.pi.startPage }" end="${ hmap.pi.endPage }">
+						
+						<c:if test="${ p eq hmap.pi.currentPage }">
+							<font color="red" size="4" id="page"><b>${ p }</b></font>
+						</c:if>
+						<c:if test="${ p ne hmap.pi.currentPage }">
+							<font color="lightgray" size="4"><b>${ p }</b></font>
+						</c:if> 
+						
+					</c:forEach> 
+					
+					&nbsp;&nbsp; <button class="btn btn-danger" style="font-size:16px;" onclick="return pageChange('plus')"> 다음 </button>
+					
 				</div>
 			</div>
 			
-    <input type="text" value="${ pi.maxPage }" id="maxPage"/>
+    <input type="hidden" value="${ hmap.pi.maxPage }" id="maxPage"/>
   	<script>
   	
   		function pageChange(value){
@@ -241,13 +255,44 @@ table {
 	  				data:{"newCurrentPage":page},
 	  				success:function(data){
 
-	  					var list = data.nList;
-	  					var pi = data.pi;
+	  					var list = data.hmap.nList;
+	  					var pi = data.hmap.pi;
 	  					console.log(list);
 	  					console.log(pi);
 	  					
-	  					$("#page").attr("value", pi.currentPage);
+	  					$("#listArea").html("");
+	  					
+	  					$("#listArea").append("<tr><th>글제목</th><th>작성자</th><th>조회수</th><th>작성일</th></tr>");
+	  					
+	  					for(var i = 0; i < list.length; i++){
+		  					$("#listArea").append("<tr><td style='padding-left: 3%;'>" + list[i].b_title
+		  										 + "</td><td align='center'>" + list[i].bwriter
+		  										 + "</td><td align='center'>" + list[i].b_count
+		  										 + "</td><td align='center'>" + list[i].b_update_date 
+		  										 + "</td><td><input type='hidden' value='" + list[i].b_code + "' id='b_code' name='b_code'>"
+		  										 + "</td></tr>");
+	  					}
+	  					
+	  					$(function(){
+	  						
+	  						$("#listArea td").mouseenter(function(){
+	  								//tr의 css를 변경
+	  							$(this).parent().css({"background":"#F08080", "cursor":"pointer", "color":"white"});
+	  								
+	  						}).mouseout(function(){
+	  							
+	  							$(this).parent().css({"background":"white", "color":"black"});
+	  							
+	  						}).click(function(){
+	  							
+	  							var b_code = $(this).parent().children(":last").children().val();
+	  							location.href="${ contextPath }/helpnoticedetail.hp?b_code=" + b_code;
+	  						});
+	  					});
+	  					
+	  					$("#page").text(page);
 	  					$("#maxPage").attr("value", pi.maxPage);
+	  					
 	  				},
 	  				error:function(data){
 	  					console.log("에러!");

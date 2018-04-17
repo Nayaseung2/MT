@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -168,17 +169,25 @@ public class HelpController {
 	// 메뉴바에서 고객센터 공지사항으로 페이지 이동(=공지글 목록)
 	@RequestMapping(value="helpnotice.hp")
 	public ModelAndView showHelpCenterNotice(ModelAndView mv, String newCurrentPage) {
-
+		
 		PageInfo pi = addPage(newCurrentPage);
-
-		ArrayList<HelpMainVo> nList = hs.nList();
 		
-		System.out.println("controller's pi : " + pi);
+		ArrayList<HelpMainVo> nList = hs.nList(pi);
 		
-		mv.addObject("pi", pi);
-		mv.addObject("nList", nList);
+		//System.out.println("controller's pi : " + pi);
 		
-		mv.setViewName("helpcenter/helpNotice");
+		HashMap hmap = new HashMap();
+		
+		hmap.put("pi", pi);
+		hmap.put("nList", nList);
+		
+		mv.addObject("hmap", hmap);
+		
+		if(newCurrentPage == null) {
+			mv.setViewName("helpcenter/helpNotice");
+		}else {
+			mv.setViewName("jsonView");
+		}
 
 		return mv; 
 	}
