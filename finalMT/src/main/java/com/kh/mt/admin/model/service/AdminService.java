@@ -24,12 +24,22 @@ public interface AdminService {
 
 	String searchDay();
 
+	//오늘날짜
 	String sysdate();
-
+	
+	//마지막일 추출
 	String lastDay(String date);
-
+	
+	//수익관리 전체 회원 리스트
 	ArrayList<Pay> payList();
 
-	ArrayList<Revenue> revenueList(PageInfo pi); 
+	//수익관리 전체 회원 리스트
+	ArrayList<Revenue> revenueList(PageInfo pi);
+	
+	//수익관리 회원조회
+	ArrayList<Revenue> searchRevenue(String userId, PageInfo pi);
+	
+	//유저 리스트카운트 조회
+	int searchRevenueUser(String userId); 
 } 
  

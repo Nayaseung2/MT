@@ -45,4 +45,18 @@
 		JOIN PAYHISTORY USING(MCODE)
   	</select>
   	
+  	<select id="searchRevenue" parameterType="java.lang.String" resultMap="revenueResultSet">
+  		SELECT MID, MNAME, PEACH_CODE, TO_CHAR(PAY_DATE, 'RRRR-MM-DD-hh24:mm:ss') P_DATE
+  		FROM MEMBER
+		JOIN PAYHISTORY USING(MCODE)
+		WHERE MID = #{userId}
+  	</select>
+  	
+  	<select id="searchRevenueUser" parameterType="java.lang.String" resultType="_int">
+  		SELECT COUNT(*)
+  		FROM PAYHISTORY
+		JOIN MEMBER USING(MCODE)
+		WHERE MID = #{userId}
+  	</select>
+  	
   </mapper>

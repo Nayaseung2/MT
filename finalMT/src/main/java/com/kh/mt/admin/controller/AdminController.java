@@ -146,12 +146,16 @@ public class AdminController {
 		}
 		
 		if(type.equals("reDay")){
+			ArrayList<Integer> list = revenueDayGraph();
 			
-			
-			mv.addObject("list");
-			
+			mv.addObject("list", list);
 		}
 		
+		if(type.equals("reMonth")){
+			ArrayList<Integer> list = revenueMonthGraph();
+			
+			mv.addObject("list", list);
+		}
 		
 		mv.setViewName("jsonView");
 		
@@ -257,7 +261,7 @@ public class AdminController {
 	//페이징 처리 메소드
 	public PageInfo addPage(String newCurrentPage, String type){
 		HashMap<String, String> list = as.memberList();
-		System.out.println(list);
+		
 		int currentPage = 1;
 		int limit = 0;
 		int maxPage = 0;
@@ -274,6 +278,36 @@ public class AdminController {
 		}else if(type.equals("revenue")){
 			listCount = Integer.parseInt(String.valueOf(list.get("REVENUE")));
 		}
+		
+		if(newCurrentPage != null){
+			currentPage = Integer.parseInt(newCurrentPage);
+		}
+		
+		maxPage = (int)((double)listCount / limit + 0.9);
+		
+		startPage = ((int)((double)currentPage / limit + 0.9)-1) * limit + 1;
+		
+		endPage = startPage + limit -1;
+		
+		if(maxPage < endPage){
+			endPage = maxPage;
+		}
+		
+		return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+	}
+	
+	//유져 페이징 처리
+	public PageInfo addUserPage(String newCurrentPage, String userId){
+		int currentPage = 1;
+		int limit = 0;
+		int maxPage = 0;
+		int startPage = 0;
+		int endPage = 0;
+		int listCount = 0;
+
+		limit = 10;
+		
+		listCount = as.searchRevenueUser(userId); 
 		
 		if(newCurrentPage != null){
 			currentPage = Integer.parseInt(newCurrentPage);
@@ -451,7 +485,7 @@ public class AdminController {
 		String sysdate = sdf.format(new Date());
 		String[] today = sysdate.split("-");
 		
-		for(int i = 1; i < 24; i++){
+		for(int i = 1; i < 25; i++){
 			if(i < 10){
 				htemp.put("0"+i, 0);
 				tset.add("0"+i);
@@ -460,10 +494,13 @@ public class AdminController {
 				tset.add(""+i);
 			}
 		}
+		
 		String dataDay = "";
+		
 		for(int i = 0; i < plist.size(); i++){
 			String dataHour = plist.get(i).getPay_time().split(":")[0];
 			dataDay = String.valueOf((plist.get(i).getPay_date())).split("-")[2];
+			
 			if(today[2].equals(dataDay)){
 				if(htemp.containsKey(dataHour)){
 					int result = htemp.get(dataHour).intValue();
@@ -473,13 +510,110 @@ public class AdminController {
 		}
 		
 		Iterator<String> it = tset.iterator();
-		
 		while(it.hasNext()){
 			String key = it.next();
 			tlist.add(htemp.get(key));
 		}
 		
 		return tlist;
+	}
+	
+	//수익관리 일별 그래프
+	public ArrayList<Integer> revenueDayGraph(){
+		ArrayList<Integer> dlist = new ArrayList<Integer>();
+		//오늘 날짜 추출
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String sysdate = sdf.format(new Date());
+		String yearAndMonth = sysdate.substring(0, sysdate.lastIndexOf("-"));
+		
+		//PAYHISTORY 테이블 값 가져오기
+		ArrayList<Pay> plist = as.payList();
+		
+		int result = 0;
+
+		for(int i = 0; i < plist.size(); i++){
+			String dataValue = String.valueOf(plist.get(i).getPay_date());
+			String temp = dataValue.substring(0, dataValue.lastIndexOf("-"));
+			
+			if(temp.equals(yearAndMonth)){		//값 비교(년, 월 비교)
+				String str = "";
+				for(int j = 1; j < 32; j++){	//총 31일 계산
+					if(j < 10){
+						str = "-0"+j;
+					}else {
+						str = "-"+j;
+					}
+					for(int k = i; k < plist.size(); k++){	
+						if((temp+str).equals(String.valueOf(plist.get(k).getPay_date()))){ 			//년+월+일 값이 가져온 데이터값의 날짜와 같을때
+							result += plist.get(k).getPrice();			//하루치 값 누적
+						}
+					}
+					dlist.add(result);									//하루치 값 추가
+					result = 0;											//값 초기화 후 반복
+				}
+				break;
+			}
+		}
+		return dlist;
+	}
+	
+	//수익관리 월별 그래프
+	public ArrayList<Integer> revenueMonthGraph(){
+		ArrayList<Integer> mlist = new ArrayList<Integer>(); //값 저장용 변수 선언
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");	//날짜 포맷 설정
+		String sysdate = sdf.format(new Date());					//오늘 날짜 추출
+		String[] extractDate = sysdate.split("-"); 					//년, 월, 일 추출
+		
+		ArrayList<Pay> plist = as.payList();		//결제 이력 데이터 가져오기
+		String temp = "";				//임시변수
+		String dataDate = "";			//결제이력 날짜 변수
+		String[] extractDataDate;		//결제이력 년, 월, 일 담을 변수
+		
+		int result = 0;					//총 누적액을 담을 변수
+		
+		for(int i = 0; i < plist.size(); i++){
+			dataDate = String.valueOf(plist.get(i).getPay_date());		//결제 이력의 날짜 가져오기
+			extractDataDate = dataDate.split("-");	//년, 월, 일 추출
+			
+			if(extractDate[0].equals(extractDataDate[0])){			//오늘날짜의 년도와 가져온 데이터의 년도가 같을때
+				for(int j = 1; j < 13; j++){	//총 개월수인 12번 반복
+					if(j < 10){
+						temp = "0" + j;
+					}else {
+						temp = "" + j;
+					}
+					for(int k = i; k < plist.size(); k++){	
+						if((temp).equals(extractDataDate[1])){ 			//temp로 만든 월과 데이터의 월이 같을때
+							result += plist.get(k).getPrice();			//한달치 값 누적
+						}
+					}
+					mlist.add(result);
+					result = 0;
+				}
+				break;
+			}
+		}
+		
+		return mlist;
+	}
+	
+	//수익관리 회원 조회
+	@RequestMapping("searchRevenue.ad")
+	public ModelAndView searchRevenue(ModelAndView mv, String newCurrentPage, String userId){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageInfo pi = addUserPage(newCurrentPage, userId);
+		ArrayList<Revenue> rlist = as.searchRevenue(userId, pi);
+		
+		map.put("rlist", rlist);
+		map.put("pi", pi);
+		
+		mv.addObject("map", map);
+		
+		mv.setViewName("jsonView");
+		
+		return mv;
 	}
 	
 	

@@ -103,4 +103,16 @@ public class AdminSerivceImpl implements AdminService{
 		return list;
 	}
 
+	@Override
+	public ArrayList<Revenue> searchRevenue(String userId, PageInfo pi) {
+		ArrayList<Revenue> list = ad.searchRevenue(userId, pi);
+		
+		return list;
+	}
+
+	@Override
+	public int searchRevenueUser(String userId) {
+		return ad.searchRevenueUser(userId);
+	}
+
 }

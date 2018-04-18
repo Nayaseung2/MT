@@ -164,13 +164,13 @@
                            </button>
                            <ul class="dropdown-menu pull-right" role="menu" >
                                <li value="time">
-                               		<a href="graphChange(reTime)">시간별</a>
+                               		<a class="gType" onclick="graphChange('reTime')">시간별</a>
                                </li>
                                <li>
-                               		<a href="graphChange(reDay)">일별</a>
+                               		<a class="gType" onclick="graphChange('reDay')">일별</a>
                                </li>
                                <li>
-                              	 	<a href="graphChange(reMonth)">월별</a>
+                              	 	<a class="gType" onclick="graphChange('reMonth')">월별</a>
                                </li>
                            </ul>
                        </div>
@@ -186,9 +186,9 @@
                     <div class="panel panel-default">
                         <div class="panel-heading type" id="revenueMg.ad">회원 정보
                         	<div class="input-group custom-search-form" style="width: 30%; float: right;" >
-                                <input type="text" class="form-control" placeholder="Search...">
+                                <input type="text" class="form-control" placeholder="Search..." id="search" value="">
                                 <span class="input-group-btn">
-	                                <button class="btn btn-default" type="button">
+	                                <button class="btn btn-default" type="button" onclick="typeChange('searchRevenue.ad');">
 	                                    <i class="fa fa-search"></i>
 	                                </button>
                             	</span>
@@ -241,6 +241,7 @@
     <script>
     	$(function(){
 			var money = ${map.tlist};
+			console.log(money);
 			var chart = $("#chart").highcharts({
 				chart: {type: 'line'},
 				title: {text: '시간별'},
@@ -254,6 +255,9 @@
     	function pageChange(value, type){
   			var page = Number($("#page").text());
 			var url = type;		
+			var userId = $("#search").val();
+			
+			console.log(userId);
 			
 			if(page >= 1 && page <= $("#maxPage").val()){
 	  			if(value === 'plus'){
@@ -271,7 +275,8 @@
 	  			$.ajax({
 	  				url: url,
 	  				type: "get",
-	  				data:{"newCurrentPage":page},
+	  				data:{"newCurrentPage":page,
+	  						"userId": userId},
 	  				success:function(data){
 	  					var list = data.map.rlist;
 	  					var pi = data.map.pi;
@@ -282,7 +287,13 @@
 	  					}
 	  					
 	  					$("#page").text(page);
-	  					$("#maxPage").attr("value", pi.maxPage)
+	  					$("#maxPage").attr("value", pi.maxPage);
+	  					
+	  					if(userId != ""){
+	  						$("#all").remove();
+	  						$("#pagingArea").append("<button onclick='location.reload()' id='all'>전체보기</button>");
+	  					}
+	  					
 	  				},
 	  				error:function(data){
 	  					console.log("에러!");
@@ -292,31 +303,6 @@
   			}
   		}
     	
-    	function typeChange(type){
-  			$(".type").attr("id", type);
-  			
-  			pageChange("", type);
-  		}
-  		
-  		function search(){
-  			var userId = $("#search").val();
-  			
-  			$.ajax({
-  				url: "searchMember.ad",
-  				type: "get",
-  				data: {"userId": userId},
-  				success: function(data){
-  					var m = data.m;
-  					$("tbody").html("");
-  					$("#pagingArea").html("");
-  					
-  					$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].peach_code+"</td><td>카드</td><td>"+list[i].p_date+"</td></tr>");
-  					$("#pagingArea").append("<button onclick='location.reload()'>전체보기</button>");
-  				}
-  			});
-  			
-  		}
-  		
   		function graphChange(type){
   			var newData = new Array();
   			var total = new Array();
@@ -347,7 +333,12 @@
   				series: [{name: '인원수', data: newData}]
   			});
   		}
-    
+  		
+  		function typeChange(type){
+  			$(".type").attr("id", type);
+  			
+  			pageChange("", type);
+  		}
     </script>
     
 </body>
