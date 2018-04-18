@@ -31,4 +31,8 @@ public interface AdminDao {
 	ArrayList<Pay> payList();
 
 	ArrayList<Revenue> revenueList(PageInfo pi);
+
+	ArrayList<Revenue> searchRevenue(String userId, PageInfo pi);
+
+	int searchRevenueUser(String userId);
 }

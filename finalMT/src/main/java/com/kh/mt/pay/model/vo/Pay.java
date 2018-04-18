@@ -20,20 +20,21 @@ public class Pay implements Serializable{
 	private int price;
 	private int peach_code;
 	private Date pay_date;
-	
+	private String pay_time;
 	
 	public Pay() {
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public Pay(String pay_code, String mcode, int price, int peach_code, Date pay_date) {
+	public Pay(String pay_code, String mcode, int price, int peach_code, Date pay_date, String pay_time) {
 		super();
 		this.pay_code = pay_code;
 		this.mcode = mcode;
 		this.price = price;
 		this.peach_code = peach_code;
 		this.pay_date = pay_date;
+		this.pay_time = pay_time;
 	}
 
 
@@ -84,6 +85,16 @@ public class Pay implements Serializable{
 
 	public void setPay_date(Date pay_date) {
 		this.pay_date = pay_date;
+	}
+	
+
+	public String getPay_time() {
+		return pay_time;
+	}
+
+
+	public void setPay_time(String pay_time) {
+		this.pay_time = pay_time;
 	}
 
 

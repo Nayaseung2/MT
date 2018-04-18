@@ -111,5 +111,23 @@ public class AdminDaoImpl implements AdminDao{
 		return list;
 	}
 	
+	//[수익]회원 조회
+	@Override
+	public ArrayList<Revenue> searchRevenue(String userId, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		ArrayList<Revenue> list = (ArrayList)sqlSession.selectList("Admin.searchRevenue", userId, rowBounds);
+
+		return list;
+	}
+	
+	//유저 리스트카운트 조회
+	@Override
+	public int searchRevenueUser(String userId) {
+		return sqlSession.selectOne("Admin.searchRevenueUser", userId);
+	}
+	
 	
 }
