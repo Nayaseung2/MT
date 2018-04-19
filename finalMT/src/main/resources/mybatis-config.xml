@@ -14,6 +14,7 @@
 		<typeAlias alias='Board' type="com.kh.mt.board.model.vo.Board"/>
 		<typeAlias alias='Boardfile' type="com.kh.mt.board.model.vo.BoardFile"/>
 		<typeAlias alias="Revenue" type="com.kh.mt.admin.model.vo.Revenue"/>
+		<typeAlias alias="Withdrawal" type="com.kh.mt.admin.model.vo.Withdrawal"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource='mappers/member-mapper.xml' />

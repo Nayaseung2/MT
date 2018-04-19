@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.mt.admin.model.vo.Revenue;
+import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
 import com.kh.mt.pay.model.vo.Pay;
@@ -40,6 +41,14 @@ public interface AdminService {
 	ArrayList<Revenue> searchRevenue(String userId, PageInfo pi);
 	
 	//유저 리스트카운트 조회
-	int searchRevenueUser(String userId); 
+	int searchRevenueUser(String userId);
+	
+	//출금신청 전체 회원 리스트
+	HashMap<String, Object> withdrawalList(PageInfo pi);
+	
+	//출금신청 회원 조회
+	ArrayList<Withdrawal> searchWithdrawal(String userId, PageInfo pi);
+
+	int approval(String wdCode); 
 } 
  

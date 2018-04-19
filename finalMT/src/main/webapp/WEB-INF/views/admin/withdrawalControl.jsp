@@ -1,39 +1,49 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <!DOCTYPE html>
 <html> 
 
 <head>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+<title>SB Admin 2 - Bootstrap Admin Theme</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="/mt/resources/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Core CSS -->
+<link href="/mt/resources/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- MetisMenu CSS -->
+<link href="/mt/resources/admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="/mt/resources/admin/dist/css/sb-admin-2.css" rel="stylesheet">
+<!-- Morris Charts CSS -->
+<link href="/mt/resources/admin/vendor/morrisjs/morris.css" rel="stylesheet">
+<!-- Custom Fonts -->
+<link href="/mt/resources/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- MetisMenu CSS -->
-    <link href="/mt/resources/admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="/mt/resources/admin/dist/css/sb-admin-2.css" rel="stylesheet">
+<!-- jQuery -->
+<script src="/mt/resources/admin/vendor/jquery/jquery.min.js"></script>
 
-    <!-- Morris Charts CSS -->
-    <link href="/mt/resources/admin/vendor/morrisjs/morris.css" rel="stylesheet">
+<!-- Bootstrap Core JavaScript -->
+<script src="/mt/resources/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Custom Fonts -->
-    <link href="/mt/resources/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/mt/resources/admin/vendor/metisMenu/metisMenu.min.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+<!-- Custom Theme JavaScript -->
+<script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<style>
+.arBtn {
+	width: 3.5%;
+}
+</style>
 </head>
 
 <body>
@@ -109,7 +119,7 @@
                                     <i class="fa fa-lightbulb-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">15건</div>
+                                    <div class="huge"><fmt:formatNumber value="${ map.wCount.TODAY }" groupingUsed="true"/>건</div>
                                     <div>오늘의 출금 신청</div>
                                 </div>
                             </div>
@@ -124,15 +134,13 @@
                                     <i class="fa fa-lightbulb-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">5건</div>
+                                    <div class="huge"><fmt:formatNumber value="${ map.wCount.SUCCESS }" groupingUsed="true"/>건</div>
                                     <div>완료된 출금 신청</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                
                 
                 <a href="#">
                 <div class="col-lg-3 col-md-6">
@@ -153,49 +161,14 @@
                 </a>
 			</div>
             
-            
             <div class="row">
-		   		<div class="panel panel-default" style="margin-top: 30px;">
-	               <div class="panel-heading">
-	                   <i class="fa fa-bar-chart-o fa-fw"></i> 출금건수
-	                   <div class="pull-right">
-	                       <div class="btn-group">
-	                           <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-	                               <span class="caret"></span>
-	                           </button>
-	                           <ul class="dropdown-menu pull-right" role="menu" >
-	                               <li value="time">
-	                               		<a href="#">시간별</a>
-	                               </li>
-	                               <li>
-	                               		<a href="#">일별</a>
-	                               </li>
-	                               <li>
-	                              	 	<a href="#">주별</a>
-	                               </li>
-	                               <li>
-	                              	 	<a href="#">월별</a>
-	                               </li>
-	                               <li>
-	                               		<a href="#">년별</a>
-	                               </li>
-	                           </ul>
-	                       </div>
-	                   </div>
-	               </div>
-	               <!-- /.panel-heading -->
-	               <div class="panel-body">
-	                   <div id="morris-area-chart"></div>
-	               </div>
-	               <!-- /.panel-body -->
-		        </div>
 		        <div class="col-lg-12">
 	                <div class="panel panel-default">
 	                    <div class="panel-heading">회원 정보
 	                    	<div class="input-group custom-search-form" style="width: 30%; float: right;" >
-	                            <input type="text" class="form-control" placeholder="Search...">
+	                            <input type="text" class="form-control" placeholder="Search..." id="search" value="">
 	                            <span class="input-group-btn">
-	                             <button class="btn btn-default" type="button">
+	                             <button class="btn btn-default" type="button" onclick="typeChange('searchWithdrawal.ad');">
 	                                 <i class="fa fa-search"></i>
 	                             </button>
 	                        	</span>
@@ -211,51 +184,151 @@
 	                                    <th>신청 액</th>
 	                                    <th>계좌 번호</th>
 	                                    <th>신청 날짜</th>
-	                                    <th>수수료</th>
-	                                    <th>실 지급액</th>
+	                                    <th>승인</th>
+	                                    <th>거절</th>
 	                                </tr>
 	                            </thead>
 								<tbody>
-									<c:forEach var="i" begin="0" end="20">
+									<c:forEach var="w" items="${ map.wlist }">
 	                                  	<tr>
-	                                  		<td>${ i }</td>
-	                                  		<td>${ i }</td>
-	                                  		<td>${ i }</td>
-	                                  		<td>${ i }</td>
-	                                  		<td>N</td>
-	                                  		<td>${ i }</td>
-	                                  		<td>${ i }</td>
+	                                  		<td>${ w.mId }</td>
+	                                  		<td>${ w.mName }</td>
+	                                  		<td>${ w.amount }</td>
+	                                  		<td>${ w.account }</td>
+	                                  		<td>${ w.wdDate }</td>
+	                                  		<td class='arBtn'><button class='approval'>승인</button></td>
+	                                  		<td class='arBtn'><button class='refusal'>거절</button></td>
+	                                  		<td style="display: none;">${ w.wdCode }</td>
 										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
 							<!-- /.table-responsive -->
+							<div id="pagingArea" align="center">
+								<button onclick="return pageChange('minus', $('.type').attr('id'))">[이전]</button>
+	
+									<font color="red" size="4" id="page"><b><c:out value="${ map.pi.currentPage }"/></b></font>
+	
+								&nbsp; <button onclick="return pageChange('plus', $('.type').attr('id'))">[다음]</button>
+							</div>
 						</div>
 						<!-- /.panel-body -->
 					</div>
 					<!-- /.panel -->
 				</div>
         	</div>
-        	
+        </div>
 	</div>
     <!-- /#wrapper -->
+	<input type="hidden" value="${ map.pi.maxPage }" id="maxPage"/>
+	<script>
+	function typeChange(type){
+		$(".type").attr("id", type);
+		
+		pageChange("", type);
+	}
+	
+	function pageChange(value, type){
+		var page = Number($("#page").text());
+		var url = type;		
+		var userId = $("#search").val();
 
-    <!-- jQuery -->
-    <script src="/test/resources/vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/test/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/test/resources/vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="/test/resources/vendor/raphael/raphael.min.js"></script>
-    <script src="/test/resources/vendor/morrisjs/morris.min.js"></script>
-    <script src="/test/resources/data/morris-data.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="/test/resources/dist/js/sb-admin-2.js"></script>
-
+		if(page >= 1 && page <= $("#maxPage").val()){
+  			if(value === 'plus'){
+  				if(page == $("#maxPage").val()){
+  					return;
+  				}
+  				page += 1;
+  			}else if(value === 'minus'){
+  				if(page === 1){
+  					return;
+  				}
+  				page -= 1;
+  			}
+  			
+  			$.ajax({
+  				url: url,
+  				type: "get",
+  				data:{"newCurrentPage":page, "userId": userId},
+  				success:function(data){
+	  				var list = data.map.rlist;
+	  				var pi = data.map.pi;
+	  				$("tbody").html("");
+	  				
+	  				for(var i = 0; i < list.length; i++){
+		  				$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class='approval' onclick='approval()'>승인</button></td><td class='arBtn'><button class='refusal' onclick='refusal()'>거부</button></td><td><input type='hidden' value='"+list[i].wdCode+"'/></td></tr>");
+	  				}
+	  				
+	  				$("#page").text(page);
+	  				$("#maxPage").attr("value", pi.maxPage);
+	  				
+	  				if(userId != ""){
+	  					$("#all").remove();
+	  					$("#pagingArea").append("<button onclick='location.reload()' id='all'>전체보기</button>");
+	  				}
+  				},
+  				error:function(data){
+  					console.log("에러!");
+  				}
+  			});
+			return false;
+		}
+	}
+	
+	$(".approval").on("click", function(){
+		var wdCode = $(this).parent().parent().children().last().text();
+		
+		var approval = $(this).parent();
+		var refusal = $(this).parent().next();
+		
+		var con = confirm("승인하시겠습니까?"); 
+		if(con){
+			$.ajax({
+				url: "approval.ad", 
+				type: "get",
+				data: {"wdCode": wdCode},
+				success: function(data){
+					approval.html("승인완료");
+	  				refusal.html("승인완료");
+				},
+				error: function(data){
+					console.log("에러");
+				}
+			});
+		}else {
+			
+		}
+		
+	});
+	
+	$(".refusal").on("click", function(){
+		var wdCode = $(this).parent().parent().children().last().text();
+		
+		var approval = $(this).parent();
+		var refusal = $(this).parent().next();
+		
+		var con = confirm("거절하시겠습니까?"); 
+		if(con){
+			$.ajax({
+				url: "approval.ad", 
+				type: "get",
+				data: {"wdCode": wdCode},
+				success: function(data){
+					approval.html("거절완료");
+	  				refusal.html("거절완료");
+				},
+				error: function(data){
+					console.log("에러");
+				}
+			});
+		}else {
+			
+		}
+		
+	});
+	
+	
+    </script>
 </body>
 </html>
+

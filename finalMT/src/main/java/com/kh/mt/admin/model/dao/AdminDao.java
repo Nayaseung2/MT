@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.mt.admin.model.vo.Revenue;
+import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
 import com.kh.mt.pay.model.vo.Pay;
@@ -35,4 +36,13 @@ public interface AdminDao {
 	ArrayList<Revenue> searchRevenue(String userId, PageInfo pi);
 
 	int searchRevenueUser(String userId);
+
+	ArrayList<Withdrawal> withdrawalList(PageInfo pi);
+
+	HashMap<String, String> withdrawalCount();
+
+	ArrayList<Withdrawal> searchWithdrawal(String userId, PageInfo pi);
+
+	int approval(String wdCode);
+
 }
