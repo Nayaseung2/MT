@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.mt.admin.model.dao.AdminDao;
 import com.kh.mt.admin.model.vo.Revenue;
+import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
 import com.kh.mt.pay.model.vo.Pay;
@@ -114,5 +115,36 @@ public class AdminSerivceImpl implements AdminService{
 	public int searchRevenueUser(String userId) {
 		return ad.searchRevenueUser(userId);
 	}
+
+	@Override
+	public HashMap<String, Object> withdrawalList(PageInfo pi) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<Withdrawal> list = ad.withdrawalList(pi);
+		
+		if(list != null){
+			map.put("wlist", list);
+			HashMap<String, String> count = ad.withdrawalCount();
+			map.put("wCount", count);
+		}
+		
+		System.out.println(map);
+		
+		return map;
+	}
+
+	@Override
+	public ArrayList<Withdrawal> searchWithdrawal(String userId, PageInfo pi) {
+		ArrayList<Withdrawal> list =  ad.searchWithdrawal(userId, pi);
+		return list;
+	}
+
+	@Override
+	public int approval(String wdCode) {
+		int approval = ad.approval(wdCode);
+		
+		return approval;
+	}
+
 
 }

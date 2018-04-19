@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.mt.admin.model.vo.Revenue;
+import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
 import com.kh.mt.pay.model.vo.Pay;
@@ -24,6 +25,8 @@ public class AdminDaoImpl implements AdminDao{
 		HashMap<String, HashMap<String, String>> list = new HashMap<String, HashMap<String, String>>(); 
 		
 		list.put("allList",sqlSession.selectOne("Admin.allMenuList"));
+		
+		System.out.println(list);
 		
 		return list;
 	} 
@@ -128,6 +131,46 @@ public class AdminDaoImpl implements AdminDao{
 	public int searchRevenueUser(String userId) {
 		return sqlSession.selectOne("Admin.searchRevenueUser", userId);
 	}
+	
+	
+	
+	@Override
+	public ArrayList<Withdrawal> withdrawalList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		ArrayList<Withdrawal> list = (ArrayList)sqlSession.selectList("Admin.withdrawalList", null, rowBounds);
+		
+		return list;
+		
+	}
+
+	@Override
+	public HashMap<String, String> withdrawalCount() {
+		
+		HashMap<String, String> map = sqlSession.selectOne("Admin.withdrawalCount");
+		
+		return map;
+	}
+
+	@Override
+	public ArrayList<Withdrawal> searchWithdrawal(String userId, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		ArrayList<Withdrawal> list =  (ArrayList)sqlSession.selectList("Admin.searchWithdrawal", userId, rowBounds);
+		
+		return list;
+	}
+
+	@Override
+	public int approval(String wdCode) {
+		int approval = sqlSession.update("Admin.approval", Integer.parseInt(wdCode));
+		System.out.println("daoImpl: " + approval);
+		return approval;
+	}
+
 	
 	
 }

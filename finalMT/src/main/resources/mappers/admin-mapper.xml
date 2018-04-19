@@ -10,29 +10,36 @@
       <result property="peach_code" column="PEACH_CODE"/>  
       <result property="p_date" column="P_DATE"/>
    </resultMap>
-  
-  	
+  	<!-- private int amount;
+	private String account;
+	private String date;
+	private int payment; -->
+  	<resultMap type="Withdrawal" id="withdrawalResultSet">
+  		<result property="mId" column="MID"/>
+  		<result property="mName" column="MNAME"/>
+  		<result property="amount" column="PRICE"/>
+  		<result property="account" column="ACCOUNT"/>
+  		<result property="wd_date" column="WD_DATE"/>
+  		<result property="wdCode" column="WD_CODE"/>
+  	</resultMap>
   	 
   	<!-- 관리자 메인화면 -->
   	<select id="allMenuList" resultType="hashmap">
-	SELECT COUNT(*) bj, (SELECT SUM(PRICE)
-						FROM PAYHISTORY
-						WHERE TO_CHAR(PAY_DATE) = TO_CHAR(SYSDATE)) mt,
-						(SELECT COUNT(*) FROM BOARD WHERE B_TYPE = '44' AND B_STATUS = 'Y') report,
-						(SELECT COUNT(*) FROM MEMBER WHERE TO_CHAR(JOIN_DATE) =	TO_CHAR(SYSDATE)) newm,
-						<!-- 출금 신청 해야함. -->
-						(SELECT COUNT(*) FROM BOARD WHERE B_TYPE = 'personal' AND B_STATUS = 'Y') personal
-						
-	FROM JDBC
-	WHERE STATUS = 'Y'
+	SELECT (SELECT COUNT(*) FROM MEMBER WHERE VIDEO_YN = 'Y') bj,
+        		(SELECT SUM(PRICE)
+				FROM PAYHISTORY
+				WHERE TO_CHAR(PAY_DATE) = TO_CHAR(SYSDATE)) mt,
+		        (SELECT COUNT(*) FROM BOARD WHERE B_TYPE = 'report' AND B_STATUS = 'Y') report,
+		        (SELECT COUNT(*) FROM MEMBER WHERE TO_CHAR(JOIN_DATE) =	TO_CHAR(SYSDATE)) newm,
+		        (SELECT COUNT(*) FROM WITHDRAWAL WHERE STATUS = 'N' AND WD_DATE = SYSDATE) withdrawal,            
+		        (SELECT COUNT(*) FROM BOARD WHERE B_TYPE = 'personal' AND B_STATUS = 'Y') personal
+	FROM MEMBER 
 	GROUP BY 2
   	</select> 
   	 
   	<select id="memberList" resultType="hashmap">
-  		SELECT COUNT(*) TOTAL, (SELECT COUNT(*) FROM MEMBER WHERE VIDEO_YN='Y') BJ, (SELECT COUNT(*) FROM PAYHISTORY) REVENUE
-		FROM MEMBER
-		WHERE MSTATUS = 'Y'
-		GROUP BY 2
+  		SELECT (SELECT COUNT(*) FROM MEMBER WHERE MSTATUS = 'Y')TOTAL, (SELECT COUNT(*) FROM MEMBER WHERE VIDEO_YN='Y') BJ, (SELECT COUNT(*) FROM PAYHISTORY) REVENUE, (SELECT COUNT(*) FROM WITHDRAWAL WHERE TO_CHAR(WD_DATE) = TO_CHAR(SYSDATE) AND STATUS = 'N') TODAY, (SELECT COUNT(*) FROM WITHDRAWAL WHERE TO_CHAR(WD_DATE) = TO_CHAR(SYSDATE) AND STATUS = 'Y') SUCCESS 
+		FROM DUAL
   	</select>
   	
   	<select id="searchDay" resultType="java.lang.String">
@@ -58,5 +65,29 @@
 		JOIN MEMBER USING(MCODE)
 		WHERE MID = #{userId}
   	</select>
+  	
+  	<select id="withdrawalList" resultMap="withdrawalResultSet">
+  		SELECT MID, MNAME, PRICE AS AMOUNT, ACCOUNT, TO_CHAR(WD_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS WDDATE, WD_CODE
+		FROM WITHDRAWAL
+		JOIN MEMBER USING(MCODE)
+		WHERE STATUS = 'N'
+  	</select>
+  	
+  	<select id="withdrawalCount" resultType="hashmap">
+  		SELECT (SELECT COUNT(*) FROM WITHDRAWAL WHERE TO_CHAR(WD_DATE) = TO_CHAR(SYSDATE) AND STATUS = 'N') TODAY, (SELECT COUNT(*) FROM WITHDRAWAL WHERE TO_CHAR(WD_DATE) = TO_CHAR(SYSDATE) AND STATUS = 'Y') SUCCESS
+		FROM DUAL
+  	</select>
+  	
+  	<select id="searchWithdrawal" parameterType="java.lang.String" resultMap="withdrawalResultSet">
+  		SELECT MID, MNAME, PRICE AS AMOUNT, ACCOUNT, TO_CHAR(WD_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS WDDATE, WD_CODE
+		FROM WITHDRAWAL
+		JOIN MEMBER USING(MCODE)
+		WHERE MID = #{userId}
+  	</select>
+  	
+  	<update id="approval" parameterType="_int">
+  		UPDATE WITHDRAWAL SET STATUS = 'Y'
+		WHERE WD_CODE = #{wdCode}
+  	</update>
   	
   </mapper>

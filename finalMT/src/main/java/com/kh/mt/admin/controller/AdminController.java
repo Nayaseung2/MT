@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.mt.admin.model.service.AdminService;
 import com.kh.mt.admin.model.vo.Revenue;
+import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
 import com.kh.mt.pay.model.vo.Pay;
@@ -221,12 +222,52 @@ public class AdminController {
 	
 	//출금신청 화면
 	@RequestMapping("withdrawal.ad")
-	public ModelAndView withdrawal(ModelAndView mv){
+	public ModelAndView withdrawal(ModelAndView mv, String newCurrentPage){
+		
+		PageInfo pi = addPage(newCurrentPage, "withdrawal");
+		
+		HashMap<String, Object> map = as.withdrawalList(pi);
+		
+		map.put("pi", pi);
+		mv.addObject("map", map);
 		
 		mv.setViewName("admin/withdrawalControl");
 		
 		return mv;
 	}
+	
+	//출금신청 회원조회
+	@RequestMapping("searchWithdrawal.ad")
+	public ModelAndView searchWithdrawal(ModelAndView mv, String newCurrentPage, String userId){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageInfo pi = addUserPage(newCurrentPage, userId);
+		ArrayList<Withdrawal> rlist = as.searchWithdrawal(userId, pi);
+		
+		map.put("rlist", rlist);
+		map.put("pi", pi);
+		
+		mv.addObject("map", map);
+		
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	//출금신청 승인
+	@RequestMapping("approval.ad")
+	public ModelAndView approval(ModelAndView mv, String wdCode){
+		
+		int approval = 0; 
+		approval = as.approval(wdCode);
+		
+		System.out.println(approval);
+		
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
 	
 	//출금완료 화면
 	@RequestMapping("deposit.ad")
@@ -277,6 +318,8 @@ public class AdminController {
 			listCount = Integer.parseInt(String.valueOf(list.get("BJ")));
 		}else if(type.equals("revenue")){
 			listCount = Integer.parseInt(String.valueOf(list.get("REVENUE")));
+		}else if(type.equals("withdrawal")){
+			listCount = Integer.parseInt(String.valueOf(list.get("TODAY")));
 		}
 		
 		if(newCurrentPage != null){
@@ -298,6 +341,7 @@ public class AdminController {
 	
 	//유져 페이징 처리
 	public PageInfo addUserPage(String newCurrentPage, String userId){
+		
 		int currentPage = 1;
 		int limit = 0;
 		int maxPage = 0;
@@ -616,5 +660,17 @@ public class AdminController {
 		return mv;
 	}
 	
+//	public static void main(String[] args) {
+//		int num = 160;
+//		String str = "";
+//		
+//		String temp = "";
+//		for(int i = 0; i < str.length(); i++){
+//			if(i >= num){
+//				temp += str.charAt(i);
+//			}
+//		}
+//		System.out.println(temp);
+//	}
 	
 }
