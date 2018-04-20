@@ -218,26 +218,25 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 				* 고객님께서 궁금하신 사항을 FAQ에서 찾지 못하셨을 경우 1:1 문의를 이용해주세요.<br/>
 				* 1:1 문의에 등록된 내용은 본인만 확인 할 수 있습니다.<br/>
 				* 문의하신 내용에 대한 답변은 myPage에서 확인하실 수 있습니다.<br/>
-				* 임시점검 시간 및 휴무 시에는 답변이 늦어질 수 있으니 양해 부탁 드립니다.
+				* 임시점검 시간 및 휴무 시에는 답변이 늦어질 수 있으니 양해 부탁 드립니다.<br/><br/><br/>
+				* 아래의 문의 카테고를 꼭! 선택해주세요.
 			</h4>
 			<br/>	
-			
-				<br/>
-				<br/>
 				<form action="helpanswer.hp" method="post">
 					<table class="qTable" align="center">
 						<tr>
 							<td colspan="3" style="height: 70px;">
-								<input type="radio" name="qRadio" id="qRadio1" value="qRadio1" checked="checked">
+								<input type="radio" name="qRadio" id="qRadio1" value="계정">
 									<label for="qRadio1" style="font-size: 20px;"> <span></span> 계정관련 </label>
-								<input type="radio" name="qRadio" id="qRadio2" value="qRadio2">
+								<input type="radio" name="qRadio" id="qRadio2" value="방송시청">
 									<label for="qRadio2" style="font-size: 20px;"> <span></span> 방송/시청관련 </label>
-								<input type="radio" name="qRadio" id="qRadio3" value="qRadio3">
+								<input type="radio" name="qRadio" id="qRadio3" value="피치">
 									<label for="qRadio3" style="font-size: 20px;"> <span></span> 피치관련 </label>
-								<input type="radio" name="qRadio" id="qRadio4" value="qRadio4">
+								<input type="radio" name="qRadio" id="qRadio4" value="결제">
 									<label for="qRadio4" style="font-size: 20px;"> <span></span> 결제관련 </label>
-								<input type="radio" name="qRadio" id="qRadio5" value="qRadio5">
+								<input type="radio" name="qRadio" id="qRadio5" value="기타">
 									<label for="qRadio5" style="font-size: 20px;"> <span></span> 기 타 </label>
+								<input type="hidden" id="qType" name="qType" value="">
 							</td>
 						</tr>
 						<tr>
@@ -278,9 +277,22 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 				</form>
 				<br/>
 				<br/>	
-			</div>		
+			</div>
+			
+			<script>
+			
+				$(function(){
+					
+					$("input:radio[name='qRadio']").click(function(){
+						
+						var qType = $("input:radio[name='qRadio']:checked").val();
+						
+						$("#qType").val(qType);
+					});
+				});
+			
+			</script>
 		</div>
-
 	</div>
 	<!-- 위에 배너 빼고 전체 div 끝 -->
 	<br/>

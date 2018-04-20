@@ -9,11 +9,13 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +24,7 @@ import com.kh.mt.board.model.vo.BoardFile;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.helpcenter.model.sevice.HelpService;
 import com.kh.mt.helpcenter.model.vo.HelpMainVo;
+import com.kh.mt.member.model.vo.Member;
 @Controller
 public class HelpController {
 
@@ -75,10 +78,34 @@ public class HelpController {
 
 		return "helpcenter/helpReport";
 	}
-
+	
+	// 신고대상 아이디 체크
+	@RequestMapping("bullyIdCheck.hp")
+	public void bullyIdCheck(HttpServletResponse response, String bullyId) {
+		
+		response.setContentType("text/html; charset=utf-8");
+		
+		String userId = hs.bullyIdCheck(bullyId);
+		
+		try {
+			
+			if(bullyId.equals(userId)){
+				
+				response.getWriter().print("신고대상 아이디 체크를 완료했습니다.");
+			
+			}else{
+				
+				response.getWriter().print("일치하는 회원 아이디가 존재하지 않습니다.");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	// 신고하기 등록하면 등록완료 페이지 이동
 	@RequestMapping(value="helpreportpost.hp")
-	public String showHelpCenterReportPost(String mId, String rTitle, String rContent,
+	public String showHelpCenterReportPost(String mId, String bullyId, String rContent,
 			Model model, MultipartFile photo, HttpServletRequest request) {
 
 		//System.out.println("controller's mId/rTitle/rContent : " + mId + "/" + rTitle + "/" + rContent);
@@ -110,7 +137,7 @@ public class HelpController {
 
 			HelpMainVo hm = new HelpMainVo();
 			hm.setBwriter(mId);
-			hm.setB_title(rTitle);
+			hm.setB_title(bullyId);	// 신고일 경우 게시글 제목 대신 신고대상 아이디
 			hm.setB_content(rContent);
 			// b_type은 report로
 
@@ -150,14 +177,15 @@ public class HelpController {
 
 	// 1:1문의 등록
 	@RequestMapping(value="helpanswer.hp")
-	public ModelAndView showHelpCenterAnswer(ModelAndView mv, String mId, String qTitle, String qContent) {
+	public ModelAndView showHelpCenterAnswer(ModelAndView mv, String mId, String qType, String qTitle, String qContent) {
 
-		//System.out.println("controller's mId/qTitle/qContent : " + mId + "/" + qTitle + "/" + qContent);
+		//System.out.println("controller's mId/qType/qTitle/qContent : " + mId + "/" + qType + "/" + qTitle + "/" + qContent);
 
 		mv.setViewName("helpcenter/helpAnswer");
 
 		HelpMainVo hm = new HelpMainVo();
 		hm.setBwriter(mId);
+		hm.setB_type("personal/" + qType);
 		hm.setB_title(qTitle);
 		hm.setB_content(qContent);
 

@@ -53,7 +53,16 @@ public class HelpServiceImpl implements HelpService{
 		
 	}
 
-	// 신고하기(제목/내용)
+	// 신고대상 아이디 체크
+	@Override
+	public String bullyIdCheck(String bullyId) {
+
+		String userId = hd.bullyIdCheck(bullyId);
+		
+		return userId;
+	} 
+
+	// 신고하기(신고대상 아이디/내용)
 	@Override
 	public void report(HelpMainVo hm) {
 
@@ -98,6 +107,7 @@ public class HelpServiceImpl implements HelpService{
 		int nListTotal = hd.nListTotal();
 		
 		return nListTotal;
-	} 
+	}
+
 	
 }

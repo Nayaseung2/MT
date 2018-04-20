@@ -50,8 +50,19 @@ public class HelpDaoImpl implements HelpDao{
 		
 		return result;
 	}
+	
+	// 신고대상 아이디 체크
+	@Override
+	public String bullyIdCheck(String bullyId) {
 
-	// 신고하기(제목/내용)
+		String userId="";
+		
+		userId = sqlSession.selectOne("QnA.bullyIdCheck", bullyId);
+		
+		return userId;
+	}
+
+	// 신고하기(신고대상 아이디/내용)
 	@Override
 	public int report(SqlSessionTemplate sqlSession, HelpMainVo hm) {
 		
@@ -120,4 +131,6 @@ public class HelpDaoImpl implements HelpDao{
 		
 		return result;
 	}
+
+
 }
