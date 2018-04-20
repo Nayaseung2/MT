@@ -17,7 +17,10 @@ public interface HelpService {
 	// 1:1 문의글 
 	void personal(HelpMainVo hm);
 
-	// 신고하기(제목/내용)
+	// 신고대상 아이디 체크
+	String bullyIdCheck(String bullyId);
+	
+	// 신고하기(신고대상 아이디/내용)
 	void report(HelpMainVo hm);
 
 	// 신고하기(파일)
@@ -31,5 +34,6 @@ public interface HelpService {
 
 	// 총 공지글 수
 	int nListTotal();
+
 
 }

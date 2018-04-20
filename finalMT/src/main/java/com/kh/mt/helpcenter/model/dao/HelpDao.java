@@ -19,7 +19,10 @@ public interface HelpDao {
 	// 1:1 문의글
 	int personal(SqlSessionTemplate sqlSession, HelpMainVo hm);
 
-	// 신고하기(제목/내용)
+	// 신고대상 아이디 체크
+	String bullyIdCheck(String bullyId);
+	
+	// 신고하기(신고대상 아이디/내용)
 	int report(SqlSessionTemplate sqlSession, HelpMainVo hm);
 
 	// 신고하기(파일)
@@ -36,5 +39,6 @@ public interface HelpDao {
 
 	// 게시글 조회수
 	int updateCount(String b_code);
+
 	
 }

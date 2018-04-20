@@ -37,7 +37,12 @@
 	<!-- 1:1문의글 등록 -->
 	<select id="personal">
 		INSERT INTO BOARD
-   		VALUES( seq_bcode.nextval || #{ bwriter }, NULL, 'personal', #{ b_title }, #{ b_content }, #{ bwriter }, SYSDATE, SYSDATE, 1, 'Y')
+   		VALUES( seq_bcode.nextval || #{ bwriter }, NULL, #{ b_type }, #{ b_title }, #{ b_content }, #{ bwriter }, SYSDATE, SYSDATE, 1, 'Y')
+	</select>
+	
+	<!-- 신고대상 아이디 체크 -->
+	<select id="bullyIdCheck" parameterType="string" resultType="string">
+		SELECT MID FROM MEMBER WHERE MID = #{ mId }
 	</select>
 	
 	<!-- 신고글 등록 -->
