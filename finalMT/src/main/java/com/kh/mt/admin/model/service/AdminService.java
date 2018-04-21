@@ -3,6 +3,7 @@ package com.kh.mt.admin.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.mt.admin.model.vo.Contact;
 import com.kh.mt.admin.model.vo.Revenue;
 import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
@@ -61,6 +62,16 @@ public interface AdminService {
 	HashMap<String, Object> contactList(PageInfo pi);
 
 	int depositUserCount(String userId); //출금 완료 유저 카운트
+
+	void addAnswer(HashMap<String, String> map); //1:1문의 답변달기
+
+	int contactTypeCount(String type); //문의 타입별 listCount조회용
+
+	HashMap<String, Object> contactTypeList(PageInfo pi, String type); //문의 타입별 리스트 가져오기
+
+	int searchContact(String userId); //문의 유저 카운트
+
+	ArrayList<Contact> searchContactUser(String userId, PageInfo pi); //문의 유저리스트
 
 } 
  

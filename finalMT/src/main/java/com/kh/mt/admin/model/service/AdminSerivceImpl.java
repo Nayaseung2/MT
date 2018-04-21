@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.mt.admin.model.dao.AdminDao;
+import com.kh.mt.admin.model.vo.Contact;
 import com.kh.mt.admin.model.vo.Revenue;
 import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
@@ -185,6 +186,45 @@ public class AdminSerivceImpl implements AdminService{
 	public int depositUserCount(String userId) {
 		
 		return ad.depositUserCount(userId);
+	}
+
+	@Override
+	public void addAnswer(HashMap<String, String> map) {
+		int result = ad.addAnswer(map);
+		
+		if(result > 0){
+			System.out.println("답변 성공");
+		}
+	}
+
+	@Override
+	public int contactTypeCount(String type) {
+		return ad.contactTypeCount(type);
+	}
+
+	@Override
+	public HashMap<String, Object> contactTypeList(PageInfo pi, String type) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<Contact> clist = ad.contactTypeList(pi, type);
+		
+		map.put("clist", clist);
+		
+		return map;
+	}
+
+	@Override
+	public int searchContact(String userId) {
+		return ad.searchContact(userId);
+	}
+
+	@Override
+	public ArrayList<Contact> searchContactUser(String userId, PageInfo pi) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<Contact> clist = ad.searchContactUser(pi, userId);
+		
+		return clist;
 	}
 
 
