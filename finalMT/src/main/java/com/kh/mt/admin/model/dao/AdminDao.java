@@ -3,6 +3,7 @@ package com.kh.mt.admin.model.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.mt.admin.model.vo.Contact;
 import com.kh.mt.admin.model.vo.Revenue;
 import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
@@ -54,5 +55,15 @@ public interface AdminDao {
 	int searchWithCount(String userId);
 
 	int depositUserCount(String userId);
+
+	int addAnswer(HashMap<String, String> map);
+
+	int contactTypeCount(String type);
+
+	ArrayList<Contact> contactTypeList(PageInfo pi, String type);
+
+	int searchContact(String userId);
+
+	ArrayList<Contact> searchContactUser(PageInfo pi, String userId);
 
 }

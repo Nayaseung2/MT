@@ -269,10 +269,11 @@
     	
     	function onclickPage(value, type){
     		var url = type;        
+    		var userId = $("#search").val();
     		$.ajax({
        			url: url,
        			type: "get",
-       			data:{"newCurrentPage":value},
+       			data:{"newCurrentPage":value, "userId":userId},
        			success:function(data){
     	   
     	       		var list = data.map.rlist;

@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.mt.admin.model.vo.Contact;
 import com.kh.mt.admin.model.vo.Revenue;
 import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
@@ -208,6 +209,44 @@ public class AdminDaoImpl implements AdminDao{
 	@Override
 	public int depositUserCount(String userId) {
 		return sqlSession.selectOne("Admin.depositUserCount", userId);
+	}
+
+	@Override
+	public int addAnswer(HashMap<String, String> map) {
+		
+		int result = sqlSession.insert("Admin.addAnswer", map);
+		
+		return result;
+	}
+
+	@Override
+	public int contactTypeCount(String type) {
+		return sqlSession.selectOne("Admin.contactTypeCount", type);
+	}
+
+	@Override
+	public ArrayList<Contact> contactTypeList(PageInfo pi, String type) {
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		ArrayList<Contact> list = (ArrayList)sqlSession.selectList("Admin.contactTypeList", type, rowBounds);
+		
+		return list;
+	}
+
+	@Override
+	public int searchContact(String userId) {
+		return sqlSession.selectOne("Admin.searchContact", userId);
+	}
+
+	@Override
+	public ArrayList<Contact> searchContactUser(PageInfo pi, String userId) {
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		ArrayList<Contact> list = (ArrayList)sqlSession.selectList("Admin.searchContactUser", userId, rowBounds);
+		
+		return list;
 	}
 
 	

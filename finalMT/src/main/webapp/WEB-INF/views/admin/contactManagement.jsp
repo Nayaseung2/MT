@@ -38,6 +38,31 @@
 <script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
 
 <script src="http://code.highcharts.com/highcharts.js"></script>
+
+<style>
+	.modalTable, .modalTable td, .modalTable input{
+		width: 100%;
+	}
+	
+	.modalTable input{
+		margin: 0px auto 20px auto; 
+		font-size: 18px;
+		font-weight: bold;
+	}
+	
+	.modalTable textarea{
+		width: 100%;
+		height: 200px;
+		resize: none;
+	}
+	.modal-content label{
+		float: inherit;
+	}
+	
+	
+</style>
+
+
 </head>
 
 <body>
@@ -119,11 +144,18 @@
                                     <i class="fa fa-lightbulb-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">15건</div>
-                                    <div>오늘</div>
+                                    <div class="huge account"><c:out value="${ map.count[0] }건"/></div>
+                                    <div>계정관련</div>
                                 </div>
                             </div>
                         </div>
+                        <a onclick="contactTypeChange('contactTypeChange.ad', '계정')">
+                            <div class="panel-footer">
+                                <span class="pull-left">자세히</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -134,11 +166,18 @@
                                     <i class="fa fa-lightbulb-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">15건</div>
-                                    <div>이번주</div>
+                                    <div class="huge watch"><c:out value="${ map.count[1] }건"/></div>
+                                    <div>방송시청관련</div>
                                 </div>
                             </div>
                         </div>
+                        <a onclick="contactTypeChange('contactTypeChange.ad', '방송시청')">
+                            <div class="panel-footer">
+                                <span class="pull-left">자세히</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -149,53 +188,96 @@
                                     <i class="fa fa-lightbulb-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">15건</div>
-                                    <div>이번달</div>
+                                    <div class="huge peach"><c:out value="${ map.count[2] }건"/></div>
+                                    <div>피치관련</div>
                                 </div>
                             </div>
                         </div>
+                        <a onclick="contactTypeChange('contactTypeChange.ad', '피치')">
+                            <div class="panel-footer">
+                                <span class="pull-left">자세히</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
                     </div>
                 </div>
-                
-                 <a href="#">
                 <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-info">
+                    <div class="panel panel-green">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <img src="resources/images/plusBtn.png" style="height: 75px;"/>
+                                    <i class="fa fa-lightbulb-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">추가하기</div>
-                                    <div></div>
+                                    <div class="huge payment"><c:out value="${ map.count[3] }건"/></div>
+                                    <div>결제관련</div>
                                 </div>
                             </div>
                         </div>
+                        <a onclick="contactTypeChange('contactTypeChange.ad', '결제')">
+                            <div class="panel-footer">
+                                <span class="pull-left">자세히</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
                     </div>
                 </div>
-                </a>
-                
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-lightbulb-o fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge others"><c:out value="${ map.count[4] }건"/></div>
+                                    <div>기타</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a onclick="contactTypeChange('contactTypeChange.ad', '기타')">
+                            <div class="panel-footer">
+                                <span class="pull-left">자세히</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-lightbulb-o fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge total"><c:out value="${ map.count[5] }건"/></div>
+                                    <div>전체 문의</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a onclick="location.reload()">
+                            <div class="panel-footer">
+                                <span class="pull-left">자세히</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="row" style="margin-top: 30px;">
 				<div class="searchArea" align="center">
 					<table>
 						<tr>
 							<td>
-								<select style="height: 30px;" name="searchSelect">
-									<option>---------</option>
-									<option value="userId">아이디</option>
-									<option value="userName">이름</option>
-									<option value="date">날짜</option>
-								</select>
-							</td>
-							<td>
-								&nbsp;&nbsp;
-							</td>
-							<td>
 								<div class="input-group custom-search-form" style="width: 100%; float: right;" >
-	                                <input type="text" class="form-control" placeholder="Search...">
+	                                <input type="text" class="form-control" placeholder="Search..." id="search">
 	                                <span class="input-group-btn">
-		                                <button class="btn btn-default" type="button">
+		                                <button class="btn btn-default" type="button" onclick="typeChange('searchContact.ad')">
 		                                    <i class="fa fa-search"></i>
 		                                </button>
 	                            	</span>
@@ -216,59 +298,289 @@
                                     <tr>
                                         <th>아이디</th>
                                         <th>분류</th>
+                                        <th>문의 제목</th>
                                         <th>문의 내용</th>
                                         <th>문의 날짜</th>
                                         <th align="center">자세히 보기</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                  <c:forEach var="i" begin="0" end="20">
+                                <tbody class="values">
+                                  <c:forEach var="c" items="${ map.clist }">
                                   	<tr>
-                                  		<td>${ i }</td>
-                                  		<td>${ i }</td>
-                                  		<td>${ i }</td>
-                                  		<td>${ i }</td>
-                                  		<td width="5%" align="center"><button class="btn btn-default detail">자세히 보기</button></td>
-                                  	</tr>
-                                  	<tr class="detailboard">
-                                  		<td colspan="4">
-                                  			<ul>
-                                  				<li><c:out value="제목: "/> </li>
-                                  				<li>내용</li>
-                                  				<li>dasfkjsjfhaulhfueqwhfiashuids</li>
-                                  			</ul>
-                                  		</td>
-                                  		<td style="width: 10%; vertical-align: middle;" align="center">
-                                  			<button class="btn btn-info response">답변하기</button>
-                                  		</td>
+                                  		<td><c:out value="${ c.bWriter }"/></td>
+                                  		<td><c:out value="${ c.bType }"/></td>
+                                  		<td><c:out value="${ c.bTitle }"/></td>
+                                  		<td style="width: 20px; overflow: hidden; text-overflow; ellipsis;"><c:out value="${ c.bContent }"/></td>
+                                  		<td><c:out value="${ c.bCreateDate }"/></td>
+                                  		<td width="5%" align="center" class="detailTd"><button class="btn btn-default detail">자세히 보기</button></td>
+                                  		<td style="display:none;" id="${ c.bCode }"><c:out value="${ c.bCode }"/></td>
                                   	</tr>
                                   </c:forEach>
                                 </tbody>
                             </table>
-                            
-                            <script>
-                            	$(function(){
-                            		$(".detailboard").hide();
-	                            	$(document).on("click", ".detail", function(){
-	                            		$(this).parents().parents().next().toggle();
-	                            	});
-	                            	$(".response").click(function(){
-	                            		alert("안녕");
-	                            	});
-	                            });
-                            </script>
                             <!-- /.table-responsive -->
+                            <div id="pagingArea" align="center">
+								<ul class="pagination pageul">
+	                              <li class="page-item"><a class="page-link back" onclick="return pageChange($('.active').children().text(),'minus', $('.type').attr('id'))">이전</a></li>
+	                              <c:forEach var="p" begin="${ map.pi.startPage }" end="${ map.pi.endPage }">
+	                                 <c:if test="${p eq map.pi.currentPage }">
+	                                    <li class="page-item active" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${p}</a></li>
+	                                 </c:if>
+	                                 <c:if test="${p ne map.pi.currentPage }">
+	                                    <li class="page-item" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${p}</a></li>
+	                                 </c:if>
+	                              
+	                              </c:forEach>
+	                              <li class="page-item"><a class="page-link next" onclick="return pageChange($('.active').children().text(),'plus', $('.type').attr('id'))">다음</a></li>
+	                           </ul>
+							</div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
             </div>
-	        
         </div>
-        
-        
     </div>
     <!-- /#wrapper -->
+    <!-- .modal -->
+    <div class="modal fade" id="layerpop" >
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <!-- header -->
+	      <div class="modal-header">
+	        <!-- 닫기(x) 버튼 -->
+	        <button type="button" class="close" data-dismiss="modal">×</button>
+	        <!-- header title -->
+	        <h4 class="modal-title" align="center">상세보기</h4>
+	      </div>
+	      <!-- body -->
+	      <div class="modal-body">
+		      <table class="modalTable">
+		      	<tr>
+		      		<td><label>분류</label><input type="text" class="ptype" readonly/></td>
+		      		<td style="display: none;" class="code"></td>
+		      	</tr>
+		      	<tr>
+		      		<td><label>날짜</label><input type="text" class="date" readonly/></td>
+		      	</tr>
+		      	<tr>
+		      		<td><label>작성자</label><input type="text" class="writer" readonly/></td>
+		      	</tr>
+		      	<tr>
+		      		<td><label>제목</label><input type="text" class="title" readonly/></td>
+		      	</tr>
+		      	<tr>
+		      		<td><label>내용</label><textarea class="content" readonly></textarea></td>
+		      	</tr>
+		      </table>
+	      </div>
+	      <!-- Footer -->
+	      <div class="modal-footer">
+	      	<label style="float: left;">답변내용</label>
+	      	<textarea style="width: 100%; height: 200px; resize: none;" class="personalAnswer"></textarea>
+	      
+	      
+	        <button type="button" class="btn btn-default answer" onclick="answer($('.code').val(), $('.personalAnswer').val())">답변하기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- /.modal -->
+	<input type="hidden" value="${ map.pi.maxPage }" id="maxPage"/>
+    <input type="hidden" class="type" id="contactTypeChange.ad"/>
+    <script>
+   	
+   	$(document).on("click", ".detail", function(){
+		var writer = $(this).parent().parent().children().eq(0).text();
+		var ptype = $(this).parent().parent().children().eq(1).text();
+		var title = $(this).parent().parent().children().eq(2).text();
+		var content = $(this).parent().parent().children().eq(3).text();
+		var date = $(this).parent().parent().children().eq(4).text();
+		var code = $(this).parent().parent().children().last().text();
+		
+	    $('div.modal').modal();
+		
+		$(".ptype").val(ptype);
+		$(".code").val(code);
+		$(".date").val(date);
+		$(".writer").val(writer);
+		$(".title").val(title);
+		$(".content").text(content);
+		
+	});
+   	
+   	function answer(code, text){
+   		var con = confirm("이 문구 그대로 답변하시겠습니까?"); 
+   		
+   		if(con == true){
+	   		$.ajax({
+	   			url: "addAnswer.ad",
+	   			type: "post",
+	   			data: {"code": code, "content": text},
+	   			success: function(data){
+	   				
+	   			},
+	   			error: function(data){
+	   				console.log("에러");
+	   			}
+	   		});
+	   		
+			$(".personalAnswer").val("");
+			
+			$(".close").click();
+			
+			$("#"+code).prev().html("처리완료");
+			
+   		
+   		}else {
+   			$(".personalAnswer").focus();
+   		}
+   	}
+   	
+   	function typeChange(type){
+		$(".type").attr("id", type);
+		
+		pageChange("1", "", type);
+	}
+	
+	function onclickPage(value, type){
+		
+		var url = type;        
+		$.ajax({
+   			url: url,
+   			type: "get",
+   			data:{"newCurrentPage":value},
+   			success:function(data){
+	   
+	       		var list = data.map.clist;
+	       		var pi = data.map.pi;
+				$("tbody").html("");
+	       
+	      		for(var i = 0; i < list.length; i++){
+	      			$(".values").append("<tr><td>"+list[i].bWriter+"</td><td>"+list[i].bType+"</td><td>"+list[i].bTitle+"</td><td>"+list[i].bContent+"</td><td>"+list[i].bCreateDate+"</td><td class='detailTd'><button class='btn btn-default detail'>자세히 보기</button></td></tr>");
+	      		}
+	      		
+	      		$(".pageul").children().removeClass('active');
+	      		$("#cu"+value).addClass('active');
+	      		$("#maxPage").attr("value", pi.maxPage);
+   			},
+   			error:function(data){
+      			console.log("에러!");
+   			}
+		});
+ 		return false;
+	}
+	
+	function pageChange(pagenum, value, type){
+        var page = Number(pagenum);
+        var url = type;  
+        var userId = $("#search").val();
+        
+        console.log("url: "+url);
+        console.log("page: " + page);
+        console.log("userId: " + userId);
+        if(page >= 1 && page <= $("#maxPage").val()){
+             if(value === 'plus'){
+                if(page == $("#maxPage").val()){
+                   return;
+                }
+                page += 1;
+             }else if(value === 'minus'){
+                if(page === 1){
+                   return;
+                }
+                page -= 1;
+             }
+             
+             $.ajax({
+                url: url,
+                type: "get",
+                data:{"newCurrentPage":page, "userId":userId},
+                success:function(data){
+                	var list = data.map.clist;
+    	       		var pi = data.map.pi;
+    	       		console.log(pi.currentPage);
+    	       		console.log(list);
+    	       		
+    	       		
+    				$(".values").html("");
+    	       
+    	      		for(var i = 0; i < list.length; i++){
+    	      			$(".values").append("<tr><td>"+list[i].bWriter+"</td><td>"+list[i].bType+"</td><td>"+list[i].bTitle+"</td><td>"+list[i].bContent+"</td><td>"+list[i].bCreateDate+"</td><td class='detailTd'><button class='btn btn-default detail'>자세히 보기</button></td></tr>");
+    	      		}
+    	      		
+					$(".pageul").html("");
+    	      		$(".pageul").append("<li class='page-item'><a class='page-link back'>이전</a></li>");
+    	      		
+    	      		for(var i = pi.startPage; i <= pi.endPage; i++){
+    	      			if(i == pi.currentPage){
+    	      				$(".pageul").append("<li class='page-item active' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
+    	      			}else {
+    	      				$(".pageul").append("<li class='page-item' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
+    	      			}
+    	      		}
+    	      		$(".pageul").append("<li class='page-item'><a class='page-link next'>다음</a></li>");
+
+    	      		$(".page-item").attr("onclick", "return onclickPage($(this).text(), $('.type').attr('id'))");
+    	      		$(".back").attr("onclick", "return pageChange($('.active').children().text(),'minus', $('.type').attr('id'))");
+    	      		$(".next").attr("onclick", "return pageChange($('.active').children().text(),'plus', $('.type').attr('id'))");
+    	      		$("#maxPage").attr("value", pi.maxPage);
+    	      		
+    	      		if(userId != ""){
+	  					$("#all").remove();
+	  					$(".pageul").append("<br/><button onclick='location.reload()' id='all'>전체보기</button>");
+	  				}
+                },
+                error:function(data){
+                   console.log("에러!");
+                }
+             });
+              return false;
+           }
+        }
+	function contactTypeChange(url, type){
+        $.ajax({
+	    	url: url,
+	        type: "get",
+	        data:{"newCurrentPage":"1", "type":type},
+	        success:function(data){
+		       	var list = data.map.clist;
+		   		var pi = data.map.pi;
+       		
+				$(".values").html("");
+	       
+	      		for(var i = 0; i < list.length; i++){
+	      			$(".values").append("<tr><td>"+list[i].bWriter+"</td><td>"+list[i].bType+"</td><td>"+list[i].bTitle+"</td><td>"+list[i].bContent+"</td><td>"+list[i].bCreateDate+"</td><td class='detailTd'><button class='btn btn-default detail'>자세히 보기</button></td></tr>");
+	      		}
+      		
+				$(".pageul").html("");
+	      		$(".pageul").append("<li class='page-item'><a class='page-link back'>이전</a></li>");
+	      		
+	      		for(var i = pi.startPage; i <= pi.endPage; i++){
+	      			if(i == pi.currentPage){
+	      				$(".pageul").append("<li class='page-item active' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
+	      			}else {
+	      				$(".pageul").append("<li class='page-item' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
+	      			}
+	      		}
+	      		$(".pageul").append("<li class='page-item'><a class='page-link next'>다음</a></li>");
+
+	      		$(".page-item").attr("onclick", "return onclickPage($(this).text(), $('.type').attr('id'))");
+	      		$(".back").attr("onclick", "return pageChange($('.active').children().text(),'minus', $('.type').attr('id'))");
+	      		$(".next").attr("onclick", "return pageChange($('.active').children().text(),'plus', $('.type').attr('id'))");
+	      		$("#maxPage").attr("value", pi.maxPage);
+      		
+	      		if(userId != ""){
+					$("#all").remove();
+					$(".pageul").append("<br/><button onclick='location.reload()' id='all'>전체보기</button>");
+				}
+           },
+           error:function(data){
+              console.log("에러!");
+           }
+		});
+	}
+   	</script>
 </body>
 </html>

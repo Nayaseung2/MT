@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.mt.admin.model.service.AdminService;
+import com.kh.mt.admin.model.vo.Contact;
 import com.kh.mt.admin.model.vo.Revenue;
 import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
@@ -290,7 +291,6 @@ public class AdminController {
 	//출금완료 회원조회
 	@RequestMapping("searchDeposit.ad")
 	public ModelAndView searchDeposit(ModelAndView mv, String newCurrentPage, String userId){
-		System.out.println("여기는 들어옵니가?");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int count = as.depositUserCount(userId);
 		PageInfo pi = addUserPage(newCurrentPage, count);
@@ -330,17 +330,108 @@ public class AdminController {
 		
 		HashMap<String, Object> map = as.contactList(pi);
 		
+		ArrayList<Contact> list = (ArrayList<Contact>) map.get("clist");
+		
+		int[] temp = addArr(list);
+		
+		ArrayList<Integer> count = new ArrayList<Integer>();
+		for(int i = 0; i < temp.length; i++){
+			count.add(temp[i]);
+		}
+		
+		
+		map.put("count", count);
 		map.put("pi", pi);
 		mv.addObject("map", map);
 		
 		System.out.println("controller: " + map);
-		
-		
+
 		mv.setViewName("admin/contactManagement");
 		
 		return mv;
+	}
+	
+	@RequestMapping("addAnswer.ad")
+	public ModelAndView addAnswer(ModelAndView mv, String code, String content){
 		
-	} 
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map.put("code", code);
+		map.put("content", content);
+		
+		as.addAnswer(map);
+		
+		System.out.println(code);
+		System.out.println(content);
+		
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	@RequestMapping("contactTypeChange.ad")
+	public ModelAndView contactTypeChange(ModelAndView mv, String newCurrentPage, String type){
+		System.out.println(type);
+		int listCount = as.contactTypeCount(type);
+		
+		PageInfo pi = addUserPage(newCurrentPage, listCount);
+		
+		HashMap<String, Object> map = as.contactTypeList(pi, type);
+		
+		map.put("pi", pi);
+		mv.addObject("map", map);
+		
+		System.out.println("controller: " + map);
+
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	@RequestMapping("searchContact.ad")
+	public ModelAndView searchContact(ModelAndView mv, String newCurrentPage, String userId){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int count = as.searchContact(userId);
+		
+		PageInfo pi = addUserPage(newCurrentPage, count);
+		
+		ArrayList<Contact> clist = as.searchContactUser(userId, pi);
+		
+		map.put("clist", clist);
+		map.put("pi", pi);
+		
+		mv.addObject("map", map);
+		
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	public int[] addArr(ArrayList<Contact> list){
+		int[] temp = new int[7];
+		
+		for(int i = 0; i < list.size(); i++){
+			if(list.get(i).getbType().equals("계정")){
+				temp[0] += 1;
+			}
+			if(list.get(i).getbType().equals("방송시청")){
+				temp[1] += 1;
+			}
+			if(list.get(i).getbType().equals("피치")){
+				temp[2] += 1;
+			}
+			if(list.get(i).getbType().equals("결제")){
+				temp[3] += 1;
+			}
+			if(list.get(i).getbType().equals("기타")){
+				temp[4] += 1;
+			}
+			temp[5] +=1;
+		}
+		
+		return temp;
+	}
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//페이징 처리 메소드
 	public PageInfo addPage(String newCurrentPage, String type){
@@ -365,6 +456,8 @@ public class AdminController {
 			listCount = Integer.parseInt(String.valueOf(list.get("WITHCOUNT")));
 		}else if(type.equals("deposit")){
 			listCount = Integer.parseInt(String.valueOf(list.get("DEPOSIT")));
+		}else if(type.equals("conctact")){
+			listCount = Integer.parseInt(String.valueOf(list.get("CONTACT")));
 		}
 		
 		
@@ -414,6 +507,7 @@ public class AdminController {
 		
 		return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 	}
+	
 	
 	//회원 관리 시간별 그래프 메소드
 	public  ArrayList<String> userCount(){
