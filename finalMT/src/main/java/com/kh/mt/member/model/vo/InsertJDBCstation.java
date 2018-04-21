@@ -1,9 +1,9 @@
-package com.kh.mt.JDBC.model.vo;
+package com.kh.mt.member.model.vo;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class JDBC implements java.io.Serializable{
+public class InsertJDBCstation implements java.io.Serializable{
 	private String mid;
 	private String jdbc_name;
 	private String jdbc_introduce;
@@ -11,10 +11,10 @@ public class JDBC implements java.io.Serializable{
 	private String guest_book;
 	private int visitor;
 	
-	public JDBC(){}
+	public InsertJDBCstation(){}
 
-	public JDBC(String mid, String jdbc_name, String jdbc_introduce, String jdbc_interest, String guest_book,
-			int visitor) {
+	public InsertJDBCstation(String mid, String jdbc_name, String jdbc_introduce, String jdbc_interest,
+			String guest_book, int visitor) {
 		super();
 		this.mid = mid;
 		this.jdbc_name = jdbc_name;
@@ -74,9 +74,8 @@ public class JDBC implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "JDBC [mid=" + mid + ", jdbc_name=" + jdbc_name + ", jdbc_introduce=" + jdbc_introduce
+		return "InsertJDBCstation [mid=" + mid + ", jdbc_name=" + jdbc_name + ", jdbc_introduce=" + jdbc_introduce
 				+ ", jdbc_interest=" + jdbc_interest + ", guest_book=" + guest_book + ", visitor=" + visitor + "]";
 	}
-	
 	
 }

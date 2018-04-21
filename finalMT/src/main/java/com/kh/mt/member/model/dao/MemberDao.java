@@ -17,4 +17,6 @@ public interface MemberDao {
 
 	int insertNaverMember(NaverLoginMember nlm);
 
+	int insertJDBCStation(String mid);
+
 }

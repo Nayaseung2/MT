@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <!DOCTYPE html>
 <html>
-<head>  
+<head>
 <meta charset="UTF-8">
 <title>방송국 개인 정보 관리</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -165,15 +165,10 @@
 				<br>
 					<label class="idnickname"><b>${loginUser.mId }</b></label><br>
 		<span class="idnickname">${loginUser.nickName }</span>
-					<span class="glyphicon glyphicon-cog" style="float: right;"><a style="text-decoration: none; color: black; cursor: pointer;"id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br> 
-					<c:if test="${empty jdbcInfo.jdbc_introduce }">
-					<input class="introduction" type="text" value="자기소개가 없습니다." readonly>
-					</c:if>
-					<c:if test="${!empty jdbcInfo.jdbc_introduce }">
-					<input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce }" readonly>
-					</c:if> 
-					<br><br><br> 
-					<label style="margin-left: 15px;">방송국 방문 : 0명</label>
+					<span class="glyphicon glyphicon-cog" style="float: right;"><a style="text-decoration: none; color: black; cursor: pointer;"id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br> <input class="introduction"
+						type="text" value="자기소개가 없습니다." readonly> <br>
+					<br> <br> <label style="margin-left: 15px;">방송국
+						방문 : 0명</label>
 				</div>
 				<br>
 				<button
@@ -194,9 +189,7 @@
 							<p>
 								<a class="bottom">일반 게시판</a>
 							</p>
-							<p>
-								<a class="bottom">방명록</a>
-							</p>
+								<p><a class="bottom" href="showGuestBookList.JDBC">방명록</a></p>
 						</td>
 					</tr>
 					<tr>

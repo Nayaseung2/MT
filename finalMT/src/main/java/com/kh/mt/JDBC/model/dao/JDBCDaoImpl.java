@@ -7,18 +7,18 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.mt.JDBC.model.vo.JDBC;
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
-  
+
 @Repository
 public class JDBCDaoImpl implements JDBCDao{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
 	//방송국 정보가 없으면 insert
-	@Override
+	/*@Override
 	public int insertJDBCstation(JDBC j) {
 		return sqlSession.insert("JDBC1.insertJDBCstation",j);
 	}
-
+*/
 	//JDBC정보 유무 확인
 	@Override
 	public JDBC selectJDBCstation(JDBC j) {
@@ -59,6 +59,14 @@ public class JDBCDaoImpl implements JDBCDao{
 		j=sqlSession.selectOne("JDBC1.selectForShow",mId);
 		System.out.println("j : "+j);
 		return j;
+	}
+
+	//방송국 로고 파일 불러오기
+	@Override
+	public JDBCLogoFile selectJDBCLogoForShow(String mId) {
+		JDBCLogoFile f= null;
+		f=sqlSession.selectOne("JDBC1.selectJDBCLogoForShow",mId);
+		return f;
 	}
 
 

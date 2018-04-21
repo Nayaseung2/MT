@@ -4,8 +4,8 @@ import com.kh.mt.JDBC.model.vo.JDBC;
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
 
 public interface JDBCService {
-  
-	void insertJDBCstation(JDBC j);
+
+	//void insertJDBCstation(JDBC j);
 
 	JDBC selectJDBCstation(JDBC j);
 
@@ -18,5 +18,8 @@ public interface JDBCService {
 	void updateJDBCLogoFile(JDBCLogoFile f);
 
 	JDBC selectForShow(String mId);
+
+	JDBCLogoFile selectJDBCLogoForShow(String mId);
+
 
 }

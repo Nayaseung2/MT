@@ -1,7 +1,7 @@
 package com.kh.mt.JDBC.model.vo;
-   
+
 import org.springframework.stereotype.Component;
-  
+
 @Component
 public class JDBCLogoFile implements java.io.Serializable{
 	private String file_code;

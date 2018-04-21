@@ -8,7 +8,7 @@ import com.kh.mt.JDBC.model.dao.JDBCDao;
 import com.kh.mt.JDBC.model.vo.JDBC;
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
 import com.kh.mt.member.model.dao.MemberDao;
-  
+
 @Service
 public class JDBCServiceImpl implements JDBCService {
 	@Autowired
@@ -17,10 +17,10 @@ public class JDBCServiceImpl implements JDBCService {
 	private SqlSessionTemplate sqlSession;
 	
 	//방송국 정보가 없으면 insert
-	@Override
+	/*@Override
 	public void insertJDBCstation(JDBC j) {
 		int result=jd.insertJDBCstation(j);
-	}
+	}*/
 
 	//방송국 정보가 잇는지 없는지 체크
 	@Override
@@ -63,6 +63,15 @@ public class JDBCServiceImpl implements JDBCService {
 		j=jd.selectForShow(mId);
 		return j;
 	}
+
+	//JDBC로고 파일 불러오기
+	@Override
+	public JDBCLogoFile selectJDBCLogoForShow(String mId) {
+		JDBCLogoFile f=null;
+		f=jd.selectJDBCLogoForShow(mId);
+		return f;
+	}
+
 
 
 	

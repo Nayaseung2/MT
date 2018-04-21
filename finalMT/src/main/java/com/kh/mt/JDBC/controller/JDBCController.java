@@ -17,26 +17,38 @@ import com.kh.mt.JDBC.model.service.JDBCService;
 import com.kh.mt.JDBC.model.vo.JDBC;
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
 import com.kh.mt.member.model.vo.Member;
-  
+
 @Controller
 public class JDBCController {
 	@Autowired
 	JDBCService js;
 
-	// 메인에서 방송국 페이지로 가기 정보 없으면
-	/*@RequestMapping(value = "showJDBCPage.JDBC")
-	public String showJDBCPage() {
-		System.out.println("정보 없음 ");
-		return "JDBC/myBroadcastStation";
-	}*/
+	//2018.04.13
+	//방명록쓰기
+	@RequestMapping(value = "showGuestBookList.JDBC")
+	public String showGuestBookList() {
+		return "JDBC/BSGuestBookList";
+	}
 	
+	
+	//
 	//menubar에서 방송국 가기 눌렀을 때 정보 불러오기
 	@RequestMapping(value = "bringJDBC.JDBC")
 	public String bringJDBC(HttpServletRequest request) {
+		//방송국 정보 불러오기
 		String mId= request.getParameter("mId");
 		JDBC j = js.selectForShow(mId);
+		
+		//방송국 로고 파일 불러오기
+		JDBCLogoFile f = new JDBCLogoFile();
+		f=js.selectJDBCLogoForShow(mId);
+		
 		HttpSession session = request.getSession();
 		session.setAttribute("jdbcInfo", j);
+		if(f!=null){
+			System.out.println("controller f : "+f);
+			session.setAttribute("jdbcLogoFile", f);
+		}
 		return "JDBC/myBroadcastStation";
 	}
 
@@ -99,20 +111,27 @@ public class JDBCController {
 		}else{
 			js.updateJDBCLogoFile(f);
 		}
+		
 		// 방송국 정보가 있는지 없는지 체크
 		JDBC getInfo = null;
 		getInfo = js.selectJDBCstation(j);
 
-		if (getInfo == null) {
+		/*if (getInfo == null) {
 			js.insertJDBCstation(j);
 		} else {
 			js.updateJDBCstation(j);
-		}
+		}*/
+		//방송국 정보 update
+		js.updateJDBCstation(j);
 		JDBC getInfo1 = null;
 		getInfo1 = js.selectJDBCstation(j);
-		System.out.println("Controller getInfo1 : "+getInfo1);
 		HttpSession session = request.getSession();
 		session.setAttribute("jdbcInfo", getInfo1);
+		
+		//파일 세션에 올리기
+		JDBCLogoFile f2 = null;
+		f2=js.selectJDBCLogo(f);
+		session.setAttribute("jdbcLogoFile", f2);
 		return "JDBC/myBroadcastStation";
 	}
 

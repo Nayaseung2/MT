@@ -54,4 +54,10 @@ public class MemberDaoImpl implements MemberDao{
 		return sqlSession.insert("Member.insertNaverMember", nlm);
 	}
 
+	//회원가입시 방송국 생성
+	@Override
+	public int insertJDBCStation(String mid) {
+		return sqlSession.insert("Member.insertJDBCStation",mid);
+	}
+
 }
