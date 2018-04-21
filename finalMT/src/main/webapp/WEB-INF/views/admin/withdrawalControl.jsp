@@ -73,13 +73,21 @@
                             <a href="adminMain.ad"><i class="fa fa-home fa-fw"></i> HOME</a>
                         </li>
                         <li>
-                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 회원 관리</a>
+                        	<a href="#"><i class="fa fa-table fa-fw"></i> 회원 관리<span class="fa arrow"></span></a>
+                        	<ul class="nav nav-second-level">
+                                <li>
+		                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
+                                </li>
+                                <li>
+                                    <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="revenueMg.ad"><i class="fa fa-table fa-fw"></i> 수익 관리</a>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="withdrawal.ad">출금 신청</a>
@@ -164,11 +172,11 @@
             <div class="row">
 		        <div class="col-lg-12">
 	                <div class="panel panel-default">
-	                    <div class="panel-heading">회원 정보
+	                    <div class="panel-heading type" id="withdrawal.ad" >회원 정보
 	                    	<div class="input-group custom-search-form" style="width: 30%; float: right;" >
 	                            <input type="text" class="form-control" placeholder="Search..." id="search" value="">
 	                            <span class="input-group-btn">
-	                             <button class="btn btn-default" type="button" onclick="typeChange('searchWithdrawal.ad');">
+	                             <button class="btn btn-default" type="button" onclick="typeChange('searchWithdrawal.ad')">
 	                                 <i class="fa fa-search"></i>
 	                             </button>
 	                        	</span>
@@ -198,18 +206,26 @@
 	                                  		<td>${ w.wdDate }</td>
 	                                  		<td class='arBtn'><button class='approval'>승인</button></td>
 	                                  		<td class='arBtn'><button class='refusal'>거절</button></td>
-	                                  		<td style="display: none;">${ w.wdCode }</td>
+	                                  		<td style='display: none;'>${ w.wdCode }</td>
 										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
 							<!-- /.table-responsive -->
 							<div id="pagingArea" align="center">
-								<button onclick="return pageChange('minus', $('.type').attr('id'))">[이전]</button>
-	
-									<font color="red" size="4" id="page"><b><c:out value="${ map.pi.currentPage }"/></b></font>
-	
-								&nbsp; <button onclick="return pageChange('plus', $('.type').attr('id'))">[다음]</button>
+								<ul class="pagination pageul">
+	                              <li class="page-item"><a class="page-link back" onclick="return pageChange($('.active').children().text(),'minus', $('.type').attr('id'))">이전</a></li>
+	                              <c:forEach var="p" begin="${ map.pi.startPage }" end="${ map.pi.endPage }">
+	                                 <c:if test="${p eq map.pi.currentPage }">
+	                                    <li class="page-item active" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${p}</a></li>
+	                                 </c:if>
+	                                 <c:if test="${p ne map.pi.currentPage }">
+	                                    <li class="page-item" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${p}</a></li>
+	                                 </c:if>
+	                              
+	                              </c:forEach>
+	                              <li class="page-item"><a class="page-link next" onclick="return pageChange($('.active').children().text(),'plus', $('.type').attr('id'))">다음</a></li>
+	                           </ul>
 							</div>
 						</div>
 						<!-- /.panel-body -->
@@ -222,58 +238,108 @@
     <!-- /#wrapper -->
 	<input type="hidden" value="${ map.pi.maxPage }" id="maxPage"/>
 	<script>
+	
 	function typeChange(type){
 		$(".type").attr("id", type);
 		
-		pageChange("", type);
+		pageChange("1", "", type);
 	}
 	
-	function pageChange(value, type){
-		var page = Number($("#page").text());
-		var url = type;		
-		var userId = $("#search").val();
-
-		if(page >= 1 && page <= $("#maxPage").val()){
-  			if(value === 'plus'){
-  				if(page == $("#maxPage").val()){
-  					return;
-  				}
-  				page += 1;
-  			}else if(value === 'minus'){
-  				if(page === 1){
-  					return;
-  				}
-  				page -= 1;
-  			}
-  			
-  			$.ajax({
-  				url: url,
-  				type: "get",
-  				data:{"newCurrentPage":page, "userId": userId},
-  				success:function(data){
-	  				var list = data.map.rlist;
-	  				var pi = data.map.pi;
-	  				$("tbody").html("");
-	  				
-	  				for(var i = 0; i < list.length; i++){
-		  				$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class='approval' onclick='approval()'>승인</button></td><td class='arBtn'><button class='refusal' onclick='refusal()'>거부</button></td><td><input type='hidden' value='"+list[i].wdCode+"'/></td></tr>");
-	  				}
-	  				
-	  				$("#page").text(page);
-	  				$("#maxPage").attr("value", pi.maxPage);
-	  				
-	  				if(userId != ""){
-	  					$("#all").remove();
-	  					$("#pagingArea").append("<button onclick='location.reload()' id='all'>전체보기</button>");
-	  				}
-  				},
-  				error:function(data){
-  					console.log("에러!");
-  				}
-  			});
-			return false;
-		}
+	function onclickPage(value, type){
+		
+		var url = type;        
+		$.ajax({
+   			url: url,
+   			type: "get",
+   			data:{"newCurrentPage":value},
+   			success:function(data){
+	   
+	       		var list = data.map.rlist;
+	       		var pi = data.map.pi;
+				$("tbody").html("");
+	       
+	      		for(var i = 0; i < list.length; i++){
+	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>카드</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class=''></button></td><td class='arBtn'><button class='refusal'>거절</button></td><td style='display: none;'>"+ list[i].wdDate +"</td></tr>");
+	      		}
+	      		
+	      		$(".pageul").children().removeClass('active');
+	      		$("#cu"+value).addClass('active');
+	      		$("#maxPage").attr("value", pi.maxPage);
+   			},
+   			error:function(data){
+      			console.log("에러!");
+   			}
+		});
+ 		return false;
 	}
+	
+	function pageChange(pagenum, value, type){
+        var page = Number(pagenum);
+        var url = type;  
+        var userId = $("#search").val();
+        
+        console.log("url: "+url);
+        console.log("page: " + page);
+        console.log("userId: " + userId);
+        if(page >= 1 && page <= $("#maxPage").val()){
+             if(value === 'plus'){
+                if(page == $("#maxPage").val()){
+                   return;
+                }
+                page += 1;
+             }else if(value === 'minus'){
+                if(page === 1){
+                   return;
+                }
+                page -= 1;
+             }
+             
+             $.ajax({
+                url: url,
+                type: "get",
+                data:{"newCurrentPage":page, "userId":userId},
+                success:function(data){
+                	
+                	var list = data.map.rlist;
+    	       		var pi = data.map.pi;
+    	       		console.log(pi.currentPage);
+    	       		console.log(list);
+    	       		
+    	       		
+    				$("tbody").html("");
+    	       
+    	      		for(var i = 0; i < list.length; i++){
+    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>카드</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class=''></button></td><td class='arBtn'><button class='refusal'>거절</button></td><td style='display: none;'>"+ list[i].wdDate +"</td></tr>");
+    	      		}
+    	      		
+					$(".pageul").html("");
+    	      		$(".pageul").append("<li class='page-item'><a class='page-link back'>이전</a></li>");
+    	      		for(var i = pi.startPage; i <= pi.endPage; i++){
+    	      			if(i == pi.currentPage){
+    	      				$(".pageul").append("<li class='page-item active' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
+    	      			}else {
+    	      				$(".pageul").append("<li class='page-item' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
+    	      			}
+    	      		}
+    	      		$(".pageul").append("<li class='page-item'><a class='page-link next'>다음</a></li>");
+
+    	      		$(".page-item").attr("onclick", "return onclickPage($(this).text(), $('.type').attr('id'))");
+    	      		$(".back").attr("onclick", "return pageChange($('.active').children().text(),'minus', $('.type').attr('id'))");
+    	      		$(".next").attr("onclick", "return pageChange($('.active').children().text(),'plus', $('.type').attr('id'))");
+    	      		$("#maxPage").attr("value", pi.maxPage);
+    	      		
+    	      		if(userId != ""){
+	  					$("#all").remove();
+	  					$(".pageul").append("<br/><button onclick='location.reload()' id='all'>전체보기</button>");
+	  				}
+                },
+                error:function(data){
+                   console.log("에러!");
+                }
+             });
+              return false;
+           }
+        }
 	
 	$(".approval").on("click", function(){
 		var wdCode = $(this).parent().parent().children().last().text();
@@ -282,7 +348,7 @@
 		var refusal = $(this).parent().next();
 		
 		var con = confirm("승인하시겠습니까?"); 
-		if(con){
+		if(con == true){
 			$.ajax({
 				url: "approval.ad", 
 				type: "get",
@@ -304,8 +370,8 @@
 	$(".refusal").on("click", function(){
 		var wdCode = $(this).parent().parent().children().last().text();
 		
-		var approval = $(this).parent();
-		var refusal = $(this).parent().next();
+		var approval = $(this).parent().prev();
+		var refusal = $(this).parent();
 		
 		var con = confirm("거절하시겠습니까?"); 
 		if(con){

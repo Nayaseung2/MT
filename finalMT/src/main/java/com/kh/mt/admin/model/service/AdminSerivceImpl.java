@@ -146,5 +146,46 @@ public class AdminSerivceImpl implements AdminService{
 		return approval;
 	}
 
+	@Override
+	public HashMap<String, Object> depositList(PageInfo pi) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<Withdrawal> dlist = ad.depositList(pi);
+		
+		map.put("dlist", dlist);
+		
+		return map;
+	}
+
+	@Override
+	public ArrayList<Withdrawal> searchDeposit(String userId, PageInfo pi) {
+		
+		ArrayList<Withdrawal> list =  ad.searchDeposit(userId, pi);
+		
+		return list;
+	}
+
+	@Override
+	public HashMap<String, Object> contactList(PageInfo pi) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<Withdrawal> clist = ad.contactList(pi);
+		
+		map.put("clist", clist);
+		
+		return map;
+	}
+
+	@Override
+	public int searchWithCount(String userId) {
+		
+		return ad.searchWithCount(userId);
+	}
+
+	@Override
+	public int depositUserCount(String userId) {
+		
+		return ad.depositUserCount(userId);
+	}
+
 
 }

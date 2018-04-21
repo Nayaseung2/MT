@@ -6,36 +6,38 @@
 
 <head>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+<title>SB Admin 2 - Bootstrap Admin Theme</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="/mt/resources/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Core CSS -->
+<link href="/mt/resources/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- MetisMenu CSS -->
+<link href="/mt/resources/admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="/mt/resources/admin/dist/css/sb-admin-2.css" rel="stylesheet">
+<!-- Morris Charts CSS -->
+<link href="/mt/resources/admin/vendor/morrisjs/morris.css" rel="stylesheet">
+<!-- Custom Fonts -->
+<link href="/mt/resources/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- MetisMenu CSS -->
-    <link href="/mt/resources/admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="/mt/resources/admin/dist/css/sb-admin-2.css" rel="stylesheet">
+<!-- jQuery -->
+<script src="/mt/resources/admin/vendor/jquery/jquery.min.js"></script>
 
-    <!-- Morris Charts CSS -->
-    <link href="/mt/resources/admin/vendor/morrisjs/morris.css" rel="stylesheet">
+<!-- Bootstrap Core JavaScript -->
+<script src="/mt/resources/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Custom Fonts -->
-    <link href="/tt/resources/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/mt/resources/admin/vendor/metisMenu/metisMenu.min.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
+<!-- Custom Theme JavaScript -->
+<script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
 </head>
 
 <body>
@@ -65,13 +67,21 @@
                             <a href="adminMain.ad"><i class="fa fa-home fa-fw"></i> HOME</a>
                         </li>
                         <li>
-                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 회원 관리</a>
+                        	<a href="#"><i class="fa fa-table fa-fw"></i> 회원 관리<span class="fa arrow"></span></a>
+                        	<ul class="nav nav-second-level">
+                                <li>
+		                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
+                                </li>
+                                <li>
+                                    <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="revenueMg.ad"><i class="fa fa-table fa-fw"></i> 수익 관리</a>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="withdrawal.ad">출금 신청</a>
@@ -222,9 +232,11 @@
                                   	</tr>
                                   	<tr class="detailboard">
                                   		<td colspan="4">
-  											<div style="width: 100%;">
-  												<img src="resources/images/logo.png"/>
-  											</div>
+                                  			<ul>
+                                  				<li><c:out value="제목: "/> </li>
+                                  				<li>내용</li>
+                                  				<li>dasfkjsjfhaulhfueqwhfiashuids</li>
+                                  			</ul>
                                   		</td>
                                   		<td style="width: 10%; vertical-align: middle;" align="center">
                                   			<button class="btn btn-info response">답변하기</button>
@@ -258,23 +270,5 @@
         
     </div>
     <!-- /#wrapper -->
-
-    <!-- jQuery -->
-    <script src="/test/resources/vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/test/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/test/resources/vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="/test/resources/vendor/raphael/raphael.min.js"></script>
-    <script src="/test/resources/vendor/morrisjs/morris.min.js"></script>
-    <script src="/test/resources/data/morris-data.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="/test/resources/dist/js/sb-admin-2.js"></script>
-
 </body>
 </html>
