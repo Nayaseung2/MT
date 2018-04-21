@@ -217,8 +217,8 @@ public class AdminController {
 		
 		return mv;
 	}
-	
-//--------------------------------------------------------------------------------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------------------------------------출금신청----------------------------------------------------------------------------------------------------------
 	
 	//출금신청 화면
 	@RequestMapping("withdrawal.ad")
@@ -240,8 +240,8 @@ public class AdminController {
 	@RequestMapping("searchWithdrawal.ad")
 	public ModelAndView searchWithdrawal(ModelAndView mv, String newCurrentPage, String userId){
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		PageInfo pi = addUserPage(newCurrentPage, userId);
+		int count = as.searchWithCount(userId);
+		PageInfo pi = addUserPage(newCurrentPage, count);
 		ArrayList<Withdrawal> rlist = as.searchWithdrawal(userId, pi);
 		
 		map.put("rlist", rlist);
@@ -261,17 +261,25 @@ public class AdminController {
 		int approval = 0; 
 		approval = as.approval(wdCode);
 		
-		System.out.println(approval);
-		
 		mv.setViewName("jsonView");
 		
 		return mv;
 	}
-	
+
+//---------------------------------------------------------------------------------------------------------출금완료----------------------------------------------------------------------------------------------------------	
 	
 	//출금완료 화면
 	@RequestMapping("deposit.ad")
-	public ModelAndView deposit(ModelAndView mv){
+	public ModelAndView deposit(ModelAndView mv, String newCurrentPage){
+		
+		PageInfo pi = addPage(newCurrentPage, "deposit");
+		
+		HashMap<String, Object> map = as.depositList(pi);
+		
+		map.put("pi", pi);
+		mv.addObject("map", map);
+		
+		System.out.println("controller: " + map);
 		
 		
 		mv.setViewName("admin/depositCompleted");
@@ -279,26 +287,61 @@ public class AdminController {
 		return mv;
 	}
 	
+	//출금완료 회원조회
+	@RequestMapping("searchDeposit.ad")
+	public ModelAndView searchDeposit(ModelAndView mv, String newCurrentPage, String userId){
+		System.out.println("여기는 들어옵니가?");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int count = as.depositUserCount(userId);
+		PageInfo pi = addUserPage(newCurrentPage, count);
+		ArrayList<Withdrawal> dlist = as.searchDeposit(userId, pi);
+		
+		System.out.println("searchDeposit dlist: "+ dlist);
+		
+		map.put("dlist", dlist);
+		map.put("pi", pi);
+		
+		mv.addObject("map", map);
+		
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+//---------------------------------------------------------------------------------------------------------신고관리----------------------------------------------------------------------------------------------------------	
+	
 	//신고관리 화면
 	@RequestMapping("reportMg.ad")
-	public ModelAndView reportMg(ModelAndView mv){
+	public ModelAndView reportMg(ModelAndView mv, String newCurrentPage){
+		
+		
+		
 		
 		mv.setViewName("admin/reportManagement");
 		
 		return mv;
 	}
-	
+//---------------------------------------------------------------------------------------------------------문의 내역----------------------------------------------------------------------------------------------------------	
 	//문의내역 화면
 	@RequestMapping("contactMg.ad")
-	public ModelAndView contactMg(ModelAndView mv){
+	public ModelAndView contactMg(ModelAndView mv, String newCurrentPage){
+
+		PageInfo pi = addPage(newCurrentPage, "conctact");
+		
+		HashMap<String, Object> map = as.contactList(pi);
+		
+		map.put("pi", pi);
+		mv.addObject("map", map);
+		
+		System.out.println("controller: " + map);
 		
 		
 		mv.setViewName("admin/contactManagement");
 		
-		
 		return mv;
-	}
-	
+		
+	} 
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//페이징 처리 메소드
 	public PageInfo addPage(String newCurrentPage, String type){
 		HashMap<String, String> list = as.memberList();
@@ -319,17 +362,19 @@ public class AdminController {
 		}else if(type.equals("revenue")){
 			listCount = Integer.parseInt(String.valueOf(list.get("REVENUE")));
 		}else if(type.equals("withdrawal")){
-			listCount = Integer.parseInt(String.valueOf(list.get("TODAY")));
+			listCount = Integer.parseInt(String.valueOf(list.get("WITHCOUNT")));
+		}else if(type.equals("deposit")){
+			listCount = Integer.parseInt(String.valueOf(list.get("DEPOSIT")));
 		}
+		
 		
 		if(newCurrentPage != null){
 			currentPage = Integer.parseInt(newCurrentPage);
 		}
 		
 		maxPage = (int)((double)listCount / limit + 0.9);
-		
+		 
 		startPage = ((int)((double)currentPage / limit + 0.9)-1) * limit + 1;
-		
 		endPage = startPage + limit -1;
 		
 		if(maxPage < endPage){
@@ -340,7 +385,7 @@ public class AdminController {
 	}
 	
 	//유져 페이징 처리
-	public PageInfo addUserPage(String newCurrentPage, String userId){
+	public PageInfo addUserPage(String newCurrentPage, int count){
 		
 		int currentPage = 1;
 		int limit = 0;
@@ -351,7 +396,7 @@ public class AdminController {
 
 		limit = 10;
 		
-		listCount = as.searchRevenueUser(userId); 
+		listCount = count; 
 		
 		if(newCurrentPage != null){
 			currentPage = Integer.parseInt(newCurrentPage);
@@ -647,7 +692,8 @@ public class AdminController {
 	public ModelAndView searchRevenue(ModelAndView mv, String newCurrentPage, String userId){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		PageInfo pi = addUserPage(newCurrentPage, userId);
+		int count = as.searchRevenueUser(userId);
+		PageInfo pi = addUserPage(newCurrentPage, count);
 		ArrayList<Revenue> rlist = as.searchRevenue(userId, pi);
 		
 		map.put("rlist", rlist);

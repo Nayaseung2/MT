@@ -67,13 +67,21 @@
                             <a href="adminMain.ad"><i class="fa fa-home fa-fw"></i> HOME</a>
                         </li>
                         <li>
-                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 회원 관리</a>
+                        	<a href="#"><i class="fa fa-table fa-fw"></i> 회원 관리<span class="fa arrow"></span></a>
+                        	<ul class="nav nav-second-level">
+                                <li>
+		                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
+                                </li>
+                                <li>
+                                    <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="revenueMg.ad"><i class="fa fa-table fa-fw"></i> 수익 관리</a>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="withdrawal.ad">출금 신청</a>
@@ -220,12 +228,20 @@
                             </table>
                             <!-- /.table-responsive -->
                              <div id="pagingArea" align="center">
-								<button onclick="return pageChange('minus', $('.type').attr('id'))">[이전]</button>
-
-									<font color="red" size="4" id="page"><b><c:out value="${ map.pi.currentPage }"/></b></font>
-
-								&nbsp; <button onclick="return pageChange('plus', $('.type').attr('id'))">[다음]</button>
-							</div>
+	                           <ul class="pagination pageul">
+	                              <li class="page-item"><a class="page-link back" onclick="return pageChange($('.active').children().text(),'minus', $('.type').attr('id'))">이전</a></li>
+	                              <c:forEach var="p" begin="${ map.pi.startPage }" end="${ map.pi.endPage }">
+	                                 <c:if test="${p eq map.pi.currentPage }">
+	                                    <li class="page-item active" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${p}</a></li>
+	                                 </c:if>
+	                                 <c:if test="${p ne map.pi.currentPage }">
+	                                    <li class="page-item" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${p}</a></li>
+	                                 </c:if>
+	                              
+	                              </c:forEach>
+	                              <li class="page-item"><a class="page-link next" onclick="return pageChange($('.active').children().text(),'plus', $('.type').attr('id'))">다음</a></li>
+	                           </ul>
+	                        </div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -241,7 +257,6 @@
     <script>
     	$(function(){
 			var money = ${map.tlist};
-			console.log(money);
 			var chart = $("#chart").highcharts({
 				chart: {type: 'line'},
 				title: {text: '시간별'},
@@ -252,56 +267,104 @@
 			});
 		});
     	
-    	function pageChange(value, type){
-  			var page = Number($("#page").text());
-			var url = type;		
-			var userId = $("#search").val();
-			
-			console.log(userId);
-			
-			if(page >= 1 && page <= $("#maxPage").val()){
-	  			if(value === 'plus'){
-	  				if(page == $("#maxPage").val()){
-	  					return;
-	  				}
-	  				page += 1;
-	  			}else if(value === 'minus'){
-	  				if(page === 1){
-	  					return;
-	  				}
-	  				page -= 1;
-	  			}
-	  			
-	  			$.ajax({
-	  				url: url,
-	  				type: "get",
-	  				data:{"newCurrentPage":page,
-	  						"userId": userId},
-	  				success:function(data){
-	  					var list = data.map.rlist;
-	  					var pi = data.map.pi;
-	  					$("tbody").html("");
-	  					
-	  					for(var i = 0; i < list.length; i++){
-		  					$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].peach_code+"</td><td>카드</td><td>"+list[i].p_date+"</td></tr>");
-	  					}
-	  					
-	  					$("#page").text(page);
-	  					$("#maxPage").attr("value", pi.maxPage);
-	  					
-	  					if(userId != ""){
-	  						$("#all").remove();
-	  						$("#pagingArea").append("<button onclick='location.reload()' id='all'>전체보기</button>");
-	  					}
-	  					
-	  				},
-	  				error:function(data){
-	  					console.log("에러!");
-	  				}
-	  			});
-  				return false;
-  			}
+    	function onclickPage(value, type){
+    		var url = type;        
+    		$.ajax({
+       			url: url,
+       			type: "get",
+       			data:{"newCurrentPage":value},
+       			success:function(data){
+    	   
+    	       		var list = data.map.rlist;
+    	       		var pi = data.map.pi;
+    				$("tbody").html("");
+    	       
+    	      		for(var i = 0; i < list.length; i++){
+    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].peach_code+"</td><td>카드</td><td>"+list[i].p_date+"</td></tr>");
+    	      		}
+    	      		
+    	      		$(".pageul").children().removeClass('active');
+    	      		$("#cu"+value).addClass('active');
+    	      		$("#maxPage").attr("value", pi.maxPage);
+       			},
+       			error:function(data){
+          			console.log("에러!");
+       			}
+    		});
+     		return false;
+    	}
+    	
+    	function typeChange(type){
+  			$(".type").attr("id", type);
+  			
+  			pageChange("1", "", type);
   		}
+    	
+    	function pageChange(pagenum, value, type){
+            var page = Number(pagenum);
+            var url = type;  
+            var userId = $("#search").val();
+            
+            console.log("url: "+url);
+            console.log("page: " + page);
+            console.log("userId: " + userId);
+            if(page >= 1 && page <= $("#maxPage").val()){
+                 if(value === 'plus'){
+                    if(page == $("#maxPage").val()){
+                       return;
+                    }
+                    page += 1;
+                 }else if(value === 'minus'){
+                    if(page === 1){
+                       return;
+                    }
+                    page -= 1;
+                 }
+                 
+                 $.ajax({
+                    url: url,
+                    type: "get",
+                    data:{"newCurrentPage":page, "userId":userId},
+                    success:function(data){
+                    	
+                    	var list = data.map.rlist;
+        	       		var pi = data.map.pi;
+        	       		console.log(pi.currentPage);
+        	       		console.log(list);
+        				$("tbody").html("");
+        	       
+        	      		for(var i = 0; i < list.length; i++){
+        	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].peach_code+"</td><td>카드</td><td>"+list[i].p_date+"</td></tr>");
+        	      		}
+        	      		
+						$(".pageul").html("");
+        	      		$(".pageul").append("<li class='page-item'><a class='page-link back'>이전</a></li>");
+        	      		for(var i = pi.startPage; i <= pi.endPage; i++){
+        	      			if(i == pi.currentPage){
+        	      				$(".pageul").append("<li class='page-item active' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
+        	      			}else {
+        	      				$(".pageul").append("<li class='page-item' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
+        	      			}
+        	      		}
+        	      		$(".pageul").append("<li class='page-item'><a class='page-link next'>다음</a></li>");
+
+        	      		$(".page-item").attr("onclick", "return onclickPage($(this).text(), $('.type').attr('id'))");
+        	      		$(".back").attr("onclick", "return pageChange($('.active').children().text(),'minus', $('.type').attr('id'))");
+        	      		$(".next").attr("onclick", "return pageChange($('.active').children().text(),'plus', $('.type').attr('id'))");
+        	      		$("#maxPage").attr("value", pi.maxPage);
+        	      		
+        	      		if(userId != ""){
+    	  					$("#all").remove();
+    	  					$(".pageul").append("<button onclick='location.reload()' id='all'>전체보기</button>");
+    	  				}
+                    },
+                    error:function(data){
+                       console.log("에러!");
+                    }
+                 });
+                  return false;
+               }
+            }
     	
   		function graphChange(type){
   			var newData = new Array();
@@ -332,12 +395,6 @@
   				yAxis: {title: 't'},
   				series: [{name: '인원수', data: newData}]
   			});
-  		}
-  		
-  		function typeChange(type){
-  			$(".type").attr("id", type);
-  			
-  			pageChange("", type);
   		}
     </script>
     

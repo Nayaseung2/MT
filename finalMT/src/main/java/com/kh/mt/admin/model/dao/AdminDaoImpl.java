@@ -167,8 +167,47 @@ public class AdminDaoImpl implements AdminDao{
 	@Override
 	public int approval(String wdCode) {
 		int approval = sqlSession.update("Admin.approval", Integer.parseInt(wdCode));
-		System.out.println("daoImpl: " + approval);
 		return approval;
+	}
+
+	@Override
+	public ArrayList<Withdrawal> depositList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		ArrayList<Withdrawal> list = (ArrayList)sqlSession.selectList("Admin.depositList", null, rowBounds);
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<Withdrawal> searchDeposit(String userId, PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		ArrayList<Withdrawal> list =  (ArrayList)sqlSession.selectList("Admin.searchDeposit", userId, rowBounds);
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<Withdrawal> contactList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		ArrayList<Withdrawal> list = (ArrayList)sqlSession.selectList("Admin.contactList", null, rowBounds);
+		
+		return list;
+	}
+
+	@Override
+	public int searchWithCount(String userId) {
+		return sqlSession.selectOne("Admin.searchWithCount", userId);
+	}
+
+	@Override
+	public int depositUserCount(String userId) {
+		return sqlSession.selectOne("Admin.depositUserCount", userId);
 	}
 
 	

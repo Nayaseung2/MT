@@ -45,4 +45,14 @@ public interface AdminDao {
 
 	int approval(String wdCode);
 
+	ArrayList<Withdrawal> depositList(PageInfo pi);
+
+	ArrayList<Withdrawal> searchDeposit(String userId, PageInfo pi);
+
+	ArrayList<Withdrawal> contactList(PageInfo pi);
+
+	int searchWithCount(String userId);
+
+	int depositUserCount(String userId);
+
 }
