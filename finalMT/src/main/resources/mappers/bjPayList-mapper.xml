@@ -12,6 +12,20 @@
 		<result property="success_date" column="SUCCESS_DATE" />
 		<result property="account" column="ACCOUNT" />
 	</resultMap>
+	<resultMap type="Expeach" id="ExpeachResultSet">
+		<result property="from_mcode" column="FROM_MCODE" />
+		<result property="to_mcode" column="TO_MCODE" />
+		<result property="peachcount" column="PEACHCOUNT" />
+		<result property="send_date" column="SEND_DATE" />
+	</resultMap>
+	<resultMap type="Subscribe" id="SubscribeResultSet">
+		<result property="reader_mcode" column="READER_MCODE" />
+		<result property="read_date" column="READ_DATE" />
+		<result property="bj_mcode" column="BJ_MCODE" />
+		<result property="reader_mid" column="MID" />
+		<result property="reader_nic" column="NIC" />
+		<result property="reader_num" column="READER_NUM" />
+	</resultMap>
 
 	 <select id="selectPeach" resultType="_int" parameterType="java.lang.String">
 	   	SELECT PEACH FROM MEMBER WHERE MCODE=#{mcode}
@@ -27,7 +41,63 @@
    		UPDATE MEMBER SET PEACH = TO_NUMBER(#{peach_code}) WHERE MCODE = #{mcode}
    	 </update>
    	 <select id="selectWithdrawList" parameterType="java.lang.String" resultMap="BJPayListResultSet">
-   	 	SELECT * FROM WITHDRAWAL WHERE MCODE = #{mcode} ORDER BY WD_DATE ASC
+   	 	SELECT MCODE, WD_CODE, PRICE, TO_CHAR(WD_DATE, 'YYYY-MM-DD') WD_DATE, 
+   	 	STATUS, TO_CHAR(SUCCESS_DATE, 'YYYY-MM-DD') SUCCESS_DATE, ACCOUNT 
+   	 	FROM WITHDRAWAL WHERE MCODE = #{mcode} AND STATUS='Y' ORDER BY WD_DATE ASC
    	 </select>
+   	 <select id="selectWithdrawAllList" parameterType="java.lang.String" resultMap="BJPayListResultSet">
+   	 	SELECT  MCODE, WD_CODE, PRICE, TO_CHAR(WD_DATE, 'YYYY-MM-DD') WD_DATE, 
+   	 	STATUS, TO_CHAR(SUCCESS_DATE, 'YYYY-MM-DD') SUCCESS_DATE, ACCOUNT 
+   	 	FROM WITHDRAWAL WHERE MCODE = #{mcode} ORDER BY WD_DATE DESC
+   	 </select>
+   	 <select id="selectWDAllCount" parameterType="java.lang.String" resultType="hashmap">
+   	 	SELECT COUNT(*) WDLIST, 
+		(SELECT COUNT(*) FROM WITHDRAWAL WHERE  MCODE = #{mcode} AND STATUS='Y') WDSUCCESS, 
+		(SELECT COUNT(*) FROM WITHDRAWAL WHERE  MCODE = #{mcode} AND STATUS='N') WDING,
+		(SELECT COUNT(*) FROM WITHDRAWAL WHERE  MCODE = #{mcode} AND STATUS='A') WDFAIL
+		FROM WITHDRAWAL
+		WHERE MCODE = #{mcode}
+		GROUP BY 2
+   	 </select>
+   	 <select id="selectProfitBjAllCount" parameterType="java.lang.String" resultType="hashmap">
+   	 	SELECT COUNT(*) ProfitBj
+		FROM EXPEACH
+		WHERE TO_MCODE = #{mcode}
+		GROUP BY 2
+   	 </select>
+   	 <select id="selectProfitBjAllList" parameterType="java.lang.String" resultMap="ExpeachResultSet">
+   	 	SELECT (SELECT MID FROM MEMBER WHERE MCODE = E.FROM_MCODE) FROM_MCODE,
+		(SELECT M_NICKNAME FROM MEMBER WHERE MCODE = E.FROM_MCODE) TO_MCODE, 
+		E.PEACHCOUNT, 
+		TO_CHAR(SEND_DATE, 'YYYY-MM-DD') SEND_DATE FROM EXPEACH E WHERE E.TO_MCODE = #{mcode}
+   	 </select>
+   	 <select id="selectProfitBjList" parameterType="java.lang.String" resultMap="ExpeachResultSet">
+   	 	SELECT (SELECT MID FROM MEMBER WHERE MCODE = E.FROM_MCODE) FROM_MCODE,
+		(SELECT M_NICKNAME FROM MEMBER WHERE MCODE = E.FROM_MCODE) TO_MCODE, 
+		E.PEACHCOUNT, 
+		TO_CHAR(SEND_DATE, 'YYYY-MM-DD') SEND_DATE FROM EXPEACH E WHERE E.TO_MCODE = #{mcode}
+		ORDER BY E.SEND_DATE ASC
+   	 </select>
+   	 <select id="selectMyFanAllCount" parameterType="java.lang.String" resultType="hashmap">
+   	 	SELECT COUNT(*) MYFAN
+		FROM SUBSCRIBE
+		WHERE BJ_MCODE = #{mcode}
+		GROUP BY 2
+   	 </select>
+   	 <select id="selectMyFanAllList" parameterType="java.lang.String" resultMap="SubscribeResultSet">
+   	 	SELECT S.READER_MCODE,
+		TO_CHAR(S.READ_DATE, 'YYYY-MM-DD') READ_DATE,
+		S.BJ_MCODE, (SELECT MID FROM MEMBER WHERE MCODE = S.READER_MCODE) MID,
+		(SELECT M_NICKNAME FROM MEMBER WHERE MCODE = S.READER_MCODE) NIC
+ 		FROM SUBSCRIBE S WHERE S.BJ_MCODE = #{mcode} ORDER BY S.READ_DATE ASC
+   	 </select>
+   	 <select id="selectMyFanList" parameterType="java.lang.String" resultMap="SubscribeResultSet">
+   	 	SELECT S.READER_MCODE,
+		TO_CHAR(S.READ_DATE, 'YYYY-MM-DD') READ_DATE,
+		S.BJ_MCODE, (SELECT MID FROM MEMBER WHERE MCODE = S.READER_MCODE) MID,
+		(SELECT M_NICKNAME FROM MEMBER WHERE MCODE = S.READER_MCODE) NIC
+ 		FROM SUBSCRIBE S WHERE S.BJ_MCODE = #{mcode} ORDER BY S.READ_DATE ASC
+   	 </select>
+
 
 </mapper>

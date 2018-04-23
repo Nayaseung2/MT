@@ -23,6 +23,20 @@
   		<result property="wdCode" column="WD_CODE"/>
   	</resultMap>
   	 
+  	 <resultMap type="Contact" id="contactResultSet">
+  	 	<result property="bCode" column="B_CODE"/>
+  	 	<result property="vCode" column="V_CODE"/>
+  	 	<result property="bType" column="B_TYPE"/>
+  	 	<result property="bTitle" column="B_TITLE"/>
+  	 	<result property="bContent" column="B_CONTENT"/>
+  	 	<result property="bWriter" column="BWRITER"/>
+  	 	<result property="bCreateDate" column="B_CREATE_DATE"/>
+  	 	<result property="bUpdateDate" column="B_UPDATE_DATE"/>
+  	 	<result property="bCount" column="B_COUNT"/>
+  	 	<result property="bStatus" column="B_STATUS"/>
+  	 </resultMap>
+  	 
+  	 
   	<!-- 관리자 메인화면 -->
   	<select id="allMenuList" resultType="hashmap">
 	SELECT (SELECT COUNT(*) FROM MEMBER WHERE VIDEO_YN = 'Y') bj,
@@ -38,7 +52,7 @@
   	</select> 
   	 
   	<select id="memberList" resultType="hashmap">
-  		SELECT (SELECT COUNT(*) FROM MEMBER WHERE MSTATUS = 'Y')TOTAL, (SELECT COUNT(*) FROM MEMBER WHERE VIDEO_YN='Y') BJ, (SELECT COUNT(*) FROM PAYHISTORY) REVENUE, (SELECT COUNT(*) FROM WITHDRAWAL WHERE TO_CHAR(WD_DATE) = TO_CHAR(SYSDATE) AND STATUS = 'N') TODAY, (SELECT COUNT(*) FROM WITHDRAWAL WHERE TO_CHAR(WD_DATE) = TO_CHAR(SYSDATE) AND STATUS = 'Y') SUCCESS 
+  		SELECT (SELECT COUNT(*) FROM MEMBER WHERE MSTATUS = 'Y')TOTAL, (SELECT COUNT(*) FROM MEMBER WHERE VIDEO_YN='Y') BJ, (SELECT COUNT(*) FROM PAYHISTORY) REVENUE, (SELECT COUNT(*) FROM WITHDRAWAL WHERE TO_CHAR(WD_DATE) = TO_CHAR(SYSDATE) AND STATUS = 'N') TODAY, (SELECT COUNT(*) FROM WITHDRAWAL WHERE TO_CHAR(SUCCESS_DATE) = TO_CHAR(SYSDATE) AND STATUS = 'Y') SUCCESS, (SELECT COUNT(*) FROM WITHDRAWAL WHERE STATUS = 'Y') DEPOSIT, (SELECT COUNT(*) FROM BOARD WHERE B_TYPE LIKE 'personal%' ) CONTACT, (SELECT COUNT(*) FROM WITHDRAWAL WHERE STATUS = 'N') WITHCOUNT
 		FROM DUAL
   	</select>
   	
@@ -67,7 +81,7 @@
   	</select>
   	
   	<select id="withdrawalList" resultMap="withdrawalResultSet">
-  		SELECT MID, MNAME, PRICE AS AMOUNT, ACCOUNT, TO_CHAR(WD_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS WDDATE, WD_CODE
+  		SELECT MID, MNAME, PRICE, ACCOUNT, TO_CHAR(WD_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS WDDATE, WD_CODE
 		FROM WITHDRAWAL
 		JOIN MEMBER USING(MCODE)
 		WHERE STATUS = 'N'
@@ -79,15 +93,89 @@
   	</select>
   	
   	<select id="searchWithdrawal" parameterType="java.lang.String" resultMap="withdrawalResultSet">
-  		SELECT MID, MNAME, PRICE AS AMOUNT, ACCOUNT, TO_CHAR(WD_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS WDDATE, WD_CODE
+  		SELECT MID, MNAME, PRICE, ACCOUNT, TO_CHAR(WD_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS WDDATE, WD_CODE
 		FROM WITHDRAWAL
 		JOIN MEMBER USING(MCODE)
 		WHERE MID = #{userId}
+		AND STATUS = 'N'
   	</select>
   	
   	<update id="approval" parameterType="_int">
-  		UPDATE WITHDRAWAL SET STATUS = 'Y'
+  		UPDATE WITHDRAWAL SET STATUS = 'Y', SUCCESS_DATE = SYSDATE
 		WHERE WD_CODE = #{wdCode}
   	</update>
+  	
+  	<select id="depositList" resultMap="withdrawalResultSet">
+  		SELECT MID, MNAME, PRICE, ACCOUNT, TO_CHAR(SUCCESS_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS WDDATE, WD_CODE
+		FROM WITHDRAWAL
+		JOIN MEMBER USING(MCODE)
+		WHERE STATUS = 'Y'
+  	</select>
+  	
+  	<select id="searchDeposit" parameterType="java.lang.String" resultMap="withdrawalResultSet">
+  		SELECT MID, MNAME, PRICE, ACCOUNT, TO_CHAR(WD_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS WDDATE, WD_CODE
+		FROM WITHDRAWAL
+		JOIN MEMBER USING(MCODE)
+		WHERE MID = #{userId}
+		AND STATUS = 'Y'
+  	</select>
+  	
+  	<select id="searchWithCount" parameterType="java.lang.String" resultType="_int">
+  		SELECT COUNT(*)
+  		FROM WITHDRAWAL
+  		JOIN MEMBER USING(MCODE)
+  		WHERE STATUS = 'N'
+  		AND MID = #{userId}
+  	</select>
+  	
+  	<select id="depositUserCount" parameterType="java.lang.String" resultType="_int">
+  		SELECT COUNT(*)
+  		FROM WITHDRAWAL
+  		JOIN MEMBER USING(MCODE)
+  		WHERE STATUS = 'Y'
+  		AND MID = #{userId}
+  	</select>
+  	
+  	<insert id="addAnswer" parameterType="java.util.HashMap">
+  		INSERT INTO REPLY
+  		VALUES (#{code}, SEQ_R_CODE.NEXTVAL||'personal', #{content}, '관리자', SYSDATE, 0)
+  	</insert>
+  	
+  	<select id="contactList" resultMap="contactResultSet">
+  		SELECT B_CODE, V_CODE, SUBSTR(B_TYPE, INSTR(B_TYPE, '/')+1, LENGTH(B_TYPE)) B_TYPE, B_TITLE, B_CONTENT, BWRITER, TO_CHAR(B_CREATE_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS B_CREATE_DATE, TO_CHAR(B_UPDATE_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS B_UPDATE_DATE, B_COUNT, B_STATUS
+		FROM BOARD 
+		WHERE B_TYPE LIKE 'personal%'
+		AND B_CODE NOT IN (SELECT B_CODE FROM REPLY)
+  	</select>
+  	
+  	<select id="contactTypeCount" parameterType="java.lang.String" resultType="_int">
+  		SELECT COUNT(*)
+		FROM BOARD 
+		WHERE B_TYPE = 'personal/'||#{type}
+		AND B_CODE NOT IN (SELECT B_CODE FROM REPLY)
+  	</select>
+  	
+  	<select id="contactTypeList" parameterType="java.lang.String" resultMap="contactResultSet">
+  		SELECT B_CODE, V_CODE, SUBSTR(B_TYPE, INSTR(B_TYPE, '/')+1, LENGTH(B_TYPE)) B_TYPE, B_TITLE, B_CONTENT, BWRITER, TO_CHAR(B_CREATE_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS B_CREATE_DATE, TO_CHAR(B_UPDATE_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS B_UPDATE_DATE, B_COUNT, B_STATUS
+		FROM BOARD 
+		WHERE B_TYPE = 'personal/'||#{type}
+		AND B_CODE NOT IN (SELECT B_CODE FROM REPLY)
+  	</select>
+  	
+  	<select id="searchContact" parameterType="java.lang.String" resultType="_int">
+  		SELECT COUNT(*)
+		FROM BOARD 
+		WHERE B_TYPE LIKE 'personal%'
+		AND B_CODE NOT IN (SELECT B_CODE FROM REPLY)
+		AND BWRITER = #{userId}
+  	</select>
+  	
+  	<select id="searchContactUser" parameterType="java.lang.String" resultMap="contactResultSet">
+  		SELECT B_CODE, V_CODE, SUBSTR(B_TYPE, INSTR(B_TYPE, '/')+1, LENGTH(B_TYPE)) B_TYPE, B_TITLE, B_CONTENT, BWRITER, TO_CHAR(B_CREATE_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS B_CREATE_DATE, TO_CHAR(B_UPDATE_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS B_UPDATE_DATE, B_COUNT, B_STATUS
+		FROM BOARD 
+		WHERE B_TYPE LIKE 'personal%'
+		AND B_CODE NOT IN (SELECT B_CODE FROM REPLY)
+		AND BWRITER = #{userId}
+  	</select>
   	
   </mapper>

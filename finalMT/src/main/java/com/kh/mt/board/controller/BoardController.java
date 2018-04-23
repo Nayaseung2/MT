@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.mt.JDBC.model.vo.JDBC;
 import com.kh.mt.board.model.service.BoardService;
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
 
-@Controller 
+@Controller
 public class BoardController {
 	@Autowired
 	BoardService bs;
@@ -56,6 +57,14 @@ public class BoardController {
 		
 		//Board넣기
 		bs.insertBoard(b);
+		return "JDBC/myBroadcastStation";
+	}
+	
+	//방명록 insert
+	@RequestMapping(value="insertGuestBook.board")
+	public String insertGuestBook(Board b){
+		b.setB_type("GuestBook");
+		bs.insertGuestBook(b);
 		return "JDBC/myBroadcastStation";
 	}
 }

@@ -26,48 +26,19 @@
 	.bottomBox{margin-left:20px;
 		width:200px;
 		height:200px;
-		border:1px solid #b3b3b3;
-		cursor:pointer;}
+		border:1px solid #b3b3b3;}
 	.bottomBox td{border-bottom:1px dotted lightgray;}
-	.bottom{color:black; text-decoration:none; margin-left:15px;}
+	.bottom{color:black; text-decoration:none; margin-left:15px; cursor:pointer;}
 	.showRightPart{position:relative; width:940px; height:800px; 
-	left:240px;bottom:640px;}
+	left:240px;bottom:620px;}
+	.favoriteBJ{width:920px;height:170px; margin-left:10px;}
+	/* 방명록 리스트 */
+	.showGuestBookList{width:860px; height:800px;
+	margin-left:auto; margin-right:auto; border:1px solid red;
+	}
 	
-	/* 글쓰기 테이블 */
-	.writeTable{
-		margin-left:30px;
-		width:750px;
-	}
-	.writeTable th{
-		width:100px;
-		height:30px;
-		text-align:center;
-	}
-	.writeTable tr{
-		height:35px;
-	}
-	.equal{
-		width:20px;
-	}
-	/* 이미지 올리기 */
-	.inputImg{
-		margin-left:30px;
-		border:1px solid lightgray;
-	}/*  */
-	.okay{
-		width:100px;
-		height:30px;
-		background:rgba(235, 104, 100, 0.5);
-		border:none;
-		color:white;
-		float:right;
-		margin-right:500px;
-	}
 </style>
-<title>글쓰기</title>
-<!-- ckeditor -->
-<script src="<%= request.getContextPath()%>/resources/ckeditor/ckeditor.js">
-</script>
+<title>방송국 방명록 목록</title>
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
@@ -80,7 +51,12 @@
 <br>
 <!-- 회원 이미지 넣기 -->
 <div class="profileImg">
+<c:if test="${!empty jdbcLogoFile }">
+<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${jdbcLogoFile.f_rename}"style="width:80px; height:80px;">
+</c:if>
+<c:if test="${empty jdbcLogoFile }">
 <img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/images/logo.png"style="width:80px; height:80px;">
+</c:if>
 <div class="BStitle">
 <c:if test="${!empty jdbcInfo.jdbc_name }">
 <label class="BStext"><a id="BStexta"href="#">${jdbcInfo.jdbc_name }</a></label><br>
@@ -99,12 +75,12 @@
 <br>
 <label class="idnickname"><b>${loginUser.mId }</b></label><br>
 <span class="idnickname">${loginUser.nickName }</span>
-<span class="glyphicon glyphicon-cog" style="float:right;"><a style="text-decoration:none; color:black; cursor:pointer;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
-<c:if test="${!empty jdbcInfo.jdbc_name }">
-<input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce}" readonly>
-</c:if>
-<c:if test="${empty jdbcInfo.jdbc_name }">
+<span class="glyphicon glyphicon-cog" style="float:right;"><a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
+<c:if test="${empty jdbcInfo.jdbc_introduce }">
 <input class="introduction" type="text" value="자기소개가 없습니다." readonly>
+</c:if>
+<c:if test="${!empty jdbcInfo.jdbc_introduce }">
+<input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce }" readonly>
 </c:if>
 <br><br> <br>  
 <label style="margin-left:15px;">방송국 방문 : 0명</label>
@@ -131,47 +107,18 @@
 	</tr>
 </table>
 </div>
-<!-- 오른쪽 부분 -->
+<!-- 즐겨찾기 보여주기 부분 -->
 <div class="showRightPart">
-<h4 style="margin-left:30px;">글쓰기</h4>
-<form method="post" action="insertBoard.board" encType="multipart/form-data">
-	<table class="writeTable" >
-		<tr>
-			<th><span class="glyphicon glyphicon-asterisk"></span>게시판</th>
-			<td class="equal"><b>:</b></td>
-			<td>
-				&nbsp;
-				<input type="radio" id="board" name="b_type" value="normalBoard">
-				<label for="board">게시판 공지</label>
-				<input type="radio" id="BSboard" name="b_type" value="JDBCBoard">
-				<label for="BSboard">방송국 게시판 공지</label>
-			</td>
-		</tr>
-		<tr>
-			<th><span class="glyphicon glyphicon-asterisk"></span>제목</th>
-			<td class="equal"><b>:</b></td>
-			<td><input type="text" name="b_title" size="70" style="border:1px solid lightgray;"></td>
-		</tr>
-		<tr>
-			<th><span class="glyphicon glyphicon-asterisk"></span>내용</th>
-			<td class="equal"><b>:</b></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td colspan="3" style="height:330px;">
-				<textarea name="b_content" class="ckeditor" rows="30" cols="50">
-				</textarea>
-			</td>
-		</tr>
-	</table>
-	<input type="file" class="inputImg" name="Boardfile">
-	<br>
-		<button type="submit"class="okay">확인</button>
-		<input type="hidden" name="bwriter" value="${loginUser.mId }"/>
-</form>
-</div>
-</div>
-</div>
+<div class="showGuestBookList">
+<label style="font-size:16px; width:930px; border-bottom:2px solid rgba(235, 104, 100, 0.5);"><span class="glyphicon glyphicon-list-alt"></span>방명록</label>
+<div class="GuestBookListTableDiv">
+<table class="GBListTable">
 
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
 </body>
 </html>

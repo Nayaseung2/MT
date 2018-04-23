@@ -8,6 +8,8 @@
 		<typeAlias alias='NaverLoginMember' type="com.kh.mt.member.model.vo.NaverLoginMember"/>
 		<typeAlias alias='Pay' type="com.kh.mt.pay.model.vo.Pay"/>
 		<typeAlias alias='BJPayList' type="com.kh.mt.BJPayList.model.vo.BJPayList"/>
+		<typeAlias alias='Expeach' type="com.kh.mt.BJPayList.model.vo.Expeach"/>
+		<typeAlias alias='Subscribe' type="com.kh.mt.BJPayList.model.vo.Subscribe"/>
 		<typeAlias alias='HelpMainVo' type="com.kh.mt.helpcenter.model.vo.HelpMainVo"/>
 		<typeAlias alias='JDBC1' type="com.kh.mt.JDBC.model.vo.JDBC"/>
 		<typeAlias alias='JDBClogo' type="com.kh.mt.JDBC.model.vo.JDBCLogoFile"/>
@@ -15,6 +17,10 @@
 		<typeAlias alias='Boardfile' type="com.kh.mt.board.model.vo.BoardFile"/>
 		<typeAlias alias="Revenue" type="com.kh.mt.admin.model.vo.Revenue"/>
 		<typeAlias alias="Withdrawal" type="com.kh.mt.admin.model.vo.Withdrawal"/>
+		<typeAlias alias="Contact" type="com.kh.mt.admin.model.vo.Contact"/>
+		<!-- 회원가입시 방송국 생성 -->
+		<typeAlias alias='insertJDBC' type="com.kh.mt.member.model.vo.InsertJDBCstation"/>
+
 	</typeAliases>
 	<mappers>
 		<mapper resource='mappers/member-mapper.xml' />
@@ -25,5 +31,6 @@
 		<mapper resource='mappers/JDBC-mapper.xml' />
 		<mapper resource='mappers/board-mapper.xml' /> 
 		<mapper resource='mappers/myPage-mapper.xml' /> 
+		<mapper resource='mappers/liveBJ-mapper.xml' />
 	</mappers>
 </configuration>

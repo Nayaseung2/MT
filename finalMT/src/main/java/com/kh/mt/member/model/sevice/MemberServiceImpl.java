@@ -47,5 +47,13 @@ public class MemberServiceImpl implements MemberService {
 	public void insertNaverMember(NaverLoginMember nlm) {
 		int result=md.insertNaverMember(nlm);
 	}
+
+	
+	//회원가입시 방송국 생성
+	@Override
+	public void insertJDBCStation(String mid) {
+		int result=md.insertJDBCStation(mid);
+		System.out.println("방송국 생성함? result : "+result);
+	}
 	
 }

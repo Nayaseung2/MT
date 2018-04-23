@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
-<html>  
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,7 +46,12 @@
 <br>
 <!-- 회원 이미지 넣기 -->
 <div class="profileImg">
+<c:if test="${!empty jdbcLogoFile }">
+<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${jdbcLogoFile.f_rename}"style="width:80px; height:80px;">
+</c:if>
+<c:if test="${empty jdbcLogoFile }">
 <img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/images/logo.png"style="width:80px; height:80px;">
+</c:if>
 <div class="BStitle">
 <c:if test="${!empty jdbcInfo.jdbc_name }">
 <label class="BStext"><a id="BStexta"href="#">${jdbcInfo.jdbc_name }</a></label><br>
@@ -87,7 +92,7 @@
 	<tr>
 		<td>
 			<p><a class="bottom">일반 게시판</a></p>
-			<p><a class="bottom">방명록</a></p>
+			<p><a class="bottom" href="showGuestBookList.JDBC">방명록</a></p>
 		</td>
 	</tr>
 	<tr>

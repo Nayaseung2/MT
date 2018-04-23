@@ -15,5 +15,7 @@ public interface MemberService {
 
 	void insertNaverMember(NaverLoginMember nlm);
 
+	void insertJDBCStation(String mid);
+
 
 }
