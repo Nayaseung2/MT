@@ -15,16 +15,16 @@ public class BJPayList implements Serializable{
 	private String mcode;
 	private int wd_code;
 	private int price;
-	private Date wd_date;
+	private String wd_date;
 	private String status;
-	private Date success_date;
+	private String success_date;
 	private String account;
 	
 	public BJPayList() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BJPayList(String mcode, int wd_code, int price, Date wd_date, String status, Date success_date,
+	public BJPayList(String mcode, int wd_code, int price, String wd_date, String status, String success_date,
 			String account) {
 		super();
 		this.mcode = mcode;
@@ -60,11 +60,11 @@ public class BJPayList implements Serializable{
 		this.price = price;
 	}
 
-	public Date getWd_date() {
+	public String getWd_date() {
 		return wd_date;
 	}
 
-	public void setWd_date(Date wd_date) {
+	public void setWd_date(String wd_date) {
 		this.wd_date = wd_date;
 	}
 
@@ -76,11 +76,11 @@ public class BJPayList implements Serializable{
 		this.status = status;
 	}
 
-	public Date getSuccess_date() {
+	public String getSuccess_date() {
 		return success_date;
 	}
 
-	public void setSuccess_date(Date success_date) {
+	public void setSuccess_date(String success_date) {
 		this.success_date = success_date;
 	}
 
