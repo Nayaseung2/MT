@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
-<head>  
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -121,7 +121,7 @@
 	<tr>
 		<td>
 			<p><a class="bottom">일반 게시판</a></p>
-			<p><a class="bottom">방명록</a></p>
+			<p><a class="bottom" href="showGuestBookList.JDBC">방명록</a></p>
 		</td>
 	</tr>
 	<tr>

@@ -2,12 +2,14 @@ package com.kh.mt.helpcenter.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.mt.board.model.vo.BoardFile;
+import com.kh.mt.common.PageInfo;
 import com.kh.mt.helpcenter.model.vo.HelpMainVo;
 //sdfsdfs
 @Repository
@@ -42,20 +44,31 @@ public class HelpDaoImpl implements HelpDao{
 	@Override
 	public int personal(SqlSessionTemplate sqlSession, HelpMainVo hm) {
 
-		//System.out.println("dao's hm : " + hm);
-		
 		int result = sqlSession.insert("QnA.personal", hm);
+		
+		//System.out.println("dao's hm : " + hm);
 		
 		return result;
 	}
+	
+	// 신고대상 아이디 체크
+	@Override
+	public String bullyIdCheck(String bullyId) {
 
-	// 신고하기(제목/내용)
+		String userId="";
+		
+		userId = sqlSession.selectOne("QnA.bullyIdCheck", bullyId);
+		
+		return userId;
+	}
+
+	// 신고하기(신고대상 아이디/내용)
 	@Override
 	public int report(SqlSessionTemplate sqlSession, HelpMainVo hm) {
 		
-		//System.out.println("dao's hm : " + hm);
-		
 		int result1 = sqlSession.insert("QnA.report", hm);
+		
+		//System.out.println("dao's hm : " + hm);
 		
 		return result1;
 	}
@@ -64,20 +77,24 @@ public class HelpDaoImpl implements HelpDao{
 	@Override
 	public int reportFile(SqlSessionTemplate sqlSession, BoardFile bf) {
 		
-		//System.out.println("dao's bf : " + bf);
-		
 		int result2 = sqlSession.insert("Board.reportFile", bf);
+		
+		//System.out.println("dao's bf : " + bf);
 		
 		return result2;
 	}
 
 	// 공지글 목록
 	@Override
-	public ArrayList<HelpMainVo> nList() {
+	public ArrayList<HelpMainVo> nList(PageInfo pi) {
 		
-		ArrayList<HelpMainVo> nList = (ArrayList)sqlSession.selectList("QnA.nList");
-    	
-    	System.out.println("dao's nList : " + nList);
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		ArrayList<HelpMainVo> nList = (ArrayList)sqlSession.selectList("QnA.nList", null, rowBounds);
+		
+    	//System.out.println("dao's nList : " + nList);
     	
     	return nList;
 	}
@@ -88,8 +105,32 @@ public class HelpDaoImpl implements HelpDao{
 
 		ArrayList<HelpMainVo> nListDetail = (ArrayList)sqlSession.selectList("QnA.nListDetail", b_code);
     	
-    	System.out.println("dao's nListDetail : " + nListDetail);
+    	//System.out.println("dao's nListDetail : " + nListDetail);
     	
     	return nListDetail;
 	}
+
+	// 총 공지글 수
+	@Override
+	public int nListTotal() {
+
+		int nListTotal = sqlSession.selectOne("QnA.nListTotal");
+		
+		//System.out.println("dao's nListTotal : " + nListTotal);
+		
+		return nListTotal;
+	}
+
+	// 게시글 조회수 올리기
+	@Override
+	public int updateCount(String b_code) {
+
+		int result = sqlSession.update("QnA.updateCount", b_code);
+		
+		//System.out.println("dao's result : " + result);
+		
+		return result;
+	}
+
+
 }

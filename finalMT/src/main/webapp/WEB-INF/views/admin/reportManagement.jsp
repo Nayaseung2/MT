@@ -2,44 +2,53 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
-<html> 
+<html>
 
 <head>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+<title>SB Admin 2 - Bootstrap Admin Theme</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="/mt/resources/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Core CSS -->
+<link href="/mt/resources/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- MetisMenu CSS -->
+<link href="/mt/resources/admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="/mt/resources/admin/dist/css/sb-admin-2.css" rel="stylesheet">
+<!-- Morris Charts CSS -->
+<link href="/mt/resources/admin/vendor/morrisjs/morris.css" rel="stylesheet">
+<!-- Custom Fonts -->
+<link href="/mt/resources/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- MetisMenu CSS -->
-    <link href="/mt/resources/admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="/mt/resources/admin/dist/css/sb-admin-2.css" rel="stylesheet">
+<!-- jQuery -->
+<script src="/mt/resources/admin/vendor/jquery/jquery.min.js"></script>
 
-    <!-- Morris Charts CSS -->
-    <link href="/mt/resources/admin/vendor/morrisjs/morris.css" rel="stylesheet">
+<!-- Bootstrap Core JavaScript -->
+<script src="/mt/resources/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Custom Fonts -->
-    <link href="/mt/resources/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/mt/resources/admin/vendor/metisMenu/metisMenu.min.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+<!-- Custom Theme JavaScript -->
+<script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
+<style>
+tr, th {
+	text-align: center;
+}
+</style>
+
 </head>
 
 <body>
-
     <div id="wrapper">
-
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -63,13 +72,21 @@
                             <a href="adminMain.ad"><i class="fa fa-home fa-fw"></i> HOME</a>
                         </li>
                         <li>
-                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 회원 관리</a>
+                        	<a href="#"><i class="fa fa-table fa-fw"></i> 회원 관리<span class="fa arrow"></span></a>
+                        	<ul class="nav nav-second-level">
+                                <li>
+		                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
+                                </li>
+                                <li>
+                                    <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="revenueMg.ad"><i class="fa fa-table fa-fw"></i> 수익 관리</a>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="withdrawal.ad">출금 신청</a>
@@ -94,96 +111,19 @@
 		<div id="page-wrapper" style="margin-top: 63px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"> Report Management</h1>
+                    <h1 class="page-header">Report Management</h1>
                 </div>
                 <!-- /.col-lg-12 -->
-            </div>
-             <div class="row">
-				 <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-lightbulb-o fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">15건</div>
-                                    <div>오늘</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-lightbulb-o fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">15건</div>
-                                    <div>이번주</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-lightbulb-o fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">15건</div>
-                                    <div>이번달</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                 <a href="#">
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <img src="resources/images/plusBtn.png" style="height: 75px;"/>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">추가하기</div>
-                                    <div></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </a>
-                
             </div>
             <div class="row" style="margin-top: 30px;">
 				<div class="searchArea" align="center">
 					<table>
 						<tr>
 							<td>
-								<select style="height: 30px;" name="searchSelect">
-									<option>---------</option>
-									<option value="userId">아이디</option>
-									<option value="userName">이름</option>
-									<option value="date">날짜</option>
-								</select>
-							</td>
-							<td>
-								&nbsp;&nbsp;
-							</td>
-							<td>
 								<div class="input-group custom-search-form" style="width: 100%; float: right;" >
-	                                <input type="text" class="form-control" placeholder="Search...">
+	                                <input type="text" class="form-control" placeholder="Search..." id="search">
 	                                <span class="input-group-btn">
-		                                <button class="btn btn-default" type="button">
+		                                <button class="btn btn-default" type="button" onclick="typeChange('searchDeposit.ad')">
 		                                    <i class="fa fa-search"></i>
 		                                </button>
 	                            	</span>
@@ -195,64 +135,127 @@
             </div>
 			<div class="row" style="margin-top: 40px;">
 		        <div class="col-lg-12">
-	                    <div class="panel panel-default">
-	                        <div class="panel-heading">회원 정보</div>
-	                        <!-- /.panel-heading -->
-	                        <div class="panel-body">
-	                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-	                                <thead>
-	                                    <tr>
-	                                        <th>신고한 사용자</th>
-	                                        <th>신고 분류</th>
-	                                        <th>신고할 사용자</th>
-	                                        <th>신고한 방번호</th>
-	                                        <th>신고 날짜</th>
-	                                        <th>방으로 이동</th>
-	                                    </tr>
-	                                </thead>
-	                                <tbody>
-	                                  <c:forEach var="i" begin="0" end="20">
-	                                  	<tr>
-	                                  		<td>${ i }</td>
-	                                  		<td>${ i }</td>
-	                                  		<td>${ i }</td>
-	                                  		<td>${ i }</td>
-	                                  		<td>N</td>
-	                                  		<td><button class="btn btn-default">이동하기</button></td>
-	                                  	</tr>
-	                                  </c:forEach>
-	                                </tbody>
-	                            </table>
-	                            <!-- /.table-responsive -->
-	                        </div>
-	                        <!-- /.panel-body -->
-	                    </div>
-	                    <!-- /.panel -->
-	                </div>
-				</div>            
-	        
+                    <div class="panel panel-default">
+                        <div class="panel-heading">회원 정보</div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example" style="text-align: center;">
+                                <thead>
+                                    <tr>
+                                        <th>신고자</th>
+                                        <th>신고 대상</th>
+										<th>방송 여부</th>
+										<th>누적 신고 수</th>
+                                        <th>신고 날짜</th>
+                                        <th align="center">자세히 보기</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  <c:forEach var="i" begin="0" end="20">
+                                  	<tr>
+                                  		<td>${ i }</td>
+                                  		<td>${ i }</td>
+                                  		<td>${ i }</td>
+                                  		<td>${ i }</td>
+                                  		<td>${ i }</td>
+                                  		<td width="5%" align="center"><button class="btn btn-default detail">자세히 보기</button></td>
+                                  	</tr>
+                                  	<tr class="detailboard">
+                                  		<td colspan="5">
+  											<div style="width: 100%;">
+  												<img src="resources/images/logo.png"/>
+  											</div>
+                                  		</td>
+                                  		<td style="width: 10%; vertical-align: middle;" align="center">
+                                  			<button class="btn btn-info response">이동</button>
+                                  		</td>
+                                  	</tr>
+                                  </c:forEach>
+                                </tbody>
+                            </table>
+                            <!-- /.table-responsive -->
+                            <div id="pagingArea" align="center">
+								<button onclick="return pageChange('minus', $('.type').attr('id'))">[이전]</button>
+	
+									<font color="red" size="4" id="page"><b><c:out value="${ map.pi.currentPage }"/></b></font>
+	
+								&nbsp; <button onclick="return pageChange('plus', $('.type').attr('id'))">[다음]</button>
+							</div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+			</div>            
         </div>
-        
-        
     </div>
     <!-- /#wrapper -->
-
-    <!-- jQuery -->
-    <script src="/test/resources/vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/test/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/test/resources/vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="/test/resources/vendor/raphael/raphael.min.js"></script>
-    <script src="/test/resources/vendor/morrisjs/morris.min.js"></script>
-    <script src="/test/resources/data/morris-data.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="/test/resources/dist/js/sb-admin-2.js"></script>
-
+    <input type="hidden" value="${ map.pi.maxPage }" id="maxPage"/>
+    <input type="hidden" class="type" id="deposit.ad"/>
+    <script>
+    
+    $(function(){
+		$(".detailboard").hide();
+    	$(document).on("click", ".detail", function(){
+    		$(this).parents().parents().next().toggle();
+    	});
+    	$(".response").click(function(){
+    		alert("안녕");
+    	});
+    });
+    
+    function typeChange(type){
+		$(".type").attr("id", type);
+		
+		pageChange("", type);
+	}
+	
+	function pageChange(value, type){
+		var page = Number($("#page").text());
+		var url = type;		
+		var userId = $("#search").val();
+		
+		if(page >= 1 && page <= $("#maxPage").val()){
+  			if(value === 'plus'){
+  				if(page == $("#maxPage").val()){
+  					return;
+  				}
+  				page += 1;
+  			}else if(value === 'minus'){
+  				if(page === 1){
+  					return;
+  				}
+  				page -= 1;
+  			}
+  			
+  			$.ajax({
+  				url: url,
+  				type: "get",
+  				data:{"newCurrentPage":page, "userId": userId},
+  				success:function(data){
+	  				var list = data.map.dlist;
+	  				var pi = data.map.pi;
+	  				$(".values").html("");
+	  				
+	  				for(var i = 0; i < list.length; i++){
+		  				$(".values").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td></tr>");
+	  				}
+	  				
+	  				$("#page").text(page);
+	  				$("#maxPage").attr("value", pi.maxPage);
+	  				
+	  				if(userId != ""){
+	  					$("#all").remove();
+	  					$("#pagingArea").append("<button onclick='location.reload()' id='all'>전체보기</button>");
+	  				}
+  				},
+  				error:function(data){
+  					console.log("에러!");
+  				}
+  			});
+			return false;
+		}
+	}
+    </script>
 </body>
 </html>

@@ -6,59 +6,47 @@
 
 <head>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+<title>SB Admin 2 - Bootstrap Admin Theme</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="/mt/resources/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Core CSS -->
+<link href="/mt/resources/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- MetisMenu CSS -->
-    <link href="/mt/resources/admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<!-- MetisMenu CSS -->
+<link href="/mt/resources/admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="/mt/resources/admin/dist/css/sb-admin-2.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="/mt/resources/admin/dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Morris Charts CSS -->
-    <link href="/mt/resources/admin/vendor/morrisjs/morris.css" rel="stylesheet">
+<!-- Morris Charts CSS -->
+<link href="/mt/resources/admin/vendor/morrisjs/morris.css" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-    <link href="/mt/resources/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<!-- Custom Fonts -->
+<link href="/mt/resources/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
-    <!-- jQuery -->
-    <script src="/mt/resources/admin/vendor/jquery/jquery.min.js"></script>
+<!-- jQuery -->
+<script src="/mt/resources/admin/vendor/jquery/jquery.min.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/mt/resources/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/mt/resources/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/mt/resources/admin/vendor/metisMenu/metisMenu.min.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/mt/resources/admin/vendor/metisMenu/metisMenu.min.js"></script>
 
-    <!-- Morris Charts JavaScript -->
-   <!--  <script src="/mt/resources/admin/vendor/raphael/raphael.min.js"></script>
-    <script src="/mt/resources/admin/vendor/morrisjs/morris.min.js"></script>
-    <script src="/mt/resources/admin/data/morris-data.js"></script> -->
+<!-- Custom Theme JavaScript -->
+<script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
-    
-    <script src="http://code.highcharts.com/highcharts.js"></script>
-    
-    <style>
-    	.gType:hover, .mType:hover {
-			cursor: pointer;    	
-    	}
-    </style>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
+<style>
+	.gType:hover, .mType:hover {
+		cursor: pointer;    	
+ 	}
+</style>
 </head>
 
 <body>
@@ -88,13 +76,21 @@
                             <a href="adminMain.ad"><i class="fa fa-home fa-fw"></i> HOME</a>
                         </li>
                         <li>
-                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 회원 관리</a>
+                        	<a href="#"><i class="fa fa-table fa-fw"></i> 회원 관리<span class="fa arrow"></span></a>
+                        	<ul class="nav nav-second-level">
+                                <li>
+		                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
+                                </li>
+                                <li>
+                                    <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="revenueMg.ad"><i class="fa fa-table fa-fw"></i> 수익 관리</a>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="withdrawal.ad">출금 신청</a>
@@ -223,19 +219,13 @@
                            </button>
                            <ul class="dropdown-menu pull-right" role="menu" >
                                <li value="time">
-                               		<a class="gType" onclick="graphChange('time')">시간별</a>
+                               		<a class="gType" onclick="graphChange('Time')">시간별</a>
                                </li>
                                <li>
-                               		<a class="gType" onclick="graphChange('day')">일별</a>
+                               		<a class="gType" onclick="graphChange('Day')">일별</a>
                                </li>
                                <li>
-                              	 	<a class="gType" onclick="graphChange('week')">주별</a>
-                               </li>
-                               <li>
-                              	 	<a class="gType" onclick="graphChange('month')">월별</a>
-                               </li>
-                               <li>
-                               		<a class="gType" onclick="graphChange('year')">년별</a>
+                              	 	<a class="gType" onclick="graphChange('Month')">월별</a>
                                </li>
                            </ul>
                        </div>
@@ -269,7 +259,9 @@
 	                                        <th>이름</th>
 	                                        <th>방송 번호</th>
 	                                        <th>보유 피치</th>
+	                                        <th>이메일</th>
 	                                        <th>계좌 인증여부</th>
+	                                        <th>가입일</th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
@@ -277,22 +269,33 @@
 	                                  	<tr>
 	                                  		<td>${ m.mId }</td>
 	                                  		<td>${ m.mName }</td>
-	                                  		<td>${ m.mName }</td>
+	                                  		<td>${ m.mcode }</td>
 	                                  		<td>${ m.peach }</td>
+	                                  		<td>${ m.email }</td>
 	                                  		<td>${ m.a_status }</td>
+	                                  		<td>${ m.joinDate }</td>
 	                                  	</tr>
 	                                  </c:forEach>
 	                                </tbody>
 	                            </table>
 	                            <!-- /.table-responsive -->
 	                            <!-- pageing -->
-	                            <div id="pagingArea" align="center">
-									<button onclick="return pageChange('minus', $('.type').attr('id'))">[이전]</button>
-
-										<font color="red" size="4" id="page"><b>${ pi.currentPage }</b></font>
-
-									&nbsp; <button onclick="return pageChange('plus', $('.type').attr('id'))">[다음]</button>
-								</div>
+                               <div id="pagingArea" align="center">
+		                           <ul class="pagination pageul">
+		                              <li class="page-item"><a class="page-link" onclick="return pageChange($('.active').children().text(),'minus', $('.type').attr('id'))">이전</a></li>
+		                              <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+		                                 <c:if test="${p eq pi.currentPage }">
+		                                    <li class="page-item active" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${ p }</a></li>
+		                                 </c:if>
+		                                 <c:if test="${p ne pi.currentPage }">
+		                                    <li class="page-item" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${ p }</a></li>
+		                                 </c:if>
+		                              
+		                              </c:forEach>
+		                              <li class="page-item"><a class="page-link" onclick="return pageChange($('.active').children().text(),'plus', $('.type').attr('id'))">다음</a></li>
+		                           </ul>
+		
+		                        </div>
 	                        </div>
 	                        <!-- /.panel-body -->
 	                    </div>
@@ -304,46 +307,76 @@
     <input type="hidden" value="${ pi.maxPage }" id="maxPage"/>
     <!-- /#wrapper -->
   	<script>
-  		function pageChange(value, type){
-  			var page = Number($("#page").text());
-			var url = type;			
-			
-			if(page >= 1 && page <= $("#maxPage").val()){
-	  			if(value === 'plus'){
-	  				if(page == $("#maxPage").val()){
-	  					return;
-	  				}
-	  				page += 1;
-	  			}else if(value === 'minus'){
-	  				if(page === 1){
-	  					return;
-	  				}
-	  				page -= 1;
-	  			}
-	  			
-	  			$.ajax({
-	  				url: url,
-	  				type: "get",
-	  				data:{"newCurrentPage":page},
-	  				success:function(data){
-	  					var list = data.list.mlist;
-	  					var pi = data.list.pi;
-	  					$("tbody").html("");
-	  					
-	  					for(var i = 0; i < list.length; i++){
-		  					$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mName+"</td><td>"+list[i].peach+"</td><td>"+list[i].a_status+"</td></tr>");
-	  					}
-	  					
-	  					$("#page").text(page);
-	  					$("#maxPage").attr("value", pi.maxPage)
-	  				},
-	  				error:function(data){
-	  					console.log("에러!");
-	  				}
-	  			});
-  				return false;
-  			}
-  		}
+	function onclickPage(value, type){
+		var url = type;         
+		$.ajax({
+   			url: url,
+   			type: "get",
+   			data:{"newCurrentPage":value},
+   			success:function(data){
+	   
+	       		var list = data.list.mlist;
+	       		var pi = data.list.pi;
+				$("tbody").html("");
+	       
+	      		for(var i = 0; i < list.length; i++){
+	            	$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+list[i].peach+"</td><td>"+list[i].email+"</td><td>"+list[i].a_status+"</td><td>"+list[i].joinDate+"</td></tr>");
+	      		}
+	      		$(".pageul").children().removeClass('active');
+	      		$("#cu"+value).addClass('active');
+	      		$("#maxPage").attr("value", pi.maxPage);
+   			},
+   			error:function(data){
+      			console.log("에러!");
+   			}
+		});
+ 		return false;
+	}
+        
+     
+     
+     function pageChange(pagenum, value, type){
+        var page = Number(pagenum);
+        var url = type;         
+        console.log(page)
+        if(page >= 1 && page <= $("#maxPage").val()){
+             if(value === 'plus'){
+                if(page == $("#maxPage").val()){
+                   return;
+                }
+                page += 1;
+             }else if(value === 'minus'){
+                if(page === 1){
+                   return;
+                }
+                page -= 1;
+             }
+             
+             $.ajax({
+                url: url,
+                type: "get",
+                data:{"newCurrentPage":page},
+                success:function(data){
+                	
+                	var list = data.list.mlist;
+    	       		var pi = data.list.pi;
+    				$("tbody").html("");
+    	       
+    	      		for(var i = 0; i < list.length; i++){
+    	            	$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+list[i].peach+"</td><td>"+list[i].email+"</td><td>"+list[i].a_status+"</td><td>"+list[i].joinDate+"</td></tr>");
+    	      		}
+    	      		
+    	      		$(".pageul").children().removeClass('active');
+    	      		$("#cu"+page).addClass('active');
+    	      		$("#maxPage").attr("value", pi.maxPage);
+                },
+                error:function(data){
+                   console.log("에러!");
+                }
+             });
+              return false;
+           }
+        }
   		
   		function typeChange(type){
   			$(".type").attr("id", type);
@@ -371,7 +404,6 @@
   		}
   		
   		function graphChange(type){
-  			console.log(type);
   			var newData = new Array();
   			var total = new Array();
   			
@@ -385,8 +417,7 @@
   					$.each(data.list, function(index, item){
   						newData.push(Number(item));
 						total.push(index+1);	
-  				       });	
-  					console.log(newData);
+  				    });	
   				},
   				error: function(){
   					console.log("error!");
@@ -396,27 +427,21 @@
   			$("#chart").html("");
   			$("#chart").highcharts({
   				chart: {type: 'line'},
-  				title: {text: '일별 접속자'},
+  				title: {text: type},
   				xAxis: {categories: total},
   				yAxis: {title: 't'},
-  				series: [
-  					{name: '인원수', data: newData}]
+  				series: [{name: '인원수', data: newData}]
   			});
-		  			
-  			
   		}
-  		
   		
   		$(function(){
 			var times = ${times};
-			console.log(times.length);
   			var chart = $("#chart").highcharts({
   				chart: {type: 'line'},
-  				title: {text: '시간별 접속자'},
+  				title: {text: 'Time'},
   				xAxis: {categories: [00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]},
   				yAxis: {title: 't'},
-  				series: [
-  					{name: '인원수', data: times}]
+  				series: [{name: '인원수', data: times}]
   			});
   		});
   		

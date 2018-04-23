@@ -16,6 +16,7 @@
 <!-- Morris Charts CSS -->
 <link href="${contextPath }/resources/css/left/morris.css" rel="stylesheet">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- 아임포트 결제  -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
@@ -87,7 +88,7 @@
 	    if ( rsp.success ) {
 	    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 	    	$.ajax({
-	    		url : "paysuccess.pay",
+	    		url : "${contextPath }/paysuccess.pay",
 				type : "post",
 				data:{
 					mcode : ${loginUser.mcode},

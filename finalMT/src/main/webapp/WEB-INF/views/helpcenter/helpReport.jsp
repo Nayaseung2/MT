@@ -119,7 +119,36 @@ label {
 	border-radius: .25em;
 }
 
-.fileRegiBtn input[type="file"]{
+.fileRegiBtn input[type="file"] {
+
+	display: inline-block;
+	width: 1px; 
+	height: 1px; 
+	padding: 0; 
+	margin: -1px; 
+	overflow: hidden; 
+	clip:rect(0,0,0,0); 
+	border: 0;
+}
+
+.idCheckBtn label {
+
+	width: 16%;
+	display: inline-block; 
+	padding: .5em .75em; 
+	color: #ffffff; 
+	font-size: 16px; 
+	line-height: normal; 
+	vertical-align: middle; 
+	background-color: #FC7D01; 
+	cursor: pointer; 
+	border: 1px solid #ebebeb; 
+	border-bottom-color: #e2e2e2; 
+	border-radius: .25em;
+	text-align: center;
+}
+
+.idCheckBtn input[type="button"] {
 
 	display: inline-block;
 	width: 1px; 
@@ -219,17 +248,25 @@ label {
 						<table class="rTable" align="center">
 							<tr>
 								<td class="tableList">작성자</td>
-								<td colspan="3"><input type="text" id="mId" name="mId" size="18px" value="${ loginUser.mId }" style="height:50px;
-										border:3px solid hsl(0, 100%, 90%);" readonly/></td>
+								<td colspan="3">
+									<input type="text" id="mId" name="mId" size="15px" value="${ loginUser.mId }" 
+											style="height:50px; border:3px solid hsl(0, 100%, 90%); text-align:center;" readonly/>
+								</td>
 							</tr>
 							<tr>
 								<td><div style="height: 30px;"></div></td>
 							</tr>
 							<tr>
-								<td class="tableList">제목</td>
-								<td colspan="3"><input type="text" id="rTitle" name="rTitle" size="52px" style="height:50px;
-										border:3px solid hsl(0, 100%, 90%);"/></td>
-							</tr>	
+								<td class="tableList">신고대상</td>
+								<td colspan="3">
+									<div class="idCheckBtn">
+										<input type="text" id="bullyId" name="bullyId" size="15px" 
+												style="height:50px; border:3px solid hsl(0, 100%, 90%); text-align:center;"/>
+										<input type="button" id="idCheck" name="idCheck">
+											<label for="idCheck">아이디 체크하기</label>
+									</div>
+								</td>
+							</tr>
 							<tr>
 								<td><div style="height: 30px;"></div></td>
 							</tr>
@@ -262,6 +299,8 @@ label {
 						</table>
 						<script>
 							
+							/* 스크린샷 첨부 */
+							
 							function readURL(input) {
 
 						        if (input.files && input.files[0]) {
@@ -289,7 +328,28 @@ label {
 
 						        readURL(this);
 						    });
-						
+							
+							
+							/* 신고대상 아이디체크 */
+							
+							$("#idCheck").click(function(){
+								
+								var bullyId = $("#bullyId").val();
+								
+								$.ajax({
+									url:"bullyIdCheck.hp",
+									type:"post",
+									data:{bullyId:bullyId},
+									success:function(data){
+										alert(data);
+									},
+									error:function(){
+										alert("일치하는 아이디가 없습니다.");
+										console.log("해당 아이디 없음");
+									}
+								});
+							});
+							
 						</script>
 						<br/>
 						<br/>

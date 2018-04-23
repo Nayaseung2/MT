@@ -1,7 +1,7 @@
 package com.kh.mt.board.model.vo;
 
 import org.springframework.stereotype.Component;
-  
+
 @Component
 public class BoardFile implements java.io.Serializable{
 	private String file_code;

@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.mt.JDBC.model.vo.JDBC;
 import com.kh.mt.member.model.sevice.MemberService;
 import com.kh.mt.member.model.vo.Member;
 import com.kh.mt.member.model.vo.NaverLoginMember;
@@ -74,14 +75,14 @@ public class MemberController {
 		mv.setViewName("main/main");
 		return mv;
 	}
-	  
+	
 	//로그아웃
-		@RequestMapping(value="logout.me", method=RequestMethod.GET)
-		public String logout(SessionStatus status,HttpServletRequest request){
-			//status.setComplete();
-			request.getSession().invalidate();
-			return "main/main";
-		}
+	@RequestMapping(value="logout.me", method=RequestMethod.GET)
+	public String logout(SessionStatus status,HttpServletRequest request){
+		//status.setComplete();
+		request.getSession().invalidate();
+		return "main/main";
+	}
 	//회원가입
 	@RequestMapping(value="joinMember.me")
 	public String insertMeber(Member m,Model model) {
@@ -112,6 +113,9 @@ public class MemberController {
 		}
 		m.setmPwd(passwordEncoder.encode(m.getmPwd()));
 		ms.insertMember(m);
+		//방송국 생성
+		String mid=m.getmId();
+		ms.insertJDBCStation(mid);
 		System.out.println("Member : "+m);
 		return "member/Login";
 	}
@@ -309,6 +313,11 @@ public class MemberController {
 		            		 status.setComplete();
 		            		 mv.setViewName("main/main");
 		            	 }
+		             
+		             Member m2=null;
+		             m2 =ms.selectOne(email);
+		             HttpSession session = request.getSession();
+		             session.setAttribute("loginUser", m2);
 		             }
 		         }
 		      

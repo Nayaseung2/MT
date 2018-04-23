@@ -35,13 +35,9 @@
   			VALUES(#{from_code},#{f_orname},#{f_rename},#{filepath},#{f_mcode},SYSDATE,SEQ_FILECODE.NEXTVAL)
 	</insert>
 	
-	<!-- 신고글 파일업로드 -->
-	<insert id="reportFile">
-		INSERT INTO UPLOADFILE
-  		VALUES( NULL, #{ f_orname }, #{ f_rename }, #{ filepath }, #{ f_mcode }, SYSDATE, seq_filecode.nextval)
+	<!-- 방명록 insert -->
+	<insert id="insertGuestBook">
+		INSERT INTO BOARD
+		VALUES(SEQ_BCODE.NEXTVAL,#{v_code},#{b_type},NULL,#{b_content},#{bwriter},SYSDATE,SYSDATE,0,'Y')	
 	</insert>
-	
-	
-	
-	
 </mapper>

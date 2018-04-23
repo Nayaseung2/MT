@@ -5,7 +5,7 @@
   
 <mapper namespace="JDBC1">
 	<resultMap type="JDBC1" id="JDBCResultSet" >
-  			<id property="mid" column="MCODE"/>
+  			<id property="mid" column="MID"/>
   			<result property="jdbc_name" column="JDBC_NAME"/>
   			<result property="jdbc_introduce" column="JDBC_INTRODUCE"/>
   			<result property="jdbc_interest" column="JDBC_INTEREST"/>
@@ -25,10 +25,10 @@
   		<select id="selectJDBCstation" parameterType="JDBC1" resultMap="JDBCResultSet">
   			SELECT * FROM JDBCSTATION WHERE MID=#{mid}
   		</select>
-  		<insert id="insertJDBCstation">
+  		<!-- <insert id="insertJDBCstation">
   			INSERT INTO JDBCSTATION
-  			VALUES(#{mid},#{jdbc_name},#{jdbc_introduce},#{jdbc_interest},NULL,0)
-  		</insert>
+  			VALUES(#{mid},#{jdbc_name},#{jdbc_introduce},#{jdbc_interest},0)
+  		</insert> -->
   		
   		<update id="updateJDBCstation">
   			UPDATE JDBCSTATION
@@ -38,6 +38,7 @@
   		<select id="selectJDBCLogo" parameterType="JDBClogo" resultMap="JDBCLogoResultSet">
   			SELECT * FROM UPLOADFILE
   			WHERE F_MCODE=#{f_mcode}
+  			AND FROM_CODE='JDBCLogo'
   		</select>
   		<insert id="insertJDBCLogo">
   			INSERT INTO UPLOADFILE
@@ -53,4 +54,10 @@
   			WHERE MID=#{mId}
   		
   		</select>
+  		<select id="selectJDBCLogoForShow" parameterType="string" resultMap="JDBCLogoResultSet">
+  			SELECT * FROM UPLOADFILE
+  			WHERE F_MCODE=#{mId}
+  			AND FROM_CODE='JDBCLogo'
+  		</select>
+  		
 </mapper>

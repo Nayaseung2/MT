@@ -10,6 +10,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.kh.mt.board.model.vo.BoardFile;
+import com.kh.mt.common.PageInfo;
 import com.kh.mt.helpcenter.model.dao.HelpDao;
 import com.kh.mt.helpcenter.model.vo.HelpMainVo;
 
@@ -52,7 +53,16 @@ public class HelpServiceImpl implements HelpService{
 		
 	}
 
-	// 신고하기(제목/내용)
+	// 신고대상 아이디 체크
+	@Override
+	public String bullyIdCheck(String bullyId) {
+
+		String userId = hd.bullyIdCheck(bullyId);
+		
+		return userId;
+	} 
+
+	// 신고하기(신고대상 아이디/내용)
 	@Override
 	public void report(HelpMainVo hm) {
 
@@ -68,11 +78,11 @@ public class HelpServiceImpl implements HelpService{
 
 	// 공지글 목록
 	@Override
-	public ArrayList<HelpMainVo> nList() {
+	public ArrayList<HelpMainVo> nList(PageInfo pi) {
 		
 		ArrayList<HelpMainVo> nList = null;
     	
-		nList = hd.nList();
+		nList = hd.nList(pi);
     	
     	return nList;
 	}
@@ -82,10 +92,22 @@ public class HelpServiceImpl implements HelpService{
 	public ArrayList<HelpMainVo> nListDetail(String b_code) {
 
 		ArrayList<HelpMainVo> nListDetail = null;
+		
+		int result = hd.updateCount(b_code);
     	
 		nListDetail = hd.nListDetail(b_code);
     	
     	return nListDetail;
-	} 
+	}
+
+	// 총 공지글 수
+	@Override
+	public int nListTotal() {
+
+		int nListTotal = hd.nListTotal();
+		
+		return nListTotal;
+	}
+
 	
 }

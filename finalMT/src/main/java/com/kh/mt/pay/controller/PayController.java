@@ -24,7 +24,7 @@ public class PayController {
 	public ModelAndView PayForm(ModelAndView mv, String mcode){
 		System.out.println(mcode);			
 		int peach = ps.selectPeach(mcode);		
-		
+		System.out.println("컨트롤러  peach"+peach);
 		mv.addObject("peach", peach);
 		mv.setViewName("pay/payform");
 		return mv;
@@ -33,6 +33,7 @@ public class PayController {
 	//pay ajax 페이지
 	@RequestMapping("paysuccess.pay")
 	public ModelAndView PaySuccess(String mcode,String pay_code, int price, int peach_code ,ModelAndView mv){
+		System.out.println("여기는 오니???"+mcode+" pay_code 직자~!"+pay_code);
 		Pay p = new Pay();
 		p.setPay_code(pay_code);
 		p.setMcode(mcode);
@@ -40,6 +41,7 @@ public class PayController {
 		p.setPeach_code(peach_code);
 		
 		ps.insertPayList(p);
+		
 		
 						
 		mv.setViewName("pay/payform");

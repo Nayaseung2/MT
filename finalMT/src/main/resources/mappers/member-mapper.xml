@@ -46,6 +46,11 @@
            VALUES(SEQ_MCODE.NEXTVAL,#{email},NULL,#{ename},#{ename},
            #{email},NULL,SYSDATE,SYSDATE,'Y','N',0,NULL)
         </insert>
+        <!-- 회원가입시 바로 방송국 생성 -->
+       <insert id="insertJDBCStation" parameterType="string">
+       		INSERT INTO JDBCSTATION(MID)
+       		VALUES(#{mid})
+       </insert>
   		<select id="userAllList" resultMap="memberResultSet">
   			SELECT *
   			FROM MEMBER

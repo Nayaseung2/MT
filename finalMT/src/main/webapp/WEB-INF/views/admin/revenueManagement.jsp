@@ -1,39 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html> 
 
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<title>수익 관리</title>
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+<!-- Bootstrap Core CSS -->
+<link href="/mt/resources/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- MetisMenu CSS -->
+<link href="/mt/resources/admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="/mt/resources/admin/dist/css/sb-admin-2.css" rel="stylesheet">
+<!-- Morris Charts CSS -->
+<link href="/mt/resources/admin/vendor/morrisjs/morris.css" rel="stylesheet">
+<!-- Custom Fonts -->
+<link href="/mt/resources/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Bootstrap Core CSS -->
-    <link href="/mt/resources/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- MetisMenu CSS -->
-    <link href="/mt/resources/admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<!-- jQuery -->
+<script src="/mt/resources/admin/vendor/jquery/jquery.min.js"></script>
 
-    <!-- Custom CSS -->
-    <link href="/mt/resources/admin/dist/css/sb-admin-2.css" rel="stylesheet">
+<!-- Bootstrap Core JavaScript -->
+<script src="/mt/resources/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Morris Charts CSS -->
-    <link href="/mt/resources/admin/vendor/morrisjs/morris.css" rel="stylesheet">
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/mt/resources/admin/vendor/metisMenu/metisMenu.min.js"></script>
 
-    <!-- Custom Fonts -->
-    <link href="/mt/resources/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<!-- Custom Theme JavaScript -->
+<script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+<script src="http://code.highcharts.com/highcharts.js"></script>
 </head>
 
 <body>
@@ -63,13 +67,21 @@
                             <a href="adminMain.ad"><i class="fa fa-home fa-fw"></i> HOME</a>
                         </li>
                         <li>
-                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 회원 관리</a>
+                        	<a href="#"><i class="fa fa-table fa-fw"></i> 회원 관리<span class="fa arrow"></span></a>
+                        	<ul class="nav nav-second-level">
+                                <li>
+		                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
+                                </li>
+                                <li>
+                                    <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="revenueMg.ad"><i class="fa fa-table fa-fw"></i> 수익 관리</a>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="withdrawal.ad">출금 신청</a>
@@ -108,7 +120,7 @@
                                     <i class="fa fa-won fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">528,600</div>
+                                    <div class="huge"><fmt:formatNumber value="${ map.day }" type="currency" groupingUsed="true"/></div>
                                     <div>오늘의 수입</div>
                                 </div>
                             </div>
@@ -123,22 +135,7 @@
                                     <i class="fa fa-won fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">905,101,000</div>
-                                    <div>이번주 수입</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-won fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">1,999,999,999</div>
+                                    <div class="huge"><fmt:formatNumber value="${ map.month }" type="currency" groupingUsed="true"/></div>
                                     <div>이번달 수입</div>
                                 </div>
                             </div>
@@ -146,23 +143,21 @@
                     </div>
                 </div>
                 
-                <a href="#">
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-info">
+               	<div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <img src="resources/images/plusBtn.png" style="height: 75px;"/>
+                                    <i class="fa fa-won fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">추가하기</div>
-                                    <div></div>
+                                    <div class="huge"><fmt:formatNumber value="${ map.total }" type="currency" groupingUsed="true"/></div>
+                                    <div>총 수입</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                </a>
 			</div>
             
             
@@ -177,19 +172,13 @@
                            </button>
                            <ul class="dropdown-menu pull-right" role="menu" >
                                <li value="time">
-                               		<a href="#">시간별</a>
+                               		<a class="gType" onclick="graphChange('reTime')">시간별</a>
                                </li>
                                <li>
-                               		<a href="#">일별</a>
+                               		<a class="gType" onclick="graphChange('reDay')">일별</a>
                                </li>
                                <li>
-                              	 	<a href="#">주별</a>
-                               </li>
-                               <li>
-                              	 	<a href="#">월별</a>
-                               </li>
-                               <li>
-                               		<a href="#">년별</a>
+                              	 	<a class="gType" onclick="graphChange('reMonth')">월별</a>
                                </li>
                            </ul>
                        </div>
@@ -197,17 +186,17 @@
                </div>
                <!-- /.panel-heading -->
                <div class="panel-body">
-                   <div id="morris-area-chart"></div>
+                   <div id="chart" style="width: 100%; height: 400px;"></div>
                </div>
                <!-- /.panel-body -->
 	        </div>
 	        <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">회원 정보
+                        <div class="panel-heading type" id="revenueMg.ad">회원 정보
                         	<div class="input-group custom-search-form" style="width: 30%; float: right;" >
-                                <input type="text" class="form-control" placeholder="Search...">
+                                <input type="text" class="form-control" placeholder="Search..." id="search" value="">
                                 <span class="input-group-btn">
-	                                <button class="btn btn-default" type="button">
+	                                <button class="btn btn-default" type="button" onclick="typeChange('searchRevenue.ad');">
 	                                    <i class="fa fa-search"></i>
 	                                </button>
                             	</span>
@@ -226,18 +215,33 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  <c:forEach var="i" begin="0" end="20">
-                                  	<tr>
-                                  		<td>${ i }</td>
-                                  		<td>${ i }</td>
-                                  		<td>${ i }</td>
-                                  		<td>${ i }</td>
-                                  		<td>N</td>
-                                  	</tr>
-                                  </c:forEach>
+                                <c:forEach var="m" items="${ map.rlist }">
+                               		<tr>
+                               			<td><c:out value="${ m.mId }"/></td>
+                               			<td><c:out value="${ m.mName }"/></td>
+                               			<td><c:out value="${ m.peach_code }"/></td>
+                               			<td><c:out value="카드"/></td>
+                               			<td><c:out value="${ m.p_date }"/></td>
+                                 	</tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->
+                             <div id="pagingArea" align="center">
+	                           <ul class="pagination pageul">
+	                              <li class="page-item"><a class="page-link back" onclick="return pageChange($('.active').children().text(),'minus', $('.type').attr('id'))">이전</a></li>
+	                              <c:forEach var="p" begin="${ map.pi.startPage }" end="${ map.pi.endPage }">
+	                                 <c:if test="${p eq map.pi.currentPage }">
+	                                    <li class="page-item active" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${p}</a></li>
+	                                 </c:if>
+	                                 <c:if test="${p ne map.pi.currentPage }">
+	                                    <li class="page-item" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${p}</a></li>
+	                                 </c:if>
+	                              
+	                              </c:forEach>
+	                              <li class="page-item"><a class="page-link next" onclick="return pageChange($('.active').children().text(),'plus', $('.type').attr('id'))">다음</a></li>
+	                           </ul>
+	                        </div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -248,24 +252,152 @@
         </div>
         
     </div>
+    <input type="hidden" value="${ map.pi.maxPage }" id="maxPage"/>
     <!-- /#wrapper -->
+    <script>
+    	$(function(){
+			var money = ${map.tlist};
+			var chart = $("#chart").highcharts({
+				chart: {type: 'line'},
+				title: {text: '시간별'},
+				xAxis: {categories: [00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]},
+				yAxis: {title: 't'},
+				series: [
+					{name: '금액', data: money}]
+			});
+		});
+    	
+    	function onclickPage(value, type){
+    		var url = type;        
+    		var userId = $("#search").val();
+    		$.ajax({
+       			url: url,
+       			type: "get",
+       			data:{"newCurrentPage":value, "userId":userId},
+       			success:function(data){
+    	   
+    	       		var list = data.map.rlist;
+    	       		var pi = data.map.pi;
+    				$("tbody").html("");
+    	       
+    	      		for(var i = 0; i < list.length; i++){
+    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].peach_code+"</td><td>카드</td><td>"+list[i].p_date+"</td></tr>");
+    	      		}
+    	      		
+    	      		$(".pageul").children().removeClass('active');
+    	      		$("#cu"+value).addClass('active');
+    	      		$("#maxPage").attr("value", pi.maxPage);
+       			},
+       			error:function(data){
+          			console.log("에러!");
+       			}
+    		});
+     		return false;
+    	}
+    	
+    	function typeChange(type){
+  			$(".type").attr("id", type);
+  			
+  			pageChange("1", "", type);
+  		}
+    	
+    	function pageChange(pagenum, value, type){
+            var page = Number(pagenum);
+            var url = type;  
+            var userId = $("#search").val();
+            
+            console.log("url: "+url);
+            console.log("page: " + page);
+            console.log("userId: " + userId);
+            if(page >= 1 && page <= $("#maxPage").val()){
+                 if(value === 'plus'){
+                    if(page == $("#maxPage").val()){
+                       return;
+                    }
+                    page += 1;
+                 }else if(value === 'minus'){
+                    if(page === 1){
+                       return;
+                    }
+                    page -= 1;
+                 }
+                 
+                 $.ajax({
+                    url: url,
+                    type: "get",
+                    data:{"newCurrentPage":page, "userId":userId},
+                    success:function(data){
+                    	
+                    	var list = data.map.rlist;
+        	       		var pi = data.map.pi;
+        	       		console.log(pi.currentPage);
+        	       		console.log(list);
+        				$("tbody").html("");
+        	       
+        	      		for(var i = 0; i < list.length; i++){
+        	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].peach_code+"</td><td>카드</td><td>"+list[i].p_date+"</td></tr>");
+        	      		}
+        	      		
+						$(".pageul").html("");
+        	      		$(".pageul").append("<li class='page-item'><a class='page-link back'>이전</a></li>");
+        	      		for(var i = pi.startPage; i <= pi.endPage; i++){
+        	      			if(i == pi.currentPage){
+        	      				$(".pageul").append("<li class='page-item active' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
+        	      			}else {
+        	      				$(".pageul").append("<li class='page-item' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
+        	      			}
+        	      		}
+        	      		$(".pageul").append("<li class='page-item'><a class='page-link next'>다음</a></li>");
 
-    <!-- jQuery -->
-    <script src="/test/resources/vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/test/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/test/resources/vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="/test/resources/vendor/raphael/raphael.min.js"></script>
-    <script src="/test/resources/vendor/morrisjs/morris.min.js"></script>
-    <script src="/test/resources/data/morris-data.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="/test/resources/dist/js/sb-admin-2.js"></script>
-
+        	      		$(".page-item").attr("onclick", "return onclickPage($(this).text(), $('.type').attr('id'))");
+        	      		$(".back").attr("onclick", "return pageChange($('.active').children().text(),'minus', $('.type').attr('id'))");
+        	      		$(".next").attr("onclick", "return pageChange($('.active').children().text(),'plus', $('.type').attr('id'))");
+        	      		$("#maxPage").attr("value", pi.maxPage);
+        	      		
+        	      		if(userId != ""){
+    	  					$("#all").remove();
+    	  					$(".pageul").append("<button onclick='location.reload()' id='all'>전체보기</button>");
+    	  				}
+                    },
+                    error:function(data){
+                       console.log("에러!");
+                    }
+                 });
+                  return false;
+               }
+            }
+    	
+  		function graphChange(type){
+  			var newData = new Array();
+  			var total = new Array();
+  			
+  			$.ajax({
+  				url: "changeGraph.ad",
+  				type: "get",
+  				async: false,
+  				data: {"type": type},
+  				success: function(data){
+  					
+  					$.each(data.list, function(index, item){
+  						newData.push(Number(item));
+						total.push(index+1);	
+  				    });	
+  				},
+  				error: function(){
+  					console.log("error!");
+  				}
+  			});
+			
+  			$("#chart").html("");
+  			$("#chart").highcharts({
+  				chart: {type: 'line'},
+  				title: {text: type},
+  				xAxis: {categories: total},
+  				yAxis: {title: 't'},
+  				series: [{name: '인원수', data: newData}]
+  			});
+  		}
+    </script>
+    
 </body>
 </html>
