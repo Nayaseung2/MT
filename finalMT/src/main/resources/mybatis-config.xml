@@ -13,14 +13,16 @@
 		<typeAlias alias='JDBClogo' type="com.kh.mt.JDBC.model.vo.JDBCLogoFile"/>
 		<typeAlias alias='Board' type="com.kh.mt.board.model.vo.Board"/>
 		<typeAlias alias='Boardfile' type="com.kh.mt.board.model.vo.BoardFile"/>
+		<typeAlias alias='LiveBJ' type="com.kh.liveBJ.model.vo.LiveBJ"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource='mappers/member-mapper.xml' />
 		<mapper resource='mappers/admin-mapper.xml' /> 
-    <mapper resource='mappers/pay-mapper.xml' />
-    	 <mapper resource='mappers/bjPayList-mapper.xml' />
+   		<mapper resource='mappers/pay-mapper.xml' />
+    	<mapper resource='mappers/bjPayList-mapper.xml' />
 		<mapper resource='mappers/help-mapper.xml' />
 		<mapper resource='mappers/JDBC-mapper.xml' />
 		<mapper resource='mappers/board-mapper.xml' /> 
+		<mapper resource='mappers/liveBJ-mapper.xml' />
 	</mappers>
 </configuration>
