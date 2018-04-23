@@ -201,7 +201,7 @@ ul.tabs li.active {
 								<tr>
 									<th>이 름</th>
 									<td>
-										<input type="text" class="form-control" value="${ loginUser.mName }" 
+										<input type="text" class="form-control" name="mName" value="${ loginUser.mName }" 
 											style="font-size:18px; width:150px; text-align:center;" readonly>
 									</td>
 								</tr>
@@ -225,13 +225,14 @@ ul.tabs li.active {
 												style="font-size:18px; width:250px;">
 											<input type="button" id="emailCheck" name="emailCheck">
 												<label for="emailCheck">이메일 변경</label>
+											<input type="hidden" value="${ loginUser.email }" id="orgEmail">
 										</div>
 									</td>
 								</tr>
 								<tr>
 									<th>가입일</th>
 									<td>
-										<input type="text" class="form-control" value="${ loginUser.joinDate }" 
+										<input type="text" class="form-control" name="joinDate" value="${ loginUser.joinDate }" 
 											style="font-size:18px; width:200px;" readonly>
 									</td>
 								</tr>
@@ -240,11 +241,12 @@ ul.tabs li.active {
 				        <!-- #tab2 -->
 				        <div id="tab2" class="tab_content">
 				        	<h4 align="left">현재 비밀번호를 입력하세요.</h4>
-							<input type="password" class="form-control" id="orgPwd">
+							<input type="password" class="form-control" id="inputPwd">
 							<h4 align="left">새로운 비밀번호를 입력하세요.</h4>
-							<input type="password" class="form-control" id="chPwd1">
+							<input type="password" class="form-control" id="newPwd1">
 							<h4 align="left">새로운 비밀번호를 한 번 더 입력하세요.</h4>
-							<input type="password" class="form-control" id="chPwd2">
+							<input type="password" class="form-control" id="newPwd2">
+							<input type="hidden" id="mPwd" name="mPwd" value="${ loginUser.mPwd }">
 							<br/>
 							<br/><br/>
 							<div class="checkBtn">
@@ -298,6 +300,8 @@ ul.tabs li.active {
 			    });
 			    
 			    
+			    /* page 1 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+			    
 			    /* 닉네임 중복확인 후 변경 */
 			    $("#nickCheck").click(function(){
 			    	
@@ -346,66 +350,148 @@ ul.tabs li.active {
 			    
 			    /* 이메일 변경을 위한 인증 */
 			    $(".certiEmailContainer").hide();
-				$("#certiEmail").click(function(){
-					$(".certiEmailContainer").show();
-					var email=$("#email").val();
-					$.ajax({
-						url:"certiEmail.me",
-						data:{email:email},
-						type:"post",
-						success:function(data){
-							$("#certiEmailBtn").click(function(){
-							var inputCertiNum=$("#inputCertiNum").val();
-								if(data==inputCertiNum){
-									alert("이메일 인증 되었습니다.");
-								}else{
-									alert("이메일 인증 실패하였습니다. \n다시 입력해주세요");
-								}
-								$(".certiEmailContainer").hide();
-							});
-						},
-						error:function(){
-							alert("실패");
-						}
-					}); 
+			    
+				$("#emailCheck").click(function(){
+					
+					var orgEmail = $("#orgEmail").val();
+					var email = $("#email").val();
+					
+					if(orgEmail === email){
+						
+						alert("현재와 같은 이메일입니다.");
+						location.reload();
+						
+					} else {
+						
+						$(".certiEmailContainer").show();
+						
+						$.ajax({
+							url:"certiEmail.me",
+							data:{email:email},
+							type:"post",
+							success:function(data){
+								$("#certiEmailBtn").click(function(){
+								var inputCertiNum=$("#inputCertiNum").val();
+									if(data==inputCertiNum){
+										alert("이메일 인증 되었습니다.");
+									}else{
+										alert("이메일 인증 실패하였습니다. \n다시 입력해주세요");
+									}
+									$(".certiEmailContainer").hide();
+								});
+							},
+							error:function(){
+								alert("실패");
+							}
+						});
+					}
 				});
 			    
 			    
+				/* page 2 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+				
 			    /* 비밀번호 확인 후 변경 - 1.현재비번확인 / 2.새로운비밀번호 일치확인 */
-				/* $("#nickCheck").click(function(){
-			    	
-			    	var orgPwd = $("#orgPwd").val();
-			    	var mId = $("#mId").val();
-			    	
-			    	if($("#nickName").val() == null){
-			    		
-			    		alert("변경하실 닉네임을 입력해주세요.");
-			    		location.reload();
-			    		
-			    	} else if($("#nickName").val() == $("#orgNick").val()){
-			    		alert("현재와 같은 닉네임입니다.");
-			    		location.reload();
-			    		
-			    	} else {
-			    		
+			    
+				$("#changePwd").click(function(){
+					
+					var mId = $("#mId").val();
+					
+					var mPwd = $("#mPwd").val(); // 진짜 비번
+					var inputPwd = $("#inputPwd").val(); // 입력한 비번
+					
+					var newPwd1 = $("#newPwd1").val(); // 새로운 비번
+					var newPwd2 = $("#newPwd2").val(); // 새로운 비번 확인
+					
+					/* 빈 칸이 있을 때 */
+					if(inputPwd === "" || newPwd1 === "" || newPwd2 === ""){
+						
+						alert("빈칸을 확인해주세요.");
+						return inputPwd.focus();
+					
+					/* 빈 칸이 없을 때 */
+					} else {
+						
+						console.log(mPwd);
+						console.log(inputPwd);
 						$.ajax({
-							url:"changeNick.mp",
-							type:"post",
-							data:{nickName:nickName, mId:mId},
-							success:function(data){
-								alert(data);
+							url: "pwdCheck.mp",
+							type: "post",
+							data: {"mPwd": mPwd,
+									"inputPwd": inputPwd,
+										"mId": mId},
+							success: function(data){
+								
+								console.log(data.string);
+								
+								/* 현재 비번이 일치할 때 */
+								if(data.string === "success"){
+									 
+									 /* 새로운 비번이 다를 때 */
+										if(newPwd1 != newPwd2){
+										
+											alert("새로운 비밀번호가 일치하지 않습니다..");
+											location.reload();
+											
+										/* 새로운 비번이 일치할 때 */
+										} else {
+											
+											/* .....최종 업데이트...... */
+											console.log(nickName);
+											alert("비밀번호가 변경됐습니다.");
+											location.href="changePwd.mp?mId=" + mId + "&newPwd1=" + newPwd1;
+										}
+									
+								/* 현재 비번이 다를 때 */
+								} else {
+									
+									alert("현재 비밀번호가 일치하지 않습니다.");
+									location.reload();
+								} 	
 							},
-							error:function(){
-								console.log("중복확인 실패");
+							error: function(data){
 							}
 						});
-			    	}
-			    }); */
+					}
+				});
 			    
+				
+				/* page 3 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
 			    
-			    
-			    
-			    
+			    /* 탈퇴 */
+			    $("#withdraw").click(function(){
+			    	
+			    	var mId = $("#mId").val();
+			    	
+			    	$.ajax({
+						url:"withdraw.mp",
+						type:"post",
+						data:{"mId": mId},
+						success:function(data){
+
+							console.log(data.string);
+							
+							if(data.string === "success"){
+								
+								console.log(mId);
+								alert("탈퇴되었습니다.");
+								location.href="showMain.mp";
+								
+							} else {
+								
+								alert("error");
+								location.reload();
+							}
+						},
+						error:function(){
+						}
+					});
+			    	
+			    	
+			    	
+			    	
+			    	
+			    	
+			    });
 			    
 			    
 			    
@@ -417,14 +503,6 @@ ul.tabs li.active {
 			    
 			});
 		
-			/* function goMyPage(){
-				
-				location.href="${ contextPath }/myPageMain.hp;
-			} */
-		
-			
-			
-			
 			
 			
 		</script>		

@@ -12,6 +12,9 @@ public interface MyPageDao {
 	// 닉네임 변경
 	int changeNick(SqlSessionTemplate sqlSession, Member m);
 
+	// 비밀번호 변경
+	int changePwd(SqlSessionTemplate sqlSession, Member m);
+
 
 
 }

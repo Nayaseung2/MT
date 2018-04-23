@@ -32,7 +32,18 @@ public class MyPageDaoImpl implements MyPageDao {
 
 		System.out.println("dao's m : " + m);
 		
-		int result = sqlSession.insert("MyPage.changeNick", m);
+		int result = sqlSession.update("MyPage.changeNick", m);
+		
+		return result;
+	}
+
+	// 비밀번호 변경
+	@Override
+	public int changePwd(SqlSessionTemplate sqlSession, Member m) {
+
+		System.out.println("dao's m : " + m);
+		
+		int result = sqlSession.update("MyPage.changePwd", m);
 		
 		return result;
 	}

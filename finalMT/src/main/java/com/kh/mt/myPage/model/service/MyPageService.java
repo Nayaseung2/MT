@@ -9,6 +9,9 @@ public interface MyPageService {
 
 	// 닉네임 변경
 	void changeNick(Member m);
+	
+	// 비밀번호 변경
+	void changePwd(Member m);
 
 
 }
