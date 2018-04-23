@@ -97,7 +97,7 @@
 							<td><h1>킬당1000개 한시간 현재 10킬중!!</h1></td>
 						</tr>
 						<tr>
-							<td><h3>BJ 감우성</h3></td>
+							<td><h3>${loginUser.mId}</h3></td>
 						</tr>
 						<tr>
 							<td><h5>#배틀그라운두&nbsp;&nbsp;#감우성&nbsp;&nbsp;#못생김주의&nbsp;&nbsp;#남캠</h5></td>
@@ -540,38 +540,12 @@
             })();
             disableInputButtons();
         }	    
-        
-        /* chatContainer.innerHTML = '<li class="left clearfix" id="chatli"></li>';
-   		var chatli = document.getElementById("chatli");
-   		chatli.innerHTML = '<span class="chat-img pull-left"></span>';
-   		//chatli.innerHTML = '<div class="chat-body clearfix" id="chat-body"></div>';
-   		var chat_body = document.getElementById('chat-body');
-   		chat_body.innerHTML = '<div class="header" id="chat-header"></div>';
-   		var chat_header = document.getElementById("chat-header");
-   		chat_header.innerHTML = '<i class="fa fa-github-alt fa-fw"></i><strong class="primary-font">아프리카 청춘이다</strong><small class="pull-right text-muted" id="chat_box"></small>';
-   		chat_header.innerHTML = '<strong class="primary-font">아프리카 청춘이다</strong>';
-   		chat_header.innerHTML = '<small class="pull-right text-muted" id="chat_box"></small>'; 
-   		chatContainer.append(chatli);
-   		var chat_box = document.getElementById('chat_box');  */
 	</script>
-	
-        <!-- var $mesli = document.createElement('<li class="left clearfix"></li>'); */
-  
-   		var $mesli = $('<li class="left clearfix"></li>');
-        var $span = $('<span class="chat-img pull-left"></span>');
-        var $chat_body = $('<div class="chat-body clearfix" id="chat-body"></div>');
-        var $header1 = $('<div class="header"></div>');
-        var $itag = $('<i class="fa fa-github-alt fa-fw"></i>');
-        var $strong = $('<strong class="primary-font"></strong>');
-        var $small1 = $('<small class="pull-right text-muted" id="chat_box"></small>');
-        chatContainer.append($mesli);
-        $mesli.append($span);
-        $mesli.append($chat_body);
-        $chat_body.append($header1);
-        $header1.append($itag);
-        $strong.text("아프리카 청춘이다");
-        $header1.append($strong);
-        $header1.append($small1);
-        chatContainer = $chat_body;  -->
+	<script>
+	 function singo(){
+		 location.href="${contextPath}"
+	 }
+	</script>
+
 </body>
 </html>

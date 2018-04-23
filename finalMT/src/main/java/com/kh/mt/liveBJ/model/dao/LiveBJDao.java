@@ -1,5 +1,7 @@
 package com.kh.mt.liveBJ.model.dao;
 
-public class LiveBJDao {
+public interface LiveBJDao {
+
+	void singo(String singoID, String content, String userID);
 
 }
