@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MyPage">
+
+	<resultMap type="Member" id="memberResultSet" >
+  			<id property="mcode" column="MCODE"/>
+  			
+  			<result property="mId" column="MID"/>
+  			<result property="mPwd" column="MPWD"/>
+  			<result property="mName" column="MNAME"/>
+  			<result property="nickName" column="M_NICKNAME"/>
+  			<result property="email" column="EMAIL"/>
+  			<result property="account" column="ACCOUNT"/>
+  			<result property="joinDate" column="JOIN_DATE"/>
+  			<result property="updateDate" column="UPDATE_DATE"/>
+  			<result property="status" column="MSTATUS"/>
+  			<result property="a_status" column="A_STATUS"/>
+  			<result property="peach" column="PEACH"/>
+  			<result property="videoYN" column="VIDEO_YN"/>
+	</resultMap>
+	
+	<!-- 닉네임 중복확인 -->
+	<select id="overlapCheck" parameterType="java.lang.String" resultType="string">
+  			SELECT M_NICKNAME FROM MEMBER WHERE M_NICKNAME = #{ nickName }
+	</select>
+	
+	<!-- 닉네임 변경 -->
+    <select id="changeNick" parameterType="java.lang.String" resultType="_int">
+    	UPDATE MEMBER 
+    	SET M_NICKNAME = #{ nickName }
+    	WHERE MID = #{ mId }
+    </select>
+
+</mapper>

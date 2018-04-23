@@ -170,7 +170,7 @@
 		<url-pattern>*.pay</url-pattern>
 	</servlet-mapping>
 	
-	<!-- 다윤-방송국 글쓰기를 위해 board만들었다. -->
+
 	<!-- Board 맵핑 -->
 	<servlet>
 		<servlet-name>board</servlet-name>
@@ -188,7 +188,21 @@
 	</servlet-mapping>
 	
 	
-	
+	<!-- myPage 맵핑 -->
+	<servlet>
+		<servlet-name>myPage</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/config/myPage-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>myPage</servlet-name>
+		<url-pattern>*.mp</url-pattern>
+	</servlet-mapping>	
 	
 	
 	

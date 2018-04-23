@@ -203,27 +203,129 @@ table {
 				<br/>
 				<div id="pagingArea" align="center">
 				
-					<button class="btn btn-danger" style="font-size:16px;" onclick="return pageChange('minus')"> 이전 </button>&nbsp;&nbsp;
+					<ul class="pagination pageul">
+				
+					<!-- <button class="btn btn-danger" style="font-size:16px;" onclick="return pageChange('minus')"> 이전 </button>&nbsp;&nbsp; -->
+					<li class="page-item"><a class="page-link" onclick="return pageChange('minus')">이전</a></li>
+					
 						
 						<!-- 가운데 나오는 페이지 숫자들 -->
 					<c:forEach var="p" begin="${ hmap.pi.startPage }" end="${ hmap.pi.endPage }">
 						
 						<c:if test="${ p eq hmap.pi.currentPage }">
-							<font color="red" size="4" id="page"><b>${ p }</b></font>
+							<%-- <font color="red" size="4" id="page"><b>${ p }</b></font> --%>
+							
+							<li class="page-item active" id="cu${ p }">
+								<a class="page-link" id="page" onclick="return onclickPage($(this).text())">${ p }</a>
+							</li>
+							
 						</c:if>
 						<c:if test="${ p ne hmap.pi.currentPage }">
-							<font color="lightgray" size="4"><b>${ p }</b></font>
+							<%-- <font color="lightgray" size="4"><b>${ p }</b></font> --%>
+							
+							 <li class="page-item" id="cu${ p }">
+							 	<a class="page-link" id="page" onclick="return onclickPage($(this).text())">${ p }</a>
+							 </li>
+							
 						</c:if> 
 						
 					</c:forEach> 
 					
-					&nbsp;&nbsp; <button class="btn btn-danger" style="font-size:16px;" onclick="return pageChange('plus')"> 다음 </button>
+					<!-- &nbsp;&nbsp; <button class="btn btn-danger" style="font-size:16px;" onclick="return pageChange('plus')"> 다음 </button> -->
+					<li class="page-item"><a class="page-link" onclick="return pageChange('plus')">다음</a></li>
 					
+					</ul>
 				</div>
 			</div>
 			
     <input type="hidden" value="${ hmap.pi.maxPage }" id="maxPage"/>
   	<script>
+  	
+  	
+  	
+  	
+ 	 	function onclickPage(value){
+ 	 		
+	        console.log($("#cu"+value).children().text())
+	        console.log(value)
+	             
+	             $.ajax({
+	                url: "helpnotice.hp",
+	                type: "get",
+	  				data:{"newCurrentPage":value},
+	                success:function(data){
+	                	
+	                	var list = data.hmap.nList;
+	  					var pi = data.hmap.pi;
+	  					console.log(list);
+	  					console.log(pi);
+	                   
+	                   $("#listArea").html("");
+	                   
+	                   $("#listArea").append("<tr><th>글제목</th><th>작성자</th><th>조회수</th><th>작성일</th></tr>");
+	                   
+	                   for(var i = 0; i < list.length; i++){
+	                      
+	                	   $("#listArea").append("<tr><td style='padding-left: 3%;'>" + list[i].b_title
+									 + "</td><td align='center'>" + list[i].bwriter
+									 + "</td><td align='center'>" + list[i].b_count
+									 + "</td><td align='center'>" + list[i].b_update_date 
+									 + "</td><td><input type='hidden' value='" + list[i].b_code + "' id='b_code' name='b_code'>"
+									 + "</td></tr>");
+	                   }
+	                   
+	                   $(function(){
+	  						
+	  						$("#listArea td").mouseenter(function(){
+	  								//tr의 css를 변경
+	  							$(this).parent().css({"background":"#F08080", "cursor":"pointer", "color":"white"});
+	  								
+	  						}).mouseout(function(){
+	  							
+	  							$(this).parent().css({"background":"white", "color":"black"});
+	  							
+	  						}).click(function(){
+	  							
+	  							var b_code = $(this).parent().children(":last").children().val();
+	  							location.href="${ contextPath }/helpnoticedetail.hp?b_code=" + b_code;
+	  						});
+	  					});
+	                   
+	                   
+	                   $(".pageul").children().removeClass('active');
+	                   $("#cu"+value).addClass('active');
+	                   $("#maxPage").attr("value", pi.maxPage);
+	                },
+	                error:function(data){
+	                   console.log("에러!");
+	                }
+	             });
+	              return false;
+	           }
+	        
+
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
   	
   		function pageChange(value){
   			
@@ -241,10 +343,10 @@ table {
 	  				
 	  			}else if(value === 'minus'){
 	  				
-	  				if(page === 1){
+	  				/* if(page === 1){
 	  					
 	  					return;
-	  				}
+	  				} */
 	  				
 	  				page -= 1;
 	  			}
@@ -290,8 +392,14 @@ table {
 	  						});
 	  					});
 	  					
-	  					$("#page").text(page);
-	  					$("#maxPage").attr("value", pi.maxPage);
+	  					/* $("#page").text(page);
+	  					$("#maxPage").attr("value", pi.maxPage); */
+	  					
+	  					 $(".pageul").children().removeClass('active');
+	  	                 $("#cu"+page).addClass('active');
+	  	                 $("#maxPage").attr("value", pi.maxPage);
+
+	  					
 	  					
 	  				},
 	  				error:function(data){
