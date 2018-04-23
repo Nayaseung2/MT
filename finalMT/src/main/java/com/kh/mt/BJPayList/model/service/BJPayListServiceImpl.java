@@ -1,6 +1,7 @@
 package com.kh.mt.BJPayList.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.kh.mt.BJPayList.model.dao.BJPayListDao;
 import com.kh.mt.BJPayList.model.vo.BJPayList;
+import com.kh.mt.BJPayList.model.vo.Expeach;
+import com.kh.mt.BJPayList.model.vo.Subscribe;
+import com.kh.mt.common.PageInfo;
 
 @Service
 public class BJPayListServiceImpl implements BJPayListService{
@@ -47,6 +51,72 @@ public class BJPayListServiceImpl implements BJPayListService{
 		
 		return list;
 	}
+
+	@Override
+	public ArrayList<BJPayList> selectWithdrawAllList(String mcode, PageInfo pi) {
+		ArrayList<BJPayList> list = bjp.selectWithdrawAllList(sqlSession, mcode , pi);
+		
+		return list;
+	}
+
+	@Override
+	public HashMap<String, String> WithdrawListAllCount(String mcode) {
+		HashMap<String, String> list = null;
+		
+		list = bjp.WithdrawListAllCount(sqlSession, mcode);
+		
+		 
+		return list;
+	}
+
+	@Override
+	public HashMap<String, String> ProfitBjAllCount(String mcode) {
+		HashMap<String, String> list = null;
+		
+		list = bjp.ProfitBjAllCount(sqlSession, mcode);
+		
+		 
+		return list;
+	}
+
+	@Override
+	public ArrayList<Expeach> selectProfitBjAllList(String mcode, PageInfo pi) {
+		ArrayList<Expeach> list = bjp.selectProfitBjAllList(sqlSession, mcode , pi);
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<Expeach> selectProfitBjList(String mcode) {
+		ArrayList<Expeach> list = bjp.selectProfitBjList(sqlSession, mcode);
+		
+		return list;
+	}
+
+	@Override
+	public HashMap<String, String> MyFanAllCount(String mcode) {
+		HashMap<String, String> list = null;
+		
+		list = bjp.MyFanAllCount(sqlSession, mcode);
+		
+		 
+		return list;
+	}
+
+	@Override
+	public ArrayList<Subscribe> selectMyFanAllList(String mcode, PageInfo pi) {
+		ArrayList<Subscribe> list = bjp.selectMyFanAllList(sqlSession, mcode , pi);
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<Subscribe> selectMyFanList(String mcode) {
+		ArrayList<Subscribe> list = bjp.selectMyFanList(sqlSession, mcode);
+		
+		return list;
+	}
+
 
 
 }
