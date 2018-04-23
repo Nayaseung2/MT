@@ -59,7 +59,7 @@
 <c:if test="${empty jdbcInfo.jdbc_name }">
 <label class="BStext"><a id="BStexta"href="#">모두의TV</a></label><br>
 </c:if>
-<label class="BStext">${loginUser.nickName }</label><br>
+<label class="BStext">${loginUser.nickName}</label><br>
 </div>
 </div>
 </div>
@@ -81,7 +81,8 @@
 <label style="margin-left:15px;">방송국 방문 : 0명</label>
 </div>
 <br>
-<button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button>
+<button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button><br><br>
+<button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
 <br><br>
 <table class="bottomBox">
 	<tr>

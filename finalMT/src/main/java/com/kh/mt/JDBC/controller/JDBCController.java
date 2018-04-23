@@ -1,6 +1,7 @@
 package com.kh.mt.JDBC.controller;
 
 import java.io.File;
+
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -133,6 +134,11 @@ public class JDBCController {
 		f2=js.selectJDBCLogo(f);
 		session.setAttribute("jdbcLogoFile", f2);
 		return "JDBC/myBroadcastStation";
+	}
+	//방송하러 가기 
+	@RequestMapping(value = "bangsonggo.JDBC")
+	public String bangsonggo(){
+		return "JDBC/BangsongGo";
 	}
 
 }
