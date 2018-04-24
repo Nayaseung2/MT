@@ -30,7 +30,7 @@ public class MyPageDaoImpl implements MyPageDao {
 	@Override
 	public int changeNick(SqlSessionTemplate sqlSession, Member m) {
 
-		System.out.println("dao's m : " + m);
+		//System.out.println("dao's m : " + m);
 		
 		int result = sqlSession.update("MyPage.changeNick", m);
 		
@@ -41,12 +41,25 @@ public class MyPageDaoImpl implements MyPageDao {
 	@Override
 	public int changePwd(SqlSessionTemplate sqlSession, Member m) {
 
-		System.out.println("dao's m : " + m);
+		//System.out.println("dao's m : " + m);
 		
 		int result = sqlSession.update("MyPage.changePwd", m);
 		
 		return result;
 	}
+
+	// 회원 탈퇴
+	@Override
+	public int withdraw(String mId) {
+
+		//System.out.println("dao's mId : " + mId);
+		
+		int result = sqlSession.update("MyPage.withdraw", mId);
+		
+		return result;
+	}
+	
+	
 
 
 
