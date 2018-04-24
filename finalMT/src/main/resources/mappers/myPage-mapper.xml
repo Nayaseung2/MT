@@ -27,9 +27,15 @@
 	</select>
 	
 	<!-- 닉네임 변경 -->
-    <select id="changeNick" parameterType="java.lang.String" resultType="_int">
+    <select id="changeNick" parameterType="Member" resultType="_int">
     	UPDATE MEMBER 
     	SET M_NICKNAME = #{ nickName }
+    	WHERE MID = #{ mId }
+    </select>
+    
+    <select id="changePwd" parameterType="Member" resultType="_int">
+    	UPDATE MEMBER
+    	SET MPWD = #{ mPwd }
     	WHERE MID = #{ mId }
     </select>
 

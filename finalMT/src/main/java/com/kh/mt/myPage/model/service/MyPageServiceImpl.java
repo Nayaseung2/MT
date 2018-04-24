@@ -32,6 +32,13 @@ public class MyPageServiceImpl implements MyPageService {
 		int result = md.changeNick(sqlSession, m);
 	}
 
+	// 비밀번호 변경
+	@Override
+	public void changePwd(Member m) {
+
+		int result = md.changePwd(sqlSession, m);
+	}
+
 	
 
 }
