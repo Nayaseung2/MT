@@ -39,6 +39,13 @@ public class MyPageServiceImpl implements MyPageService {
 		int result = md.changePwd(sqlSession, m);
 	}
 
+	// 회원탈퇴
+	@Override
+	public void withdraw(String mId) {
+
+		int result = md.withdraw(mId);
+	}
+
 	
 
 }

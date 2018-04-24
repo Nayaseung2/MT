@@ -26,10 +26,12 @@
   			<result property="f_mcode" column="F_MCODE"/>
   			<result property="upload_date" column="UPLOAD_DATE"/>
   		</resultMap>
+  		
 	<insert id="insertBoard">
 		INSERT INTO BOARD
 		VALUES(SEQ_BCODE.NEXTVAL,#{bwriter},#{b_type},#{b_title},#{b_content},#{bwriter},SYSDATE,SYSDATE,0,'Y')
 	</insert>
+	
 	<insert id="insertBoardFile">
 		INSERT INTO UPLOADFILE
   			VALUES(#{from_code},#{f_orname},#{f_rename},#{filepath},#{f_mcode},SYSDATE,SEQ_FILECODE.NEXTVAL)
@@ -40,4 +42,11 @@
 		INSERT INTO BOARD
 		VALUES(SEQ_BCODE.NEXTVAL,#{v_code},#{b_type},NULL,#{b_content},#{bwriter},SYSDATE,SYSDATE,0,'Y')	
 	</insert>
+	
+	<!-- 신고글 파일업로드 -->
+	<insert id="reportFile">
+		INSERT INTO UPLOADFILE
+  		VALUES(NULL, #{ f_orname }, #{ f_rename }, #{ filepath }, #{ f_mcode }, SYSDATE, seq_filecode.nextval)
+	</insert>
+	
 </mapper>

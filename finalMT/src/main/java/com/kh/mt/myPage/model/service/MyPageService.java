@@ -13,5 +13,8 @@ public interface MyPageService {
 	// 비밀번호 변경
 	void changePwd(Member m);
 
+	// 회원탈퇴
+	void withdraw(String mId);
+
 
 }

@@ -21,19 +21,6 @@
 	 font-family: 'Noto Sans KR', sans-serif;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 ul.tabs {
    /*  margin: 0;
     padding: 0;
@@ -430,7 +417,7 @@ ul.tabs li.active {
 										if(newPwd1 != newPwd2){
 										
 											alert("새로운 비밀번호가 일치하지 않습니다..");
-											location.reload();
+											newPwd1.focus();
 											
 										/* 새로운 비번이 일치할 때 */
 										} else {
@@ -474,7 +461,7 @@ ul.tabs li.active {
 								
 								console.log(mId);
 								alert("탈퇴되었습니다.");
-								location.href="showMain.mp";
+								location.href="${ contextPath }/index.jsp";
 								
 							} else {
 								

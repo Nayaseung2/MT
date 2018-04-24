@@ -66,23 +66,6 @@ public class MyPageController {
 		return "myPage/myPageMain";
 	}
 	
-	
-	// 닉네임 변경
-	/*@RequestMapping(value="changeNick.mp")
-	public ModelAndView changeNick(ModelAndView mv, String nickName) {
-		
-		System.out.println("controller's changeNick : " + nickName);
-		
-		mv.setViewName("myPage/myPageMain");
-		
-		Member m =  new Member();
-		m.setNickName(nickName);
-		
-		ms.changeNick(m);
-		
-		return mv;
-	}*/
-	
 	// 닉네임 중복확인
 	@RequestMapping(value="overlapCheck.mp")
 	public ModelAndView overlapCheck(HttpServletResponse response, ModelAndView mv, String mId, String nickName) {
@@ -118,26 +101,14 @@ public class MyPageController {
 		
 		System.out.println("controller's mId/nickName : " + mId + "/" + nickName);
 		
-		
-		
-		// 파라미터 꺼내와서 변수에 저장
-		/*String mName =request.getParameter("mName");
-		String email = request.getParameter("email");
-		String joinDate = request.getParameter("joinDate");*/
-		
-		// 멤버객체 만들어서 set으로 필드값변경
 		Member m = new Member();
 		m.setmId(mId);
-		/*m.setmName(mName);*/
 		m.setNickName(nickName);
-		/*m.setEmail(email);
-		m.setJoinDate(joinDate);*/
-		request.setAttribute("member", m);
 		
 		ms.changeNick(m);
 		
 		HttpSession session = request.getSession();
-		session.setAttribute("nickName", nickName);
+		((Member)session.getAttribute("loginUser")).setNickName(nickName);
 		
 		mv.setViewName("myPage/myPageMain");
 		
@@ -149,15 +120,15 @@ public class MyPageController {
 	public ModelAndView changePwd(ModelAndView mv, SessionStatus status, HttpServletRequest request,
 			 						Member m, String mId, String newPwd1) {
 		
-		System.out.println("controller's mId/newPwd1 : " + mId + "/" + newPwd1);
+		//System.out.println("controller's mId/newPwd1 : " + mId + "/" + newPwd1);
 		
 		m.setmId(mId);
 		m.setmPwd(passwordEncoder.encode(newPwd1));
 		
 		ms.changePwd(m);
 		
-		/*HttpSession session = request.getSession();
-		session.setAttribute("newPwd1", newPwd1);*/
+		HttpSession session = request.getSession();
+		((Member)session.getAttribute("loginUser")).setmPwd(passwordEncoder.encode(newPwd1));
 		
 		mv.setViewName("myPage/myPageMain");
 		
@@ -165,12 +136,19 @@ public class MyPageController {
 	}
 	
 	// 탈퇴 후 사이트 메인페이지로 가기
-	@RequestMapping(value="showMain.mp")
-	public String showshowMainPage(SessionStatus status) {
+	@RequestMapping(value="withdraw.mp")
+	public ModelAndView withdraw(SessionStatus status, ModelAndView mv, String mId) {
+		
+		//System.out.println("controller's mId : " + mId);
+		
+		ms.withdraw(mId);
 		
 		status.setComplete();
 		
-		return "main/main";
+		mv.addObject("success");
+		mv.setViewName("jsonView");
+		
+		return mv;
 	}
 	
 	

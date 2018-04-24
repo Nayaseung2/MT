@@ -354,8 +354,8 @@ label {
 						<br/>
 						<br/>
 						<div class="qBtn">
-							<button type="submit" class="btn btn-danger" style="font-size:20px;" onclick="submit();">등록하기</button>&nbsp;&nbsp;
-							<button type="reset" class="btn btn-danger" style="font-size:20px;">취소하기</button>	
+							<button type="submit" class="btn btn-danger" style="font-size:20px;" id="submitBtn">등록하기</button>&nbsp;&nbsp;
+							<button type="reset" class="btn btn-danger" style="font-size:20px;" id="resetBtn">취소하기</button>	
 						</div>
 					</form>
 					<br/>
@@ -364,15 +364,35 @@ label {
 					
 			<script>
 			
-				function submit(){
+				$(function(){
 					
-					alert("[ 모두의 TV 알림 ] \n사실에 의거하지않은 신고자는 불이익을 받을 수 있습니다.");
-				}
+					$("#resetBtn").click(function(){
+						
+						location.href="helpmain.hp";
+					});
+					
+					$("#submitBtn").click(function(){
+						
+						var bullyId = $("#bullyId").val();
+						var rContent = $("#rContent").val();
+						var myFileUp = $("#myFileUp").val();
+						
+						var mId = $("#mId").val();
+						
+						if(bullyId === "" || rContent === "" || myFileUp == null){
+							
+							alert("빈 칸을 확인해주세요.");
+							location.reload();
+							
+						} else {
+							
+							alert("[ 모두의 TV 알림 ] \n사실에 의거하지않은 신고자는 불이익을 받을 수 있습니다.");
+						}
+					});
+				});
 			
 			</script>
-
 		</div>
-
 	</div>
 	<!-- 위에 배너 빼고 전체 div 끝 -->
 

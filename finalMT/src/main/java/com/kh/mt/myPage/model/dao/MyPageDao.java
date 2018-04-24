@@ -15,6 +15,9 @@ public interface MyPageDao {
 	// 비밀번호 변경
 	int changePwd(SqlSessionTemplate sqlSession, Member m);
 
+	// 회원탈퇴
+	int withdraw(String mId);
+
 
 
 }
