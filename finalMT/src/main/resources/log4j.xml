@@ -11,7 +11,7 @@
 	</appender>
 	
 	<appender name="fileLogger" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="file" value="C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log"/>
+		<param name="file" value="C:/Users/\sungbo1/git/MT/finalMT/src/main/resources/logs/system.log"/>
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="[%d{HH:mm:ss}] %m%n"/>
 		</layout>
