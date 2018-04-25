@@ -55,5 +55,28 @@ public class MemberServiceImpl implements MemberService {
 		int result=md.insertJDBCStation(mid);
 		System.out.println("방송국 생성함? result : "+result);
 	}
+
+	// 이름으로 아이디 가져오기
+	@Override
+	public String checkNameId(String joinName) {
+
+		String nameId = "";
+		
+		nameId = md.checkNameId(joinName);
+		
+		return nameId;
+	}
+
+	// 이메일로 아이디 가져오기
+	@Override
+	public String checkEmailId(String joinEmail) {
+
+		String emailId = "";
+		
+		emailId = md.checkEmailId(joinEmail);
+		
+		return emailId;
+	}
+
 	
 }
