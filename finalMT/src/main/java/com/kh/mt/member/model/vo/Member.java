@@ -23,10 +23,13 @@ public class Member implements java.io.Serializable{
 	private String a_status;
 	private int peach;
 	private String videoYN;
+	private int readerCount;
+	
 	public Member(){}
+	
 	public Member(String mcode, String mId, String mPwd, String mName, String nickName, String email, String account1,
 			String account2, String account, String joinDate, String updateDate, String status, String a_status,
-			int peach, String videoYN) {
+			int peach, String videoYN, int readerCount) {
 		super();
 		this.mcode = mcode;
 		this.mId = mId;
@@ -43,6 +46,7 @@ public class Member implements java.io.Serializable{
 		this.a_status = a_status;
 		this.peach = peach;
 		this.videoYN = videoYN;
+		this.readerCount = readerCount;
 	}
 	public String getMcode() {
 		return mcode;
@@ -137,14 +141,23 @@ public class Member implements java.io.Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	public int getReaderCount() {
+		return readerCount;
+	}
+
+	public void setReaderCount(int readerCount) {
+		this.readerCount = readerCount;
+	}
+
 	@Override
 	public String toString() {
 		return "Member [mcode=" + mcode + ", mId=" + mId + ", mPwd=" + mPwd + ", mName=" + mName + ", nickName="
 				+ nickName + ", email=" + email + ", account1=" + account1 + ", account2=" + account2 + ", account="
 				+ account + ", joinDate=" + joinDate + ", updateDate=" + updateDate + ", status=" + status
-				+ ", a_status=" + a_status + ", peach=" + peach + ", videoYN=" + videoYN + "]";
+				+ ", a_status=" + a_status + ", peach=" + peach + ", videoYN=" + videoYN + ", readerCount="
+				+ readerCount + "]";
 	}
-	
 	
 	
 }

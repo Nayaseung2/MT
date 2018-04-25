@@ -73,5 +73,13 @@ public interface AdminService {
 
 	ArrayList<Contact> searchContactUser(String userId, PageInfo pi); //문의 유저리스트
 
+	int stopUser(String userId); //회원 정지시키기
+
+	HashMap<String, Object> blackUsers(PageInfo pi); //블랙리스트 뽑아오기
+
+	int restoreUser(String userId); //회원 복원시키기
+
+	Member blackUserSearch(String userId);
+
 } 
  

@@ -45,7 +45,7 @@ public class AdminDaoImpl implements AdminDao{
 		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
 		
-		mlist = (ArrayList) sqlSession.selectList("Member.userAllList", null, rowBounds);
+		mlist = (ArrayList) sqlSession.selectList("Admin.userAllList", null, rowBounds);
 		
 		return mlist;
 	}
@@ -247,6 +247,32 @@ public class AdminDaoImpl implements AdminDao{
 		ArrayList<Contact> list = (ArrayList)sqlSession.selectList("Admin.searchContactUser", userId, rowBounds);
 		
 		return list;
+	}
+
+	@Override
+	public int stopUser(String userId) {
+		return sqlSession.update("Admin.stopUser", userId);
+	}
+
+	@Override
+	public ArrayList<Member> blackUsers(PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		ArrayList<Member> list = (ArrayList)sqlSession.selectList("Admin.blackUsers", null, rowBounds);
+		
+		return list;
+	}
+
+	@Override
+	public int restoreUser(String userId) {
+		return sqlSession.update("Admin.restoreUser", userId);
+	}
+
+	@Override
+	public Member blackUserSearch(String userId) {
+		Member m = sqlSession.selectOne("Admin.blackUserSearch", userId);
+		return m;
 	}
 
 	

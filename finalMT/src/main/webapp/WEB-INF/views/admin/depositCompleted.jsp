@@ -48,6 +48,8 @@ tr, th {
 </head>
 
 <body>
+	<c:if test="${ loginUser.mId eq 'admin' }">
+	<jsp:include page="chatting.jsp"/>
     <div id="wrapper">
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -78,7 +80,7 @@ tr, th {
 		                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
                                 </li>
                                 <li>
-                                    <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
+                                    <a href="blackUsers.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
                                 </li>
                             </ul>
                         </li>
@@ -111,7 +113,7 @@ tr, th {
 		<div id="page-wrapper" style="margin-top: 63px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"> Deposit Completed</h1>
+                    <h1 class="page-header" style="font-weight: bold;">출금 완료 내역</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -188,6 +190,10 @@ tr, th {
     <!-- /#wrapper -->
     <input type="hidden" value="${ map.pi.maxPage }" id="maxPage"/>
     <input type="hidden" class="type" id="deposit.ad"/>
+    </c:if>
+    <c:if test="${ loginUser.mId ne 'admin' || loginUser != null}">
+		<c:redirect url="index.jsp"/>
+    </c:if>
     <script>
     function typeChange(type){
 		$(".type").attr("id", type);
@@ -198,15 +204,16 @@ tr, th {
 	function onclickPage(value, type){
 		
 		var url = type;        
+		console.log(url);
 		$.ajax({
    			url: url,
    			type: "get",
    			data:{"newCurrentPage":value},
    			success:function(data){
 	   
-	       		var list = data.map.rlist;
+	       		var list = data.map.dlist;
 	       		var pi = data.map.pi;
-				$("tbody").html("");
+				$(".values").html("");
 	       
 	      		for(var i = 0; i < list.length; i++){
 	      			$(".values").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td></tr>");

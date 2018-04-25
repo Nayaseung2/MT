@@ -227,5 +227,32 @@ public class AdminSerivceImpl implements AdminService{
 		return clist;
 	}
 
+	@Override
+	public int stopUser(String userId) {
+		return ad.stopUser(userId);
+	}
+
+	@Override
+	public HashMap<String, Object> blackUsers(PageInfo pi) {
+		HashMap<String, Object> list = new HashMap<String, Object>();
+		
+		ArrayList<Member> mlist = ad.blackUsers(pi);
+		list.put("mlist", mlist);
+		
+		return list;
+	}
+
+	@Override
+	public int restoreUser(String userId) {
+		
+		return ad.restoreUser(userId);
+	}
+
+	@Override
+	public Member blackUserSearch(String userId) {
+		Member m = ad.blackUserSearch(userId);
+		return m;
+	}
+
 
 }

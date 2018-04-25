@@ -13,7 +13,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,6 +40,20 @@ public class AdminController {
 	private BufferedReader reader = null;
 	
 	public AdminController(){}
+	
+	//서버 연결
+	@RequestMapping("chatting.ad")
+	public ModelAndView chatting(ModelAndView mv, HttpServletRequest request){
+		mv.setViewName("admin/chatting");
+		
+		HttpSession session = request.getSession();
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		mv.addObject("userId", m.getmId());
+		
+		return mv;
+	}
 	
 	//관리자 메인화면
 	@RequestMapping("adminMain.ad")
@@ -116,6 +136,63 @@ public class AdminController {
 		
 		mv.setViewName("jsonView");
 
+		return mv;
+	}
+	
+	//회원 정지
+	@RequestMapping("stopUser.ad")
+	public ModelAndView stopUser(ModelAndView mv, String userId){
+		
+		int result = as.stopUser(userId);
+		
+		mv.addObject("success");
+		
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	//블랙회원 관리
+	@RequestMapping("blackUsers.ad")
+	public ModelAndView blackUsers(ModelAndView mv, String newCurrentPage){
+		PageInfo pi = addPage(newCurrentPage, "blackUser");
+		
+		HashMap<String, Object> map = as.blackUsers(pi);
+		
+		System.out.println(map.get("mlist"));
+		
+		map.put("pi", pi);
+		
+		mv.addObject("map", map);
+		if(newCurrentPage == null){
+			mv.setViewName("admin/blackList");
+		}else {
+			mv.setViewName("jsonView");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("blackUserSearch.ad")
+	public ModelAndView blackUserSearch(ModelAndView mv, String userId){
+		Member m = as.blackUserSearch(userId);
+		
+		mv.addObject("m", m);
+		
+		mv.setViewName("jsonView");
+
+		return mv;
+	}
+	
+	//회원 복원
+	@RequestMapping("restore.ad")
+	public ModelAndView restore(ModelAndView mv, String userId){
+		int result = as.restoreUser(userId);
+		
+		mv.addObject("success");
+		
+		mv.setViewName("jsonView");
+		
 		return mv;
 	}
 	
@@ -232,7 +309,11 @@ public class AdminController {
 		map.put("pi", pi);
 		mv.addObject("map", map);
 		
-		mv.setViewName("admin/withdrawalControl");
+		if(newCurrentPage == null){
+			mv.setViewName("admin/withdrawalControl");
+		}else {
+			mv.setViewName("jsonView");
+		}
 		
 		return mv;
 	}
@@ -280,10 +361,11 @@ public class AdminController {
 		map.put("pi", pi);
 		mv.addObject("map", map);
 		
-		System.out.println("controller: " + map);
-		
-		
-		mv.setViewName("admin/depositCompleted");
+		if(newCurrentPage == null){
+			mv.setViewName("admin/depositCompleted");
+		}else {
+			mv.setViewName("jsonView");
+		}
 		
 		return mv;
 	}
@@ -458,6 +540,8 @@ public class AdminController {
 			listCount = Integer.parseInt(String.valueOf(list.get("DEPOSIT")));
 		}else if(type.equals("conctact")){
 			listCount = Integer.parseInt(String.valueOf(list.get("CONTACT")));
+		}else if(type.equals("blackUser")){
+			listCount = Integer.parseInt(String.valueOf(list.get("BLACKUSER")));
 		}
 		
 		

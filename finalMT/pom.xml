@@ -188,7 +188,15 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.6</version>
 		</dependency>
-
+		
+		<!-- WebSocket -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>5.0.4.RELEASE</version>
+		</dependency>
+		
+		
 		<!-- JSON -->
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
