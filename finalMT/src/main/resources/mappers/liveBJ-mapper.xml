@@ -4,5 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="LiveBJ">
-
+		<insert id="insertBSCotent" parameterType="LiveBJ">
+		INSERT INTO JDBC VALUES (NULL ,#{bsTitle},#{bsContent},SYSDATE,0,#{cate},#{mid},SEQ_JDBCCODE.NEXTVAL)
+  		</insert>
+  		
+  		<insert id="insertBSTitleImg" parameterType="JDBClogo">
+  		INSERT INTO UPLOADFILE VALUES (#{from_code},#{f_orname},#{f_rename},#{filepath},#{f_mcode},SYSDATE,SEQ_FILECODE.NEXTVAL)
+  		</insert>
 </mapper>

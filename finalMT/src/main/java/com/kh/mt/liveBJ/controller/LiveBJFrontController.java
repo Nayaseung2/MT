@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,12 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.mt.JDBC.model.vo.JDBC;
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
 import com.kh.mt.liveBJ.model.service.LiveBJService;
-import com.kh.mt.liveBJ.model.vo.LiveBJ;
+import com.kh.mt.liveBJ.model.vo.LiveBj;
 
 @Controller
 public class LiveBJFrontController {
-
+	@Autowired
 	LiveBJService ls;
+	
 	@RequestMapping(value="testLiveBj.lb")
 	public String ChangeView(){
 		return "LiveBj/LiveBjPage";
@@ -40,7 +42,7 @@ public class LiveBJFrontController {
 	}
 
 	@RequestMapping(value="insertBSCotent.lb")
-	public String  insertBSContent(LiveBJ bj, Model model,
+	public String  insertBSContent(LiveBj bj, Model model,
 			@RequestParam(name = "bsImg", required = false) MultipartFile photo, HttpServletRequest request){
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String filePath = root + "//bsTitleImages";
@@ -50,7 +52,7 @@ public class LiveBJFrontController {
 		String ext = originalFileName.substring(originalFileName.lastIndexOf('.'));
 		String changedName = authNum() + ext;
 		try {
-			photo.transferTo(new File(filePath + "\\" + changedName));
+			photo.transferTo(new File(filePath + "\\" + originalFileName));
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,6 +60,7 @@ public class LiveBJFrontController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(bj);
 		
 		// UPLOADFILE insert
 		JDBCLogoFile f = new JDBCLogoFile();
@@ -65,7 +68,11 @@ public class LiveBJFrontController {
 		f.setF_orname(originalFileName);
 		f.setF_rename(changedName);
 		f.setFilepath(filePath);
-		f.setF_mcode(bj.getUserId());
+		f.setF_mcode(bj.getMid());
+		
+		ls.insertBSCotent(bj);
+		ls.insertBSTitleImg(f);
+		
 		
 		return "LiveBj/LiveBjPage";
 	}
