@@ -66,4 +66,12 @@ public interface AdminDao {
 
 	ArrayList<Contact> searchContactUser(PageInfo pi, String userId);
 
+	int stopUser(String userId);
+
+	ArrayList<Member> blackUsers(PageInfo pi);
+
+	int restoreUser(String userId);
+
+	Member blackUserSearch(String userId);
+
 }

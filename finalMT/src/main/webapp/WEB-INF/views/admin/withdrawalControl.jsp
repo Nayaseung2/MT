@@ -38,7 +38,7 @@
 <!-- Custom Theme JavaScript -->
 <script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
 
-<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
 <style>
 .arBtn {
 	width: 3.5%;
@@ -47,7 +47,8 @@
 </head>
 
 <body>
-
+	<c:if test="${ loginUser.mId eq 'admin' }">
+	<jsp:include page="chatting.jsp"/>
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -79,7 +80,7 @@
 		                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
                                 </li>
                                 <li>
-                                    <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
+                                    <a href="blackUsers.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
                                 </li>
                             </ul>
                         </li>
@@ -114,7 +115,7 @@
 		<div id="page-wrapper" style="margin-top: 63px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"> Withdrawal Control</h1>
+                    <h1 class="page-header" style="font-weight: bold;">출금 신청</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -237,8 +238,11 @@
 	</div>
     <!-- /#wrapper -->
 	<input type="hidden" value="${ map.pi.maxPage }" id="maxPage"/>
+	</c:if>
+    <c:if test="${ loginUser.mId ne 'admin' || loginUser != null}">
+		<c:redirect url="index.jsp"/>
+    </c:if>
 	<script>
-	
 	function typeChange(type){
 		$(".type").attr("id", type);
 		
@@ -254,12 +258,12 @@
    			data:{"newCurrentPage":value},
    			success:function(data){
 	   
-	       		var list = data.map.rlist;
+	       		var list = data.map.wlist;
 	       		var pi = data.map.pi;
 				$("tbody").html("");
 	       
 	      		for(var i = 0; i < list.length; i++){
-	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>카드</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class=''></button></td><td class='arBtn'><button class='refusal'>거절</button></td><td style='display: none;'>"+ list[i].wdDate +"</td></tr>");
+	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class='approval'>승인</button></td><td class='arBtn'><button class='refusal'>거절</button></td><td style='display: none;'>"+ list[i].wdDate +"</td></tr>");
 	      		}
 	      		
 	      		$(".pageul").children().removeClass('active');
@@ -300,7 +304,7 @@
                 data:{"newCurrentPage":page, "userId":userId},
                 success:function(data){
                 	
-                	var list = data.map.rlist;
+                	var list = data.map.wlist;
     	       		var pi = data.map.pi;
     	       		console.log(pi.currentPage);
     	       		console.log(list);
@@ -309,7 +313,7 @@
     				$("tbody").html("");
     	       
     	      		for(var i = 0; i < list.length; i++){
-    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>카드</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class=''></button></td><td class='arBtn'><button class='refusal'>거절</button></td><td style='display: none;'>"+ list[i].wdDate +"</td></tr>");
+    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class='approval'>승인</button></td><td class='arBtn'><button class='refusal'>거절</button></td><td style='display: none;'>"+ list[i].wdDate +"</td></tr>");
     	      		}
     	      		
 					$(".pageul").html("");

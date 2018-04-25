@@ -6,7 +6,6 @@
 <html>
 
 <head>
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -38,14 +37,13 @@
 </head>
 
 <body>
-	<script>
-		
-		
-	</script>
+	<c:if test="${ loginUser.mId eq 'admin' }">
+	<jsp:include page="chatting.jsp"/>
     <div id="wrapper">
-
+	
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+		
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -73,7 +71,7 @@
 		                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
                                 </li>
                                 <li>
-                                    <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
+                                    <a href="blackUsers.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
                                 </li>
                             </ul>
                         </li>
@@ -107,7 +105,7 @@
         <div id="page-wrapper" style="margin-top: 63px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"> </h1>
+                    <h1 class="page-header" style="font-weight: bold;">관리자 페이지</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -148,9 +146,6 @@
                                 </div>
                             </div>
                         </div>
-                        <script>
-                        	console.log(${list.allList});
-                        </script>
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">자세히</span>
@@ -296,6 +291,10 @@
             <!-- /.row -->
     	</div>
     </div>
+    </c:if>
+     <c:if test="${ loginUser.mId ne 'admin' || loginUser != null}">
+		<c:redirect url="index.jsp"/>
+    </c:if>
     <!-- /#wrapper -->
 
     <!-- jQuery -->

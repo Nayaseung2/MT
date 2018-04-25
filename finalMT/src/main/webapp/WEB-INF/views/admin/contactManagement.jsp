@@ -66,9 +66,9 @@
 </head>
 
 <body>
-
+	<c:if test="${ loginUser.mId eq 'admin' }">
+	<jsp:include page="chatting.jsp"/>
     <div id="wrapper">
-
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -98,7 +98,7 @@
 		                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
                                 </li>
                                 <li>
-                                    <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
+                                    <a href="blackUsers.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
                                 </li>
                             </ul>
                         </li>
@@ -131,7 +131,7 @@
 		<div id="page-wrapper" style="margin-top: 63px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"> Contact Management</h1>
+                    <h1 class="page-header" style="font-weight: bold;">문의 내역</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -389,6 +389,10 @@
 	<!-- /.modal -->
 	<input type="hidden" value="${ map.pi.maxPage }" id="maxPage"/>
     <input type="hidden" class="type" id="contactTypeChange.ad"/>
+    </c:if>
+    <c:if test="${ loginUser.mId ne 'admin' || loginUser != null}">
+		<c:redirect url="index.jsp"/>
+    </c:if>
     <script>
    	
    	$(document).on("click", ".detail", function(){

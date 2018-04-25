@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html> 
 <html>
 
@@ -40,7 +41,7 @@
 <!-- Custom Theme JavaScript -->
 <script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
 
-<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
 
 <style>
 	.gType:hover, .mType:hover {
@@ -50,9 +51,9 @@
 </head>
 
 <body>
-
+	<c:if test="${ loginUser.mId eq 'admin' }">
+	<jsp:include page="chatting.jsp"/>
     <div id="wrapper">
-
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -82,7 +83,7 @@
 		                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
                                 </li>
                                 <li>
-                                    <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
+                                    <a href="blackUsers.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
                                 </li>
                             </ul>
                         </li>
@@ -117,7 +118,7 @@
 		<div id="page-wrapper" style="margin-top: 63px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"> Member Management</h1>
+                    <h1 class="page-header" style="font-weight: bold;">회원 정보 조회</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -262,6 +263,8 @@
 	                                        <th>이메일</th>
 	                                        <th>계좌 인증여부</th>
 	                                        <th>가입일</th>
+	                                        <th>구독자 수</th>
+	                                        <th>비고</th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
@@ -270,10 +273,12 @@
 	                                  		<td>${ m.mId }</td>
 	                                  		<td>${ m.mName }</td>
 	                                  		<td>${ m.mcode }</td>
-	                                  		<td>${ m.peach }</td>
+	                                  		<td><fmt:formatNumber value="${ m.peach}" groupingUsed="true"/>개</td>
 	                                  		<td>${ m.email }</td>
 	                                  		<td>${ m.a_status }</td>
 	                                  		<td>${ m.joinDate }</td>
+	                                  		<td><fmt:formatNumber value='${ m.readerCount}' groupingUsed='true'/>명</td>
+	                                  		<td><button class="stop">정지</button></td>
 	                                  	</tr>
 	                                  </c:forEach>
 	                                </tbody>
@@ -305,6 +310,10 @@
         </div>
     </div>
     <input type="hidden" value="${ pi.maxPage }" id="maxPage"/>
+    </c:if>
+    <c:if test="${ loginUser.mId ne 'admin' || loginUser != null}">
+		<c:redirect url="index.jsp"/>
+    </c:if>
     <!-- /#wrapper -->
   	<script>
 	function onclickPage(value, type){
@@ -318,10 +327,11 @@
 	       		var list = data.list.mlist;
 	       		var pi = data.list.pi;
 				$("tbody").html("");
-	       
-	      		for(var i = 0; i < list.length; i++){
-	            	$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+list[i].peach+"</td><td>"+list[i].email+"</td><td>"+list[i].a_status+"</td><td>"+list[i].joinDate+"</td></tr>");
+
+				for(var i = 0; i < list.length; i++){
+	            	$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].a_status+"</td><td>"+list[i].joinDate+"</td><td>"+addComma(list[i].readerCount)+"명</td><td><button class='stop'>정지</button></td></tr>");
 	      		}
+				
 	      		$(".pageul").children().removeClass('active');
 	      		$("#cu"+value).addClass('active');
 	      		$("#maxPage").attr("value", pi.maxPage);
@@ -332,7 +342,7 @@
 		});
  		return false;
 	}
-        
+    
      
      
      function pageChange(pagenum, value, type){
@@ -361,9 +371,8 @@
                 	var list = data.list.mlist;
     	       		var pi = data.list.pi;
     				$("tbody").html("");
-    	       
     	      		for(var i = 0; i < list.length; i++){
-    	            	$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+list[i].peach+"</td><td>"+list[i].email+"</td><td>"+list[i].a_status+"</td><td>"+list[i].joinDate+"</td></tr>");
+    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].a_status+"</td><td>"+list[i].joinDate+"</td><td>"+addComma(list[i].readerCount)+"명</td><td><button class='stop'>정지</button></td></tr>");
     	      		}
     	      		
     	      		$(".pageul").children().removeClass('active');
@@ -396,7 +405,7 @@
   					$("tbody").html("");
   					$("#pagingArea").html("");
   					
-  					$("tbody").append("<tr><td>"+m.mId+"</td><td>"+m.mName+"</td><td>"+m.mName+"</td><td>"+m.peach+"</td><td>"+m.a_status+"</td></tr>");
+  					$("tbody").append("<tr><td>"+m.mId+"</td><td>"+m.mName+"</td><td>"+m.mcode+"</td><td>"+addComma(m.peach)+"개</td><td>"+m.email+"</td><td>"+m.a_status+"</td><td>"+m.joinDate+"</td><td>"+addComma(m.readerCount)+"명</td><td><button class='stop'>정지</button></td></tr>");
   					$("#pagingArea").append("<button onclick='location.reload()'>전체보기</button>");
   				}
   			});
@@ -442,6 +451,32 @@
   				xAxis: {categories: [00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]},
   				yAxis: {title: 't'},
   				series: [{name: '인원수', data: times}]
+  			});
+  		});
+  		
+  		
+  		function addComma(num) {
+  		  var regexp = /\B(?=(\d{3})+(?!\d))/g;
+  		   return num.toString().replace(regexp, ',');
+  		}
+  		
+  		
+  		$(".stop").on("click", function(){
+  			var td = $(this).parent();
+  			var userId = $(this).parent().parent().children().first().text();
+  			
+  			$.ajax({
+  				url: "stopUser.ad",
+  				type: "get",
+  				data: {"userId":userId},
+  				success: function(data){
+					td.html("");
+  					td.append("처리완료");
+  				
+  				},
+  				error: function(data){
+  					
+  				}
   			});
   		});
   		

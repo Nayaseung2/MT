@@ -10,10 +10,24 @@
       <result property="peach_code" column="PEACH_CODE"/>  
       <result property="p_date" column="P_DATE"/>
    </resultMap>
-  	<!-- private int amount;
-	private String account;
-	private String date;
-	private int payment; -->
+  	
+  	<resultMap type="Member" id="memberResultSet" >
+		<id property="mcode" column="MCODE"/>
+		<result property="mId" column="MID"/>
+		<result property="mPwd" column="MPWD"/>
+		<result property="mName" column="MNAME"/>
+		<result property="nickName" column="M_NICKNAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="account" column="ACCOUNT"/>
+		<result property="joinDate" column="JOIN_DATE"/>
+		<result property="updateDate" column="UPDATE_DATE"/>
+		<result property="status" column="MSTATUS"/>
+		<result property="a_status" column="A_STATUS"/>
+		<result property="peach" column="PEACH"/>
+		<result property="videoYN" column="VIDEO_YN"/>
+		<result property="readerCount" column="READER"/>
+	</resultMap>
+  	
   	<resultMap type="Withdrawal" id="withdrawalResultSet">
   		<result property="mId" column="MID"/>
   		<result property="mName" column="MNAME"/>
@@ -52,8 +66,14 @@
   	</select> 
   	 
   	<select id="memberList" resultType="hashmap">
-  		SELECT (SELECT COUNT(*) FROM MEMBER WHERE MSTATUS = 'Y')TOTAL, (SELECT COUNT(*) FROM MEMBER WHERE VIDEO_YN='Y') BJ, (SELECT COUNT(*) FROM PAYHISTORY) REVENUE, (SELECT COUNT(*) FROM WITHDRAWAL WHERE TO_CHAR(WD_DATE) = TO_CHAR(SYSDATE) AND STATUS = 'N') TODAY, (SELECT COUNT(*) FROM WITHDRAWAL WHERE TO_CHAR(SUCCESS_DATE) = TO_CHAR(SYSDATE) AND STATUS = 'Y') SUCCESS, (SELECT COUNT(*) FROM WITHDRAWAL WHERE STATUS = 'Y') DEPOSIT, (SELECT COUNT(*) FROM BOARD WHERE B_TYPE LIKE 'personal%' ) CONTACT, (SELECT COUNT(*) FROM WITHDRAWAL WHERE STATUS = 'N') WITHCOUNT
+  		SELECT (SELECT COUNT(*) FROM MEMBER WHERE MSTATUS = 'Y')TOTAL, (SELECT COUNT(*) FROM MEMBER WHERE VIDEO_YN='Y') BJ, (SELECT COUNT(*) FROM PAYHISTORY) REVENUE, (SELECT COUNT(*) FROM WITHDRAWAL WHERE TO_CHAR(WD_DATE) = TO_CHAR(SYSDATE) AND STATUS = 'N') TODAY, (SELECT COUNT(*) FROM WITHDRAWAL WHERE TO_CHAR(SUCCESS_DATE) = TO_CHAR(SYSDATE) AND STATUS = 'Y') SUCCESS, (SELECT COUNT(*) FROM WITHDRAWAL WHERE STATUS = 'Y') DEPOSIT, (SELECT COUNT(*) FROM BOARD WHERE B_TYPE LIKE 'personal%' ) CONTACT, (SELECT COUNT(*) FROM WITHDRAWAL WHERE STATUS = 'N') WITHCOUNT, (SELECT COUNT(*) FROM MEMBER WHERE MSTATUS = 'A') BLACKUSER
 		FROM DUAL
+  	</select>
+  	
+  	<select id="userAllList" resultMap="memberResultSet">
+  		SELECT MCODE, MID, MPWD, MNAME, M_NICKNAME, EMAIL, ACOUNT, JOIN_DATE, UPDATE_DATE, MSTATUS, A_STATUS, PEACH, VIDEO_YN, (SELECT COUNT(*) FROM SUBSCRIBE WHERE M.MCODE = BJ_MCODE) READER
+		FROM MEMBER M
+		WHERE MSTATUS = 'Y'
   	</select>
   	
   	<select id="searchDay" resultType="java.lang.String">
@@ -176,6 +196,29 @@
 		WHERE B_TYPE LIKE 'personal%'
 		AND B_CODE NOT IN (SELECT B_CODE FROM REPLY)
 		AND BWRITER = #{userId}
+  	</select>
+  	
+  	<update id="stopUser" parameterType="java.lang.String">
+  		UPDATE MEMBER SET MSTATUS = 'A', UPDATE_DATE = SYSDATE
+  		WHERE MID = #{userId}
+  	</update>
+  	
+  	<select id="blackUsers" resultMap="memberResultSet">
+  		SELECT MCODE, MID, MPWD, MNAME, M_NICKNAME, EMAIL, ACOUNT, JOIN_DATE, UPDATE_DATE, MSTATUS, A_STATUS, PEACH, VIDEO_YN, (SELECT COUNT(*) FROM SUBSCRIBE WHERE M.MCODE = BJ_MCODE) READER
+		FROM MEMBER M
+		WHERE MSTATUS = 'A'
+  	</select>
+  	
+  	<update id="restoreUser" parameterType="java.lang.String">
+  		UPDATE MEMBER SET MSTATUS = 'Y'
+  		WHERE MID = #{userId}
+  	</update>
+  	
+  	<select id="blackUserSearch" parameterType="java.lang.String" resultMap="memberResultSet">
+  		SELECT MCODE, MID, MPWD, MNAME, M_NICKNAME, EMAIL, ACOUNT, JOIN_DATE, UPDATE_DATE, MSTATUS, A_STATUS, PEACH, VIDEO_YN, (SELECT COUNT(*) FROM SUBSCRIBE WHERE M.MCODE = BJ_MCODE) READER
+  		FROM MEMBER M 
+  		WHERE MID = #{userId}
+  		AND MSTATUS = 'A'
   	</select>
   	
   </mapper>
