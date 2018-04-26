@@ -57,7 +57,6 @@
 												<th>구독자 ID</th>
 												<th>구독자 닉네임</th>
 												<th>구독날짜</th>
-												<th>블랙신청</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -68,7 +67,6 @@
 												<td>${list2.reader_mid }</td>
 												<td>${list2.reader_nic}</td>
 												<td>${list2.read_date }</td>
-												<td><button>블랙신청</button></td>
 											</tr>
 										
 										</c:forEach>
@@ -109,6 +107,9 @@
 	<input type="hidden" value="${ loginUser.mcode }" id="mcode"/>
 	<input type="hidden" value="${ pi.maxPage }" id="maxPage"/>
 	<script type="text/javascript">
+
+	
+	
 	function onclickPage(value, type){
 		var mcode = $("#mcode").val()
 		var url = type;			
@@ -125,7 +126,7 @@
   					$("tbody").html("");
   					
   					for(var i = 0; i < list.length; i++){
-  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].reader_mid+"</td><td>"+list[i].reader_nic+"</td><td>"+list[i].read_date+"</td><td><button>"+"블랙신청"+"</button></td></tr>");
+  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].reader_mid+"</td><td>"+list[i].reader_nic+"</td><td>"+list[i].read_date+"</td></tr>");
   					}
   					$(".pageul").children().removeClass('active');
   					$("#cu"+value).addClass('active');
@@ -168,7 +169,8 @@
   					$("tbody").html("");
   					
   					for(var i = 0; i < list.length; i++){
-  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].reader_mid+"</td><td>"+list[i].reader_nic+"</td><td>"+list[i].read_date+"</td><td><button>"+"블랙신청"+"</button></td></tr>");
+  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].reader_mid+"</td><td>"+list[i].reader_nic+"</td><td>"+list[i].read_date+"</td></tr>");
+  						$("button").addClass('blackBtn');
   					}
   					$(".pageul").children().removeClass('active');
   					$("#cu"+page).addClass('active');
@@ -237,6 +239,18 @@
 	        ]
 	    }]
 	});
+	
+	
+	$(".blackBtn").click(function(){
+		var BlackBtn = $(this);
+		var tr = BlackBtn.parent().parent();
+		var td = tr.children();
+		var mid = td.eq(1).text();
+		console.log(mid);
+		
+	})
+	
+	
 	</script>
 	
 	</c:if>
