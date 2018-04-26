@@ -38,6 +38,7 @@
 <script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
+
 </head>
 
 <body>
@@ -68,29 +69,21 @@
                             <a href="adminMain.ad"><i class="fa fa-home fa-fw"></i> HOME</a>
                         </li>
                         <li>
-                        	<a href="#"><i class="fa fa-table fa-fw"></i> 회원 관리<span class="fa arrow"></span></a>
-                        	<ul class="nav nav-second-level">
-                                <li>
-		                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
-                                </li>
-                                <li>
-                                    <a href="blackUsers.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
-                                </li>
-                            </ul>
+                        <li>
+                      		<a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
                         </li>
+                        <li>
+                            <a href="blackUsers.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
+                        </li>
+                        <li>
                         <li>
                             <a href="revenueMg.ad"><i class="fa fa-table fa-fw"></i> 수익 관리</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="withdrawal.ad">출금 신청</a>
-                                </li>
-                                <li>
-                                    <a href="deposit.ad">출금 완료</a>
-                                </li>
-                            </ul>
+                            <a href="withdrawal.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 출금 신청</a>
+                        </li>
+                        <li>
+                            <a href="deposit.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 출금 완료</a>
                         </li>
                         <li>
                             <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 신고 관리</a>
@@ -255,7 +248,7 @@
     </div>
     <input type="hidden" value="${ map.pi.maxPage }" id="maxPage"/>
     </c:if>
-    <c:if test="${ loginUser.mId ne 'admin' || loginUser != null}">
+    <c:if test="${ loginUser.mId ne 'admin' || loginUser == null}">
 		<c:redirect url="index.jsp"/>
     </c:if>
     <!-- /#wrapper -->

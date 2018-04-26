@@ -60,4 +60,37 @@ public class MemberDaoImpl implements MemberDao{
 		return sqlSession.insert("Member.insertJDBCStation",mid);
 	}
 
+	// 이름으로 아이디 가져오기
+	@Override
+	public String checkNameId(String joinName) {
+		
+		String nameId = "";
+		
+		nameId = sqlSession.selectOne("Member.checkNameId", joinName);
+		
+		return nameId;
+	}
+
+	// 이메일로 아이디 가져오기
+	@Override
+	public String checkEmailId(String joinEmail) {
+
+		String emailId = "";
+		
+		emailId = sqlSession.selectOne("Member.checkEmailId", joinEmail);
+		
+		return emailId;
+	}
+	
+	// 임시비번으로 DB비번 재설정
+	@Override
+	public int tempPwd(SqlSessionTemplate sqlSession, Member m) {
+
+		int result = sqlSession.update("Member.tempPwd", m);
+		
+		return result;
+	}
+
+
+
 }

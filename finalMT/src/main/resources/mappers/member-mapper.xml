@@ -2,71 +2,97 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  	<mapper namespace="Member">
-  		<resultMap type="Member" id="memberResultSet" >
-  			<id property="mcode" column="MCODE"/>
-  			<result property="mId" column="MID"/>
-  			<result property="mPwd" column="MPWD"/>
-  			<result property="mName" column="MNAME"/>
-  			<result property="nickName" column="M_NICKNAME"/>
-  			<result property="email" column="EMAIL"/>
-  			<result property="account" column="ACCOUNT"/>
-  			<result property="joinDate" column="JOIN_DATE"/>
-  			<result property="updateDate" column="UPDATE_DATE"/>
-  			<result property="status" column="MSTATUS"/>
-  			<result property="a_status" column="A_STATUS"/>
-  			<result property="peach" column="PEACH"/>
-  			<result property="videoYN" column="VIDEO_YN"/>
-  		</resultMap>
-  		
-  		
-  		<insert id="insertMember">
-  			INSERT INTO MEMBER
-  			VALUES(SEQ_MCODE.NEXTVAL,#{mId},#{mPwd},#{mName},#{nickName},
-  			#{email},#{account},SYSDATE,SYSDATE,'Y','N',0,NULL)
-  		</insert>
-  		
-  		<select id="loginCheck" resultMap="memberResultSet" parameterType="Member">
-  			SELECT * FROM MEMBER WHERE MID = #{mId} AND MSTATUS = 'Y'
-  		</select>
-  		<select id="overlapCheck" parameterType="string" resultType="string">
-  			SELECT MID FROM MEMBER WHERE MID=#{mId}
-  		</select>
-  			<select id="selectPwd" resultType="java.lang.String" parameterType="java.lang.String">
-		SELECT MPWD FROM MEMBER WHERE MID = #{mId} AND MSTATUS='Y'
+<mapper namespace="Member">
+	<resultMap type="Member" id="memberResultSet">
+		<id property="mcode" column="MCODE" />
+		<result property="mId" column="MID" />
+		<result property="mPwd" column="MPWD" />
+		<result property="mName" column="MNAME" />
+		<result property="nickName" column="M_NICKNAME" />
+		<result property="email" column="EMAIL" />
+		<result property="account" column="ACCOUNT" />
+		<result property="joinDate" column="JOIN_DATE" />
+		<result property="updateDate" column="UPDATE_DATE" />
+		<result property="status" column="MSTATUS" />
+		<result property="a_status" column="A_STATUS" />
+		<result property="peach" column="PEACH" />
+		<result property="videoYN" column="VIDEO_YN" />
+	</resultMap>
 
-      </select>
+
+	<insert id="insertMember">
+		INSERT INTO MEMBER
+		VALUES(SEQ_MCODE.NEXTVAL,#{mId},#{mPwd},#{mName},#{nickName},
+		#{email},#{account},SYSDATE,SYSDATE,'Y','N',0,NULL)
+	</insert>
+
+	<select id="loginCheck" resultMap="memberResultSet"
+		parameterType="Member">
+		SELECT * FROM MEMBER WHERE MID = #{mId} AND MSTATUS = 'Y'
+	</select>
+	<select id="overlapCheck" parameterType="string"
+		resultType="string">
+		SELECT MID FROM MEMBER WHERE MID=#{mId}
+	</select>
+	<select id="selectPwd" resultType="java.lang.String"
+		parameterType="java.lang.String">
+		SELECT MPWD FROM MEMBER WHERE MID = #{mId} AND
+		MSTATUS='Y'
+
+	</select>
 	<!-- 네이버 아이디 로그인 체크용 -->
-		<select id="selectNaverOne" parameterType="string" resultMap="memberResultSet">
-			SELECT * FROM MEMBER WHERE MID=#{id} AND MSTATUS='Y'
-		</select>
-  		<!-- 네이버 아이디 insert -->
-  		<insert id="insertNaverMember" parameterType="NaverLoginMember" >
-           INSERT INTO MEMBER
-           VALUES(SEQ_MCODE.NEXTVAL,#{email},NULL,#{ename},#{ename},
-           #{email},NULL,SYSDATE,SYSDATE,'Y','N',0,NULL)
-        </insert>
-        <!-- 회원가입시 바로 방송국 생성 -->
-       <insert id="insertJDBCStation" parameterType="string">
-       		INSERT INTO JDBCSTATION(MID)
-       		VALUES(#{mid})
-       </insert>
-  		<select id="userAllList" resultMap="memberResultSet"><!-- 삭제예정 -->
-  			SELECT *
-  			FROM MEMBER
-  			WHERE MSTATUS = 'Y'
-  		</select>
-  		<select id="memberListCount" resultType="_int">
-  			SELECT COUNT(*)
-  			FROM MEMBER
-  			WHERE MSTATUS = 'Y'
-  		</select>
-  		
-  		<select id="BJList" resultMap="memberResultSet">
-  			SELECT *
-  			FROM MEMBER
-  			WHERE MSTATUS = 'Y'
-  			AND VIDEO_YN = 'Y'
-  		</select>
-  		
-  	</mapper>
+	<select id="selectNaverOne" parameterType="string"
+		resultMap="memberResultSet">
+		SELECT * FROM MEMBER WHERE MID=#{id} AND MSTATUS='Y'
+	</select>
+	<!-- 네이버 아이디 insert -->
+	<insert id="insertNaverMember" parameterType="NaverLoginMember">
+		INSERT INTO MEMBER
+		VALUES(SEQ_MCODE.NEXTVAL,#{email},NULL,#{ename},#{ename},
+		#{email},NULL,SYSDATE,SYSDATE,'Y','N',0,NULL)
+	</insert>
+	<!-- 회원가입시 바로 방송국 생성 -->
+	<insert id="insertJDBCStation" parameterType="string">
+		INSERT INTO JDBCSTATION(MID)
+		VALUES(#{mid})
+	</insert>
+	<select id="userAllList" resultMap="memberResultSet"><!-- 삭제예정 -->
+		SELECT *
+		FROM MEMBER
+		WHERE MSTATUS = 'Y'
+	</select>
+	<select id="memberListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MSTATUS = 'Y'
+	</select>
+
+	<select id="BJList" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MSTATUS = 'Y'
+		AND VIDEO_YN = 'Y'
+	</select>
+
+	<!-- 이름으로 아이디 가져오기 -->
+	<select id="checkNameId" resultType="java.lang.String">
+		SELECT MID
+		FROM MEMBER
+		WHERE MNAME = #{ mName } AND MSTATUS = 'Y'
+	</select>
+	
+	<!-- 이메일로 아이디 가져오기 -->
+	<select id="checkEmailId" resultType="java.lang.String">
+		SELECT MID
+		FROM MEMBER
+		WHERE EMAIL = #{ email } AND MSTATUS = 'Y'
+	</select>
+
+	<!-- 임시비밀번호로 DB비번 재설정하기 -->
+	<update id="tempPwd" parameterType="Member">
+		UPDATE MEMBER
+    	SET MPWD = #{ mPwd }, UPDATE_DATE = SYSDATE
+    	WHERE MID = #{ mId }
+	</update>
+
+</mapper>

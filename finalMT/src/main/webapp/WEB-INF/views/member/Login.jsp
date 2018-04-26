@@ -58,6 +58,23 @@ border:1px solid lightgray;
 	font-size:20px;
 	margin-left:80px;
 }
+
+
+
+	.findBtn{
+		width:150px;
+		height:40px;
+		font-size:18px;
+		background:rgba(235, 104, 100, 0.2);
+		border:none;
+		border-radius:5px;
+	}
+
+
+
+
+
+
 </style>
 </head>
 <body>
@@ -98,7 +115,34 @@ border:1px solid lightgray;
    </div>
    </a>
    </div>
-<!-- 네이버 로그인 끝 -->   
+<!-- 네이버 로그인 끝 -->  
+<br/>
+
+	<!-- 아이디/비밀번호 찾기 -->
+	<button type="button" class="findBtn" id="findId">아이디 찾기</button>
+	<button class="findBtn" id="findPwd">비밀번호 찾기</button>
+
+<script>
+
+	$(function(){
+		
+		$("#findId").click(function(){
+			
+			location.href="findId.me";
+		});
+		
+		$("#findPwd").click(function(){
+			
+			location.href="findPwd.me";
+		});
+		
+	});
+	
+</script>
+
+
+
+ 
 <p style="float:right; margin-right:100px;"><span class="glyphicon glyphicon-asterisk"></span><a href="showJoinPage1.me">회원가입하기</a></p>
 </div>
 </form>

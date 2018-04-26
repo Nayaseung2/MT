@@ -176,10 +176,10 @@ public class BJPayListController {
 		System.out.println(mcode);
 		HashMap<String, String> list3 = bjp.MyFanAllCount(mcode);
 		
-		PageInfo pi = ProfitBjaddPage(newCurrentPage, "MyFan", mcode);
+		PageInfo pi = MyFanaddPage(newCurrentPage, "MyFan", mcode);
 		
 		ArrayList<Subscribe> list2 = bjp.selectMyFanAllList(mcode,pi);
-		
+		System.out.println("list2 이다 팬관리"+list2);
 		
 		System.out.println("??????????????????????????????????????????제발"+newCurrentPage);
 		ArrayList<Subscribe> list= bjp.selectMyFanList(mcode);;
@@ -242,7 +242,7 @@ public class BJPayListController {
 		int endPage = 0;
 		int listCount = 0;
 
-		limit = 5;
+		limit = 10;
 		System.out.println("라스트다~~~~"+list);
 		if(type.equals("MyFan")){
 			listCount = Integer.parseInt(String.valueOf(list.get("MYFAN")));

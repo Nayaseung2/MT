@@ -23,79 +23,78 @@
             height:490px;
             max-height:100%;
         }
-         #broadcastdisplay{
-          height:1000px;
-         }
-       .panel-body{
-          height:960px;
-       }
+   		#broadcastdisplay{
+    		height:1000px;
+   		}
+    	.panel-body{
+    		height:960px;
+    	}
 </style>
 </head>
 <body>
-   <jsp:include page="../common/menubar.jsp"/>
-   <div class="slider-area ptb-40">
-      <div class="container">
-         <div class="row">
-            <div class="col-md-8">
-               <div align="center" id="broadcastdisplay">
-               <!-- <br><br><br>
-                  <i align="center" class="fa fa-thumbs-o-up fa-5x"></i>
-                  <h1 align="center">방송 화면 입니다. </h1>
-                  <h1 align="center">화면조정중입니다. </h1> -->
-                <!-- <article>  -->
-                    <!-- <section class="experiment"> -->
-                        <div class="make-center">
-                            <input type="hidden" id="broadcast-id" placeholder="broadcast-id" value="room-xyz">
-                              <!-- <button id="open-or-join">방송하기</button> -->
-                        </div>
-                        <div id="video-preview" controls loop></div>
-                      <!-- </section> -->
-               <!-- </article> -->
-               </div>
-               <div align="right">
-                  <button id="open-or-join-cam" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="left" class="fa fa-send-o"></i>&nbsp;&nbsp;캠방송하기</button>
-                   <button id="open-or-join" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="left" class="fa fa-send-o"></i>&nbsp;&nbsp;스크린 방송하기</button>
-                  <button id="peach" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-apple"></i>&nbsp;&nbsp;피치</button>
-                  <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-thumbs-o-up"></i>&nbsp;&nbsp;구독하기</button>
-                  <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-warning"></i>&nbsp;&nbsp;신고하기</button>
-                  <button id="stop-broadcast"class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-send-o"></i>&nbsp;&nbsp;방송종료</button>
-                  <button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-heart"></i></button>
-                  <!-- <button id="open-room">Open Room</button>
+	<jsp:include page="../common/menubar.jsp"/>
+	<div class="slider-area ptb-40">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8">
+					<div align="center" id="broadcastdisplay">
+					<!-- <br><br><br>
+						<i align="center" class="fa fa-thumbs-o-up fa-5x"></i>
+						<h1 align="center">방송 화면 입니다. </h1>
+						<h1 align="center">화면조정중입니다. </h1> -->
+				    <!-- <article>  -->
+        				<!-- <section class="experiment"> -->
+            				<div class="make-center">
+                				<input type="hidden" id="broadcast-id" placeholder="broadcast-id" value="room-xyz">
+               					<!-- <button id="open-or-join">방송하기</button> -->
+				            </div>
+				            <div id="video-preview" controls loop></div>
+       					<!-- </section> -->
+					<!-- </article> -->
+					</div>
+					<div align="right">
+					 	<button id="open-or-join" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="left" class="fa fa-send-o"></i>&nbsp;&nbsp;스크린 방송하기</button>
+						<button id="peach" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-apple"></i>&nbsp;&nbsp;피치</button>
+						<button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-thumbs-o-up"></i>&nbsp;&nbsp;구독하기</button>
+						<button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-warning"></i>&nbsp;&nbsp;신고하기</button>
+						<button id="stop-broadcast"class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-send-o"></i>&nbsp;&nbsp;방송종료</button>
+						<button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-heart"></i></button>
+						<!-- <button id="open-room">Open Room</button>
                 <button id="join-room">Join Room</button>
                 <button id="open-or-join-room">Auto Open Or Join Room</button> -->
-               </div>
-            </div>
-         
-         
-            <div class="col-md-3" id="row3Div">
-               <div class="chat-panel panel panel-default">
-               
-                  <div class="panel-heading">
-                     <i class="fa fa-comments fa-fw"></i> 실시간 채팅
-                  </div>
-                  <!-- /.panel-heading -->
-                  <div class="panel-body" style="overflow: overlay; text-align:left;">
-                     <!-- <ul class="chat"> -->
-                     <ul class="chat" style="text-align:left;">
-                     </ul>
-                  <!-- /.panel-body -->
-                  </div>
-                  <div class="panel-footer">
-                     <div class="input-group">
-                        <input id="btn-input" type="text" class="form-control input-sm" placeholder="채팅을 입력하세요..."> 
-                        <span class="input-group-btn">
-                           <button class="btn btn-warning btn-sm" id="btn-chat">전송</button>
-                        </span>
-                     </div>
-                  </div>
-                  <!-- /.panel-footer -->
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-      <div class="container">
-         <div class="row">
+					</div>
+				</div>
+			
+			
+				<div class="col-md-3" id="row3Div">
+					<div class="chat-panel panel panel-default">
+					
+						<div class="panel-heading">
+							<i class="fa fa-comments fa-fw"></i> 실시간 채팅
+						</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body" style="overflow: overlay; text-align:left;">
+							<!-- <ul class="chat"> -->
+							<ul class="chat" style="text-align:left;">
+							</ul>
+						<!-- /.panel-body -->
+						</div>
+						<div class="panel-footer">
+							<div class="input-group">
+								<input id="btn-input" type="text" class="form-control input-sm" placeholder="채팅을 입력하세요..."> 
+								<span class="input-group-btn">
+									<button class="btn btn-warning btn-sm" id="btn-chat">전송</button>
+								</span>
+							</div>
+						</div>
+						<!-- /.panel-footer -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="container">
+			<div class="row">
 
             <div class="col-md-12">
                <hr>
@@ -121,11 +120,13 @@
          </div>
       </div> 
 
-   <input id="myId" type="hidden" value="${loginUser.mId} "/>
-   <input id="nickName" type="hidden" value="${loginUser.nickName} "/>
-   <div id="room-urls" style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
-   <jsp:include page="../common/footer.jsp"/>
-    
+
+
+	<input id="myId" type="hidden" value="${loginUser.mId} "/>
+	<input id="nickName" type="hidden" value="${loginUser.nickName} "/>
+	<div id="room-urls" style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
+	<jsp:include page="../common/footer.jsp"/>
+
    
     <!-- jQuery -->
     <script src="${contextPath }/resources/js/jquery-1.12.4.min.js"></script>
@@ -149,25 +150,21 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnh74UN6BKgq9U5fMNGhdZOSpmM_QnZqs"></script>
     <!-- Main JS -->
     <script src="${contextPath }/resources/js/main.js"></script>
-   
-   <script>
-      /* 스크린 방송하기 버튼 클릭 function */
-      /* $("#open-or-join").click(function(){
-         $("#broadcastdisplay").css({"height":"1000px"});
-         $(".panel-body").css({"height":"960px"});
-      }); */
-      document.getElementById("stop-broadcast").onclick = function(){
-         connection.close();
-      };
-        
-      window.onload(function){
-          var userId = document.getElementById("myId").value;
-          var text33 = document.getElementById("#broadcast-id").innerHTML();
-          document.getElementById("#broadcast-id").innerHTML(text33+userId);
-       }
-      
-   </script>
-   <script>
+
+	
+	<script>
+		/* 스크린 방송하기 버튼 클릭 function */
+		/* $("#open-or-join").click(function(){
+			$("#broadcastdisplay").css({"height":"1000px"});
+			$(".panel-body").css({"height":"960px"});
+		}); */
+		document.getElementById("stop-broadcast").oclick = function(){
+			connection.close();
+		};
+			
+		
+	</script>
+	<script>
             // ......................................................
             // .......................UI Code........................
             // ......................................................
@@ -267,28 +264,28 @@
                 }
             };
             
-            
-           /* 채팅 div 형태
-           <div class="panel-body" style="height: 460px; overflow: overlay;">
-              <ul class="chat">
-                 <li class="left clearfix">
-                    <span class="chat-img pull-left"></span>
-                    <div class="chat-body clearfix">
-                       <div class="header">
-                          <i class="fa fa-github-alt fa-fw"></i> 
-                          <strong class="primary-font">아프리카 청춘이다</strong> 
-                          <small class="pull-right text-muted"></small>
-                       </div>
-                    <p>오늘도 즐방 하세요~~!</p>
-                    </div>
-                 </li>
-              </ul>
-           </div> */
-           
-           /* UI코드 */
-           
-           /*  채팅코드  */ 
-            document.getElementById('btn-input').onkeyup = function(e) {
+
+        	/* 채팅 div 형태
+        	<div class="panel-body" style="height: 460px; overflow: overlay;">
+        		<ul class="chat">
+        			<li class="left clearfix">
+        				<span class="chat-img pull-left"></span>
+        				<div class="chat-body clearfix">
+        					<div class="header">
+        						<i class="fa fa-github-alt fa-fw"></i> 
+        						<strong class="primary-font">아프리카 청춘이다</strong> 
+        						<small class="pull-right text-muted"></small>
+        					</div>
+        				<p>오늘도 즐방 하세요~~!</p>
+        				</div>
+        			</li>
+        		</ul>
+        	</div> */
+        	
+        	/* UI코드 */
+        	
+        	/*  채팅코드  */ 
+        	 document.getElementById('btn-input').onkeyup = function(e) {
                 if (e.keyCode != 13) return;
                 // 먼저 input의 공백과 특수문자들 제거
                 this.value = this.value.replace(/^\s+|\s+$/g, '');
@@ -300,76 +297,77 @@
             };
             //피치쏘기
             /* document.getElementById("peach").onclick = function(){
-               var myId = document.getElementById("myId").value;
-               console.log("쉬벨"+myId);
-               var url = "peach.lb";
-               $.ajax({
-                  url:url,
-                  type:"post",
-                  data:{"mId":myId},
-                  success:function(data){
-                     alert("당신의 보유 피치 수는 : "+data.peach);
-                     console.log("당신의 보유 피치 수는 : "+data.peach);
-                  },
-                  error:function(data){
-                     
-                  }
-               });
+
+            	var myId = document.getElementById("myId").value;
+            	console.log("쉬벨"+myId);
+            	var url = "peach.lb";
+            	$.ajax({
+            		url:url,
+            		type:"post",
+            		data:{"mId":myId},
+            		success:function(data){
+            			alert("당신의 보유 피치 수는 : "+data.peach);
+            			console.log("당신의 보유 피치 수는 : "+data.peach);
+            		},
+            		error:function(data){
+            			
+            		}
+            	});
             } */
             document.getElementById("peach").onclick = function(){
-               var text111 = "";
-               text111 = "<div style='position:relative; width:240px; height:127px;'><img src='resources/images/peach.png' style='position:absolute'/><b style='position:absolute; top:43px; left:105px; font-size:30px'>"+"10"+"</b></div>";
-               connection.send(text111);
-               appendDIV(text111);
+            	var text111 = "";
+            	text111 = "<div style='position:relative; width:240px; height:127px;'><img src='resources/images/peach.png' style='position:absolute'/><b style='position:absolute; top:43px; left:105px; font-size:30px'>"+"10"+"</b></div>";
+            	connection.send(text111);
+            	appendDIV(text111);
             }; 
             document.getElementById("btn-chat").onclick = function(){
-               var text11 = document.getElementById('btn-input');
-               connection.send(text11.value);
-               appendDIV(text11.value);
-               text11.value ='';
+            	var text11 = document.getElementById('btn-input');
+            	connection.send(text11.value);
+            	appendDIV(text11.value);
+            	text11.value ='';
             };
             
             function appendDIV(event) {
-                 var chatContainer = document.querySelector('div.panel-body ul.chat');
-                 var nickName = document.getElementById("nickName").value+":";
-                 
-                 var chatli = document.createElement('li');
-                 chatli.setAttribute("id","chatli");
-                 chatli.setAttribute("class","left clearfix");
-                 chatli.setAttribute("style","width:126px");
-                 var chat_span = document.createElement('span');
-                 chat_span.setAttribute("class","chat-img pull-left");
-                 var chat_body = document.createElement('div');
-                 chat_body.setAttribute("style","align:left");
-                 chat_body.setAttribute('id', 'chat-body');
-                 chat_body.setAttribute('class', 'chat-body clearfix');
-                 var chat_header = document.createElement('div');
-                 chat_header.setAttribute("style","align:left");
-                 chat_header.setAttribute("class", "header");
-                 chat_header.setAttribute("id", "chat-header");
-              var chat_i = document.createElement('i');
-              chat_i.setAttribute("class", "fa fa-github-alt fa-fw");
-                 var chat_strong = document.createElement('strong');
-                 chat_strong.setAttribute("style","align:left");
-                 chat_strong.setAttribute("class", "primary-font");
-                 chat_strong.innerHTML = nickName+"&nbsp";
-              var chat_small = document.createElement('small');
-              chat_strong.setAttribute("style","display:inline-block");
-              chat_small.setAttribute('class', "text-muted");
-              chat_small.setAttribute('id', 'chat_box');
-              chat_small.setAttribute("style","display:inline-block; text-indent:5px;");
-                 var br = document.createElement('br');
-              chatContainer.append(chatli);
-              chatli.append(chat_span);
-              chatli.append(chat_body);
-              
-              chat_body.append(chat_header);
-              chat_header.append(chat_i);
-              chat_header.append(chat_strong);
-              chat_header.append(chat_small);
-              
-                var div = document.createElement('p');
-                div.setAttribute("style","align:left");
+           		var chatContainer = document.querySelector('div.panel-body ul.chat');
+           		var nickName = document.getElementById("nickName").value+":";
+           		
+           		var chatli = document.createElement('li');
+           		chatli.setAttribute("id","chatli");
+           		chatli.setAttribute("class","left clearfix");
+           		chatli.setAttribute("style","width:126px");
+           		var chat_span = document.createElement('span');
+           		chat_span.setAttribute("class","chat-img pull-left");
+           		var chat_body = document.createElement('div');
+           		chat_body.setAttribute("style","align:left");
+           		chat_body.setAttribute('id', 'chat-body');
+           		chat_body.setAttribute('class', 'chat-body clearfix');
+           		var chat_header = document.createElement('div');
+           		chat_header.setAttribute("style","align:left");
+           		chat_header.setAttribute("class", "header");
+           		chat_header.setAttribute("id", "chat-header");
+        		var chat_i = document.createElement('i');
+        		chat_i.setAttribute("class", "fa fa-github-alt fa-fw");
+           		var chat_strong = document.createElement('strong');
+           		chat_strong.setAttribute("style","align:left");
+           		chat_strong.setAttribute("class", "primary-font");
+           		chat_strong.innerHTML = nickName+"&nbsp";
+        		var chat_small = document.createElement('small');
+        		chat_strong.setAttribute("style","display:inline-block");
+        		chat_small.setAttribute('class', "text-muted");
+        		chat_small.setAttribute('id', 'chat_box');
+        		chat_small.setAttribute("style","display:inline-block; text-indent:5px;");
+           		var br = document.createElement('br');
+        		chatContainer.append(chatli);
+        		chatli.append(chat_span);
+        		chatli.append(chat_body);
+        		
+        		chat_body.append(chat_header);
+        		chat_header.append(chat_i);
+        		chat_header.append(chat_strong);
+        		chat_header.append(chat_small);
+        		
+             	var div = document.createElement('p');
+             	div.setAttribute("style","align:left");
                 div.innerHTML = event.data || event;
                 chat_small.append(div);
               div.tabIndex = 0;

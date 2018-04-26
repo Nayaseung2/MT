@@ -19,4 +19,14 @@ public interface MemberDao {
 
 	int insertJDBCStation(String mid);
 
+	// 이름으로 아이디 가져오기
+	String checkNameId(String joinName);
+
+	// 이메일로 아이디 가져오기
+	String checkEmailId(String joinEmail);
+
+	// 임시비번으로 DB비번 재설정
+	int tempPwd(SqlSessionTemplate sqlSession, Member m);
+
+
 }
