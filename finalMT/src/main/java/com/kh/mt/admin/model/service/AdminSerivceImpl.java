@@ -254,5 +254,11 @@ public class AdminSerivceImpl implements AdminService{
 		return m;
 	}
 
+	@Override
+	public int reportListCount() {
+		int result = ad.reportListCount();
+		return result;
+	}
+
 
 }

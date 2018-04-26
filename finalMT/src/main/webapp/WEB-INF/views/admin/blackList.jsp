@@ -75,29 +75,21 @@
                             <a href="adminMain.ad"><i class="fa fa-home fa-fw"></i> HOME</a>
                         </li>
                         <li>
-                        	<a href="#"><i class="fa fa-table fa-fw"></i> 회원 관리<span class="fa arrow"></span></a>
-                        	<ul class="nav nav-second-level">
-                                <li>
-		                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
-                                </li>
-                                <li>
-                                    <a href="blackUsers.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
-                                </li>
-                            </ul>
+                        <li>
+                      		<a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
                         </li>
+                        <li>
+                            <a href="blackUsers.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
+                        </li>
+                        <li>
                         <li>
                             <a href="revenueMg.ad"><i class="fa fa-table fa-fw"></i> 수익 관리</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="withdrawal.ad">출금 신청</a>
-                                </li>
-                                <li>
-                                    <a href="deposit.ad">출금 완료</a>
-                                </li>
-                            </ul>
+                            <a href="withdrawal.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 출금 신청</a>
+                        </li>
+                        <li>
+                            <a href="deposit.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 출금 완료</a>
                         </li>
                         <li>
                             <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 신고 관리</a>
@@ -143,9 +135,7 @@
 	                                        <th>방송 번호</th>
 	                                        <th>보유 피치</th>
 	                                        <th>이메일</th>
-	                                        <th>계좌 인증여부</th>
 	                                        <th>정지일</th>
-	                                        <th>구독자 수</th>
 	                                        <th>비고</th>
 	                                    </tr>
 	                                </thead>
@@ -157,9 +147,7 @@
 	                                  		<td>${ m.mcode }</td>
 	                                  		<td><fmt:formatNumber value="${ m.peach}" groupingUsed="true"/>개</td>
 	                                  		<td>${ m.email }</td>
-	                                  		<td>${ m.a_status }</td>
 	                                  		<td>${ m.updateDate }</td>
-	                                  		<td><fmt:formatNumber value='${ m.readerCount}' groupingUsed='true'/>명</td>
 	                                  		<td><button class="stop">복원</button></td>
 	                                  	</tr>
 	                                  </c:forEach>
@@ -194,7 +182,7 @@
     <input type="hidden" value="${ pi.maxPage }" id="maxPage"/>
     <!-- /#wrapper -->
 	</c:if>
-    <c:if test="${ loginUser.mId ne 'admin' || loginUser != null}">
+    <c:if test="${ loginUser.mId ne 'admin' || loginUser == null}">
 		<c:redirect url="index.jsp"/>
     </c:if>
 
@@ -212,7 +200,7 @@
 				$("tbody").html("");
 
 				for(var i = 0; i < list.length; i++){
-	            	$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].a_status+"</td><td>"+list[i].updateDate+"</td><td>"+addComma(list[i].readerCount)+"명</td><td><button class='stop'>복원</button></td></tr>");
+	            	$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].updateDate+"</td><td><button class='stop'>복원</button></td></tr>");
 	      		}
 				
 	      		$(".pageul").children().removeClass('active');
@@ -255,7 +243,7 @@
     	       		var pi = data.map.pi;
     				$("tbody").html("");
     	      		for(var i = 0; i < list.length; i++){
-    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].a_status+"</td><td>"+list[i].updateDate+"</td><td>"+addComma(list[i].readerCount)+"명</td><td><button class='stop'>복원</button></td></tr>");
+    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].updateDate+"</td><td><button class='stop'>복원</button></td></tr>");
     	      		}
     	      		
     	      		$(".pageul").children().removeClass('active');
@@ -290,7 +278,7 @@
 	  					$("tbody").html("");
 	  					$("#pagingArea").html("");
 	  					
-	  					$("tbody").append("<tr><td>"+m.mId+"</td><td>"+m.mName+"</td><td>"+m.mcode+"</td><td>"+addComma(m.peach)+"개</td><td>"+m.email+"</td><td>"+m.a_status+"</td><td>"+m.updateDate+"</td><td>"+addComma(m.readerCount)+"명</td><td><button class='stop'>복원</button></td></tr>");
+	  					$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].updateDate+"</td><td><button class='stop'>복원</button></td></tr>");
 	  					$("#pagingArea").append("<button onclick='location.reload()'>전체보기</button>");
 	 				}else {
 	 					alert("존재하지 않는 아이디입니다.");

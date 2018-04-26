@@ -221,4 +221,10 @@
   		AND MSTATUS = 'A'
   	</select>
   	
+  	<select id="reportListCount" resultType="_int">
+  		SELECT COUNT(*)
+  		FROM BOARD
+  		WHERE B_TYPE = 'report'
+  	</select>
+  	
   </mapper>

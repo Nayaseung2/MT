@@ -1,6 +1,7 @@
 package com.kh.mt.admin.controller;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -395,8 +396,9 @@ public class AdminController {
 	//신고관리 화면
 	@RequestMapping("reportMg.ad")
 	public ModelAndView reportMg(ModelAndView mv, String newCurrentPage){
+		int count = as.reportListCount();
 		
-		
+		PageInfo pi = addUserPage(newCurrentPage, count);
 		
 		
 		mv.setViewName("admin/reportManagement");
@@ -885,7 +887,7 @@ public class AdminController {
 	}
 	
 //	public static void main(String[] args) {
-//		int num = 160;
+//		/*int num = 160;
 //		String str = "";
 //		
 //		String temp = "";
@@ -894,7 +896,28 @@ public class AdminController {
 //				temp += str.charAt(i);
 //			}
 //		}
-//		System.out.println(temp);
+//		System.out.println(temp);*/
+//		
+//        
+//        
+//        try{
+//            for(int i = 15; i < 25; i++){
+//            	String fileName = "C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log.2018-04-"+i;
+//            	
+//	            BufferedWriter fw = new BufferedWriter(new FileWriter(fileName, true));
+//	            
+//            	fw.write(" ");
+//            	fw.flush();
+//	            fw.close();
+//	             
+//            }
+//             
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//
+//
+//		
 //	}
 	
 }
