@@ -78,5 +78,12 @@ public class MemberServiceImpl implements MemberService {
 		return emailId;
 	}
 
+	// 임시비번으로 DB비번 재설정
+	@Override
+	public void tempPwd(Member m) {
+
+		int result = md.tempPwd(sqlSession, m);
+	}
+
 	
 }

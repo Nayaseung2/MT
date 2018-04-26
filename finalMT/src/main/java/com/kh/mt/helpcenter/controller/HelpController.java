@@ -120,11 +120,12 @@ public class HelpController {
 		String onlyFileName = photo.getOriginalFilename().substring(0, photo.getOriginalFilename().indexOf(".")); // fileName
 		String extension = photo.getOriginalFilename().substring(photo.getOriginalFilename().indexOf(".")); // .jpg
 
-		String rename = onlyFileName + "_" + getCurrentDayTime() + extension;
+		String rename = onlyFileName + "_" + getCurrentDayTime() + (int)((Math.random()* 100)+1) + extension;
 
+		System.out.println("sdf" + rename);
 		try {
 
-			photo.transferTo(new File(filePath + "\\" + photo.getOriginalFilename()));
+			photo.transferTo(new File(filePath + "\\" + rename));
 
 		} catch (IllegalStateException e1) {
 			e1.printStackTrace();
