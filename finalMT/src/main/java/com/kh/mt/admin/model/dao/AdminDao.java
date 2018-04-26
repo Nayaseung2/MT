@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.mt.admin.model.vo.Contact;
+import com.kh.mt.admin.model.vo.Report;
 import com.kh.mt.admin.model.vo.Revenue;
 import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
@@ -75,5 +76,9 @@ public interface AdminDao {
 	Member blackUserSearch(String userId);
 
 	int reportListCount();
+
+	ArrayList<Report> reportList(PageInfo pi);
+
+	String urlSearch(String target);
 
 }

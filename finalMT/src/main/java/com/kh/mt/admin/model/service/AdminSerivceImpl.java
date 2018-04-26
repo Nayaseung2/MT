@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.mt.admin.model.dao.AdminDao;
 import com.kh.mt.admin.model.vo.Contact;
+import com.kh.mt.admin.model.vo.Report;
 import com.kh.mt.admin.model.vo.Revenue;
 import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
@@ -258,6 +259,18 @@ public class AdminSerivceImpl implements AdminService{
 	public int reportListCount() {
 		int result = ad.reportListCount();
 		return result;
+	}
+
+	@Override
+	public ArrayList<Report> reportList(PageInfo pi) {
+		
+		return ad.reportList(pi);
+	}
+
+	@Override
+	public String urlSearch(String target) {
+		
+		return ad.urlSearch(target);
 	}
 
 
