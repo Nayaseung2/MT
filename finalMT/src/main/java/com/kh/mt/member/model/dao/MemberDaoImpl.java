@@ -81,6 +81,15 @@ public class MemberDaoImpl implements MemberDao{
 		
 		return emailId;
 	}
+	
+	// 임시비번으로 DB비번 재설정
+	@Override
+	public int tempPwd(SqlSessionTemplate sqlSession, Member m) {
+
+		int result = sqlSession.update("Member.tempPwd", m);
+		
+		return result;
+	}
 
 
 

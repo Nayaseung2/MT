@@ -88,5 +88,11 @@
 		WHERE EMAIL = #{ email } AND MSTATUS = 'Y'
 	</select>
 
+	<!-- 임시비밀번호로 DB비번 재설정하기 -->
+	<update id="tempPwd" parameterType="Member">
+		UPDATE MEMBER
+    	SET MPWD = #{ mPwd }, UPDATE_DATE = SYSDATE
+    	WHERE MID = #{ mId }
+	</update>
 
 </mapper>

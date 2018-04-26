@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -383,7 +384,88 @@ public class MemberController {
 				msg.setContent(content, "text/html; charset=utf-8"); // 내용설정
 
 				Transport.send(msg); // 메일보내기
-				
+
+				mv.addObject("success");
+
+			} else {
+
+				mv.addObject("fail");
+			}
+
+		} catch(Exception e) {
+
+			e.printStackTrace();
+		}
+
+		mv.setViewName("jsonView");
+
+		return mv;
+	}
+
+	// 비밀번호 찾기 페이지로 이동
+	@RequestMapping(value="findPwd.me")
+	public String showFindPwdPage() {
+
+		return "member/findPwd";
+	}
+
+
+	// 이메일로 임시 비밀번호 전송
+	@RequestMapping(value="findPwdEmail.me")
+	public ModelAndView findPwdEmail(HttpServletResponse response, ModelAndView mv, 
+			String joinId, String joinName, String joinEmail) {
+
+		// 입력받은 이름과 이메일로 아이디를 가져오고 입력한 아이디와 일치하는지
+		String nameId = ms.checkNameId(joinName);
+		String emailId = ms.checkEmailId(joinEmail);
+
+		try {
+
+			// 모든 정보가 일치하면 메일발송
+			if(nameId.equals(emailId) && nameId.equals(joinId)) {
+
+				String to1 = joinEmail;
+				String host = "smtp.naver.com";
+				String subject = "임시 비밀번호입니다.";
+				String fromName = "모두의TV 관리자";
+				String from = "ekdbs1220@naver.com";
+				//String randomPwd = randomPwd();
+				//String content = "임시 비밀번호는 [" + randomPwd + "]입니다. 로그인 뒤 반드시 비밀번호를 재설정해주세요.";
+
+				Properties props = new Properties();
+				props.put("mail.smtp.starttls.enable", "true");
+				props.put("mail.transport.protocol", "smtp");
+				props.put("mail.smtp.host", host);
+				props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+				props.put("mail.smtp.port", "465");
+				props.put("mail.smtp.user", from);
+				props.put("mail.smtp.auth", "true");
+
+				Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication("ekdbs1220@naver.com", "dan2353"); // gmail계정
+					}
+				});
+
+				Message msg = new MimeMessage(mailSession);
+
+				InternetAddress[] address1 = { new InternetAddress(to1) };
+				msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName, "utf-8", "B")));
+				msg.setRecipients(Message.RecipientType.TO, address1); // 받는사람 설정
+				msg.setSubject(subject); // 제목설정
+				msg.setSentDate(new java.util.Date());
+				//msg.setContent(content, "text/html; charset=utf-8"); // 내용설정
+
+				Transport.send(msg); // 메일보내기
+
+
+				// DB에 암호화된 임시비밀번호로 재설정
+				Member m = new Member();
+				m.setmId(joinId);
+				//m.setmPwd(passwordEncoder.encode(randomPwd));
+
+				ms.tempPwd(m);
+
 				mv.addObject("success");
 
 			} else {
@@ -402,14 +484,39 @@ public class MemberController {
 	}
 
 
+	// 임시비밀번호 난수 만들기
+	public static String randomPwd(String type, int cnt) {
 
+		StringBuffer strPwd = new StringBuffer();
 
+		char str[] = new char[1];
 
+		// 특수기호 포함
+		if (type.equals("P")) {
 
+			for (int i = 0; i < cnt; i++) {
 
+				str[0] = (char) ((Math.random() * 94) + 33);
+				strPwd.append(str);
+			}
+			
+		// 소문자, 숫자형
+		} else if (type.equals("C")) {
 
+			Random rnd = new Random();
 
+			for (int i = 0; i < cnt; i++) {
 
+				if (rnd.nextBoolean()) {
+					strPwd.append((char) ((int) (rnd.nextInt(26)) + 97));
+				} else {
+					strPwd.append((rnd.nextInt(10)));
+				}
+			}
+		}
+
+		return strPwd.toString();
+	}  
 
 
 
