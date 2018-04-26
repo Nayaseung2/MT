@@ -37,11 +37,44 @@
 <!-- Custom Theme JavaScript -->
 <script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
 
-<script src="https://code.highcharts.com/highcharts.js"></script>
 
 <style>
 tr, th {
 	text-align: center;
+}
+.modalTable, .modalTable td, .modalTable input{
+	width: 100%;
+}
+
+.modalTable input{
+	margin: 0px auto 20px auto; 
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.modal-dialog{
+	width: 70%;
+	
+}
+
+.modalTable textarea{
+	width: 100%;
+	height: 200px;
+	resize: none;
+}
+.modal-content label{
+	float: inherit;
+}
+
+.modal-left{
+	width: 69%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.modal-right {
+	width: 30%;
+	display: inline-block;
 }
 </style>
 
@@ -74,29 +107,21 @@ tr, th {
                             <a href="adminMain.ad"><i class="fa fa-home fa-fw"></i> HOME</a>
                         </li>
                         <li>
-                        	<a href="#"><i class="fa fa-table fa-fw"></i> 회원 관리<span class="fa arrow"></span></a>
-                        	<ul class="nav nav-second-level">
-                                <li>
-		                            <a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
-                                </li>
-                                <li>
-                                    <a href="blackUsers.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
-                                </li>
-                            </ul>
+                        <li>
+                      		<a href="memberMg.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 일반 회원 관리</a>
                         </li>
+                        <li>
+                            <a href="blackUsers.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 블랙리스트 관리</a>
+                        </li>
+                        <li>
                         <li>
                             <a href="revenueMg.ad"><i class="fa fa-table fa-fw"></i> 수익 관리</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-table fa-fw"></i> 출금 관리<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="withdrawal.ad">출금 신청</a>
-                                </li>
-                                <li>
-                                    <a href="deposit.ad">출금 완료</a>
-                                </li>
-                            </ul>
+                            <a href="withdrawal.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 출금 신청</a>
+                        </li>
+                        <li>
+                            <a href="deposit.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 출금 완료</a>
                         </li>
                         <li>
                             <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 신고 관리</a>
@@ -191,11 +216,56 @@ tr, th {
 			</div>            
         </div>
     </div>
+    <!-- .modal -->
+    <div class="modal fade" id="layerpop" >
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <!-- header -->
+	      <div class="modal-header">
+	        <!-- 닫기(x) 버튼 -->
+	        <button type="button" class="close" data-dismiss="modal">×</button>
+	        <!-- header title -->
+	        <h4 class="modal-title" align="center">상세보기</h4>
+	      </div>
+	      <!-- body -->
+	      <div class="modal-body">
+				<div class="modal-left">
+					<img style="width: 100%; height: 100%;" src="/mt/resources/uploadFiles/mybatis.jpg"/>
+				</div>
+				<div class="modal-right">
+					<table class="modalTable">
+				      	<tr>
+				      		<td><label>분류</label><input type="text" class="ptype" readonly/></td>
+				      		<td style="display: none;" class="code"></td>
+				      	</tr>
+				      	<tr>
+				      		<td><label>날짜</label><input type="text" class="date" readonly/></td>
+				      	</tr>
+				      	<tr>
+				      		<td><label>작성자</label><input type="text" class="writer" readonly/></td>
+				      	</tr>
+				      	<tr>
+				      		<td><label>제목</label><input type="text" class="title" readonly/></td>
+				      	</tr>
+				      	<tr>
+				      		<td><label>내용</label><textarea class="content" readonly></textarea></td>
+				      	</tr>
+				      </table>
+				</div>
+	      </div>
+	      <!-- Footer -->
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default answer" onclick="answer($('.code').val(), $('.personalAnswer').val())">이동하기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- /.modal -->
     <!-- /#wrapper -->
     <input type="hidden" value="${ map.pi.maxPage }" id="maxPage"/>
     <input type="hidden" class="type" id="deposit.ad"/>
 	</c:if>
-    <c:if test="${ loginUser.mId ne 'admin' || loginUser != null}">
+    <c:if test="${ loginUser.mId ne 'admin' || loginUser == null}">
 		<c:redirect url="index.jsp"/>
     </c:if>
     <script>
@@ -263,6 +333,24 @@ tr, th {
 		}
 	}
 	
+	$(document).on("click", ".detail", function(){
+		var writer = $(this).parent().parent().children().eq(0).text();
+		var ptype = $(this).parent().parent().children().eq(1).text();
+		var title = $(this).parent().parent().children().eq(2).text();
+		var content = $(this).parent().parent().children().eq(3).text();
+		var date = $(this).parent().parent().children().eq(4).text();
+		var code = $(this).parent().parent().children().last().text();
+		
+	    $('div.modal').modal();
+		
+		$(".ptype").val(ptype);
+		$(".code").val(code);
+		$(".date").val(date);
+		$(".writer").val(writer);
+		$(".title").val(title);
+		$(".content").text(content);
+		
+	});
     </script>
 </body>
 </html>

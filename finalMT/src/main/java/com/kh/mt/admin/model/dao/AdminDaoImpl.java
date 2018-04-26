@@ -275,6 +275,12 @@ public class AdminDaoImpl implements AdminDao{
 		return m;
 	}
 
+	@Override
+	public int reportListCount() {
+		int result = sqlSession.selectOne("Admin.reportListCount");
+		return 0;
+	}
+
 	
 	
 }

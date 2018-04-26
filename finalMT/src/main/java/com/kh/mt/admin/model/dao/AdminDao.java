@@ -74,4 +74,6 @@ public interface AdminDao {
 
 	Member blackUserSearch(String userId);
 
+	int reportListCount();
+
 }

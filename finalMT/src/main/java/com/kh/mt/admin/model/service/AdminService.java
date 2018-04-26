@@ -81,5 +81,7 @@ public interface AdminService {
 
 	Member blackUserSearch(String userId);
 
+	int reportListCount();	//신고페이지 전체 신고내역
+
 } 
  
