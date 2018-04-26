@@ -120,7 +120,7 @@ border:1px solid lightgray;
 
 	<!-- 아이디/비밀번호 찾기 -->
 	<button type="button" class="findBtn" id="findId">아이디 찾기</button>
-	<button class="findBtn" id="findPwd">비밀번호 찾기</button>
+	<button type="button" class="findBtn" id="findPwd">비밀번호 찾기</button>
 
 <script>
 
