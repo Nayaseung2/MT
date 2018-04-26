@@ -19,7 +19,7 @@
 		<property name="password" value="mt"/>
 		<property name="defaultAutoCommit" value="false"/>
 	</bean>
-	
+	 
 	
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:mybatis-config.xml"/>

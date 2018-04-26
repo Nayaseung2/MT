@@ -25,13 +25,13 @@
                </div>   
             </div>
             <div class="row">
-            <c:forEach begin="1" end="30" step="1" >
+             <c:forEach var="item" items="${list}">
             
                 <div class="col-sm-6 col-md-3 themeix-half">
                     <div class="single-video">
                         <div class="video-img">
                                 <a href="single-video.html">
-								<img class="lazy" alt="Video" src="${contextPath }/resources/images/thumbnails/6.jpg" style="display: inline;">
+								<img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${item.f_rename}" style="display: inline;">
 								 <noscript>
 									&lt;img src="${contextPath }/resources/images/thumbnails/6.jpg" alt="video" /&gt;
 								</noscript>
@@ -39,7 +39,7 @@
                             <span class="video-duration">5.28</span>
                         </div>
                         <div class="video-content">
-                            <h4><a href="single-video.html" class="video-title">Buffalo Chicken Potato Skins</a></h4>
+                            <h4><a href="${item.v_href}" class="video-title">${item.bsTitle}</a></h4>
                             <div class="video-counter">
                                 <div class="video-viewers">
                                     <span class="fa fa-eye view-icon"></span>
@@ -48,7 +48,7 @@
                                 <div class="video-feedback">
                                     <div class="video-like-counter">
                                         <span class="fa fa-thumbs-o-up like-icon"></span>
-                                        <span>2140</span>
+                                        <span>${item.like}</span>
                                     </div>
                                     <div class="video-like-counter">
                                          <span class="fa fa-thumbs-o-down dislike-icon"></span>

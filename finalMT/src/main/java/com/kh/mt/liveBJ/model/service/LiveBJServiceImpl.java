@@ -1,5 +1,7 @@
 package com.kh.mt.liveBJ.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.LiveBeansViewMBean;
@@ -34,6 +36,20 @@ public class LiveBJServiceImpl implements LiveBJService{
 	public void insertBSTitleImg(JDBCLogoFile f) {
 		// TODO Auto-generated method stub
 		int result=ld.insertBSTitleImg(sqlSession,f);
+	}
+
+
+	@Override
+	public ArrayList<LiveBj> allBJ() {
+		ArrayList<LiveBj> list = ld.allBJ(sqlSession);
+		return list;
+	}
+
+
+	@Override
+	public void startBrod(String roomid,String mid) {
+		int result = ld.startBrod(sqlSession,roomid,mid);
+		
 	}
 
 

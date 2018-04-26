@@ -24,40 +24,42 @@
                     </div>
                     <div class="video-carousel">
                     
-                    <c:forEach begin="1" end="10" step="1">
-                    
-                        <div class="single-video">
-                            <div class="video-img">
+                    <c:forEach var="item" items="${list}">
+            
+                <div class="col-sm-6 col-md-3 themeix-half">
+                    <div class="single-video">
+                        <div class="video-img">
                                 <a href="single-video.html">
-								<img class="lazy" data-src="${contextPath }/resources/images/thumbnails/1.jpg" alt="Video" />
+								<img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${item.f_rename}" style="display: inline;">
 								 <noscript>
-									<img src="${contextPath }/resources/images/thumbnails/1.jpg" alt="video" />
+									&lt;img src="${contextPath }/resources/images/thumbnails/6.jpg" alt="video" /&gt;
 								</noscript>
 								</a>
-                                <span class="video-duration">8.17</span>
-                            </div>
-                            <div class="video-content">
-                                <h4><a href="single-video.html" class="video-title">Greek-Style Pasta Bake (Pasticcio) - English Video</a></h4>
-                                <div class="video-counter">
-                                    <div class="video-viewers">
-                                        <span class="fa fa-eye view-icon"></span>
-                                        <span>881,021</span>
+                            <span class="video-duration">5.28</span>
+                        </div>
+                        <div class="video-content">
+                            <h4><a href="${item.v_href}" class="video-title">${item.bsTitle}</a></h4>
+                            <div class="video-counter">
+                                <div class="video-viewers">
+                                    <span class="fa fa-eye view-icon"></span>
+                                    <span>241,021</span>
+                                </div>
+                                <div class="video-feedback">
+                                    <div class="video-like-counter">
+                                        <span class="fa fa-thumbs-o-up like-icon"></span>
+                                        <span>${item.like}</span>
                                     </div>
-                                    <div class="video-feedback">
-                                        <div class="video-like-counter">
-                                            <span class="fa fa-thumbs-o-up like-icon"></span>
-                                            <span>120</span>
-                                        </div>
-                                        <div class="video-like-counter">
-                                            <span class="fa fa-thumbs-o-down dislike-icon"></span>
-                                            <span>2140</span>
-                                        </div>
+                                    <div class="video-like-counter">
+                                         <span class="fa fa-thumbs-o-down dislike-icon"></span>
+                                        <span>2140</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    
-                    </c:forEach>
+                    </div>
+                </div>
+            
+            </c:forEach>
 
                     </div>
                 </div>

@@ -1,5 +1,7 @@
 package com.kh.mt.liveBJ.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
@@ -12,5 +14,9 @@ public interface LiveBJDao {
 	int insertBSCotent(SqlSessionTemplate sqlSession, LiveBj bj);
 
 	int insertBSTitleImg(SqlSessionTemplate sqlSession, JDBCLogoFile f);
+
+	ArrayList<LiveBj> allBJ(SqlSessionTemplate sqlSession);
+
+	int startBrod(SqlSessionTemplate sqlSession, String roomid,String mid);
 
 }
