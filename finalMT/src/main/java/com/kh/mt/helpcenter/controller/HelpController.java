@@ -122,7 +122,8 @@ public class HelpController {
 
 		String rename = onlyFileName + "_" + getCurrentDayTime() + (int)((Math.random()* 100)+1) + extension;
 
-		System.out.println("sdf" + rename);
+		//System.out.println("controller's rename : " + rename);
+		
 		try {
 
 			photo.transferTo(new File(filePath + "\\" + rename));

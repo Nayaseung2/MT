@@ -3,6 +3,7 @@ package com.kh.mt.member.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -68,12 +69,40 @@ public class MemberController {
 	}
 	//로그인 체크
 	@RequestMapping(value="loginCheck.me")
-	public ModelAndView loginCheck(Member m,ModelAndView mv,SessionStatus status,HttpServletRequest request) {
-		Member loginUser= ms.loginCheck(m);
+	public ModelAndView loginCheck(Member m,ModelAndView mv,SessionStatus status,HttpServletRequest request,
+										HttpServletResponse response) {
+		
+		response.setContentType("text/html; charset=utf-8");
+		
+		Member loginUser = ms.loginCheck(m);
+		
 		mv.addObject("loginUser", loginUser);
-		HttpSession session =request.getSession();
+		
+		HttpSession session = request.getSession();
 		session.setAttribute("loginUser", loginUser);
-		mv.setViewName("main/main");
+		
+		try {
+			
+			PrintWriter out = response.getWriter();
+			
+			if(loginUser != null){
+				
+				out.println("<script>alert('" + loginUser.getmName() + "님, 환영합니다!');</script>");
+	            out.flush();
+
+				mv.setViewName("main/main");
+				
+			}else{
+				
+				out.println("<script>alert('아이디 또는 비밀번호를 확인해주세요.');</script>");
+	            out.flush();
+	            
+				mv.setViewName("member/Login");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return mv;
 	}
 
@@ -117,9 +146,11 @@ public class MemberController {
 		//방송국 생성
 		String mid=m.getmId();
 		ms.insertJDBCStation(mid);
-		System.out.println("Member : "+m);
-		return "member/Login";
+		//System.out.println("Member : "+m);
+		return "member/celebration";
 	}
+	
+	
 
 	//Id 중복확인
 	@RequestMapping(value="overlapCheck.me")
@@ -429,8 +460,8 @@ public class MemberController {
 				String subject = "임시 비밀번호입니다.";
 				String fromName = "모두의TV 관리자";
 				String from = "ekdbs1220@naver.com";
-				//String randomPwd = randomPwd();
-				//String content = "임시 비밀번호는 [" + randomPwd + "]입니다. 로그인 뒤 반드시 비밀번호를 재설정해주세요.";
+				String randomPwd = randomPwd();
+				String content = "임시 비밀번호는 [  " + randomPwd + "  ] 입니다. 로그인 뒤 반드시 비밀번호를 재설정해주세요.";
 
 				Properties props = new Properties();
 				props.put("mail.smtp.starttls.enable", "true");
@@ -454,7 +485,7 @@ public class MemberController {
 				msg.setRecipients(Message.RecipientType.TO, address1); // 받는사람 설정
 				msg.setSubject(subject); // 제목설정
 				msg.setSentDate(new java.util.Date());
-				//msg.setContent(content, "text/html; charset=utf-8"); // 내용설정
+				msg.setContent(content, "text/html; charset=utf-8"); // 내용설정
 
 				Transport.send(msg); // 메일보내기
 
@@ -462,7 +493,7 @@ public class MemberController {
 				// DB에 암호화된 임시비밀번호로 재설정
 				Member m = new Member();
 				m.setmId(joinId);
-				//m.setmPwd(passwordEncoder.encode(randomPwd));
+				m.setmPwd(passwordEncoder.encode(randomPwd));
 
 				ms.tempPwd(m);
 
@@ -485,40 +516,23 @@ public class MemberController {
 
 
 	// 임시비밀번호 난수 만들기
-	public static String randomPwd(String type, int cnt) {
+	public static String randomPwd(){ 
 
-		StringBuffer strPwd = new StringBuffer();
+		char pwCollection[] = new char[] { 
+				'1','2','3','4','5','6','7','8','9','0', 
+				'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z', 
+				'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z', 
+				'!','@','#','$','%','^','&','*','(',')'};//배열에 선언 
 
-		char str[] = new char[1];
+		String ranPw = ""; 
 
-		// 특수기호 포함
-		if (type.equals("P")) {
-
-			for (int i = 0; i < cnt; i++) {
-
-				str[0] = (char) ((Math.random() * 94) + 33);
-				strPwd.append(str);
-			}
-			
-		// 소문자, 숫자형
-		} else if (type.equals("C")) {
-
-			Random rnd = new Random();
-
-			for (int i = 0; i < cnt; i++) {
-
-				if (rnd.nextBoolean()) {
-					strPwd.append((char) ((int) (rnd.nextInt(26)) + 97));
-				} else {
-					strPwd.append((rnd.nextInt(10)));
-				}
-			}
-		}
-
-		return strPwd.toString();
-	}  
-
-
+		for (int i = 0; i < 10; i++) { 
+			int selectRandomPw = (int)(Math.random()*(pwCollection.length));//Math.rondom()은 0.0이상 1.0미만의 난수를 생성해 준다. 
+			ranPw += pwCollection[selectRandomPw]; 
+		} 
+		
+		return ranPw; 
+	} 
 
 
 }
