@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.mt.admin.model.service.AdminService;
 import com.kh.mt.admin.model.vo.Contact;
+import com.kh.mt.admin.model.vo.Report;
 import com.kh.mt.admin.model.vo.Revenue;
 import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
@@ -400,8 +401,34 @@ public class AdminController {
 		
 		PageInfo pi = addUserPage(newCurrentPage, count);
 		
+		ArrayList<Report> list = as.reportList(pi);
+		
+		System.out.println(list);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pi", pi);
+		map.put("list", list);
+
+		mv.addObject("map", map);
 		
 		mv.setViewName("admin/reportManagement");
+		
+		return mv;
+	}
+	
+	//신고대상 url가져오기
+	@RequestMapping("urlSearch.ad")
+	public ModelAndView urlSearch(ModelAndView mv, String target){
+		
+		String url = as.urlSearch(target);
+		
+		if(url == null){
+			mv.addObject("N");
+		}else {
+			mv.addObject(url);
+		}
+		
+		mv.setViewName("jsonView");
 		
 		return mv;
 	}

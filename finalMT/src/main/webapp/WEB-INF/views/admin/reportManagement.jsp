@@ -172,41 +172,42 @@ tr, th {
                                         <th>신고자</th>
                                         <th>신고 대상</th>
 										<th>방송 여부</th>
+										<th>신고 내용</th>
 										<th>누적 신고 수</th>
                                         <th>신고 날짜</th>
                                         <th align="center">자세히 보기</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  <c:forEach var="i" begin="0" end="20">
+                                  <c:forEach var="i" items="${ map.list }">
                                   	<tr>
-                                  		<td>${ i }</td>
-                                  		<td>${ i }</td>
-                                  		<td>${ i }</td>
-                                  		<td>${ i }</td>
-                                  		<td>${ i }</td>
+                                  		<td><c:out value="${ i.reporter }"/></td>
+                                  		<td><c:out value="${ i.target }"/></td>
+                                  		<td><c:out value="${ i.videoYN }"/></td>
+                                  		<td><c:out value="${ i.content }"/></td>
+                                  		<td><c:out value="${ i.reportSum }"/></td>
+                                  		<td><c:out value="${ i.reportDate }"/></td>
                                   		<td width="5%" align="center"><button class="btn btn-default detail">자세히 보기</button></td>
-                                  	</tr>
-                                  	<tr class="detailboard">
-                                  		<td colspan="5">
-  											<div style="width: 100%;">
-  												<img src="resources/images/logo.png"/>
-  											</div>
-                                  		</td>
-                                  		<td style="width: 10%; vertical-align: middle;" align="center">
-                                  			<button class="btn btn-info response">이동</button>
-                                  		</td>
+                                  		<td style="display: none"><c:out value="${ i.screen }"/></td>
                                   	</tr>
                                   </c:forEach>
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->
                             <div id="pagingArea" align="center">
-								<button onclick="return pageChange('minus', $('.type').attr('id'))">[이전]</button>
-	
-									<font color="red" size="4" id="page"><b><c:out value="${ map.pi.currentPage }"/></b></font>
-	
-								&nbsp; <button onclick="return pageChange('plus', $('.type').attr('id'))">[다음]</button>
+								<ul class="pagination pageul">
+	                              <li class="page-item"><a class="page-link back" onclick="return pageChange($('.active').children().text(),'minus', $('.type').attr('id'))">이전</a></li>
+	                              <c:forEach var="p" begin="${ map.pi.startPage }" end="${ map.pi.endPage }">
+	                                 <c:if test="${p eq map.pi.currentPage }">
+	                                    <li class="page-item active" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${p}</a></li>
+	                                 </c:if>
+	                                 <c:if test="${p ne map.pi.currentPage }">
+	                                    <li class="page-item" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${p}</a></li>
+	                                 </c:if>
+	                              
+	                              </c:forEach>
+	                              <li class="page-item"><a class="page-link next" onclick="return pageChange($('.active').children().text(),'plus', $('.type').attr('id'))">다음</a></li>
+	                           </ul>
 							</div>
                         </div>
                         <!-- /.panel-body -->
@@ -230,22 +231,19 @@ tr, th {
 	      <!-- body -->
 	      <div class="modal-body">
 				<div class="modal-left">
-					<img style="width: 100%; height: 100%;" src="/mt/resources/uploadFiles/mybatis.jpg"/>
+					<img style="width: 100%; height: 100%;" src="" class="screen"/>
 				</div>
 				<div class="modal-right">
 					<table class="modalTable">
 				      	<tr>
-				      		<td><label>분류</label><input type="text" class="ptype" readonly/></td>
+				      		<td><label>신고 날짜</label><input type="text" class="date" readonly/></td>
 				      		<td style="display: none;" class="code"></td>
 				      	</tr>
 				      	<tr>
-				      		<td><label>날짜</label><input type="text" class="date" readonly/></td>
+				      		<td><label>신고자</label><input type="text" class="writer" readonly/></td>
 				      	</tr>
 				      	<tr>
-				      		<td><label>작성자</label><input type="text" class="writer" readonly/></td>
-				      	</tr>
-				      	<tr>
-				      		<td><label>제목</label><input type="text" class="title" readonly/></td>
+				      		<td style="width: 49%;"><label>신고 대상</label><input type="text" class="title" readonly/></td>
 				      	</tr>
 				      	<tr>
 				      		<td><label>내용</label><textarea class="content" readonly></textarea></td>
@@ -255,7 +253,7 @@ tr, th {
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default answer" onclick="answer($('.code').val(), $('.personalAnswer').val())">이동하기</button>
+	        <button type="button" class="btn btn-default answer" onclick="go();">이동하기</button>
 	      </div>
 	    </div>
 	  </div>
@@ -269,17 +267,6 @@ tr, th {
 		<c:redirect url="index.jsp"/>
     </c:if>
     <script>
-    
-    $(function(){
-		$(".detailboard").hide();
-    	$(document).on("click", ".detail", function(){
-    		$(this).parents().parents().next().toggle();
-    	});
-    	$(".response").click(function(){
-    		alert("안녕");
-    	});
-    });
-    
     function typeChange(type){
 		$(".type").attr("id", type);
 		
@@ -335,22 +322,44 @@ tr, th {
 	
 	$(document).on("click", ".detail", function(){
 		var writer = $(this).parent().parent().children().eq(0).text();
-		var ptype = $(this).parent().parent().children().eq(1).text();
-		var title = $(this).parent().parent().children().eq(2).text();
+		var title = $(this).parent().parent().children().eq(1).text();
 		var content = $(this).parent().parent().children().eq(3).text();
-		var date = $(this).parent().parent().children().eq(4).text();
-		var code = $(this).parent().parent().children().last().text();
+		var date = $(this).parent().parent().children().eq(5).text();
+		var screen = "/mt/resources/uploadFiles/" + $(this).parent().parent().children().last().text();
+		
 		
 	    $('div.modal').modal();
 		
-		$(".ptype").val(ptype);
-		$(".code").val(code);
-		$(".date").val(date);
 		$(".writer").val(writer);
 		$(".title").val(title);
+		$(".date").val(date);
 		$(".content").text(content);
+		$(".screen").attr("src", screen);
 		
 	});
+	
+	function go(){
+		var target = $(".title").text();
+		$.ajax({
+			url: "urlSearch.ad",
+			type: "get",
+			data: {"target": target},
+			success: function(data){
+				if(data.string === "N"){
+					location.href="memberMg.ad";
+				}else {
+					location.href=data.string;
+				}
+				
+			},
+			error: function(data) {
+				
+				
+			}
+		});
+		//window.open("http://www.naver.net", "네이버새창", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+		
+	}
     </script>
 </body>
 </html>

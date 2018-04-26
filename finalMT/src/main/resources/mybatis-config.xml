@@ -19,6 +19,7 @@
 		<typeAlias alias="Revenue" type="com.kh.mt.admin.model.vo.Revenue"/>
 		<typeAlias alias="Withdrawal" type="com.kh.mt.admin.model.vo.Withdrawal"/>
 		<typeAlias alias="Contact" type="com.kh.mt.admin.model.vo.Contact"/>
+		<typeAlias alias="Report" type="com.kh.mt.admin.model.vo.Report"/>
 		<!-- 회원가입시 방송국 생성 -->
 		<typeAlias alias='insertJDBC' type="com.kh.mt.member.model.vo.InsertJDBCstation"/>
 

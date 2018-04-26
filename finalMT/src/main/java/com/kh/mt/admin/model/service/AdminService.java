@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.mt.admin.model.vo.Contact;
+import com.kh.mt.admin.model.vo.Report;
 import com.kh.mt.admin.model.vo.Revenue;
 import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
@@ -82,6 +83,10 @@ public interface AdminService {
 	Member blackUserSearch(String userId);
 
 	int reportListCount();	//신고페이지 전체 신고내역
+
+	ArrayList<Report> reportList(PageInfo pi);
+
+	String urlSearch(String target);
 
 } 
  

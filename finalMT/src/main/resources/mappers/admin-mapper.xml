@@ -50,6 +50,16 @@
   	 	<result property="bStatus" column="B_STATUS"/>
   	 </resultMap>
   	 
+  	 <resultMap type="Report" id="reportResultSet">
+  	 	<result property="reporter" column="REPORTER"/>
+  	 	<result property="target" column="TARGET"/>
+  	 	<result property="videoYN" column="VIDEO_YN"/>
+  	 	<result property="content" column="B_CONTENT"/>
+  	 	<result property="reportSum" column="REPORTSUM"/>
+  	 	<result property="reportDate" column="REPORTDATE"/>
+  	 	<result property="screen" column="SCREEN"/>
+  	 </resultMap>
+  	 
   	 
   	<!-- 관리자 메인화면 -->
   	<select id="allMenuList" resultType="hashmap">
@@ -225,6 +235,19 @@
   		SELECT COUNT(*)
   		FROM BOARD
   		WHERE B_TYPE = 'report'
+  	</select>
+  	
+  	<select id="reportList" resultMap="reportResultSet">
+  		SELECT BWRITER AS REPORTER, B_TITLE AS TARGET, VIDEO_YN, B_CONTENT, (SELECT COUNT(*) FROM BOARD B2 WHERE B1.B_TITLE = B2.B_TITLE) AS REPORTSUM, TO_CHAR(B_CREATE_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS REPORTDATE, F_RENAME AS SCREEN
+		FROM BOARD B1
+		JOIN MEMBER ON(B_TITLE = MID)
+		JOIN UPLOADFILE ON (BWRITER = F_MCODE)
+  	</select>
+  	
+  	<select id="urlSearch" parameterType="java.lang.String" resultType="string">
+  		SELECT V_HREF
+  		FROM JDBC
+  		WHERE MCODE = #{target}
   	</select>
   	
   </mapper>

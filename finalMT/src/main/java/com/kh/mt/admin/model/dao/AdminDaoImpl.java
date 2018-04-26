@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.mt.admin.model.vo.Contact;
+import com.kh.mt.admin.model.vo.Report;
 import com.kh.mt.admin.model.vo.Revenue;
 import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
@@ -279,6 +280,20 @@ public class AdminDaoImpl implements AdminDao{
 	public int reportListCount() {
 		int result = sqlSession.selectOne("Admin.reportListCount");
 		return 0;
+	}
+
+	@Override
+	public ArrayList<Report> reportList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		return (ArrayList)sqlSession.selectList("Admin.reportList", null, rowBounds);
+	}
+
+	@Override
+	public String urlSearch(String target) {
+		
+		return sqlSession.selectOne("Admin.urlSearch", target);
 	}
 
 	
