@@ -10,13 +10,25 @@
 		</layout>
 	</appender>
 	
+	<appender name="fileLogger" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="C:/Users/sungbo1/git/MT/finalMT/src/main/resources/logs/system.log"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{HH:mm:ss}] %m%n"/>
+		</layout>
+	</appender>
+	
+	<!-- 접속 로그  -->
+	<logger name="com.common">
+		<level value="debug"/>
+		<appender-ref ref="fileLogger"/>
+	</logger>
 	<!-- Application Loggers -->
 	<logger name="com.kh.mt">
 		<level value="info" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
-	<logger name="org.springframework.core">
+	<!-- <logger name="org.springframework.core">
 		<level value="info" />
 	</logger>
 	
@@ -30,7 +42,7 @@
 
 	<logger name="org.springframework.web">
 		<level value="info" />
-	</logger>
+	</logger> -->
 
 	<!-- Root Logger -->
 	<root>

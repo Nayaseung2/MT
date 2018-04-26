@@ -16,7 +16,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title>방송기릿</title>
 <style>
-	 	video {
+       video {
             object-fit: fill;
             width: 100%;
             max-width: 100%;
@@ -96,37 +96,39 @@
 		<div class="container">
 			<div class="row">
 
-				<div class="col-md-12">
-					<hr>
-					<table>
-						<tr>
-							<td rowspan="3" style=" width: 15%; height:  15%; padding-right: 15px;">
-							 <a href="#"><img alt="" src="${contextPath }/resources/images/bjSemple/bj1.jpg" style="border-radius: 50px;"></a> 
-							</td>
-							<td><h1>킬당1000개 한시간 현재 10킬중!!</h1></td>
-						</tr>
-						<tr>
-							<td><h3>${loginUser.mId}</h3></td>
-						</tr>
-						<tr>
-							<td><h5>#배틀그라운두&nbsp;&nbsp;#감우성&nbsp;&nbsp;#못생김주의&nbsp;&nbsp;#남캠</h5></td>
-						</tr>
-					
-					</table>
-			
-				
-					<hr>
-				</div>
-			</div>
-		</div> 
+            <div class="col-md-12">
+               <hr>
+               <table>
+                  <tr>
+                     <td rowspan="3" style=" width: 15%; height:  15%; padding-right: 15px;">
+                      <a href="#"><img alt="" src="${contextPath }/resources/images/bjSemple/bj1.jpg" style="border-radius: 50px;"></a> 
+                     </td>
+                     <td><h1>킬당1000개 한시간 현재 10킬중!!</h1></td>
+                  </tr>
+                  <tr>
+                     <td><h3>${loginUser.mId}</h3></td>
+                  </tr>
+                  <tr>
+                     <td><h5>#배틀그라운두&nbsp;&nbsp;#감우성&nbsp;&nbsp;#못생김주의&nbsp;&nbsp;#남캠</h5></td>
+                  </tr>
+               
+               </table>
+         
+            
+               <hr>
+            </div>
+         </div>
+      </div> 
+
+
 
 	<input id="myId" type="hidden" value="${loginUser.mId} "/>
 	<input id="nickName" type="hidden" value="${loginUser.nickName} "/>
 	<div id="room-urls" style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
 	<jsp:include page="../common/footer.jsp"/>
-    
-	
-	 <!-- jQuery -->
+
+   
+    <!-- jQuery -->
     <script src="${contextPath }/resources/js/jquery-1.12.4.min.js"></script>
     <!-- jQuery Easing -->
     <script src="${contextPath }/resources/js/jquery.easing.js"></script>
@@ -142,12 +144,13 @@
     <script src="${contextPath }/resources/js/jquery.mb.YTPlayer.min.js"></script>
     <!-- Mega Menu JS -->
     <script src="${contextPath }/resources/js/megamenu.js"></script>    
-	<!-- lazyload JS -->
+   <!-- lazyload JS -->
     <script src="${contextPath }/resources/js/jquery.lazyload.js"></script>
     <!-- Google Map -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnh74UN6BKgq9U5fMNGhdZOSpmM_QnZqs"></script>
     <!-- Main JS -->
     <script src="${contextPath }/resources/js/main.js"></script>
+
 	
 	<script>
 		/* 스크린 방송하기 버튼 클릭 function */
@@ -170,10 +173,10 @@
                 this.disabled = true;
                 var cam = document.getElementById('video-preview').getMediaElement;
                 /* document.getElementById('newDiv2').onstream(function(cam){
-                	
+                   
                 }); */
                 connection.addStream({
-                	data : true,
+                   data : true,
                     screen: true,
                     oneway: true
                 });
@@ -205,7 +208,7 @@
             connection.getScreenConstraints = function(callback) {
                 getScreenConstraints(function(error, screen_constraints) {
                     if (!error) {
-                    	var screencon = document.getElementById('video-preview');
+                       var screencon = document.getElementById('video-preview');
                         screen_constraints = connection.modifyScreenConstraints(screen_constraints);
                         callback(error, screen_constraints);
                         return;
@@ -220,7 +223,7 @@
             connection.socketMessageEvent = 'audio-video-screen-demo';
             connection.session = {
                 data : true,
-            	audio: true,
+               audio: true,
                 video: true,
                 oneway: true
             };
@@ -261,7 +264,7 @@
                 }
             };
             
-            
+
         	/* 채팅 div 형태
         	<div class="panel-body" style="height: 460px; overflow: overlay;">
         		<ul class="chat">
@@ -287,13 +290,14 @@
                 // 먼저 input의 공백과 특수문자들 제거
                 this.value = this.value.replace(/^\s+|\s+$/g, '');
                 if (!this.value.length) return;
-        		
+              
                 connection.send(this.value);
-            	appendDIV(this.value);
+               appendDIV(this.value);
                 this.value = '';
             };
             //피치쏘기
             /* document.getElementById("peach").onclick = function(){
+
             	var myId = document.getElementById("myId").value;
             	console.log("쉬벨"+myId);
             	var url = "peach.lb";
@@ -366,8 +370,8 @@
              	div.setAttribute("style","align:left");
                 div.innerHTML = event.data || event;
                 chat_small.append(div);
-        		div.tabIndex = 0;
-        		div.focus();
+              div.tabIndex = 0;
+              div.focus();
                         
                 document.getElementById('btn-input').focus();
                 if(event.data) {
@@ -396,6 +400,8 @@
                 roomURLsDiv.innerHTML = html;
                 roomURLsDiv.style.display = 'block';
             }
+            
+            
             (function() {
                 var params = {},
                     r = /([^&=]+)=?([^&]*)/g;
@@ -407,16 +413,22 @@
                     params[d(match[1])] = d(match[2]);
                 window.params = params;
             })();
+            
+            
             var roomid = '';
             if (localStorage.getItem(connection.socketMessageEvent)) {
                 roomid = localStorage.getItem(connection.socketMessageEvent);
             } else {
                 roomid = connection.token();
             }
-            document.getElementById('broadcast-id').value = roomid;
+            
+            document.getElementById('broadcast-id').value=roomid+'1';
+           
             document.getElementById('broadcast-id').onkeyup = function() {
                 localStorage.setItem(connection.socketMessageEvent, this.value);
             };
+            
+
             var hashString = location.hash.replace('#', '');
             if(hashString.length && hashString.indexOf('comment-') == 0) {
               hashString = '';
@@ -425,6 +437,7 @@
             if(!roomid && hashString.length) {
                 roomid = hashString;
             }
+            
             if(roomid && roomid.length) {
                 document.getElementById('broadcast-id').value = roomid;
                 localStorage.setItem(connection.socketMessageEvent, roomid);
@@ -440,13 +453,32 @@
                 })();
                 disableInputButtons();
             }
+            
         </script>
-	
-	<script>
-	 function singo(){
-		 location.href="${contextPath}"
-	 }
-	</script>
+   
+   <script>
+   
+   $("#open-or-join-cam").click(function(){
+	      var roomid = document.getElementById('broadcast-id').value;
+	      var mid = document.getElementById('mid').value;
+	      
+	      $.ajax({
+	         url:"startBrod.lb",
+	         type:"POST",
+	         data:{
+	            roomid:roomid,
+	            mid:mid
+	         },
+	         success:function(data){
+	            console.log("성공")
+	         }
+	         
+	      })
+	   })
+    function singo(){
+       location.href="${contextPath}"
+    }
+   </script>
 
 </body>
 </html>

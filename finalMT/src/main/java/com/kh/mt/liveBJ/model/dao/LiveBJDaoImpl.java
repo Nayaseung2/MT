@@ -1,5 +1,8 @@
 package com.kh.mt.liveBJ.model.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -26,6 +29,22 @@ public class LiveBJDaoImpl implements LiveBJDao{
 	public int insertBSTitleImg(SqlSessionTemplate sqlSession, JDBCLogoFile f) {
 		int result = sqlSession.insert("LiveBJ.insertBSTitleImg", f);
 		
+		return result;
+	}
+	@Override
+	public ArrayList<LiveBj> allBJ(SqlSessionTemplate sqlSession) {
+		ArrayList<LiveBj> list = (ArrayList)sqlSession.selectList("LiveBJ.allBJ");
+		
+		return list;
+	}
+	@Override
+	public int startBrod(SqlSessionTemplate sqlSession, String roomid,String mid) {
+		String roomid2 =roomid;
+		LiveBj bj = new LiveBj();
+		bj.setV_href(roomid2);
+		bj.setMid(mid);
+		
+		int result = sqlSession.update("LiveBJ.startBrod", bj);
 		return result;
 	}
 
