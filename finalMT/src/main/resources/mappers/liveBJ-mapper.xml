@@ -18,8 +18,18 @@
   			<result property="v_href" column="V_HREF"/>
   			<result property="nickname" column="M_NICKNAME"/>
   		</resultMap>
+  		
+  		<!-- 시청자가 실시간 방송 정보가저오기 -->
+  		<select id='JDBCInfo' parameterType="String" resultMap='allBJSET'>
+  		SELECT J.INTRODUCE,J.V_TITLE,J.V_CONTENT,J.V_STARTTIME,J.V_LIKE,J.V_CATE,J.MCODE,J.V_JCODE,J.V_STATE,J.V_HREF,U.F_RENAME,M.M_NICKNAME FROM JDBC J JOIN MEMBER M ON(J.MCODE=M.MID) JOIN UPLOADFILE U ON(U.F_MCODE=J.MCODE)  WHERE U.FROM_CODE='BSTitleImg' AND J.V_JCODE=U.FILE_CODE AND J.V_HREF=#{href3}
+  		</select>
+  		
+  		<!-- bj가 실시간 방송 정보가저오기 -->
+  		<select id='JDBCInfo2' parameterType="String" resultMap='allBJSET'>
+  		SELECT J.INTRODUCE,J.V_TITLE,J.V_CONTENT,J.V_STARTTIME,J.V_LIKE,J.V_CATE,J.MCODE,J.V_JCODE,J.V_STATE,J.V_HREF,U.F_RENAME,M.M_NICKNAME FROM JDBC J JOIN MEMBER M ON(J.MCODE=M.MID) JOIN UPLOADFILE U ON(U.F_MCODE=J.MCODE)  WHERE U.FROM_CODE='BSTitleImg' AND J.V_JCODE=U.FILE_CODE AND J.MCODE=#{href3}
+  		</select>
 
-
+		<!-- 방송시작 인서트 -->
 		<insert id="insertBSCotent" parameterType="LiveBJ">
 		INSERT INTO JDBC VALUES (NULL ,#{bsTitle},#{bsContent},SYSDATE,0,#{cate},#{mid},SEQ_JDBCCODE.NEXTVAL,'N',NULL)
   		</insert>

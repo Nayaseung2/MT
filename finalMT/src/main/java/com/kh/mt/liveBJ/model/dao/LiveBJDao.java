@@ -19,4 +19,8 @@ public interface LiveBJDao {
 
 	int startBrod(SqlSessionTemplate sqlSession, String roomid,String mid);
 
+	LiveBj JDBCInfo(SqlSessionTemplate sqlSession, String href3);
+
+	LiveBj JDBCInfo2(SqlSessionTemplate sqlSession, String href3);
+
 }
