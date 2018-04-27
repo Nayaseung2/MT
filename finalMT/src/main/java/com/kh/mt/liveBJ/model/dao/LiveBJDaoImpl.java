@@ -39,12 +39,13 @@ public class LiveBJDaoImpl implements LiveBJDao{
 	}
 	@Override
 	public int startBrod(SqlSessionTemplate sqlSession, String roomid,String mid) {
-		String roomid2 =roomid;
+		String roomid2 = "https://192.168.30.103:8443/mt/testLiveBj.lb#"+roomid;
 		LiveBj bj = new LiveBj();
 		bj.setV_href(roomid2);
 		bj.setMid(mid);
 		
 		int result = sqlSession.update("LiveBJ.startBrod", bj);
+		System.out.println(result+"ㄱㄹㄹ");
 		return result;
 	}
 
