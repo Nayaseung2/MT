@@ -17,6 +17,10 @@ public interface LiveBJService {
 
 	void startBrod(String roomid,String mid);
 
+	LiveBj JDBCInfo(String href3);
+
+	LiveBj JDBCInfo2(String href3);
+
 
 
 }
