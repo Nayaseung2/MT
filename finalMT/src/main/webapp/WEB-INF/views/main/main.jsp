@@ -96,7 +96,8 @@
                             <span class="video-duration">5.28</span>
                         </div>
                         <div class="video-content">
-                            <h4><a href="WatchView.lb?nick=${item.nickname}&content=${item.bsContent}&title=${item.bsTitle}&href=${item.v_href}" class="video-title">${item.bsTitle}</a></h4>
+                            <%-- <h4><a href="WatchView.lb?nick=${item.nickname}&content=${item.bsContent}&title=${item.bsTitle}&href=${item.v_href}" class="video-title">${item.bsTitle}</a></h4> --%>
+                            <h4><a href="${item.v_href}" class="video-title">${item.bsTitle}</a></h4>
                             <div class="video-counter">
                                 <div class="video-viewers">
                                     <span class="fa fa-eye view-icon"></span>

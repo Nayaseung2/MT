@@ -20,7 +20,7 @@
             object-fit: fill;
             width: 100%;
             max-width: 100%;
-            height:490px;
+           	/* height:490px; */
             max-height:100%;
         }
    		#broadcastdisplay{
@@ -53,6 +53,7 @@
 					<!-- </article> -->
 					</div>
 					<div align="right">
+						<button id="open-or-join-cam" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="left" class="fa fa-send-o"></i>&nbsp;&nbsp;스크린 방송하기</button>
 					 	<button id="open-or-join" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="left" class="fa fa-send-o"></i>&nbsp;&nbsp;스크린 방송하기</button>
 						<button id="peach" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-apple"></i>&nbsp;&nbsp;피치</button>
 						<button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-thumbs-o-up"></i>&nbsp;&nbsp;구독하기</button>
@@ -121,8 +122,8 @@
       </div> 
 
 
-
-	<input id="myId" type="hidden" value="${loginUser.mId} "/>
+	<input id="mid" type="hidden" value="${loginUser.mId}"/>
+	<input id="myId" type="hidden" value="${loginUser.mId}"/>
 	<input id="nickName" type="hidden" value="${loginUser.nickName} "/>
 	<div id="room-urls" style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
 	<jsp:include page="../common/footer.jsp"/>
