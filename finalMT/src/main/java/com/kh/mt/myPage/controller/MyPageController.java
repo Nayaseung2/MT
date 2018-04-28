@@ -2,6 +2,7 @@ package com.kh.mt.myPage.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,8 +16,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.mt.board.model.vo.Board;
+import com.kh.mt.common.PageInfo;
+import com.kh.mt.helpcenter.model.vo.HelpMainVo;
 import com.kh.mt.member.model.vo.Member;
 import com.kh.mt.myPage.model.service.MyPageService;
+import com.kh.mt.reply.model.vo.ReplyVo;
 
 @Controller
 @SessionAttributes("loginUser")
@@ -32,6 +37,13 @@ public class MyPageController {
 	public String showMyPage() {
 
 		return "myPage/myPageEntry";
+	}
+	
+	// 마이페이지 선택화면
+	@RequestMapping(value="myPageChoise.mp")
+	public String showMyPageChoise() {
+
+		return "myPage/myPageChoise";
 	}
 	
 	// 비밀번호 확인
@@ -58,6 +70,104 @@ public class MyPageController {
 		
 		return mv;
 	}
+	
+	
+	
+	// 마이페이지 질문 리스트
+	@RequestMapping(value="myPageList.mp")
+	public ModelAndView showMyPageList(ModelAndView mv, String newCurrentPage,
+										String mId) {
+		
+		PageInfo pi = addPage(newCurrentPage, mId);
+		
+		ArrayList<Board> pList = ms.pList(pi, mId);
+		
+		//System.out.println("controller's pi : " + pi);
+		
+		HashMap hmap = new HashMap();
+		
+		hmap.put("pi", pi);
+		hmap.put("pList", pList);
+		
+		mv.addObject("hmap", hmap);
+		
+		if(newCurrentPage == null) {
+			mv.setViewName("myPage/myPageList");
+		}else {
+			mv.setViewName("jsonView");
+		}
+
+		return mv; 
+	}
+	
+	// 마이페이지 답변보기
+	@RequestMapping(value="myPageListAnswer.mp")
+	public ModelAndView showMyPageListAnswer(ModelAndView mv, String b_code) {
+
+		
+		//System.out.println("controller b_code: " + b_code);
+		
+		ArrayList<ReplyVo> paList = ms.paList(b_code);
+		
+		//System.out.println("controller's paList : " + paList);
+	
+		HashMap<String, Object> hmap = new HashMap<>();
+		
+		hmap.put("paList", paList);
+		
+		mv.addObject("hmap", hmap);
+
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	//페이징 처리 메소드
+	public PageInfo addPage(String newCurrentPage, String mId){
+		
+		int currentPage = 1;
+		int limit = 0;
+		int maxPage = 0;
+		int startPage = 0;
+		int endPage = 0;
+		int listCount = 0;
+
+		limit = 10;
+
+		listCount = ms.pListTotal(mId);
+
+		if(newCurrentPage != null){
+			currentPage = Integer.parseInt(newCurrentPage);
+		}
+
+		maxPage = (int)((double)listCount / limit + 0.9);
+
+		startPage = ((int)((double)currentPage / limit + 0.9)-1) * limit + 1;
+
+		endPage = startPage + limit -1;
+
+		if(maxPage < endPage){
+			endPage = maxPage;
+		}
+
+		return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*======================================*/
+	
+	
 	
 	// 마이페이지 메인
 	@RequestMapping(value="myPageMain.mp")

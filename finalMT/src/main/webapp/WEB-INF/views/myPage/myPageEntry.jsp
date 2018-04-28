@@ -91,7 +91,7 @@
 									
 									 if(data.string === "success"){
 										 
-										location.href="myPageMain.mp";
+										location.href="myPageChoise.mp";
 										
 									 } else {
 										
