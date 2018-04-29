@@ -21,6 +21,30 @@
   			<result property="videoYN" column="VIDEO_YN"/>
 	</resultMap>
 	
+	<resultMap type="Board" id="myPageResultSet">
+		<id property="b_code" column="B_CODE"/>
+		
+		<result property="v_code" column="V_CODE"/>
+		<result property="b_type" column="B_TYPE"/>
+		<result property="b_title" column="B_TITLE"/>
+		<result property="b_content" column="B_CONTENT"/>
+		<result property="bwriter" column="BWRITER"/>
+		<result property="b_create_date" column="B_CREATE_DATE"/>
+		<result property="b_update_date" column="B_UPDATE_DATE"/>
+		<result property="b_count" column="B_COUNT"/>
+		<result property="b_status" column="B_STATUS"/>
+	</resultMap>
+	
+	<resultMap type="Reply" id="replyResultSet">
+		<id property="b_code" column="B_CODE"/>
+		
+		<result property="r_code" column="R_CODE"/>
+		<result property="r_content" column="R_CONTENT"/>
+		<result property="r_writer" column="R_WRITER"/>
+		<result property="r_create_date" column="R_CREATE_DATE"/>
+		<result property="r_like" column="R_LIKE"/>
+	</resultMap>
+	
 	<!-- 닉네임 중복확인 -->
 	<select id="overlapCheck" parameterType="java.lang.String" resultType="string">
   			SELECT M_NICKNAME FROM MEMBER WHERE M_NICKNAME = #{ nickName }
@@ -46,5 +70,27 @@
     	SET MSTATUS = 'N', UPDATE_DATE = SYSDATE
     	WHERE MID = #{ mId }
     </update>
+    
+    <!-- 내 질문 내역 -->
+    <select id="pList" resultMap="myPageResultSet" >
+        SELECT *
+		FROM BOARD
+		WHERE B_CODE LIKE '%' || #{ mId } AND B_TYPE LIKE 'personal%'
+		ORDER BY B_CREATE_DATE DESC
+    </select>
+    
+    <!-- 총 질문 게시글 수 -->
+    <select id="pListTotal" resultType="_int">
+    	SELECT COUNT(*) TOTAL
+		FROM BOARD
+		WHERE B_CODE LIKE '%' || #{ mId } AND B_TYPE LIKE 'personal%'
+    </select>
+    
+    <!-- 질문 답변 -->
+    <select id="paList" parameterType="java.lang.String" resultMap="replyResultSet">
+    	SELECT B_CODE, R_CONTENT
+		FROM REPLY
+		WHERE B_CODE = #{b_code}
+    </select>
 
 </mapper>

@@ -1,8 +1,13 @@
 package com.kh.mt.myPage.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.mt.board.model.vo.Board;
+import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
+import com.kh.mt.reply.model.vo.ReplyVo;
 
 public interface MyPageDao {
 
@@ -17,6 +22,15 @@ public interface MyPageDao {
 
 	// 회원탈퇴
 	int withdraw(String mId);
+
+	// 질문 내역 리스트
+	ArrayList<Board> pList(PageInfo pi, String mId);
+
+	// 총 질문글 수
+	int pListTotal(String mId);
+
+	// 질문 답변
+	ArrayList<ReplyVo> paList(String b_code);
 
 
 
