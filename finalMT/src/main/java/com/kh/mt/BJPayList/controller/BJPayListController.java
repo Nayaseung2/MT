@@ -71,7 +71,6 @@ public class BJPayListController {
 		ArrayList<Expeach> list2 = bjp.selectProfitBjAllList(mcode,pi);
 		
 		
-		System.out.println("??????????????????????????????????????????제발"+newCurrentPage);
 		ArrayList<Expeach> list= bjp.selectProfitBjList(mcode);;
 		String day = null;
 		ArrayList<Expeach> expeach = new ArrayList<Expeach>();
@@ -133,7 +132,6 @@ public class BJPayListController {
 		int listCount = 0;
 
 		limit = 10;
-		System.out.println("라스트다~~~~"+list);
 		if(type.equals("ProfitBj")){
 			listCount = Integer.parseInt(String.valueOf(list.get("PROFITBJ")));
 		}
@@ -281,7 +279,6 @@ public class BJPayListController {
 		ArrayList<BJPayList> list2 = bjp.selectWithdrawAllList(mcode,pi);
 		
 		
-		System.out.println("??????????????????????????????????????????제발"+newCurrentPage);
 		ArrayList<BJPayList> list= bjp.selectWithdrawList(mcode);
 		String day = null;
 		ArrayList<BJPayList> dayList = new ArrayList<BJPayList>();
