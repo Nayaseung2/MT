@@ -65,7 +65,25 @@ public class JDBCController {
 	public String JDBCwrite() {
 		return "JDBC/BSwrite";
 	}
+	
+	// 방송국-글쓰기 완료
+	@RequestMapping(value = "BSwriteSuccess.JDBC")
+	public String JDBCwriteSuccess() {
+		return "JDBC/BSwriteSuccess";
+	}
+	
+	// 방송국 메인
+	@RequestMapping(value = "myBroadcastStation.JDBC")
+	public String JDBCmain() {
+		return "JDBC/myBroadcastStation";
+	}
 
+	// 방송국-내 게시판 목록
+	@RequestMapping(value = "BSmyBoard.JDBC")
+	public String showBSmyBoard() {
+		return "JDBC/BSmyBoard";
+	}
+	
 	// 난수 만들기
 	public static String authNum() {
 		StringBuffer buffer = new StringBuffer();

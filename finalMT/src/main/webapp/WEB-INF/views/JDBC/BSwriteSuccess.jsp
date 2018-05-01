@@ -26,14 +26,46 @@
 	.bottomBox{margin-left:20px;
 		width:200px;
 		height:200px;
-		border:1px solid #b3b3b3;}
+		border:1px solid #b3b3b3;
+		cursor:pointer;}
 	.bottomBox td{border-bottom:1px dotted lightgray;}
-	.bottom{color:black; text-decoration:none; margin-left:15px; cursor:pointer;}
-	.showRightPart{position:relative; width:940px; height:500px; 
-	left:240px;bottom:620px;}
-	.favoriteBJ{width:920px;height:170px; margin-left:10px;}
+	.bottom{color:black; text-decoration:none; margin-left:15px;}
+	.showRightPart{position:relative; width:940px; height:800px; 
+	left:240px;bottom:640px;}
+	
+	/* 글쓰기 테이블 */
+	.writeTable{
+		margin-left:30px;
+		width:750px;
+	}
+	.writeTable th{
+		width:100px;
+		height:30px;
+		text-align:center;
+	}
+	.writeTable tr{
+		height:35px;
+	}
+	.equal{
+		width:20px;
+	}
+	/* 이미지 올리기 */
+	.inputImg{
+		margin-left:30px;
+		border:1px solid lightgray;
+	}/*  */
+	.okay{
+		width:160px;
+		height:30px;
+		background:rgba(235, 104, 100, 0.5);
+		border:none;
+		color:white;
+	}
 </style>
-<title>나의 방송국</title>
+<title>글쓰기 완료</title>
+<!-- ckeditor -->
+<script src="<%= request.getContextPath()%>/resources/ckeditor/ckeditor.js">
+</script>
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
@@ -44,12 +76,7 @@
 <br>
 <!-- 회원 이미지 넣기 -->
 <div class="profileImg">
-<c:if test="${!empty jdbcLogoFile }">
-<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${jdbcLogoFile.f_rename}"style="width:80px; height:80px;">
-</c:if>
-<c:if test="${empty jdbcLogoFile }">
 <img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/images/logo.png"style="width:80px; height:80px;">
-</c:if>
 <div class="BStitle">
 <c:if test="${!empty jdbcInfo.jdbc_name }">
 <label class="BStext"><a id="BStexta"href="#">${jdbcInfo.jdbc_name }</a></label><br>
@@ -57,7 +84,7 @@
 <c:if test="${empty jdbcInfo.jdbc_name }">
 <label class="BStext"><a id="BStexta"href="#">모두의TV</a></label><br>
 </c:if>
-<label class="BStext">${loginUser.nickName}</label><br>
+<label class="BStext">${loginUser.nickName }</label><br>
 </div>
 </div>
 </div>
@@ -68,18 +95,18 @@
 <br>
 <label class="idnickname"><b>${loginUser.mId }</b></label><br>
 <span class="idnickname">${loginUser.nickName }</span>
-<span class="glyphicon glyphicon-cog" style="float:right;"><a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
-<c:if test="${empty jdbcInfo.jdbc_introduce }">
-<input class="introduction" type="text" value="자기소개가 없습니다." readonly>
+<span class="glyphicon glyphicon-cog" style="float:right;"><a style="text-decoration:none; color:black; cursor:pointer;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
+<c:if test="${!empty jdbcInfo.jdbc_name }">
+<input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce}" readonly>
 </c:if>
-<c:if test="${!empty jdbcInfo.jdbc_introduce }">
-<input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce }" readonly>
+<c:if test="${empty jdbcInfo.jdbc_name }">
+<input class="introduction" type="text" value="자기소개가 없습니다." readonly>
 </c:if>
 <br><br> <br>  
 <label style="margin-left:15px;">방송국 방문 : 0명</label>
 </div>
 <br>
-<button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button><br><br>
+<button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button><br/><br/>
 <button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
 <br><br>
 <table class="bottomBox">
@@ -101,16 +128,34 @@
 	</tr>
 </table>
 </div>
-<!-- 즐겨찾기 보여주기 부분 -->
+<!-- 오른쪽 부분 -->
 <div class="showRightPart">
-<div class="favoriteBJ">
-<label style="font-size:20px;">즐겨찾기 BJ</label>
-<p style="float:right;"><a style="text-decoration:none;color:black;">더보기</a></p>
-<br><br><br>
-<label style="margin-left:200px;">즐겨찾기가 없습니다.</label>
+				<br />
+				<br/>
+				<br/>
+				<br/>
+				<div align="center">
+					<img src="${ contextPath }/resources/images/notepad.png" /> <br />
+					<br />
+					<h4>정상적으로 게시글이 등록되었습니다. <br/> 왼쪽의 메뉴에서 글을 확인하실 수 있습니다.</h4>
+				</div>
+				<br/>
+				<br/>
+				<div align="center">
+					<button class="okay" onclick="goMain();">방송국 메인으로</button>
+				</div>
+
+				<script>
+					function goMain() {
+
+						location.href = "myBroadcastStation.JDBC";
+					}
+				</script>
+				<br /> <br />
+
+			</div>
 </div>
 </div>
-</div>
-</div>
+
 </body>
 </html>
