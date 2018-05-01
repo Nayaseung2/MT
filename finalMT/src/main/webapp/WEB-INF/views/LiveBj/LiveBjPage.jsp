@@ -104,13 +104,13 @@
                      <td rowspan="3" style=" width: 15%; height:  15%; padding-right: 15px;">
                       <a href="#"><img alt="" src="${contextPath }/resources/images/bjSemple/bj1.jpg" style="border-radius: 50px;"></a> 
                      </td>
-                     <td><h1>킬당1000개 한시간 현재 10킬중!!</h1></td>
+                     <td><h1 id='title1'></h1></td>
                   </tr>
                   <tr>
-                     <td><h3>${loginUser.mId}</h3></td>
+                     <td><h3 id='nick1'></h3></td>
                   </tr>
                   <tr>
-                     <td><h5>#배틀그라운두&nbsp;&nbsp;#감우성&nbsp;&nbsp;#못생김주의&nbsp;&nbsp;#남캠</h5></td>
+                     <td><h5 id='content1'></h5></td>
                   </tr>
                
                </table>
@@ -161,6 +161,7 @@
 		}); */
 		document.getElementById("stop-broadcast").oclick = function(){
 			connection.close();
+			console.log("꺼젓다")
 		};
 			
 		
@@ -423,7 +424,7 @@
                 roomid = connection.token();
             }
             
-            document.getElementById('broadcast-id').value=roomid+'1';
+            document.getElementById('broadcast-id').value=roomid+'2';
            
             document.getElementById('broadcast-id').onkeyup = function() {
                 localStorage.setItem(connection.socketMessageEvent, this.value);
@@ -479,6 +480,51 @@
     function singo(){
        location.href="${contextPath}"
     }
+   $(function(){
+	    console.log("href: "+$(location).attr('href'));
+	    //현재 url전체
+	    var href1 = $(location).attr('href');
+	    //url 나눈거
+	    var href2 = href1.split('#');
+	    //실질적으로 필요한 url
+	    var href3 = '';
+	    if(href2.length!=1){
+	    href3 = href2[1];
+	    $.ajax({
+	    	url:'JDBCInfo.lb',
+	    	type:'post',
+	    	data:{
+	    		href3:href3
+	    	},
+	    	success:function(data){
+	    		
+	    		
+	    		 $("#title1").text(data.bj.bsTitle)
+	    		$("#nick1").text(data.bj.nickname)
+	    		$("#content1").text(data.bj.bsContent) 
+	    	}
+	    })
+	    }else{
+	     href3 = document.getElementById('mid').value; 
+	    	$.ajax({
+		    	url:'JDBCInfo2.lb',
+		    	type:'post',
+		    	data:{
+		    		href3:href3
+		    	},
+		    	success:function(data){
+		    		
+		    		
+		    		 $("#title1").text(data.bj.bsTitle)
+		    		$("#nick1").text(data.bj.nickname)
+		    		$("#content1").text(data.bj.bsContent) 
+		    	}
+		    })
+	    }
+	    
+	});
+   
+   
    </script>
 
 </body>

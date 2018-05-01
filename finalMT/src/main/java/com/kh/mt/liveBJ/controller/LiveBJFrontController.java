@@ -26,30 +26,23 @@ public class LiveBJFrontController {
 	@Autowired
 	LiveBJService ls;
 	
-	//
-	public ModelAndView WatchView(ModelAndView mv,HttpServletRequest request,HttpServletRequest response){
-		String title = request.getParameter("title");
-		String href = request.getParameter("href");
-		String nick = request.getParameter("nick");
-		String content = request.getParameter("content");
+	//시청자가 방의 정보 가저오기
+	@RequestMapping(value="JDBCInfo.lb")
+	public ModelAndView JDBCInfo(ModelAndView mv,String href3){
 		
-		System.out.println(title);
-		System.out.println(href);
-		System.out.println(nick);
-		System.out.println(content);
+		LiveBj bj = ls.JDBCInfo(href3);
+		mv.setViewName("jsonView");
+		mv.addObject("bj", bj);
 		
-		request.setAttribute("title", title);
-		request.setAttribute("href", href);
-		request.setAttribute("nick", nick);
-		request.setAttribute("content", content);
+		return mv;
+	}
+	//bj가 자기정보방 가저오기
+	@RequestMapping(value="JDBCInfo2.lb")
+	public ModelAndView JDBCInfo2(ModelAndView mv,String href3){
 		
-		try {
-			request.getRequestDispatcher("https://localhost:8034/mt/insertBSCotent.lb#"+href).forward(request, (ServletResponse) response);
-		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
+		LiveBj bj = ls.JDBCInfo2(href3);
+		mv.setViewName("jsonView");
+		mv.addObject("bj", bj);
 		
 		return mv;
 	}

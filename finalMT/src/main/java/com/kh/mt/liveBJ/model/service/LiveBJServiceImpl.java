@@ -53,4 +53,18 @@ public class LiveBJServiceImpl implements LiveBJService{
 	}
 
 
+	@Override
+	public LiveBj JDBCInfo(String href3) {
+		LiveBj bj = ld.JDBCInfo(sqlSession,href3);
+		return bj;
+	}
+
+
+	@Override
+	public LiveBj JDBCInfo2(String href3) {
+		LiveBj bj = ld.JDBCInfo2(sqlSession,href3);
+		return bj;
+	}
+
+
 }
