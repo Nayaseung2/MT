@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.mt.BJPayList.model.vo.BJPayList;
+import com.kh.mt.BJPayList.model.vo.Black;
 import com.kh.mt.BJPayList.model.vo.Expeach;
 import com.kh.mt.BJPayList.model.vo.Subscribe;
 import com.kh.mt.common.PageInfo;
@@ -33,6 +34,13 @@ public interface BJPayListService {
 	ArrayList<Subscribe> selectMyFanAllList(String mcode, PageInfo pi);
 
 	ArrayList<Subscribe> selectMyFanList(String mcode);
+
+	HashMap<String, String> BlackListAllCount(String mcode);
+
+	ArrayList<Black> selectBlackListAllList(String mcode, PageInfo pi);
+
+	int BlackcancelUpdate(String mId);
+
 
 
 

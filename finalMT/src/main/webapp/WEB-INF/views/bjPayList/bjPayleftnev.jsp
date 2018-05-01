@@ -24,7 +24,7 @@
 				<li><a href="${contextPath }/loginUser.bjp"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;&nbsp;접속자 수 관리 </a></li>
 				<li><a href="${contextPath }/GoodUser.bjp"><i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;&nbsp;&nbsp;추천 수 관리</a></li>
 				<li><a href="${contextPath }/ProfitBj.bjp?mcode=${loginUser.mcode}"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;&nbsp;&nbsp;수익 그래프</a></li>
-				<li><a href="${contextPath }/BlackList.bjp"><i class="fa fa-times"></i>&nbsp;&nbsp;&nbsp;&nbsp;블랙 회원 관리</a></li>
+				<li><a href="${contextPath }/BlackList.bjp?mcode=${loginUser.mcode}"><i class="fa fa-times"></i>&nbsp;&nbsp;&nbsp;&nbsp;블랙 회원 관리</a></li>
 				<li><a href="${contextPath }/MyFan.bjp?mcode=${loginUser.mcode}"><i class="fa fa-heart"></i>&nbsp;&nbsp;&nbsp;&nbsp;내 팬 관리</a></li>
 				<li><a href="${contextPath }/WithdrawList.bjp?mcode=${loginUser.mcode}"><i class="fa fa-won"></i>&nbsp;&nbsp;&nbsp;&nbsp;출금 신청 내역</a></li>
 				<li><a href="${contextPath }/SeeUser.bjp"><i class="fa fa-gears"></i>&nbsp;&nbsp;&nbsp;&nbsp;시청자 관리 </a></li>

@@ -15,7 +15,7 @@ public class Black implements Serializable{
 	private String black_count;
 	
 	
-	
+
 	public Black() {
 		// TODO Auto-generated constructor stub
 	}

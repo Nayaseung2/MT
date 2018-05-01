@@ -146,23 +146,23 @@ width:200px;
 	<tr>
 		<th>계좌번호</th>
 		<td><select class="select" name="account1" id="bankname">
-                              <option value="0">선택</option>
-                              <option value="003">기업은행</option>
-                              <option value="004">국민은행</option>
-                              <option value="020">우리은행</option>
-                              <option value="088">신한은행</option>
-                              <option value="081">KEB하나은행</option>
-                              <option value="012">농0협은행</option>
-                              <option value="007">수협</option>
-                              <option value="048">신협</option>
-                              <option value="034">광주은행</option>
-                              <option value="032">부산은행</option>
-                              <option value="031">대구은행</option>
-                              <option value="071">우체국</option>
-                        </select> 
-                        <input id="bankaddr" name="account2" class="input01" type="text" size="20" maxlength="1000">
-                  		<label class="certi" onclick="gettoken()">계좌인증 </label>
-                 		 </td>
+            <option value="0">선택</option>
+            <option value="003">기업은행</option>
+            <option value="004">국민은행</option>
+            <option value="020">우리은행</option>
+            <option value="088">신한은행</option>
+            <option value="081">KEB하나은행</option>
+            <option value="012">농0협은행</option>
+            <option value="007">수협</option>
+            <option value="048">신협</option>
+            <option value="034">광주은행</option>
+            <option value="032">부산은행</option>
+            <option value="031">대구은행</option>
+            <option value="071">우체국</option>
+      </select> 
+      <input id="bankaddr" name="account2" class="input01" type="text" size="20" maxlength="1000">
+		<label class="certi" onclick="gettoken();">계좌인증 </label>
+	 </td>
 	</tr>
 	
 </table>
@@ -181,6 +181,74 @@ width:200px;
 </div>
 </div>
 <script>
+var token = '';
+function gettoken(){
+   $.ajax({
+      url: "https://testapi.open-platform.or.kr/oauth/2.0/token",
+      type: 'post',
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+      data: {
+    	  'client_id': "l7xx0ea168ac313d421a99a4c06328f6c7d0",
+          'client_secret': "7da334b9a69a4c52b26ea8320c7e10e6",
+          'grant_type': 'client_credentials',
+          'scope': 'oob'
+
+      },
+      success:function(data){
+      insert_action(data.access_token) 
+         
+      }
+   })
+   
+   console.log(new Date());
+   
+
+ }
+
+ function insert_action(token){
+	 console.log("여긴오니?");
+   var obj = new Object();
+   	console.log($("#bankname").val());
+	console.log($("#bankaddr").val());
+
+      obj.bank_code_std = $("#bankname").val();
+      obj.account_num = $("#bankaddr").val();
+      obj.account_holder_info =$("#birthDay").val();
+      obj.tran_dtime = '20180501101921';
+      
+      var jsonData = JSON.stringify(obj);
+  
+ var request = $.ajax({
+    url:"https://testapi.open-platform.or.kr/inquiry/real_name",
+    type:"post",
+    contentType: 'application/json; charset=UTF-8',
+    dataType:"json",
+    
+    headers: {
+       'Authorization': ('Bearer ' + token)
+       
+    },
+     data:jsonData 
+ });
+    request.done(function(data){
+    	console.log(data.account_holder_name);
+    	var bankUserName=$('#accountHolder').val();
+        var account_yn="";
+      if(bankUserName==data.account_holder_name){
+        alert("개인 정보 조회 인증되었습니다.");
+      }else{
+         account_yn='N';
+         alert("실명이 아닙니다.");
+      }
+      
+      console.log(data);
+   
+    });
+    request.fail(function(jqXHR, textStatus){ // 에러 발생
+    	  alert("개인 정보 조회 오류 발생 정확한 정보를 입력하세요.");
+    	 });
+
+} 
 	$(function(){
 		/* 이메일 인증 */		
 		$(".certiEmailContainer").hide();
