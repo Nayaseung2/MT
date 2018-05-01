@@ -26,6 +26,14 @@
 		<result property="reader_nic" column="NIC" />
 		<result property="reader_num" column="READER_NUM" />
 	</resultMap>
+	<resultMap type="Black" id="BlackResultSet">
+		<result property="bj_mcode" column="BJ_MCODE" />
+		<result property="live_mcode" column="LIVE_MCODE" />
+		<result property="live_nic" column="LIVE_NIC" />
+		<result property="black_date" column="BLACK_DATE" />
+		<result property="black_status" column="BLACK_STATUS" />
+		<result property="black_count" column="BLACK_COUNT" />
+	</resultMap>
 
 	 <select id="selectPeach" resultType="_int" parameterType="java.lang.String">
 	   	SELECT PEACH FROM MEMBER WHERE MCODE=#{mcode}
@@ -98,6 +106,21 @@
 		(SELECT M_NICKNAME FROM MEMBER WHERE MCODE = S.READER_MCODE) NIC
  		FROM SUBSCRIBE S WHERE S.BJ_MCODE = #{mcode} ORDER BY S.READ_DATE ASC
    	 </select>
+   	 <select id="BlackListAllCount" parameterType="java.lang.String" resultType="hashmap">
+   	 	SELECT COUNT(DISTINCT LIVE_MCODE) BLACKLIST
+   	 	FROM BLACKMEMBER WHERE BJ_MCODE=#{mcode} GROUP BY 2
+   	 </select>
+   	 <select id="selectBlackListAllList" parameterType="java.lang.String" resultMap="BlackResultSet">
+   	 	SELECT DISTINCT LIVE_MCODE AS TEST, 
+		(SELECT MID FROM MEMBER S WHERE S.MCODE = M.LIVE_MCODE) LIVE_MCODE, 
+		TO_CHAR(MAX(M.BLACK_DATE), 'YYYY-MM-DD') BLACK_DATE, LIVE_NIC, 
+		MAX(BLACK_STATUS) BLACK_STATUS, COUNT(LIVE_MCODE) BLACK_COUNT
+		FROM BLACKMEMBER M WHERE BJ_MCODE=#{mcode}
+		GROUP BY LIVE_MCODE, LIVE_NIC ORDER BY LIVE_MCODE ASC
+   	 </select>
 
+	<update id="UpdateBlackcancel" parameterType="java.lang.String">
+		UPDATE BLACKMEMBER SET BLACK_STATUS = 'N' WHERE LIVE_MCODE = (SELECT MCODE FROM MEMBER WHERE MID = #{mId})
+	</update>
 
 </mapper>

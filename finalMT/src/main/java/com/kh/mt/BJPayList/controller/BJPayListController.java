@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.annotation.JacksonInject.Value;
 import com.kh.mt.BJPayList.model.service.BJPayListService;
 import com.kh.mt.BJPayList.model.vo.BJPayList;
+import com.kh.mt.BJPayList.model.vo.Black;
 import com.kh.mt.BJPayList.model.vo.Expeach;
 import com.kh.mt.BJPayList.model.vo.Subscribe;
 import com.kh.mt.common.PageInfo;
@@ -161,11 +162,94 @@ public class BJPayListController {
 	
 	//.BJ 방송 블랙 회ㅏ원 관리
 	@RequestMapping("BlackList.bjp")
-	public ModelAndView BlackList(ModelAndView mv){
+	public ModelAndView BlackList(ModelAndView mv, String newCurrentPage, String mcode){
+		System.out.println(mcode);
+		HashMap<String, String> list3 = bjp.BlackListAllCount(mcode);
 		
+		PageInfo pi = BlackListaddPage(newCurrentPage, "BlackList", mcode);
+		
+		ArrayList<Black> list2 = bjp.selectBlackListAllList(mcode,pi);
+		
+		
+		String day = null;
+		
+		mv.addObject("pi", pi);
+		mv.addObject("list2", list2);
+		mv.addObject("list3", list3);
 		mv.setViewName("bjPayList/BlackList");
+		
+		
+		if (newCurrentPage != null) {
+			mv.clear();
+			HashMap hmap = new HashMap();
+			
+			hmap.put("list2", list2);
+			hmap.put("pi", pi);
+			
+			mv.addObject("list", hmap);
+			
+			System.out.println(hmap);
+			mv.setViewName("jsonView");
+			
+		}
+		
 		return mv;
 				
+				
+	}
+	
+	
+	//**********************************페이징 처리**************************************
+		public PageInfo BlackListaddPage(String newCurrentPage, String type, String mcode){
+			HashMap<String, String> list = bjp.BlackListAllCount(mcode);
+			
+			int currentPage = 1;
+			int limit = 0;
+			int maxPage = 0;
+			int startPage = 0;
+			int endPage = 0;
+			int listCount = 0;
+
+			limit = 10;
+			if(type.equals("BlackList")){
+				listCount = Integer.parseInt(String.valueOf(list.get("BLACKLIST")));
+			}
+			
+			if(newCurrentPage != null){
+				currentPage = Integer.parseInt(newCurrentPage);
+			}
+			
+			maxPage = (int)((double)listCount / limit + 0.9);
+			
+			startPage = ((int)((double)currentPage / limit + 0.9)-1) * limit + 1;
+			
+			endPage = startPage + limit -1;
+			
+			if(maxPage < endPage){
+				endPage = maxPage;
+			}
+			
+			return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+		}
+			
+	
+	
+	@RequestMapping("blackcancel.bjp")
+	public ModelAndView blackcancel(ModelAndView mv,  String mId){
+		
+		int result = bjp.BlackcancelUpdate(mId);
+		
+		
+		if(result > 0 ) {
+			mv.addObject("result", result);
+			mv.setViewName("jsonView");
+		}else{
+			mv.addObject("result", result);
+			mv.setViewName("jsonView");
+		}
+		
+		return mv;
+		
 	}
 	
 	//BJ 팬 관리 페이지
