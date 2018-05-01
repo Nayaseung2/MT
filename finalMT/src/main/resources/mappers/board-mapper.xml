@@ -29,7 +29,7 @@
   		
 	<insert id="insertBoard">
 		INSERT INTO BOARD
-		VALUES(SEQ_BCODE.NEXTVAL,#{bwriter},#{b_type},#{b_title},#{b_content},#{bwriter},SYSDATE,SYSDATE,0,'Y')
+		VALUES(SEQ_BCODE.NEXTVAL,#{bwriter},'myBoard',#{b_title},#{b_content},#{bwriter},SYSDATE,SYSDATE,0,'Y')
 	</insert>
 	
 	<insert id="insertBoardFile">
@@ -48,5 +48,23 @@
 		INSERT INTO UPLOADFILE
   		VALUES(NULL, #{ f_orname }, #{ f_rename }, #{ filepath }, #{ f_mcode }, SYSDATE, seq_filecode.nextval)
 	</insert>
+	
+	<!-- 방송국 - 내 게시글 총 수 -->
+	<select id="mbListTotal" resultType="_int">
+		SELECT COUNT(*) TOTAL
+		FROM BOARD
+		WHERE B_TYPE = 'myBoard' AND BWRITER = #{ mId }
+	</select>
+	
+	<!-- 방송국 - 내 게시글 목록 -->
+	<select id="mbList" resultMap="BoardResultSet">
+		SELECT *
+		FROM BOARD
+		WHERE B_TYPE = 'myBoard' AND BWRITER = #{ mId }
+		ORDER BY B_CREATE_DATE DESC
+	</select>	
+	
+	
+	
 	
 </mapper>

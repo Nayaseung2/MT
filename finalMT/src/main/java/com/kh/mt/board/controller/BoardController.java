@@ -2,6 +2,8 @@ package com.kh.mt.board.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,11 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.mt.JDBC.model.vo.JDBC;
 import com.kh.mt.board.model.service.BoardService;
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
+import com.kh.mt.common.PageInfo;
 
 @Controller
 public class BoardController {
@@ -57,7 +61,7 @@ public class BoardController {
 		
 		//Board넣기
 		bs.insertBoard(b);
-		return "JDBC/myBroadcastStation";
+		return "JDBC/BSwriteSuccess";
 	}
 	
 	//방명록 insert
@@ -67,4 +71,75 @@ public class BoardController {
 		bs.insertGuestBook(b);
 		return "JDBC/myBroadcastStation";
 	}
+	
+	
+	
+	// 마이페이지 질문 리스트
+	@RequestMapping(value="BSmyBoard.board")
+	public ModelAndView showBSmyBoard(ModelAndView mv, String newCurrentPage,
+										String mId) {
+		
+		//System.out.println("controller's mId : " + mId);
+		
+		PageInfo pi = addPage(newCurrentPage, mId);
+		
+		ArrayList<Board> mbList = bs.mbList(pi, mId);
+		
+		HashMap hmap = new HashMap();
+		
+		hmap.put("pi", pi);
+		hmap.put("mbList", mbList);
+		
+		mv.addObject("hmap", hmap);
+		
+		if(newCurrentPage == null) {
+			mv.setViewName("JDBC/BSmyBoard");
+		}else {
+			mv.setViewName("jsonView");
+		}
+
+		return mv; 
+	}
+	
+	//페이징 처리 메소드
+	public PageInfo addPage(String newCurrentPage, String mId){
+		
+		int currentPage = 1;
+		int limit = 0;
+		int maxPage = 0;
+		int startPage = 0;
+		int endPage = 0;
+		int listCount = 0;
+
+		limit = 10;
+
+		listCount = bs.mbListTotal(mId);
+
+		if(newCurrentPage != null){
+			currentPage = Integer.parseInt(newCurrentPage);
+		}
+
+		maxPage = (int)((double)listCount / limit + 0.9);
+
+		startPage = ((int)((double)currentPage / limit + 0.9)-1) * limit + 1;
+
+		endPage = startPage + limit -1;
+
+		if(maxPage < endPage){
+			endPage = maxPage;
+		}
+
+		return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+	}
+	
+
+	
+		
+	
+	
+	
+	
+	
+	
+	
 }

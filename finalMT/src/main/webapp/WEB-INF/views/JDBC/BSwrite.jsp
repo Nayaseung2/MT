@@ -60,8 +60,7 @@
 		background:rgba(235, 104, 100, 0.5);
 		border:none;
 		color:white;
-		float:right;
-		margin-right:500px;
+		margin-right:200px;
 	}
 </style>
 <title>글쓰기</title>
@@ -72,9 +71,7 @@
 <body>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <div class="BSContainer">
-<div class="icon">
-<a href="index.jsp"><img src="<%=request.getContextPath() %>/resources/images/logo.png" style="width:200px;"></a>
-</div>
+<jsp:include page="../common/menubar.jsp" /> 
 <div class="BSframe">
 <div class="showBSname">
 <br>
@@ -110,7 +107,7 @@
 <label style="margin-left:15px;">방송국 방문 : 0명</label>
 </div>
 <br>
-<button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button>
+<button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button><br/><br/>
 <button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
 <br><br>
 <table class="bottomBox">
@@ -121,7 +118,7 @@
 	</tr>
 	<tr>
 		<td>
-			<p><a class="bottom">일반 게시판</a></p>
+			<p><a class="bottom" href="BSmyBoard.board?mId=${ loginUser.mId }">일반 게시판</a></p>
 			<p><a class="bottom" href="showGuestBookList.JDBC">방명록</a></p>
 		</td>
 	</tr>
@@ -134,43 +131,38 @@
 </div>
 <!-- 오른쪽 부분 -->
 <div class="showRightPart">
+<br/>
 <h4 style="margin-left:30px;">글쓰기</h4>
+<br/>
+<br/>
 <form method="post" action="insertBoard.board" encType="multipart/form-data">
 	<table class="writeTable" >
 		<tr>
-			<th><span class="glyphicon glyphicon-asterisk"></span>게시판</th>
-			<td class="equal"><b>:</b></td>
-			<td>
-				&nbsp;
-				<input type="radio" id="board" name="b_type" value="normalBoard">
-				<label for="board">게시판 공지</label>
-				<input type="radio" id="BSboard" name="b_type" value="JDBCBoard">
-				<label for="BSboard">방송국 게시판 공지</label>
-			</td>
+			<th>제목</th>
+			<td><input type="text" name="b_title" id="b_title" size="70" style="border:1px solid lightgray;"></td>
 		</tr>
 		<tr>
-			<th><span class="glyphicon glyphicon-asterisk"></span>제목</th>
-			<td class="equal"><b>:</b></td>
-			<td><input type="text" name="b_title" size="70" style="border:1px solid lightgray;"></td>
-		</tr>
-		<tr>
-			<th><span class="glyphicon glyphicon-asterisk"></span>내용</th>
-			<td class="equal"><b>:</b></td>
-			<td></td>
-		</tr>
-		<tr>
+			<th>내용</th>
 			<td colspan="3" style="height:330px;">
-				<textarea name="b_content" class="ckeditor" rows="30" cols="50">
+				<textarea name="b_content" id="b_content" class="ckeditor" rows="30" cols="50">
 				</textarea>
 			</td>
 		</tr>
 	</table>
-	<input type="file" class="inputImg" name="Boardfile">
+	<div style="padding-left: 100px;">
+		<input type="file" class="inputImg" name="Boardfile" id="Boardfile">
+	</div>
 	<br>
+	<br/>
+	<div align="right">
 		<button type="submit"class="okay">확인</button>
 		<input type="hidden" name="bwriter" value="${loginUser.mId }"/>
+	</div>
 </form>
 </div>
+
+
+
 </div>
 </div>
 
