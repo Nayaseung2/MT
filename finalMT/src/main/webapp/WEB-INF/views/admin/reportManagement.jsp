@@ -45,18 +45,15 @@ tr, th {
 .modalTable, .modalTable td, .modalTable input{
 	width: 100%;
 }
-
 .modalTable input{
 	margin: 0px auto 20px auto; 
 	font-size: 18px;
 	font-weight: bold;
 }
-
 .modal-dialog{
 	width: 70%;
 	
 }
-
 .modalTable textarea{
 	width: 100%;
 	height: 200px;
@@ -76,6 +73,28 @@ tr, th {
 	width: 30%;
 	display: inline-block;
 }
+#dataTables-example{
+	table-layout:fixed;
+}
+#dataTables-example td{
+	line-height: 2.5em;
+}
+#dataTables-example td:nth-child(4){
+	display: block; 
+	width:100%; 
+	overflow:hidden; 
+	text-overflow:ellipsis; 
+	white-space:nowrap;
+}
+#all {
+	margin-top: 10px;
+}
+
+.reportSum {
+	font-weight: bold;
+	color: red;
+	
+}
 </style>
 
 </head>
@@ -93,7 +112,7 @@ tr, th {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
+                <a class="navbar-brand" href="index.jsp"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -150,7 +169,7 @@ tr, th {
 								<div class="input-group custom-search-form" style="width: 100%; float: right;" >
 	                                <input type="text" class="form-control" placeholder="Search..." id="search">
 	                                <span class="input-group-btn">
-		                                <button class="btn btn-default" type="button" onclick="typeChange('searchDeposit.ad')">
+		                                <button class="btn btn-default" type="button" onclick="typeChange('searchReport.ad')">
 		                                    <i class="fa fa-search"></i>
 		                                </button>
 	                            	</span>
@@ -178,14 +197,19 @@ tr, th {
                                         <th align="center">자세히 보기</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="values">
                                   <c:forEach var="i" items="${ map.list }">
                                   	<tr>
                                   		<td><c:out value="${ i.reporter }"/></td>
                                   		<td><c:out value="${ i.target }"/></td>
                                   		<td><c:out value="${ i.videoYN }"/></td>
                                   		<td><c:out value="${ i.content }"/></td>
-                                  		<td><c:out value="${ i.reportSum }"/></td>
+                                  		<c:if test="${ i.reportSum >= 2 }">
+                                  			<td class="reportSum"><c:out value="${ i.reportSum }"/></td>
+                                  		</c:if>
+                                  		<c:if test="${ i.reportSum < 2 }">
+                                  			<td><c:out value="${ i.reportSum }"/></td>
+                                  		</c:if>
                                   		<td><c:out value="${ i.reportDate }"/></td>
                                   		<td width="5%" align="center"><button class="btn btn-default detail">자세히 보기</button></td>
                                   		<td style="display: none"><c:out value="${ i.screen }"/></td>
@@ -261,22 +285,25 @@ tr, th {
 	<!-- /.modal -->
     <!-- /#wrapper -->
     <input type="hidden" value="${ map.pi.maxPage }" id="maxPage"/>
-    <input type="hidden" class="type" id="deposit.ad"/>
+    <input type="hidden" class="type" id="reportMg.ad"/>
 	</c:if>
     <c:if test="${ loginUser.mId ne 'admin' || loginUser == null}">
 		<c:redirect url="index.jsp"/>
     </c:if>
     <script>
+	    
     function typeChange(type){
 		$(".type").attr("id", type);
-		
 		pageChange("", type);
-	}
+	};
 	
 	function pageChange(value, type){
 		var page = Number($("#page").text());
 		var url = type;		
 		var userId = $("#search").val();
+		
+		console.log(url);
+		console.log(userId);
 		
 		if(page >= 1 && page <= $("#maxPage").val()){
   			if(value === 'plus'){
@@ -296,12 +323,19 @@ tr, th {
   				type: "get",
   				data:{"newCurrentPage":page, "userId": userId},
   				success:function(data){
-	  				var list = data.map.dlist;
+	  				var list = data.map.list;
 	  				var pi = data.map.pi;
+	  				
+	  				console.log(list);
+	  				
 	  				$(".values").html("");
 	  				
 	  				for(var i = 0; i < list.length; i++){
-		  				$(".values").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td></tr>");
+	  					if(list[i].reportSum >= 2){
+	  						$(".values").append("<tr><td>"+list[i].reporter+"</td><td>"+list[i].target+"</td><td>"+list[i].videoYN+"</td><td>"+list[i].content+"</td><td class='reportSum'>"+list[i].reportSum+"</td><td>"+list[i].reportDate+"</td><td><button class='btn btn-default detail'>자세히 보기</button></td><td style='display: none'>"+list[i].screen+"</td></tr>");
+	  					}else {
+			  				$(".values").append("<tr><td>"+list[i].reporter+"</td><td>"+list[i].target+"</td><td>"+list[i].videoYN+"</td><td>"+list[i].content+"</td><td>"+list[i].reportSum+"</td><td>"+list[i].reportDate+"</td><td><button class='btn btn-default detail'>자세히 보기</button></td><td style='display: none'>"+list[i].screen+"</td></tr>");
+	  					}
 	  				}
 	  				
 	  				$("#page").text(page);
@@ -309,8 +343,9 @@ tr, th {
 	  				
 	  				if(userId != ""){
 	  					$("#all").remove();
-	  					$("#pagingArea").append("<button onclick='location.reload()' id='all'>전체보기</button>");
+	  					$(".pageul").append("<br/><button class='btn btn-default' onclick='location.reload()' id='all'>전체보기</button>");
 	  				}
+	  				
   				},
   				error:function(data){
   					console.log("에러!");
@@ -318,7 +353,7 @@ tr, th {
   			});
 			return false;
 		}
-	}
+	};
 	
 	$(document).on("click", ".detail", function(){
 		var writer = $(this).parent().parent().children().eq(0).text();
@@ -358,8 +393,8 @@ tr, th {
 			}
 		});
 		//window.open("http://www.naver.net", "네이버새창", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
-		
 	}
+	
     </script>
 </body>
 </html>

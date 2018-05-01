@@ -64,12 +64,12 @@
   	<!-- 관리자 메인화면 -->
   	<select id="allMenuList" resultType="hashmap">
 	SELECT (SELECT COUNT(*) FROM MEMBER WHERE VIDEO_YN = 'Y') bj,
-        		(SELECT SUM(PRICE)
+        		(SELECT NVL(SUM(PRICE), 0)
 				FROM PAYHISTORY
 				WHERE TO_CHAR(PAY_DATE) = TO_CHAR(SYSDATE)) mt,
 		        (SELECT COUNT(*) FROM BOARD WHERE B_TYPE = 'report' AND B_STATUS = 'Y') report,
 		        (SELECT COUNT(*) FROM MEMBER WHERE TO_CHAR(JOIN_DATE) =	TO_CHAR(SYSDATE)) newm,
-		        (SELECT COUNT(*) FROM WITHDRAWAL WHERE STATUS = 'N' AND WD_DATE = SYSDATE) withdrawal,            
+		        (SELECT COUNT(*) FROM WITHDRAWAL WHERE STATUS = 'N') withdrawal,            
 		        (SELECT COUNT(*) FROM BOARD WHERE B_TYPE = 'personal' AND B_STATUS = 'Y') personal
 	FROM MEMBER 
 	GROUP BY 2
@@ -84,6 +84,7 @@
   		SELECT MCODE, MID, MPWD, MNAME, M_NICKNAME, EMAIL, ACOUNT, JOIN_DATE, UPDATE_DATE, MSTATUS, A_STATUS, PEACH, VIDEO_YN, (SELECT COUNT(*) FROM SUBSCRIBE WHERE M.MCODE = BJ_MCODE) READER
 		FROM MEMBER M
 		WHERE MSTATUS = 'Y'
+		AND MID != 'admin'
   	</select>
   	
   	<select id="searchDay" resultType="java.lang.String">
@@ -240,14 +241,44 @@
   	<select id="reportList" resultMap="reportResultSet">
   		SELECT BWRITER AS REPORTER, B_TITLE AS TARGET, VIDEO_YN, B_CONTENT, (SELECT COUNT(*) FROM BOARD B2 WHERE B1.B_TITLE = B2.B_TITLE) AS REPORTSUM, TO_CHAR(B_CREATE_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS REPORTDATE, F_RENAME AS SCREEN
 		FROM BOARD B1
-		JOIN MEMBER ON(B_TITLE = MID)
-		JOIN UPLOADFILE ON (BWRITER = F_MCODE)
+		JOIN MEMBER ON(B1.B_TITLE = MID)
+		JOIN UPLOADFILE ON (B1.B_CREATE_DATE = UPLOAD_DATE)
+		WHERE B1.B_TYPE = 'report'
   	</select>
   	
   	<select id="urlSearch" parameterType="java.lang.String" resultType="string">
   		SELECT V_HREF
   		FROM JDBC
   		WHERE MCODE = #{target}
+  	</select>
+  	
+  	<select id="newUserCount" resultType="_int">
+  		SELECT COUNT(*)
+  		FROM MEMBER
+  		WHERE TO_CHAR(JOIN_DATE) = TO_CHAR(SYSDATE)
+  	</select>
+  	
+  	<select id="newUserList" resultMap="memberResultSet">
+  		SELECT *
+  		FROM MEMBER
+  		WHERE TO_CHAR(JOIN_DATE) = TO_CHAR(SYSDATE)
+  	</select>
+  	
+  	<select id="reportUserCount" parameterType="java.lang.String" resultType="_int">
+  		SELECT COUNT(*)
+  		FROM BOARD
+  		WHERE B_TITLE = #{userId}
+  		AND B_STATUS = 'Y'
+  		AND B_TYPE = 'report'
+  	</select>
+  	<select id="searchReportUser" parameterType="java.lang.String" resultMap="reportResultSet">
+  		SELECT BWRITER AS REPORTER, B_TITLE AS TARGET, VIDEO_YN, B_CONTENT, (SELECT COUNT(*) FROM BOARD B2 WHERE B1.B_TITLE = B2.B_TITLE) AS REPORTSUM, TO_CHAR(B_CREATE_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS REPORTDATE, F_RENAME AS SCREEN
+		FROM BOARD B1
+		JOIN MEMBER ON(B1.B_TITLE = MID)
+		JOIN UPLOADFILE ON (B1.B_CREATE_DATE = UPLOAD_DATE)
+		WHERE B1.B_TYPE = 'report'
+  		AND B_STATUS = 'Y'
+  		AND B_TITLE = #{userId}
   	</select>
   	
   </mapper>

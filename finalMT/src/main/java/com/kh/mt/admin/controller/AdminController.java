@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,11 +62,37 @@ public class AdminController {
 	//관리자 메인화면
 	@RequestMapping("adminMain.ad")
 	public ModelAndView adminMain(ModelAndView mv){
-		
 		HashMap<String, HashMap<String, String>> list = as.allMenuList(); 
 		
-		mv.addObject("list", list);
+		int userTotal = 0;
+		int todayTotal = 0;
 		
+		File path = new File("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/");
+		File[] fileList = path.listFiles() ;
+		
+		for(int i = 0; i < fileList.length; i++){
+			try {
+				reader = new BufferedReader(new FileReader(fileList[i]));
+				
+				while(reader.readLine() != null){
+					if(i == 0){
+						todayTotal++;
+					}
+					userTotal++;
+				}
+				reader.close();
+			
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		mv.addObject("list", list);
+		mv.addObject("todayTotal", todayTotal);
+		mv.addObject("userTotal", userTotal);
+
 		mv.setViewName("admin/admin");
 		
 		return mv;
@@ -79,12 +107,13 @@ public class AdminController {
 		
 		ArrayList<Member> mlist = as.userAllList(pi);
 		ArrayList<String> times = userCount();
-		
+
 		mv.addObject("pi", pi);
 		mv.addObject("list", list);
 		mv.addObject("mlist", mlist);
 		mv.addObject("times", times);
-		
+		mv.addObject("todayTotal", todayCount());
+		mv.addObject("newUserCount", as.newUserCount());
 		mv.setViewName("admin/memberManagement");
 		
 		if(newCurrentPage != null){
@@ -123,6 +152,27 @@ public class AdminController {
 		
 		mv.addObject("list", list);
 		
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	//신규회원 List조회
+	@RequestMapping("searchNewUser.ad")
+	public ModelAndView searchNewUser(ModelAndView mv, String newCurrentPage){
+		int count = as.newUserCount();
+
+		PageInfo pi = addUserPage(newCurrentPage, count);
+		
+		ArrayList<Member> newUserList = as.newUserList(pi);
+		
+		HashMap<String, Object> list = new HashMap<String, Object>();
+		
+		list.put("pi", pi);
+		list.put("mlist", newUserList);
+		
+		mv.addObject("list", list);
+
 		mv.setViewName("jsonView");
 		
 		return mv;
@@ -398,7 +448,7 @@ public class AdminController {
 	@RequestMapping("reportMg.ad")
 	public ModelAndView reportMg(ModelAndView mv, String newCurrentPage){
 		int count = as.reportListCount();
-		
+		System.out.println("count: " + count);
 		PageInfo pi = addUserPage(newCurrentPage, count);
 		
 		ArrayList<Report> list = as.reportList(pi);
@@ -410,8 +460,28 @@ public class AdminController {
 		map.put("list", list);
 
 		mv.addObject("map", map);
-		
+		System.out.println(pi);
 		mv.setViewName("admin/reportManagement");
+		
+		return mv;
+	}
+	
+	@RequestMapping("searchReport.ad")
+	public ModelAndView searchReport(ModelAndView mv, String newCurrentPage, String userId){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int count = as.reportUserCount(userId);
+		System.out.println("searchReport.ad listCount: " + count);
+		PageInfo pi = addUserPage(newCurrentPage, count);
+		
+		ArrayList<Report> list = as.searchReportUser(userId, pi);
+		
+		System.out.println("searchReport.ad list: " + list);
+		
+		map.put("list", list);
+		map.put("pi", pi);
+		
+		mv.addObject("map", map);
+		mv.setViewName("jsonView");
 		
 		return mv;
 	}
@@ -621,6 +691,25 @@ public class AdminController {
 		return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 	}
 	
+	//하루 접속자 읽기
+	public int todayCount(){
+		int result = 0;
+		
+		try {
+			reader = new BufferedReader(new FileReader("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log"));
+			
+			while(reader.readLine() != null){
+				result++;
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	
 	//회원 관리 시간별 그래프 메소드
 	public  ArrayList<String> userCount(){
@@ -679,7 +768,6 @@ public class AdminController {
 		String monthDay = as.searchDay();
 		String day = (new Date().toString().split(" "))[2];
 		ArrayList<String> list = new ArrayList<String>();
-		String line = null;
 		
 		String lastDay = monthDay.substring(monthDay.lastIndexOf("-")+1, monthDay.length());
 		String fileName = monthDay.substring(0, monthDay.lastIndexOf("-")+1);
@@ -700,7 +788,7 @@ public class AdminController {
 					reader = new BufferedReader(new FileReader("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log." + fileName + temp));
 				}
 				
-				while((line = reader.readLine()) != null){
+				while(reader.readLine() != null){
 					count++;
 				}
 				
@@ -913,36 +1001,36 @@ public class AdminController {
 		return mv;
 	}
 	
-//	public static void main(String[] args) {
-//		/*int num = 160;
-//		String str = "";
-//		
-//		String temp = "";
-//		for(int i = 0; i < str.length(); i++){
-//			if(i >= num){
-//				temp += str.charAt(i);
-//			}
-//		}
-//		System.out.println(temp);*/
-//		
-//        
-//        
-//        try{
-//            for(int i = 15; i < 25; i++){
-//            	String fileName = "C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log.2018-04-"+i;
-//            	
-//	            BufferedWriter fw = new BufferedWriter(new FileWriter(fileName, true));
-//	            
-//            	fw.write(" ");
-//            	fw.flush();
-//	            fw.close();
-//	             
-//            }
-//             
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//
+////	public static void main(String[] args) {
+////		int num = 34;
+////		String str = "";
+////		
+////		String temp = "VALUES ('6', 2, 300000, SYSDATE, N, NULL, '국민34363521546248')";
+////		for(int i = 0; i < str.length(); i++){
+////			if(i >= num){
+////				temp += str.charAt(i);
+////			}
+////		}
+////		System.out.println(temp);
+////		
+////        
+////       /* 
+////        try{
+////            for(int i = 15; i < 25; i++){
+////            	String fileName = "C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log.2018-04-"+i;
+////            	
+////	            BufferedWriter fw = new BufferedWriter(new FileWriter(fileName, true));
+////	            
+////            	fw.write(" ");
+////            	fw.flush();
+////	            fw.close();
+////	             
+////            }
+////             
+////        }catch(Exception e){
+////            e.printStackTrace();
+////        }
+////*/
 //
 //		
 //	}

@@ -81,4 +81,12 @@ public interface AdminDao {
 
 	String urlSearch(String target);
 
+	int newUserCount();
+
+	ArrayList<Member> newUserList(PageInfo pi);
+
+	int reportUserCount(String userId);
+
+	ArrayList<Report> searchReportUser(String userId, PageInfo pi);
+
 }

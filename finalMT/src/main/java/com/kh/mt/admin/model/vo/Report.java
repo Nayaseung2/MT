@@ -11,12 +11,13 @@ public class Report {
 	private int reportSum;
 	private String reportDate;
 	private String screen;
+	private String status;
 	
 	public Report() {
 		super();
 	}
 
-	public Report(String reporter, String target, String videoYN, String content, int reportSum, String reportDate, String screen) {
+	public Report(String reporter, String target, String videoYN, String content, int reportSum, String reportDate, String screen, String status) {
 		super();
 		this.reporter = reporter;
 		this.target = target;
@@ -25,6 +26,7 @@ public class Report {
 		this.reportSum = reportSum;
 		this.reportDate = reportDate;
 		this.screen = screen;
+		this.status = status;
 	}
 
 	public String getReporter() {
@@ -81,6 +83,14 @@ public class Report {
 
 	public void setScreen(String screen) {
 		this.screen = screen;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+	
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Override

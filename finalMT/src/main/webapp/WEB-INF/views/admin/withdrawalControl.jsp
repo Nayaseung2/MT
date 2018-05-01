@@ -39,6 +39,9 @@
 <script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
 
 <style>
+th, td {
+	text-align: center;	
+}
 .arBtn {
 	width: 3.5%;
 }
@@ -59,7 +62,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
+                <a class="navbar-brand" href="index.jsp"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -141,24 +144,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <a href="#">
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <img src="resources/images/plusBtn.png" style="height: 75px;"/>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">추가하기</div>
-                                    <div></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </a>
 			</div>
             
             <div class="row">
@@ -196,8 +181,8 @@
 	                                  		<td>${ w.amount }</td>
 	                                  		<td>${ w.account }</td>
 	                                  		<td>${ w.wdDate }</td>
-	                                  		<td class='arBtn'><button class='approval'>승인</button></td>
-	                                  		<td class='arBtn'><button class='refusal'>거절</button></td>
+	                                  		<td class='arBtn'><button class='approval btn btn-info'>승인</button></td>
+	                                  		<td class='arBtn'><button class='refusal btn btn-danger'>거절</button></td>
 	                                  		<td style='display: none;'>${ w.wdCode }</td>
 										</tr>
 									</c:forEach>
@@ -254,7 +239,7 @@
 				$("tbody").html("");
 	       
 	      		for(var i = 0; i < list.length; i++){
-	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class='approval'>승인</button></td><td class='arBtn'><button class='refusal'>거절</button></td><td style='display: none;'>"+ list[i].wdDate +"</td></tr>");
+	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class='approval btn btn-info'>승인</button></td><td class='arBtn'><button class='refusal btn btn-danger'>거절</button></td><td style='display: none;'>"+ list[i].wdDate +"</td></tr>");
 	      		}
 	      		
 	      		$(".pageul").children().removeClass('active');
@@ -304,7 +289,7 @@
     				$("tbody").html("");
     	       
     	      		for(var i = 0; i < list.length; i++){
-    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class='approval'>승인</button></td><td class='arBtn'><button class='refusal'>거절</button></td><td style='display: none;'>"+ list[i].wdDate +"</td></tr>");
+    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class='approval btn btn-info'>승인</button></td><td class='arBtn'><button class='refusal btn btn-danger'>거절</button></td><td style='display: none;'>"+ list[i].wdDate +"</td></tr>");
     	      		}
     	      		
 					$(".pageul").html("");
@@ -325,7 +310,7 @@
     	      		
     	      		if(userId != ""){
 	  					$("#all").remove();
-	  					$(".pageul").append("<br/><button onclick='location.reload()' id='all'>전체보기</button>");
+	  					$(".pageul").append("<br/><br/><button class='btn btn-info' onclick='location.reload()' id='all'>전체보기</button>");
 	  				}
                 },
                 error:function(data){

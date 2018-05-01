@@ -42,6 +42,9 @@
 <script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
 
 <style>
+	th, td {
+		text-align: center;
+	}
 	.gType:hover, .mType:hover {
 		cursor: pointer;    	
  	}
@@ -61,7 +64,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
+                <a class="navbar-brand" href="index.jsp"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -148,7 +151,7 @@
 	                                  		<td><fmt:formatNumber value="${ m.peach}" groupingUsed="true"/>개</td>
 	                                  		<td>${ m.email }</td>
 	                                  		<td>${ m.updateDate }</td>
-	                                  		<td><button class="stop">복원</button></td>
+	                                  		<td><button class="stop btn btn-info">복원</button></td>
 	                                  	</tr>
 	                                  </c:forEach>
 	                                </tbody>
@@ -200,7 +203,7 @@
 				$("tbody").html("");
 
 				for(var i = 0; i < list.length; i++){
-	            	$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].updateDate+"</td><td><button class='stop'>복원</button></td></tr>");
+	            	$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].updateDate+"</td><td><button class='stop btn btn-info'>복원</button></td></tr>");
 	      		}
 				
 	      		$(".pageul").children().removeClass('active');
@@ -243,7 +246,7 @@
     	       		var pi = data.map.pi;
     				$("tbody").html("");
     	      		for(var i = 0; i < list.length; i++){
-    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].updateDate+"</td><td><button class='stop'>복원</button></td></tr>");
+    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].updateDate+"</td><td><button class='stop btn btn-info'>복원</button></td></tr>");
     	      		}
     	      		
     	      		$(".pageul").children().removeClass('active');
@@ -278,8 +281,8 @@
 	  					$("tbody").html("");
 	  					$("#pagingArea").html("");
 	  					
-	  					$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].updateDate+"</td><td><button class='stop'>복원</button></td></tr>");
-	  					$("#pagingArea").append("<button onclick='location.reload()'>전체보기</button>");
+	  					$("tbody").append("<tr><td>"+m.mId+"</td><td>"+m.mName+"</td><td>"+m.mcode+"</td><td>"+addComma(m.peach)+"개</td><td>"+m.email+"</td><td>"+m.updateDate+"</td><td><button class='stop btn btn-info'>복원</button></td></tr>");
+	  					$("#pagingArea").append("<button class='btn btn-info' onclick='location.reload()'>전체보기</button>");
 	 				}else {
 	 					alert("존재하지 않는 아이디입니다.");
 	 				}
