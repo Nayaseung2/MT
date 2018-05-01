@@ -39,6 +39,12 @@
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 
+<style>
+	th, td {
+		text-align: center;
+	}
+</style>
+
 </head>
 
 <body>
@@ -55,7 +61,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
+                <a class="navbar-brand" href="index.jsp"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -114,7 +120,7 @@
                                     <i class="fa fa-won fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge"><fmt:formatNumber value="${ map.day }" type="currency" groupingUsed="true"/></div>
+                                    <div class="huge"><fmt:formatNumber value="${ map.day }" groupingUsed="true"/>원</div>
                                     <div>오늘의 수입</div>
                                 </div>
                             </div>
@@ -129,7 +135,7 @@
                                     <i class="fa fa-won fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge"><fmt:formatNumber value="${ map.month }" type="currency" groupingUsed="true"/></div>
+                                    <div class="huge"><fmt:formatNumber value="${ map.month }" groupingUsed="true"/>원</div>
                                     <div>이번달 수입</div>
                                 </div>
                             </div>
@@ -145,7 +151,7 @@
                                     <i class="fa fa-won fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge"><fmt:formatNumber value="${ map.total }" type="currency" groupingUsed="true"/></div>
+                                    <div class="huge"><fmt:formatNumber value="${ map.total }" groupingUsed="true"/>원</div>
                                     <div>총 수입</div>
                                 </div>
                             </div>

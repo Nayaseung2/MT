@@ -88,5 +88,13 @@ public interface AdminService {
 
 	String urlSearch(String target);
 
+	int newUserCount(); //신규회원 리스트 카운트
+
+	ArrayList<Member> newUserList(PageInfo pi); //신규회원 리스트
+
+	int reportUserCount(String userId);	//신고회원 카운트
+
+	ArrayList<Report> searchReportUser(String userId, PageInfo pi); //신고대상 리스트 가져오기
+
 } 
  

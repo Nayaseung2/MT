@@ -22,8 +22,8 @@
 
 	<insert id="insertMember">
 		INSERT INTO MEMBER
-		VALUES(SEQ_MCODE.NEXTVAL,#{mId},#{mPwd},#{mName},#{nickName},
-		#{email},#{account},SYSDATE,SYSDATE,'Y','N',0,NULL)
+		VALUES(SEQ_MCODE.NEXTVAL, #{mId}, #{mPwd}, #{mName}, #{nickName},
+		#{email}, NULL, SYSDATE,SYSDATE, 'Y', 'N', 0, NULL)
 	</insert>
 
 	<select id="loginCheck" resultMap="memberResultSet"

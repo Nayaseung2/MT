@@ -44,9 +44,12 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 
 <style>
+	th, td {
+		text-align: center;
+	}
 	.gType:hover, .mType:hover {
 		cursor: pointer;    	
- 	}
+	}
 </style>
 </head>
 
@@ -63,7 +66,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
+                <a class="navbar-brand" href="index.jsp"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -123,12 +126,32 @@
                                     <i class="fa fa-qq fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">242명</div>
-                                    <div>현재 접속자 수</div>
+                                    <div class="huge"><fmt:formatNumber value="${ todayTotal }" groupingUsed="true"/>명</div>
+                                    <div>오늘 접속자 수</div>
                                 </div>
                             </div>
                         </div>
-                        <a class="mType" href="#">
+                        <div class="panel-footer">
+                            <span class="pull-left"></span>
+                            <span class="pull-right">^^</span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-plus-circle fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge"><fmt:formatNumber value="${ newUserCount }" groupingUsed="true"/>명</div>
+                                    <div>신규회원</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="mType" onclick="typeChange('searchNewUser.ad');">
                             <div class="panel-footer">
                                 <span class="pull-left">자세히</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -181,26 +204,7 @@
                         </a>
                     </div>
                 </div>
-                <a href="#">
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <img src="resources/images/plusBtn.png" style="height: 75px;"/>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">추가하기</div>
-                                    <div></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </a>
 			</div>
-            
-            
             
 	   		<div class="panel panel-default" style="margin-top: 30px;">
                <div class="panel-heading">
@@ -253,24 +257,24 @@
 	                                        <th>방송 번호</th>
 	                                        <th>보유 피치</th>
 	                                        <th>이메일</th>
-	                                        <th>계좌 인증여부</th>
+	                                        <th>계좌인증</th>
 	                                        <th>가입일</th>
 	                                        <th>구독자 수</th>
 	                                        <th>비고</th>
 	                                    </tr>
 	                                </thead>
-	                                <tbody>
+	                                <tbody class="values">
 	                                  <c:forEach var="m" items="${ mlist }">
 	                                  	<tr>
-	                                  		<td>${ m.mId }</td>
-	                                  		<td>${ m.mName }</td>
-	                                  		<td>${ m.mcode }</td>
+	                                  		<td><c:out value="${ m.mId }"/></td>
+	                                  		<td><c:out value="${ m.mName }"/></td>
+	                                  		<td><c:out value="${ m.mcode }"/></td>
 	                                  		<td><fmt:formatNumber value="${ m.peach}" groupingUsed="true"/>개</td>
-	                                  		<td>${ m.email }</td>
-	                                  		<td>${ m.a_status }</td>
-	                                  		<td>${ m.joinDate }</td>
+	                                  		<td><c:out value="${ m.email }"/></td>
+	                                  		<td><c:out value="${ m.a_status }"/></td>
+	                                  		<td><c:out value="${ m.joinDate }"/></td>
 	                                  		<td><fmt:formatNumber value='${ m.readerCount}' groupingUsed='true'/>명</td>
-	                                  		<td><button class="stop">정지</button></td>
+	                                  		<td><button class="stop btn btn-info">정지</button></td>
 	                                  	</tr>
 	                                  </c:forEach>
 	                                </tbody>
@@ -321,7 +325,7 @@
 				$("tbody").html("");
 
 				for(var i = 0; i < list.length; i++){
-	            	$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].a_status+"</td><td>"+list[i].joinDate+"</td><td>"+addComma(list[i].readerCount)+"명</td><td><button class='stop'>정지</button></td></tr>");
+	            	$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].a_status+"</td><td>"+list[i].joinDate+"</td><td>"+addComma(list[i].readerCount)+"명</td><td><button class='stop btn btn-info'>정지</button></td></tr>");
 	      		}
 				
 	      		$(".pageul").children().removeClass('active');
@@ -364,7 +368,7 @@
     	       		var pi = data.list.pi;
     				$("tbody").html("");
     	      		for(var i = 0; i < list.length; i++){
-    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].a_status+"</td><td>"+list[i].joinDate+"</td><td>"+addComma(list[i].readerCount)+"명</td><td><button class='stop'>정지</button></td></tr>");
+    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].mcode+"</td><td>"+addComma(list[i].peach)+"개</td><td>"+list[i].email+"</td><td>"+list[i].a_status+"</td><td>"+list[i].joinDate+"</td><td>"+addComma(list[i].readerCount)+"명</td><td><button class='stop btn btn-info'>정지</button></td></tr>");
     	      		}
     	      		
     	      		$(".pageul").children().removeClass('active');
@@ -382,7 +386,7 @@
   		function typeChange(type){
   			$(".type").attr("id", type);
   			
-  			pageChange("", type);
+  			pageChange("1", "", type);
   		}
   		
   		function search(){
@@ -397,8 +401,8 @@
   					$("tbody").html("");
   					$("#pagingArea").html("");
   					
-  					$("tbody").append("<tr><td>"+m.mId+"</td><td>"+m.mName+"</td><td>"+m.mcode+"</td><td>"+addComma(m.peach)+"개</td><td>"+m.email+"</td><td>"+m.a_status+"</td><td>"+m.joinDate+"</td><td>"+addComma(m.readerCount)+"명</td><td><button class='stop'>정지</button></td></tr>");
-  					$("#pagingArea").append("<button onclick='location.reload()'>전체보기</button>");
+  					$("tbody").append("<tr><td>"+m.mId+"</td><td>"+m.mName+"</td><td>"+m.mcode+"</td><td>"+addComma(m.peach)+"개</td><td>"+m.email+"</td><td>"+m.a_status+"</td><td>"+m.joinDate+"</td><td>"+addComma(m.readerCount)+"명</td><td><button class='stop btn btn-info'>정지</button></td></tr>");
+  					$("#pagingArea").append("<button class='btn btn-info' onclick='location.reload()'>전체보기</button>");
   				}
   			});
   			

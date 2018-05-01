@@ -279,7 +279,7 @@ public class AdminDaoImpl implements AdminDao{
 	@Override
 	public int reportListCount() {
 		int result = sqlSession.selectOne("Admin.reportListCount");
-		return 0;
+		return result;
 	}
 
 	@Override
@@ -294,6 +294,35 @@ public class AdminDaoImpl implements AdminDao{
 	public String urlSearch(String target) {
 		
 		return sqlSession.selectOne("Admin.urlSearch", target);
+	}
+
+	@Override
+	public int newUserCount() {
+		return sqlSession.selectOne("Admin.newUserCount");
+	}
+
+	@Override
+	public ArrayList<Member> newUserList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		return (ArrayList)sqlSession.selectList("Admin.newUserList", null, rowBounds);
+	}
+
+	@Override
+	public int reportUserCount(String userId) {
+		
+		return sqlSession.selectOne("Admin.reportUserCount", userId);
+	}
+
+	@Override
+	public ArrayList<Report> searchReportUser(String userId, PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		ArrayList<Report> list = (ArrayList)sqlSession.selectList("Admin.searchReportUser", userId, rowBounds);
+		
+		System.out.println("AdminDoaImpl searchReportUser list: " + list);
+		return list;
 	}
 
 	

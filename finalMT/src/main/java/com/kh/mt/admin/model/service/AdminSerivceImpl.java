@@ -273,5 +273,27 @@ public class AdminSerivceImpl implements AdminService{
 		return ad.urlSearch(target);
 	}
 
+	@Override
+	public int newUserCount() {
+		return ad.newUserCount();
+	}
+
+	@Override
+	public ArrayList<Member> newUserList(PageInfo pi) {
+		return ad.newUserList(pi);
+	}
+
+	@Override
+	public int reportUserCount(String userId) {
+		
+		
+		return ad.reportUserCount(userId);
+	}
+
+	@Override
+	public ArrayList<Report> searchReportUser(String userId, PageInfo pi) {
+		return ad.searchReportUser(userId, pi);
+	}
+
 
 }
