@@ -74,7 +74,7 @@ public class BoardController {
 	
 	
 	
-	// 마이페이지 질문 리스트
+	// 방송국 - 내 게시판 목록
 	@RequestMapping(value="BSmyBoard.board")
 	public ModelAndView showBSmyBoard(ModelAndView mv, String newCurrentPage,
 										String mId) {
@@ -101,7 +101,7 @@ public class BoardController {
 		return mv; 
 	}
 	
-	//페이징 처리 메소드
+	// 페이징 처리 메소드
 	public PageInfo addPage(String newCurrentPage, String mId){
 		
 		int currentPage = 1;
@@ -133,8 +133,45 @@ public class BoardController {
 	}
 	
 
-	
+	// 방송국 - 내 게시판 상세보기
+	@RequestMapping(value="BSmyBoardDetail.board")
+	public ModelAndView showHelpCenterNoticeDetail(ModelAndView mv, String bwriter, String b_code) {
+
+		mv.setViewName("JDBC/BSmyBoardDetail");
+
+		Board b = new Board();
+		b.setB_code(b_code);
+		b.setBwriter(bwriter);
 		
+		Board mbListDetail = bs.mbListDetail(b);
+		
+		String crDate = mbListDetail.getB_create_date();
+		
+		BoardFile bf = new BoardFile();
+		bf.setF_mcode(bwriter);
+		bf.setUpload_date(crDate);
+		
+		BoardFile mbListDetailP = bs.mbListDetailP(bf);
+		
+		//System.out.println("controller's rename: " + mbListDetailP.getF_rename());
+
+		HashMap hmap = new HashMap();
+		hmap.put("mbListDetail", mbListDetail);
+		hmap.put("mbListDetailP", mbListDetailP);
+		
+		mv.addObject("hmap", hmap);
+		
+		return mv;
+	}
+		
+	// 방송국 - 내 게시판 글 삭제
+	@RequestMapping(value="BSmyBoardDelete.board")
+	public String BSmyBoardDelete(String b_code){
+		
+		bs.BSmyBoardDelete(b_code);
+		
+		return "JDBC/BSmyBoardDelete";
+	}
 	
 	
 	

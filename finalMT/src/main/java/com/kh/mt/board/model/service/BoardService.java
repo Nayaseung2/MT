@@ -20,5 +20,14 @@ public interface BoardService {
 	// 방송국 - 내 게시판 목록
 	ArrayList<Board> mbList(PageInfo pi, String mId);
 
+	// 방송국 - 내 게시판 상세보기
+	Board mbListDetail(Board b);
+
+	// 방송국 - 내 게시판 상세보기(사진)
+	BoardFile mbListDetailP(BoardFile bf);
+
+	// 방송국 - 내 게시판 글 삭제
+	void BSmyBoardDelete(String b_code);
+
 
 }

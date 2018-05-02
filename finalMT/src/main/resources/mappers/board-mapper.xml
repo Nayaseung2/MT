@@ -29,7 +29,7 @@
   		
 	<insert id="insertBoard">
 		INSERT INTO BOARD
-		VALUES(SEQ_BCODE.NEXTVAL,#{bwriter},'myBoard',#{b_title},#{b_content},#{bwriter},SYSDATE,SYSDATE,0,'Y')
+		VALUES(SEQ_BCODE.NEXTVAL||'myBoard',#{bwriter},'myBoard',#{b_title},#{b_content},#{bwriter},SYSDATE,SYSDATE,0,'Y')
 	</insert>
 	
 	<insert id="insertBoardFile">
@@ -64,6 +64,24 @@
 		ORDER BY B_CREATE_DATE DESC
 	</select>	
 	
+	<!-- 방송국 - 내 게시판 상세보기 -->
+	<select id="mbListDetail" resultMap="BoardResultSet">
+		SELECT *
+		FROM BOARD
+		WHERE B_TYPE = 'myBoard' AND BWRITER = #{ bwriter } AND B_CODE = #{ b_code }
+	</select>
+	
+	<!-- 방송국 - 내 게시판 상세보기(사진 ) -->
+	<select id="mbListDetailP" resultMap="BoardFileResultSet">
+		SELECT *
+		FROM UPLOADFILE
+		WHERE F_MCODE = #{ f_mcode } AND TO_CHAR(UPLOAD_DATE, 'yyyy-MM-dd hh24:mi:ss') = #{ upload_date } 
+	</select>
+	
+	<!-- 방송국 - 내 게시판 글 삭제 -->
+	<delete id="mbListDelete">
+		DELETE FROM BOARD WHERE B_CODE = #{ b_code }
+	</delete>
 	
 	
 	
