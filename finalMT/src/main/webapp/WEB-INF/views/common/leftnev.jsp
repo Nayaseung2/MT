@@ -5,16 +5,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-    <link href="${contextPath }/resources/css/left/bootstrap.min.css" rel="stylesheet">
+    <link href="/mt/resources/css/left/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="${contextPath }/resources/css/left/metisMenu.min.css" rel="stylesheet">
+    <link href="/mt/resources/css/left/metisMenu.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="${contextPath }/resources/css/left/sb-admin-2.css" rel="stylesheet">
+    <link href="/mt/resources/css/left/sb-admin-2.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="${contextPath }/resources/css/left/morris.css" rel="stylesheet">
+    <link href="/mt/resources/css/left/morris.css" rel="stylesheet">
 </head>
 <body>
 	<div class="navbar-default sidebar" role="navigation" style="margin-top: 0px;">

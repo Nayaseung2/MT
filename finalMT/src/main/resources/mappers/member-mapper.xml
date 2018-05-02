@@ -99,6 +99,12 @@
     	SET MPWD = #{ mPwd }, UPDATE_DATE = SYSDATE
     	WHERE MID = #{ mId }
 	</update>
+
+	
+	<update id="updateAccount" parameterType="Member">
+		UPDATE MEMBER SET ACOUNT=#{account} WHERE MCODE = #{mcode}
+	</update>
+
 	<update id="updatePeach" parameterType="Peach">
 		UPDATE MEMBER 
 		SET PEACH = (SELECT PEACH FROM MEMBER WHERE MID = #{userId}) - #{peachNum} 

@@ -13,6 +13,7 @@ import com.kh.mt.BJPayList.model.vo.Black;
 import com.kh.mt.BJPayList.model.vo.Expeach;
 import com.kh.mt.BJPayList.model.vo.Subscribe;
 import com.kh.mt.common.PageInfo;
+import com.kh.mt.member.model.vo.Member;
 
 @Service
 public class BJPayListServiceImpl implements BJPayListService{
@@ -139,6 +140,44 @@ public class BJPayListServiceImpl implements BJPayListService{
 	public int BlackcancelUpdate(String mId) {
 		int result = bjp.BlackcancelUpdate(sqlSession, mId);
 		return result;
+	}
+
+	@Override
+	public int updateAccount(Member m) {
+		int result = bjp.updateAccount(sqlSession, m);
+		System.out.println(m);
+		return result;
+	}
+
+	@Override
+	public int SelectCountBlack(String mcode) {
+		int BlackCount = bjp.SelectCountBlack(sqlSession, mcode);
+		return BlackCount;
+	}
+
+	@Override
+	public int SelectwdSuccese(String mcode) {
+		int wdSuccese = bjp.SelectwdSuccese(sqlSession, mcode);
+		
+		return wdSuccese;
+	}
+
+	@Override
+	public int Selectwdloding(String mcode) {
+		int wdloding = bjp.Selectwdloding(sqlSession, mcode);
+		return wdloding;
+	}
+
+	@Override
+	public int SelectMyFanCount(String mcode) {
+		int MyFanCount = bjp.SelectMyFanCount(sqlSession, mcode);
+		return MyFanCount;
+	}
+
+	@Override
+	public int SelectProfitPeach(String mcode) {
+		int ProfitPeach = bjp.SelectProfitPeach(sqlSession, mcode);
+		return ProfitPeach;
 	}
 
 

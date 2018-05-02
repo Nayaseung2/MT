@@ -20,6 +20,7 @@ import com.kh.mt.BJPayList.model.vo.Black;
 import com.kh.mt.BJPayList.model.vo.Expeach;
 import com.kh.mt.BJPayList.model.vo.Subscribe;
 import com.kh.mt.common.PageInfo;
+import com.kh.mt.member.model.vo.Member;
 
 
 @CrossOrigin(origins="*")
@@ -36,8 +37,28 @@ public class BJPayListController {
 	
 	//BJ 수익관리 페이지  메인
 	@RequestMapping("bjPayMain.bjp")
-	public ModelAndView BJPayMain(ModelAndView mv){
+	public ModelAndView BJPayMain(ModelAndView mv, String mcode){
 		
+		//블랙회원수 조회 
+		int BlackCount = bjp.SelectCountBlack(mcode);
+		
+		//출금 완료된 금액
+		int wdSuccese = bjp.SelectwdSuccese(mcode);
+		
+		//출금 신청 진행 중인 금액 
+		int wdloding = bjp.Selectwdloding(mcode);
+		
+		//오늘의 구독자 수
+		int MyFanCount = bjp.SelectMyFanCount(mcode);
+		
+		//오늘의 수익(피치수)
+		int ProfitPeach = bjp.SelectProfitPeach(mcode);
+		
+		mv.addObject("BlackCount", BlackCount);
+		mv.addObject("wdSuccese", wdSuccese);
+		mv.addObject("wdloding", wdloding);
+		mv.addObject("MyFanCount", MyFanCount);
+		mv.addObject("ProfitPeach", ProfitPeach);
 		mv.setViewName("bjPayList/bjPayMain");
 		return mv;
 				
@@ -68,51 +89,55 @@ public class BJPayListController {
 		HashMap<String, String> list3 = bjp.ProfitBjAllCount(mcode);
 		
 		PageInfo pi = ProfitBjaddPage(newCurrentPage, "ProfitBj", mcode);
-		
-		ArrayList<Expeach> list2 = bjp.selectProfitBjAllList(mcode,pi);
-		
-		
-		ArrayList<Expeach> list= bjp.selectProfitBjList(mcode);;
-		String day = null;
-		ArrayList<Expeach> expeach = new ArrayList<Expeach>();
-		for (int i = 0; i < list.size(); i++) {
-			if (day == null || !day.equals(list.get(i).getSend_date())) {
-				int price = 0;
-				day = list.get(i).getSend_date();
-				for (int j = 0; j < list.size(); j++) {
-					if(day.equals(list.get(j).getSend_date())){
-						price+=list.get(j).getPeachcount();
+		if(pi.getLimit() == 0) {
+			mv.setViewName("bjPayList/bjPayMain");
+		}else if(pi.getLimit() > 0) {
+			
+			ArrayList<Expeach> list2 = bjp.selectProfitBjAllList(mcode,pi);
+			
+			
+			ArrayList<Expeach> list= bjp.selectProfitBjList(mcode);;
+			String day = null;
+			ArrayList<Expeach> expeach = new ArrayList<Expeach>();
+			for (int i = 0; i < list.size(); i++) {
+				if (day == null || !day.equals(list.get(i).getSend_date())) {
+					int price = 0;
+					day = list.get(i).getSend_date();
+					for (int j = 0; j < list.size(); j++) {
+						if(day.equals(list.get(j).getSend_date())){
+							price+=list.get(j).getPeachcount();
+						}
 					}
+					Expeach daybj = new Expeach();
+					daybj.setSend_date(day);
+					daybj.setPeachcount(price);
+					expeach.add(daybj);
+					
+					
 				}
-				Expeach daybj = new Expeach();
-				daybj.setSend_date(day);
-				daybj.setPeachcount(price);
-				expeach.add(daybj);
-				
 				
 			}
+			System.out.println(expeach);
+			mv.addObject("pi", pi);
+			mv.addObject("list2", list2);
+			mv.addObject("list3", list3);
+			mv.addObject("dayList", expeach);
+			mv.setViewName("bjPayList/ProfitBj");
 			
-		}
-		System.out.println(expeach);
-		mv.addObject("pi", pi);
-		mv.addObject("list2", list2);
-		mv.addObject("list3", list3);
-		mv.addObject("dayList", expeach);
-		mv.setViewName("bjPayList/ProfitBj");
-		
-		
-		if (newCurrentPage != null) {
-			mv.clear();
-			HashMap hmap = new HashMap();
 			
-			hmap.put("list2", list2);
-			hmap.put("pi", pi);
-			
-			mv.addObject("list", hmap);
-			
-			System.out.println(hmap);
-			mv.setViewName("jsonView");
-			
+			if (newCurrentPage != null) {
+				mv.clear();
+				HashMap hmap = new HashMap();
+				
+				hmap.put("list2", list2);
+				hmap.put("pi", pi);
+				
+				mv.addObject("list", hmap);
+				
+				System.out.println(hmap);
+				mv.setViewName("jsonView");
+				
+			}
 		}
 		
 		return mv;
@@ -124,34 +149,39 @@ public class BJPayListController {
 	//**********************************페이징 처리**************************************
 	public PageInfo ProfitBjaddPage(String newCurrentPage, String type, String mcode){
 		HashMap<String, String> list = bjp.ProfitBjAllCount(mcode);
-		
 		int currentPage = 1;
 		int limit = 0;
 		int maxPage = 0;
 		int startPage = 0;
 		int endPage = 0;
 		int listCount = 0;
-
-		limit = 10;
-		if(type.equals("ProfitBj")){
-			listCount = Integer.parseInt(String.valueOf(list.get("PROFITBJ")));
+		
+		if(list == null) {
+			return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+		}else if(list!=null) {
+			limit = 10;
+			
+			if(type.equals("ProfitBj")){
+				listCount = Integer.parseInt(String.valueOf(list.get("PROFITBJ")));
+			}
+			
+			if(newCurrentPage != null){
+				currentPage = Integer.parseInt(newCurrentPage);
+			}
+			
+			maxPage = (int)((double)listCount / limit + 0.9);
+			
+			startPage = ((int)((double)currentPage / limit + 0.9)-1) * limit + 1;
+			
+			endPage = startPage + limit -1;
+			
+			if(maxPage < endPage){
+				endPage = maxPage;
+			}
+			
+			return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		}
-		
-		if(newCurrentPage != null){
-			currentPage = Integer.parseInt(newCurrentPage);
-		}
-		
-		maxPage = (int)((double)listCount / limit + 0.9);
-		
-		startPage = ((int)((double)currentPage / limit + 0.9)-1) * limit + 1;
-		
-		endPage = startPage + limit -1;
-		
-		if(maxPage < endPage){
-			endPage = maxPage;
-		}
-		
-		return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+		return null;
 	}
 	
 	
@@ -509,7 +539,25 @@ public class BJPayListController {
 		return mv;
 				
 	}
-	
+	//BJ 계좌인증  Ajax
+	@RequestMapping("updateAccount.bjp")
+	public ModelAndView updateAccount(ModelAndView mv, String mcode, String account){
+		System.out.println(mcode);
+		System.out.println(account);
+		
+		Member m = new Member();
+		m.setMcode(mcode);
+		m.setAccount(account);
+		
+		
+		int result = bjp.updateAccount(m);
+		System.out.println(result);
+		
+		mv.setViewName("jsonView");
+		return mv;
+				
+	}
+
 
 	//출금신청
 	@RequestMapping("WithdrawInsert.bjp")

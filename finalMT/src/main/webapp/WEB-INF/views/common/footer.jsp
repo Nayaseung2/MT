@@ -17,7 +17,7 @@
                     <div class="col-sm-12">
                         <div class="footer-bottom">
                             <div class="footer-logo">
-                                <a href="#"><img src="${contextPath }/resources/images/logo.png" alt="logo" style="height: 50px;"></a>
+                                <a href="#"><img src="/mt/resources/images/logo.png" alt="logo" style="height: 50px;"></a>
                             </div>
                             <div class="footer-links">
                                 <ul>

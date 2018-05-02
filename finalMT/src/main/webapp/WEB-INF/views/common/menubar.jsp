@@ -11,31 +11,31 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="${contextPath }/resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/mt/resources/css/bootstrap.min.css">
 
     <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="${contextPath }/resources/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/mt/resources/css/font-awesome.min.css">
 
     <!-- Slider CSS -->
-    <link rel="stylesheet" href="${contextPath }/resources/css/pgwslider.min.css">
+    <link rel="stylesheet" href="/mt/resources/css/pgwslider.min.css">
 
     <!-- Owl Carousel CSS -->
-    <link rel="stylesheet" href="${contextPath }/resources/css/owl.carousel.css">
+    <link rel="stylesheet" href="/mt/resources/css/owl.carousel.css">
 
     <!-- pgwSlideshow CSS -->
-    <link rel="stylesheet" href="${contextPath }/resources/css/pgwslideshow.min.css">
+    <link rel="stylesheet" href="/mt/resources/css/pgwslideshow.min.css">
 
     <!-- Megamenu CSS -->
-    <link rel="stylesheet" href="${contextPath }/resources/css/megamenu.css">
+    <link rel="stylesheet" href="/mt/resources/css/megamenu.css">
 
     <!-- Main CSS -->
-    <link rel="stylesheet" href="${contextPath }/resources/css/style.css">
+    <link rel="stylesheet" href="/mt/resources/css/style.css">
 
     <!-- Responsive CSS -->
-    <link rel="stylesheet" href="${contextPath }/resources/css/responsive.css">
+    <link rel="stylesheet" href="/mt/resources/css/responsive.css">
 
     <!-- Demo Panel Style -->
-    <link rel="stylesheet" href="${contextPath }/resources/css/demo-panels.css">
+    <link rel="stylesheet" href="/mt/resources/css/demo-panels.css">
     
     
 </head>
@@ -90,7 +90,7 @@
 			                                 	<c:when test="${!empty loginUser }">
 				                                 	<li><a href="${contextPath }/payform.pay?mcode=${loginUser.mcode}">피치결제</a> <span class="arrow"></span></li>
 				                                   	<li><a href="bringJDBC.JDBC?mId=${loginUser.mId }" target="blank">방송국가기</a> <span class="arrow"></span></li>
-				                                    <li><a href="${contextPath }/bjPayMain.bjp">내수익관리</a> <span class="arrow"></span></li>
+				                                    <li><a href="bjPayMain.bjp?mcode=${loginUser.mcode}">내수익관리</a> <span class="arrow"></span></li>
 				                                    <li><a href="${ contextPath }/myPageEntry.mp">myPage</a> <span class="arrow"></span></li>
 				                                    <li><a href="logout.me">Logout</a> <span class="arrow"></span></li>
 			                                 	</c:when>

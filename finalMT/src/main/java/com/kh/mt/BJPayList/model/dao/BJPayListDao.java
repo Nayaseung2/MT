@@ -10,6 +10,7 @@ import com.kh.mt.BJPayList.model.vo.Black;
 import com.kh.mt.BJPayList.model.vo.Expeach;
 import com.kh.mt.BJPayList.model.vo.Subscribe;
 import com.kh.mt.common.PageInfo;
+import com.kh.mt.member.model.vo.Member;
 
 public interface BJPayListDao {
 
@@ -42,6 +43,18 @@ public interface BJPayListDao {
 	ArrayList<Black> selectBlackListAllList(SqlSessionTemplate sqlSession, String mcode, PageInfo pi);
 
 	int BlackcancelUpdate(SqlSessionTemplate sqlSession, String mId);
+
+	int updateAccount(SqlSessionTemplate sqlSession, Member m);
+
+	int SelectCountBlack(SqlSessionTemplate sqlSession, String mcode);
+
+	int SelectwdSuccese(SqlSessionTemplate sqlSession, String mcode);
+
+	int Selectwdloding(SqlSessionTemplate sqlSession, String mcode);
+
+	int SelectMyFanCount(SqlSessionTemplate sqlSession, String mcode);
+
+	int SelectProfitPeach(SqlSessionTemplate sqlSession, String mcode);
 
 	
 
