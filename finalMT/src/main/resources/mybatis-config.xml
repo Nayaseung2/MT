@@ -21,6 +21,8 @@
 		<typeAlias alias="Contact" type="com.kh.mt.admin.model.vo.Contact"/>
 		<typeAlias alias="Report" type="com.kh.mt.admin.model.vo.Report"/>
 		<typeAlias alias="Reply" type="com.kh.mt.reply.model.vo.ReplyVo"/>
+		<typeAlias alias="Peach" type="com.kh.mt.liveBJ.model.vo.Peach"/>
+		<typeAlias alias="BJBlackMember" type="com.kh.mt.member.model.vo.BJBlackMember"/>
 		<!-- 회원가입시 방송국 생성 -->
 		<typeAlias alias='insertJDBC' type="com.kh.mt.member.model.vo.InsertJDBCstation"/>
 
@@ -35,5 +37,7 @@
 		<mapper resource='mappers/board-mapper.xml' /> 
 		<mapper resource='mappers/myPage-mapper.xml' /> 
 		<mapper resource='mappers/liveBJ-mapper.xml' />
+		<mapper resource='mappers/peach-mapper.xml' />
+		<mapper resource='mappers/BJBlackMember-mapper.xml' />
 	</mappers>
 </configuration>

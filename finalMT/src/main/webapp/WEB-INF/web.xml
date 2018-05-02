@@ -153,23 +153,6 @@
 		<url-pattern>*.lb</url-pattern>
 	</servlet-mapping>
 	
-	<!-- liveBJServlet2 맵핑 -->
-	<servlet>
-		<servlet-name>liveBJ2</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/config/liveBJ-servlet2.xml</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-		
-	<servlet-mapping>
-		<servlet-name>liveBJ2</servlet-name>
-		<url-pattern>*.lb2</url-pattern>
-	</servlet-mapping>
-	
-	
 	
 	<!-- payServlet 맵핑 -->
 	<servlet>

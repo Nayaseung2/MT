@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="Peach">
+ 	<resultMap type="Peach" id="peachResultSet">
+		<result property="userId" column="MID" />
+		<result property="peachNum" column="PEACH" />
+		<result property="bjId" column="M_NICKNAME" />
+	</resultMap>
+ 	<insert id="insertExPeach" parameterType="Peach">
+ 		INSERT INTO EXPEACH 
+		VALUES ((SELECT MCODE FROM MEMBER WHERE MID = #{userId}),(SELECT MCODE FROM MEMBER WHERE M_NICKNAME = #{bjId}),#{peachNum},SYSDATE)
+ 	</insert>
+ </mapper>
