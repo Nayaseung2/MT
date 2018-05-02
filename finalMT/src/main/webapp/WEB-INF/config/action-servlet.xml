@@ -30,8 +30,8 @@
         </interceptor>
     </interceptors>
 	
+	<default-servlet-handler/>
 	
-
 
 
 

@@ -95,7 +95,10 @@
                             <a href="deposit.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 출금 완료</a>
                         </li>
                         <li>
-                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 신고 관리</a>
+                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 신고</a>
+                        </li>
+                        <li>
+                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 완료된 신고 내역</a>
                         </li>
                        	<li>
                             <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
@@ -161,14 +164,13 @@
                                <div id="pagingArea" align="center">
 		                           <ul class="pagination pageul">
 		                              <li class="page-item"><a class="page-link" onclick="return pageChange($('.active').children().text(),'minus', $('.type').attr('id'))">이전</a></li>
-		                              <c:forEach var="p" begin="${map.pi.startPage }" end="${map.pi.endPage }">
+		                              <c:forEach var="p" begin="${map.pi.startPage }" end="${map.pi.endPage == 0? 1 : map.pi.endPage }">
 		                                 <c:if test="${p eq map.pi.currentPage }">
 		                                    <li class="page-item active" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${ p }</a></li>
 		                                 </c:if>
 		                                 <c:if test="${p ne map.pi.currentPage }">
 		                                    <li class="page-item" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${ p }</a></li>
 		                                 </c:if>
-		                              
 		                              </c:forEach>
 		                              <li class="page-item"><a class="page-link" onclick="return pageChange($('.active').children().text(),'plus', $('.type').attr('id'))">다음</a></li>
 		                           </ul>
@@ -282,7 +284,7 @@
 	  					$("#pagingArea").html("");
 	  					
 	  					$("tbody").append("<tr><td>"+m.mId+"</td><td>"+m.mName+"</td><td>"+m.mcode+"</td><td>"+addComma(m.peach)+"개</td><td>"+m.email+"</td><td>"+m.updateDate+"</td><td><button class='stop btn btn-info'>복원</button></td></tr>");
-	  					$("#pagingArea").append("<button class='btn btn-info' onclick='location.reload()'>전체보기</button>");
+	  					$("#pagingArea").append("<br/><button class='btn btn-default' onclick='location.reload()' id='all'>전체보기</button>");
 	 				}else {
 	 					alert("존재하지 않는 아이디입니다.");
 	 				}
@@ -292,15 +294,13 @@
   			
   		}
   		
-  		
-  		
   		function addComma(num) {
   		  var regexp = /\B(?=(\d{3})+(?!\d))/g;
   		   return num.toString().replace(regexp, ',');
   		}
   		
   		
-  		$(".stop").on("click", function(){
+  		$(document).on("click", ".stop", function(){
   			var td = $(this).parent();
   			var userId = $(this).parent().parent().children().first().text();
   			
