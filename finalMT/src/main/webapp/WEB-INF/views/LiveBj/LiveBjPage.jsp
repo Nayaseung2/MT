@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://github.com/muaz-khan/RTCMultiConnection/releases/download/3.4.3/RTCMultiConnection.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 <script src="https://cdn.webrtc-experiment.com/getMediaElement.js"></script>
 <!-- <script src="https://cdn.webrtc-experiment.com:443/getScreenId.js"></script> -->
 <script src="resources/js/rtcPeerConnection.js"></script>
@@ -28,41 +29,207 @@
    		}
     	.panel-body{
     		height:960px;
+    		overflow-y:scroll;
     	}
+    	.dropdown1{
+    		display: inline-block;
+    	}
+    	.dropdown1 li ul {
+			background: white;
+			display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
+			height:auto;
+			/* position:absolute; */
+			position:relative;
+			width:90px;
+			z-index:200;
+		}
+		.dropdown1 li:hover ul {
+			display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
+		}
+	.dropdown1 li ul button{
+ 		background:white;
+ 		 color:black;
+  		border:none;
+  		position:relative;
+  		/* position:absolute; */
+  		height:20px;
+  		font-size:0.6em;
+  		cursor:pointer;
+  		transition:800ms ease all;
+  		outline:none;
+	}
+	.dropdown1 li ul .black{
+ 		background:white;
+ 		 color:black;
+  		border:none;
+  		position:relative;
+  		position:absolute;
+  		height:20px;
+  		font-size:0.6em;
+  		cursor:pointer;
+  		transition:800ms ease all;
+  		outline:none;
+  		display:none;
+	}
+	
+	.dropdown1 li ul button:hover{
+  		background:#fff;
+  		color:#1AAB8A;
+	}
+ 	.dropdown1 li ul button:before, .dropdown1 li ul button:after{
+  		content:'';
+  		position:absolute;
+  		/* position:relative; */
+  		top:0;
+  		right:0;
+  		height:2px;
+  		width:0;
+  		background: #1AAB8A;
+  		transition:400ms ease all;
+	}
+	.dropdown1 li ul button:after{
+  		right:inherit;
+  		top:inherit;
+  		left:0;
+  		bottom:0;	
+	}
+	.dropdown1 li ul button:hover:before,button:hover:after{
+  		width:100%;
+  		transition:800ms ease all;
+	}
+		
 </style>
 </head>
 <body>
+<div class="modal fade blackCChungja" id="layerpop" >
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <!-- header -->
+         <div class="modal-header">
+           <!-- 닫기(x) 버튼 -->
+           <button type="button" class="close" data-dismiss="modal">×</button>
+           <!-- header title -->
+           <h4 class="modal-title" align="center">블랙하기</h4>
+         </div>
+         <!-- body -->
+         <div class="modal-body">
+             <div class="modal-left">
+               <img style="width: 100%; height: 100%;" src="resources/images/catch.jpg" class="screen"/>
+            </div>
+            <div class="modal-right">
+               <table class="modalTable" align="center">
+                     <tr>
+                        <td><input type="text" class="adminbj" readonly/><label>&nbsp;님의 방송에서</label></td>
+                     </tr>
+                     <tr>
+                        <td><input type="text" class="blackMember" readonly/><label>&nbsp;님을 블랙</label></td>
+                     </tr>
+                  </table>
+            </div>
+         </div>
+         <!-- Footer -->
+         <div class="modal-footer" align="center">
+           <button type="button" class="btn btn-default answer" align="center" onclick="BlackC();">시청자 블랙 하기</button>
+         </div>
+       </div>
+     </div>
+   </div>
+<!-- ---------------------------------------------------------------- -->
+<div class="modal fade singo1" id="layerpop" >
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <!-- header -->
+         <div class="modal-header">
+           <!-- 닫기(x) 버튼 -->
+           <button type="button" class="close" data-dismiss="modal">×</button>
+           <!-- header title -->
+           <h4 class="modal-title" align="center">부적절한채팅내용 신고하기</h4>
+         </div>
+         <!-- body -->
+         <div class="modal-body" style="align:center;">
+            <div class="modal-left">
+               <img style="width: 100%; height: 100%;" src="resources/images/singo.jpg" class="screen"/>
+            </div>
+            <div class="modal-right">
+               <table class="modalTable">
+                     
+                     <tr>
+                        <td><label>신고자</label><input type="text" id="singoja" class="writer" value="${loginUser.nickName}" readonly/></td>
+                     </tr>
+                     <tr>
+                        <td style="width: 49%;"><label>신고 대상</label><input type="text" id="singoMem" class="singoMem" readonly/></td>
+                     </tr>
+                     <tr>
+                        <td><label>내용</label><textarea id="singoContent" class="singoContent" readonly></textarea></td>
+                     </tr>
+                  </table>
+            </div>
+         </div>
+         <!-- Footer -->
+         <div class="modal-footer">
+           <button type="button" class="btn btn-default answer" onclick="singogo();">신고하기</button>
+         </div>
+       </div>
+     </div>
+   </div>
+   
+<div class="modal fade peach11" id="layerpop" >
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <!-- header -->
+         <div class="modal-header">
+           <!-- 닫기(x) 버튼 -->
+           <button type="button" class="close" data-dismiss="modal">×</button>
+           <!-- header title -->
+           <h4 class="modal-title" align="center">피치쏘기</h4>
+         </div>
+         <!-- body -->
+         <div class="modal-body">
+            <div class="modal-left">
+               <b>${loginUser.nickName}님</b>
+            </div>
+            <div class="modal-right">
+               <table class="modalTable">
+                     <tr>
+                        <td><label>후원 가능 피치</label><input id="peachNumber" type="text" class="date" value="${loginUser.peach}" readonly/></td>
+                        <td style="display: none;" class="code"></td>
+                     </tr>
+                     <tr>
+                        <td><label>후원 할 피치</label><input type="text" id="peachNum" class="writer"/></td>
+                     </tr>
+                     <tr>
+                        <td><label>후원 할 BJ</label><input type="text" id="bjId" class="writer" value="${bj.mid}" readonly/></td>
+                     </tr>
+                  </table>
+            </div>
+         </div>
+         <!-- Footer -->
+         <div class="modal-footer">
+           <button type="button" class="btn btn-default answer" onclick="peach();">후원하기</button>
+         </div>
+       </div>
+     </div>
+   </div>
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="slider-area ptb-40">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8">
 					<div align="center" id="broadcastdisplay">
-					<!-- <br><br><br>
-						<i align="center" class="fa fa-thumbs-o-up fa-5x"></i>
-						<h1 align="center">방송 화면 입니다. </h1>
-						<h1 align="center">화면조정중입니다. </h1> -->
-				    <!-- <article>  -->
-        				<!-- <section class="experiment"> -->
             				<div class="make-center">
                 				<input type="hidden" id="broadcast-id" placeholder="broadcast-id" value="room-xyz">
-               					<!-- <button id="open-or-join">방송하기</button> -->
 				            </div>
 				            <div id="video-preview" controls loop></div>
-       					<!-- </section> -->
-					<!-- </article> -->
 					</div>
 					<div align="right">
-						<button id="open-or-join-cam" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="left" class="fa fa-send-o"></i>&nbsp;&nbsp;스크린 방송하기</button>
-					 	<button id="open-or-join" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="left" class="fa fa-send-o"></i>&nbsp;&nbsp;스크린 방송하기</button>
+					
+						<button id="open-or-join-cam" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px; display:none"><i align="left" class="fa fa-send-o"></i>&nbsp;&nbsp;방송시작하기</button>
+					 	<button id="open-or-join" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px; display:none"><i align="left" class="fa fa-send-o"></i>&nbsp;&nbsp;스크린 방송하기</button>
 						<button id="peach" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-apple"></i>&nbsp;&nbsp;피치</button>
-						<button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-thumbs-o-up"></i>&nbsp;&nbsp;구독하기</button>
-						<button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-warning"></i>&nbsp;&nbsp;신고하기</button>
-						<button id="stop-broadcast"class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-send-o"></i>&nbsp;&nbsp;방송종료</button>
-						<button class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-heart"></i></button>
-						<!-- <button id="open-room">Open Room</button>
-                <button id="join-room">Join Room</button>
-                <button id="open-or-join-room">Auto Open Or Join Room</button> -->
+						<button id="gudock" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-thumbs-o-up"></i>&nbsp;&nbsp;구독하기</button>
+						<button id="BJSinggo"class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-warning"></i>&nbsp;&nbsp;신고하기</button>
+						<button id="stop-broadcast"class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px; display:none"><i align="center" class="fa fa-send-o"></i>&nbsp;&nbsp;방송종료</button>
+						
 					</div>
 				</div>
 			
@@ -74,8 +241,7 @@
 							<i class="fa fa-comments fa-fw"></i> 실시간 채팅
 						</div>
 						<!-- /.panel-heading -->
-						<div class="panel-body" style="overflow: overlay; text-align:left;">
-							<!-- <ul class="chat"> -->
+						<div class="panel-body" style="outline none; text-align:left;">
 							<ul class="chat" style="text-align:left;">
 							</ul>
 						<!-- /.panel-body -->
@@ -88,7 +254,6 @@
 								</span>
 							</div>
 						</div>
-						<!-- /.panel-footer -->
 					</div>
 				</div>
 			</div>
@@ -102,7 +267,7 @@
                <table>
                   <tr>
                      <td rowspan="3" style=" width: 15%; height:  15%; padding-right: 15px;">
-                      <a href="#"><img alt="" src="${contextPath }/resources/images/bjSemple/bj1.jpg" style="border-radius: 50px;"></a> 
+                      <a href="#"><img alt="" src="${contextPath}/resources/images/bjSemple/bj1.jpg" style="border-radius: 50px;"></a> 
                      </td>
                      <td><h1 id='title1'></h1></td>
                   </tr>
@@ -120,11 +285,20 @@
             </div>
          </div>
       </div> 
-
-
+     
+      <!-- <div class="dropdown1">
+      	<li><a href="#" id="current">승구</a>
+         <ul>
+           <li><button id="singo" class="singo122">신고하기</button></li>
+           <li><button id="black" class="black">블랙하기</button></li>
+         </ul>
+     	</li>
+      </div> -->
+	<input id="bjId1" class="bjId1" type="hidden"/>
 	<input id="mid" type="hidden" value="${loginUser.mId}"/>
 	<input id="myId" type="hidden" value="${loginUser.mId}"/>
-	<input id="nickName" type="hidden" value="${loginUser.nickName} "/>
+	<input id="nickName" type="hidden" value="${loginUser.nickName}"/>
+	<div id="blackMemberList" style="display:none"></div>
 	<div id="room-urls" style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
 	<jsp:include page="../common/footer.jsp"/>
 
@@ -159,13 +333,17 @@
 			$("#broadcastdisplay").css({"height":"1000px"});
 			$(".panel-body").css({"height":"960px"});
 		}); */
-		document.getElementById("stop-broadcast").oclick = function(){
+		document.getElementById("stop-broadcast").onclick = function(){
+			connection.send(alert("방송종료"));
 			connection.close();
-			console.log("꺼젓다")
+			
 		};
 			
 		
 	</script>
+	
+	
+	
 	<script>
             // ......................................................
             // .......................UI Code........................
@@ -178,7 +356,7 @@
                    
                 }); */
                 connection.addStream({
-                   data : true,
+                   	data : true,
                     screen: true,
                     oneway: true
                 });
@@ -220,14 +398,15 @@
             };
             // by default, socket.io server is assumed to be deployed on your own URL
             connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+            //connection.socketURL = 'http://localhost:9001/';
             // comment-out below line if you do not have your own socket.io server
             // connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
             connection.socketMessageEvent = 'audio-video-screen-demo';
             connection.session = {
-                data : true,
-               audio: true,
+               	audio: true,
                 video: true,
-                oneway: true
+                oneway: true,
+                data : true
             };
             connection.sdpConstraints.mandatory = {
                 OfferToReceiveAudio: true,
@@ -292,10 +471,11 @@
                 // 먼저 input의 공백과 특수문자들 제거
                 this.value = this.value.replace(/^\s+|\s+$/g, '');
                 if (!this.value.length) return;
-              
-                connection.send(this.value);
-               appendDIV(this.value);
+                 
+               connection.send("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+this.value);
+               appendDIV("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+this.value);
                 this.value = '';
+                BJblack();
             };
             //피치쏘기
             /* document.getElementById("peach").onclick = function(){
@@ -316,17 +496,27 @@
             		}
             	});
             } */
+            
             document.getElementById("peach").onclick = function(){
-            	var text111 = "";
-            	text111 = "<div style='position:relative; width:240px; height:127px;'><img src='resources/images/peach.png' style='position:absolute'/><b style='position:absolute; top:43px; left:105px; font-size:30px'>"+"10"+"</b></div>";
-            	connection.send(text111);
-            	appendDIV(text111);
+            	 var userid = document.getElementById("myId");
+	             var bjnickName = $("#nick1").text();
+	             $("#bjId").text(bjnickName);
+	             $("#bjId").val(bjnickName);
+	             var userPeach = $("#peachNumber").text();
+            	$(".peach11").modal();
+            	if(userpeach = 0){
+            		
+            	}
+            	/* console.log("기리리잇"+"${loginUser.peach}");
+            	console.log("기리리잇"+bjnickName); */
+            	
             }; 
             document.getElementById("btn-chat").onclick = function(){
             	var text11 = document.getElementById('btn-input');
-            	connection.send(text11.value);
-            	appendDIV(text11.value);
+            	connection.send("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+text11.value);
+            	appendDIV("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+text11.value);
             	text11.value ='';
+            	BJblack();
             };
             
             function appendDIV(event) {
@@ -336,45 +526,35 @@
            		var chatli = document.createElement('li');
            		chatli.setAttribute("id","chatli");
            		chatli.setAttribute("class","left clearfix");
-           		chatli.setAttribute("style","width:126px");
+           		chatli.setAttribute("style","width:220px");
            		var chat_span = document.createElement('span');
            		chat_span.setAttribute("class","chat-img pull-left");
            		var chat_body = document.createElement('div');
-           		chat_body.setAttribute("style","align:left");
+           		/* chat_body.setAttribute("style","align:left"); */
            		chat_body.setAttribute('id', 'chat-body');
            		chat_body.setAttribute('class', 'chat-body clearfix');
            		var chat_header = document.createElement('div');
-           		chat_header.setAttribute("style","align:left");
+           		/* chat_header.setAttribute("style","align:left"); */
            		chat_header.setAttribute("class", "header");
            		chat_header.setAttribute("id", "chat-header");
-        		var chat_i = document.createElement('i');
-        		chat_i.setAttribute("class", "fa fa-github-alt fa-fw");
-           		var chat_strong = document.createElement('strong');
-           		chat_strong.setAttribute("style","align:left");
-           		chat_strong.setAttribute("class", "primary-font");
-           		chat_strong.innerHTML = nickName+"&nbsp";
         		var chat_small = document.createElement('small');
-        		chat_strong.setAttribute("style","display:inline-block");
         		chat_small.setAttribute('class', "text-muted");
         		chat_small.setAttribute('id', 'chat_box');
-        		chat_small.setAttribute("style","display:inline-block; text-indent:5px;");
-           		var br = document.createElement('br');
+        		/* chat_small.setAttribute("style","text-indent:5px;"); */
         		chatContainer.append(chatli);
         		chatli.append(chat_span);
         		chatli.append(chat_body);
         		
         		chat_body.append(chat_header);
-        		chat_header.append(chat_i);
-        		chat_header.append(chat_strong);
         		chat_header.append(chat_small);
         		
-             	var div = document.createElement('p');
+             	var div = document.createElement('div');
              	div.setAttribute("style","align:left");
                 div.innerHTML = event.data || event;
                 chat_small.append(div);
               div.tabIndex = 0;
               div.focus();
-                        
+              BJblack();
                 document.getElementById('btn-input').focus();
                 if(event.data) {
                     connection.Translator.TranslateText(event.data, function(event) {
@@ -385,8 +565,6 @@
             }
             
                connection.onmessage = appendDIV;
-            
-            
             
             // ......................................................
             // ......................Handling Room-ID................
@@ -424,7 +602,7 @@
                 roomid = connection.token();
             }
             
-            document.getElementById('broadcast-id').value=roomid+'2';
+            document.getElementById('broadcast-id').value=roomid+"1";
            
             document.getElementById('broadcast-id').onkeyup = function() {
                 localStorage.setItem(connection.socketMessageEvent, this.value);
@@ -453,11 +631,9 @@
                         setTimeout(reCheckRoomPresence, 5000);
                     });
                 })();
-                disableInputButtons();
+               /*  disableInputButtons(); */
             }
-            
-        </script>
-   
+   </script>
    <script>
    
    $("#open-or-join-cam").click(function(){
@@ -477,9 +653,9 @@
 	         
 	      })
 	   })
-    function singo(){
+    /* function singo(){
        location.href="${contextPath}"
-    }
+    } */
    $(function(){
 	    console.log("href: "+$(location).attr('href'));
 	    //현재 url전체
@@ -497,13 +673,20 @@
 	    		href3:href3
 	    	},
 	    	success:function(data){
-	    		
-	    		
-	    		 $("#title1").text(data.bj.bsTitle)
-	    		$("#nick1").text(data.bj.nickname)
-	    		$("#content1").text(data.bj.bsContent) 
+	    		var loginUserMid = "${loginUser.mId}";	
+	    		$("#bjId1").val(data.bj.mid);
+	    		$("#title1").text(data.bj.bsTitle);
+	    		$("#nick1").text(data.bj.nickname);
+	    		$("#content1").text(data.bj.bsContent);
+	    		var bool = "${loginUser.mId}" == data.bj.mid;
+	    		console.log(bool+"투루펄스");
+	    		if(loginUserMid === data.bj.mid){
+	    			$("#open-or-join-cam").css({"display":"inline","margin-top":"15px"});
+		    		$("#open-or-join").css({"display":"inline","margin-top":"15px"});
+		    		$("#stop-broadcast").css({"display":"inline","margin-top":"15px"});
+	    		}
 	    	}
-	    })
+	    });
 	    }else{
 	     href3 = document.getElementById('mid').value; 
 	    	$.ajax({
@@ -513,19 +696,177 @@
 		    		href3:href3
 		    	},
 		    	success:function(data){
-		    		
-		    		
-		    		 $("#title1").text(data.bj.bsTitle)
-		    		$("#nick1").text(data.bj.nickname)
-		    		$("#content1").text(data.bj.bsContent) 
+					var loginUserMid = "${loginUser.mId}";	    		
+		    		$("#title1").text(data.bj.bsTitle);
+		    		$("#nick1").text(data.bj.nickname);
+		    		$("#content1").text(data.bj.bsContent);
+		    		$("#bjId1").val(data.bj.mid);
+		    		var bool = "${loginUser.mId}" == data.bj.mid;
+		    		console.log(bool+"투루펄스");
+		    		if(loginUserMid === data.bj.mid){
+		    			$("#open-or-join-cam").css({"display":"inline","margin-top":"15px"});
+			    		$("#open-or-join").css({"display":"inline","margin-top":"15px"});
+			    		$("#stop-broadcast").css({"display":"inline","margin-top":"15px"});
+		    		}
 		    	}
-		    })
+		    });
 	    }
 	    
 	});
    
    
-   </script>
+   
+   function peach(){
+	   var userId = document.getElementById('mid').value;
+	   var peachNum = document.getElementById("peachNum").value;
+	   var bjId = document.getElementById("bjId").value;
+	   var userPeach = $("#peachNumber").val();
+	   var num =userPeach-peachNum;
+	   
+	   if(userPeach < peachNum){
+		   alert("피치갯수가 모자랍니다");
+	   }else{
+		
+	   $.ajax({
+	         url:"peach.lb",
+	         type:"POST",
+	         data:{
+	           "userId":userId,
+	           "peachNum":peachNum,
+	           "bjId":bjId
+	         },
+	         
+	         success:function(data){
+	        	 $(".close").click();
+	        	 var text111 = "";
+	             var userid = document.getElementById("myId");
+	             var bjnickName = $("#nick1").text();
+	             $("#bjId").text(bjnickName);
+	             $("#bjId").val(bjnickName);
+	             text111 = "<i class='fa fa-github-alt fa-fw'></i><strong class='primary-font'>"+"${loginUser.nickName}"+"</strong>"+"<div style='position:relative; width:240px; height:127px;'><img src='resources/images/peach.png' style='position:absolute'/><b style='position:absolute; top:43px; left:105px; font-size:30px'>"+peachNum+"</b></div>";
+	             connection.send(text111);
+	             appendDIV(text111);
+	             $("#peachNumber").val(num);
+	             $("#peachNum").value="";
+	         }
+	         
+	   	});
+	   }
+   }
+   function singogo(){
+	   var singoja = $('#singoja').val();
+	   var singoMem = $("#singoMem").val();
+	   var singoContent = $("#singoContent").val();
+	   console.log("1 : "+singoja);
+	   console.log("1 : "+singoMem);
+	   console.log("1 : "+singoContent);
+	  
+	   $.ajax({
+		   url:"textsingo.lb",
+		   type:"POST",
+		   data:{
+			   "singoja":singoja,
+			   "singoMem":singoMem,
+			   "singoContent":singoContent
+		   },
+		   success:function(data){
+			   $(".close").click();
+			   alert("신고하기 완료");
+		   }
+	   });
+	   var sock = new SockJS("<c:url value="/echo"/>");
 
+       sock.onopen = sendMessage;
+       var userId = "${loginUser.mId}/"
+
+       function sendMessage(){
+          sock.send(userId);
+          close();
+       }
+       function close(){
+          sock.close();
+          sock = null;
+       }
+   };
+   </script>
+   	 
+	<script>
+		function singo(value){
+			$(".singo1").modal();
+			var text = $(value).parent("li").parent("ul").parent("li").children("strong").text();
+			var text1 = $(value).parent("li").parent("ul").parent("li").parent("div").parent("div").text();
+			console.log(this);
+			var text3 = text.replace(':','');
+			var text2 = text1.replace('신고하기블랙하기','');
+			console.log("이거다1"+text);
+			console.log("이거다2"+text2);
+			$(".singoContent").val(text2);
+			$(".singoMem").val(text3);
+		}; 
+		function BJblack(){
+			var userId = "${loginUser.mId}";
+			var bjId = $("#bjId1").val();
+			console.log("으익"+userId);
+			console.log("으익"+bjId);
+			console.log(userId === bjId);
+			console.log(userId == bjId);
+			if(userId === bjId){
+				$(".black").css({"display":"inline" , "background":"white" , "color":"black" , "border":"none" , "position":"absolute" , "height":"20px" , "font-size":"0.6em" , "cursor":"pointer" , "transition":"800ms ease all","outline":"none"});
+			}
+		}
+		function CchungjaBlack(value){
+			var text1 = $(value).parent("li").parent("ul").parent("li").parent("div").parent("div").text();
+			console.log("시부레 : "+text1);
+			var str = text1.split(" : ");
+			/* console.log(str[0]+"3");
+			console.log(str[1]+"3"); */
+			var adminbj = $(".bjId1").val();
+			$(".blackCChungja").modal();
+			$(".adminbj").val(adminbj);
+			$(".blackMember").val(str[0]);
+		};
+		function BlackC(){
+			var adminbj = $(".adminbj").val();
+			var blackMember = $(".blackMember").val();
+			$.ajax({
+				 url:"bjBlackMember.lb",
+				 type:"POST",
+				 data:{
+					"adminbj":adminbj,
+					"blackMember":blackMember
+				 },
+				 success:function(data){
+					$(".close").click();
+					alert("블랙하기 완료");
+					for(var i = 0; i< data.bmArr.length; i++){
+						$("#blackMemberList").text($("#blackMemberList").text()+", "+data.bmArr[i].bjMember);
+						console.log("마리아 : " + data.bmArr[i].bjMember);		
+					}
+				 }
+			});	
+		};
+		$("#BJSinggo").click(function(){
+			location.href="${contextPath}/helpreport.hp";
+		});
+		$("#gudock").click(function(){
+			var gudockBjId = $("#bjId1").val();
+			$.ajax({
+				
+			});
+		});
+		
+		jQuery(document).ready(function($) {
+		    var checkload = true;
+		    $("#submit-btn").click(function () {
+		        checkload = false;
+		    });
+		    $(window).on("beforeunload", function () {
+		        if (checkload == true) return "레알 나감????????????";
+		        
+		    });
+		    
+		});
+	</script>
+</div>
 </body>
 </html>

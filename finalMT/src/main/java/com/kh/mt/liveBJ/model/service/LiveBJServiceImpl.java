@@ -8,8 +8,11 @@ import org.springframework.context.support.LiveBeansViewMBean;
 import org.springframework.stereotype.Service;
 
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
+import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.liveBJ.model.dao.LiveBJDao;
 import com.kh.mt.liveBJ.model.vo.LiveBj;
+import com.kh.mt.liveBJ.model.vo.Peach;
+import com.kh.mt.member.model.vo.BJBlackMember;
 @Service
 public class LiveBJServiceImpl implements LiveBJService{
 	@Autowired
@@ -64,6 +67,28 @@ public class LiveBJServiceImpl implements LiveBJService{
 	public LiveBj JDBCInfo2(String href3) {
 		LiveBj bj = ld.JDBCInfo2(sqlSession,href3);
 		return bj;
+	}
+
+
+	@Override
+	public int updatePeach(Peach p) {
+		int result = ld.updatePeach(sqlSession, p);
+		return result;
+	}
+
+
+	@Override
+	public int insertSingo(Board b) {
+		int result = ld.insertSingo(sqlSession, b);
+		return result;
+	}
+
+
+	@Override
+	public ArrayList insertBJBlackMember(BJBlackMember bm) {
+		
+		ArrayList bmArr = ld.insertBJBlackMember(sqlSession, bm); 
+		return bmArr;
 	}
 
 
