@@ -8,13 +8,13 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link href="${contextPath }/resources/css/left/bootstrap.min.css" rel="stylesheet">
+<link href="/mt/resources/css/left/bootstrap.min.css" rel="stylesheet">
 <!-- MetisMenu CSS -->
-<link href="${contextPath }/resources/css/left/metisMenu.min.css" rel="stylesheet">
+<link href="/mt/resources/css/left/metisMenu.min.css" rel="stylesheet">
 <!-- Custom CSS -->
-<link href="${contextPath }/resources/css/left/sb-admin-2.css" rel="stylesheet">
+<link href="/mt/resources/css/left/sb-admin-2.css" rel="stylesheet">
 <!-- Morris Charts CSS -->
-<link href="${contextPath }/resources/css/left/morris.css" rel="stylesheet">
+<link href="/mt/resources/css/left/morris.css" rel="stylesheet">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- 아임포트 결제  -->
@@ -88,18 +88,21 @@
 	    if ( rsp.success ) {
 	    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 	    	$.ajax({
-	    		url : "${contextPath }/paysuccess.pay",
+	    		url : "paysuccess.pay",
 				type : "post",
+				async: false,
 				data:{
 					mcode : ${loginUser.mcode},
 					pay_code : rsp.merchant_uid,
 					price : peach,
 					peach_code : payname
 				},success:function(data){
+					console.log("gogogogogogogo");
 					location.reload();
 				}
 				
 	    	}).done(function(data) {
+	    		console.log("erorr");
 	    		/* //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
 	    		if ( everythings_fine ) {
 	    			
@@ -181,37 +184,37 @@
     
 	
 	 <!-- jQuery -->
-    <script src="${contextPath }/resources/js/jquery-1.12.4.min.js"></script>
+    <script src="/mt/resources/js/jquery-1.12.4.min.js"></script>
 
     <!-- jQuery Easing -->
-    <script src="${contextPath }/resources/js/jquery.easing.js"></script>
+    <script src="/mt/resources/js/jquery.easing.js"></script>
 
     <!-- Bootstrap JS -->
-    <script src="${contextPath }/resources/js/bootstrap.min.js"></script>
+    <script src="/mt/resources/js/bootstrap.min.js"></script>
 
     <!-- pgwSlideshow JS -->
-    <script src="${contextPath }/resources/js/pgwslideshow.min.js"></script>
+    <script src="/mt/resources/js/pgwslideshow.min.js"></script>
 
     <!-- Slider JS -->
-    <script src="${contextPath }/resources/js/pgwslider.min.js"></script>
+    <script src="/mt/resources/js/pgwslider.min.js"></script>
 
     <!-- Owl Carousel JS -->
-    <script src="${contextPath }/resources/js/owl.carousel.min.js"></script>
+    <script src="/mt/resources/js/owl.carousel.min.js"></script>
 
     <!-- YTPlayes JS -->
-    <script src="${contextPath }/resources/js/jquery.mb.YTPlayer.min.js"></script>
+    <script src="/mt/resources/js/jquery.mb.YTPlayer.min.js"></script>
 
     <!-- Mega Menu JS -->
-    <script src="${contextPath }/resources/js/megamenu.js"></script>    
+    <script src="/mt/resources/js/megamenu.js"></script>    
 	
 	<!-- lazyload JS -->
-    <script src="${contextPath }/resources/js/jquery.lazyload.js"></script>
+    <script src="/mt/resources/js/jquery.lazyload.js"></script>
 
     <!-- Google Map -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnh74UN6BKgq9U5fMNGhdZOSpmM_QnZqs"></script>
 
     <!-- Main JS -->
-    <script src="${contextPath }/resources/js/main.js"></script>
+    <script src="/mt/resources/js/main.js"></script>
 
 
 

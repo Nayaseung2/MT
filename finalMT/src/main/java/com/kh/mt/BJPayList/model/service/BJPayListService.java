@@ -8,6 +8,7 @@ import com.kh.mt.BJPayList.model.vo.Black;
 import com.kh.mt.BJPayList.model.vo.Expeach;
 import com.kh.mt.BJPayList.model.vo.Subscribe;
 import com.kh.mt.common.PageInfo;
+import com.kh.mt.member.model.vo.Member;
 
 public interface BJPayListService {
 
@@ -40,6 +41,18 @@ public interface BJPayListService {
 	ArrayList<Black> selectBlackListAllList(String mcode, PageInfo pi);
 
 	int BlackcancelUpdate(String mId);
+
+	int updateAccount(Member m);
+
+	int SelectCountBlack(String mcode);
+
+	int SelectwdSuccese(String mcode);
+
+	int Selectwdloding(String mcode);
+
+	int SelectMyFanCount(String mcode);
+
+	int SelectProfitPeach(String mcode);
 
 
 

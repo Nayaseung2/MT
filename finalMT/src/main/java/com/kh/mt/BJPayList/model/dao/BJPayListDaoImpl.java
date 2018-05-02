@@ -13,6 +13,7 @@ import com.kh.mt.BJPayList.model.vo.Black;
 import com.kh.mt.BJPayList.model.vo.Expeach;
 import com.kh.mt.BJPayList.model.vo.Subscribe;
 import com.kh.mt.common.PageInfo;
+import com.kh.mt.member.model.vo.Member;
 import com.kh.mt.pay.model.vo.Pay;
 
 @Repository
@@ -164,8 +165,47 @@ public class BJPayListDaoImpl implements BJPayListDao{
 
 	@Override
 	public int BlackcancelUpdate(SqlSessionTemplate sqlSession , String mId) {
-		int result = sqlSession.insert("BJPayList.UpdateBlackcancel", mId);
+		int result = sqlSession.update("BJPayList.UpdateBlackcancel", mId);
 		return result;
+	}
+
+	@Override
+	public int updateAccount(SqlSessionTemplate sqlSession, Member m) {
+		System.out.println("eldpdldh"+m);
+		int result = sqlSession.update("Member.updateAccount", m);
+		System.out.println(result+"여기는 디에이오");
+		return result;
+	}
+
+	@Override
+	public int SelectCountBlack(SqlSessionTemplate sqlSession, String mcode) {
+		int BlackCount = sqlSession.selectOne("BJPayList.SelectCountBlack", mcode);
+		
+		return BlackCount;
+	}
+
+	@Override
+	public int SelectwdSuccese(SqlSessionTemplate sqlSession, String mcode) {
+		int wdSuccese = sqlSession.selectOne("BJPayList.SelectwdSuccese", mcode);
+		return wdSuccese;
+	}
+
+	@Override
+	public int Selectwdloding(SqlSessionTemplate sqlSession, String mcode) {
+		int wdloding = sqlSession.selectOne("BJPayList.Selectwdloding", mcode);
+		return wdloding;
+	}
+
+	@Override
+	public int SelectMyFanCount(SqlSessionTemplate sqlSession, String mcode) {
+		int MyFanCount = sqlSession.selectOne("BJPayList.Selectwdloding", mcode);
+		return MyFanCount;
+	}
+
+	@Override
+	public int SelectProfitPeach(SqlSessionTemplate sqlSession, String mcode) {
+		int ProfitPeach = sqlSession.selectOne("BJPayList.Selectwdloding", mcode);
+		return ProfitPeach;
 	}
 
 

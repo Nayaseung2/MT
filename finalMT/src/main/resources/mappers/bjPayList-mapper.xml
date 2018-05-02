@@ -118,9 +118,18 @@
 		FROM BLACKMEMBER M WHERE BJ_MCODE=#{mcode}
 		GROUP BY LIVE_MCODE, LIVE_NIC ORDER BY LIVE_MCODE ASC
    	 </select>
-
 	<update id="UpdateBlackcancel" parameterType="java.lang.String">
 		UPDATE BLACKMEMBER SET BLACK_STATUS = 'N' WHERE LIVE_MCODE = (SELECT MCODE FROM MEMBER WHERE MID = #{mId})
 	</update>
+	<select id="SelectCountBlack" resultType="_int" parameterType="java.lang.String">
+	   	SELECT COUNT(LIVE_MCODE) FROM BLACKMEMBER WHERE BJ_MCODE = #{mcode} AND BLACK_STATUS = 'Y'
+	 </select>
+	 <select id="SelectwdSuccese" resultType="_int" parameterType="java.lang.String">
+	   	SELECT SUM(PRICE) FROM WITHDRAWAL WHERE MCODE = #{mcode} AND STATUS = 'Y'
+	 </select>
+	 <select id="Selectwdloding" resultType="_int" parameterType="java.lang.String">
+	   	SELECT SUM(PRICE) FROM WITHDRAWAL WHERE MCODE = #{mcode} AND STATUS = 'N'
+	 </select>
+
 
 </mapper>

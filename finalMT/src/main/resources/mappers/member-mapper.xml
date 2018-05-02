@@ -94,5 +94,9 @@
     	SET MPWD = #{ mPwd }, UPDATE_DATE = SYSDATE
     	WHERE MID = #{ mId }
 	</update>
+	
+	<update id="updateAccount" parameterType="Member">
+		UPDATE MEMBER SET ACOUNT=#{account} WHERE MCODE = #{mcode}
+	</update>
 
 </mapper>
