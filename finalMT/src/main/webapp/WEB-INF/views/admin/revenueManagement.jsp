@@ -43,6 +43,9 @@
 	th, td {
 		text-align: center;
 	}
+	#all {
+		margin-top: 10px;
+	}
 </style>
 
 </head>
@@ -92,7 +95,10 @@
                             <a href="deposit.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 출금 완료</a>
                         </li>
                         <li>
-                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 신고 관리</a>
+                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 신고</a>
+                        </li>
+                        <li>
+                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 완료된 신고 내역</a>
                         </li>
                        	<li>
                             <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
@@ -360,7 +366,7 @@
         	      		
         	      		if(userId != ""){
     	  					$("#all").remove();
-    	  					$(".pageul").append("<button onclick='location.reload()' id='all'>전체보기</button>");
+    	  					$(".pageul").append("<br/><button class='btn btn-default' onclick='location.reload()' id='all'>전체보기</button>");
     	  				}
                     },
                     error:function(data){

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Report {
+	private String bCode;
 	private String reporter;
 	private String target;
 	private String videoYN;
@@ -17,8 +18,9 @@ public class Report {
 		super();
 	}
 
-	public Report(String reporter, String target, String videoYN, String content, int reportSum, String reportDate, String screen, String status) {
+	public Report(String bCode, String reporter, String target, String videoYN, String content, int reportSum, String reportDate, String screen, String status) {
 		super();
+		this.bCode = bCode;
 		this.reporter = reporter;
 		this.target = target;
 		this.videoYN = videoYN;
@@ -27,6 +29,16 @@ public class Report {
 		this.reportDate = reportDate;
 		this.screen = screen;
 		this.status = status;
+	}
+
+	
+	
+	public String getbCode() {
+		return bCode;
+	}
+
+	public void setbCode(String bCode) {
+		this.bCode = bCode;
 	}
 
 	public String getReporter() {
@@ -95,11 +107,11 @@ public class Report {
 
 	@Override
 	public String toString() {
-		return "Report [reporter=" + reporter + ", target=" + target + ", videoYN=" + videoYN + ", content=" + content + ", reportSum="
-				+ reportSum + ", reportDate=" + reportDate + ", screen=" + screen + "]";
+		return "Report [bCode=" + bCode + ", reporter=" + reporter + ", target=" + target + ", videoYN=" + videoYN
+				+ ", content=" + content + ", reportSum=" + reportSum + ", reportDate=" + reportDate + ", screen="
+				+ screen + ", status=" + status + "]";
 	}
-	
-	
+
 	
 	
 }

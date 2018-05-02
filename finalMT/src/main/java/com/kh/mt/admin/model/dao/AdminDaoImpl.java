@@ -325,6 +325,42 @@ public class AdminDaoImpl implements AdminDao{
 		return list;
 	}
 
+	@Override
+	public int sReportListCount() {
+		return sqlSession.selectOne("Admin.sReportListCount");
+	}
+
+	@Override
+	public ArrayList<Report> sReportList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		return (ArrayList)sqlSession.selectList("Admin.sReportList", null, rowBounds);
+	}
+
+	@Override
+	public int statusChange(String bCode) {
+		return sqlSession.update("Admin.statusChange", bCode);
+	}
+
+	@Override
+	public int sReportUserSearch(String userId) {
+		return sqlSession.selectOne("Admin.sReportUserSearch", userId);
+	}
+
+	@Override
+	public ArrayList<Report> sReportUserList(PageInfo pi, String userId) {
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		return (ArrayList) sqlSession.selectList("Admin.sReportUserList", userId, rowBounds);
+	}
+
+	@Override
+	public int refusal(String wdCode) {
+		return sqlSession.update("Admin.refusal", wdCode);
+	}
+
 	
 	
 }

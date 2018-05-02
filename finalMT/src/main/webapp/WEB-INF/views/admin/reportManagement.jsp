@@ -143,7 +143,10 @@ tr, th {
                             <a href="deposit.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 출금 완료</a>
                         </li>
                         <li>
-                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 신고 관리</a>
+                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 신고</a>
+                        </li>
+                        <li>
+                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 완료된 신고 내역</a>
                         </li>
                        	<li>
                             <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
@@ -198,7 +201,7 @@ tr, th {
                                     </tr>
                                 </thead>
                                 <tbody class="values">
-                                  <c:forEach var="i" items="${ map.list }">
+                                  <c:forEach var="i" items="${ map.list }" varStatus="index">
                                   	<tr>
                                   		<td><c:out value="${ i.reporter }"/></td>
                                   		<td><c:out value="${ i.target }"/></td>
@@ -212,7 +215,9 @@ tr, th {
                                   		</c:if>
                                   		<td><c:out value="${ i.reportDate }"/></td>
                                   		<td width="5%" align="center"><button class="btn btn-default detail">자세히 보기</button></td>
-                                  		<td style="display: none"><c:out value="${ i.screen }"/></td>
+                                  		<td style="display: none;"><c:out value="${ i.screen }"/></td>
+                                  		<td style="display: none;"><c:out value="${ i.bCode }"/></td>
+                                  		<td style="display: none;" id="${ index.index }"></td>
                                   	</tr>
                                   </c:forEach>
                                 </tbody>
@@ -270,14 +275,20 @@ tr, th {
 				      		<td style="width: 49%;"><label>신고 대상</label><input type="text" class="title" readonly/></td>
 				      	</tr>
 				      	<tr>
+				      		<td><label>방송여부</label><input type="text" class="videoYN" readonly/></td>
+				      	</tr>
+				      	<tr>
 				      		<td><label>내용</label><textarea class="content" readonly></textarea></td>
+				      		<td class="bCode" style="display: none;"></td>
 				      	</tr>
 				      </table>
 				</div>
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default answer" onclick="go();">이동하기</button>
+	      	<button class='btn btn-info' onclick='check()'>확인처리</button>
+	      	<button class="btn btn-danger" onclick="go()">이동하기</button>
+	      	<input type="hidden" value="" id="check"/>
 	      </div>
 	    </div>
 	  </div>
@@ -291,90 +302,149 @@ tr, th {
 		<c:redirect url="index.jsp"/>
     </c:if>
     <script>
-	    
+    
     function typeChange(type){
 		$(".type").attr("id", type);
-		pageChange("", type);
+		pageChange("1", "", type);
 	};
 	
-	function pageChange(value, type){
-		var page = Number($("#page").text());
-		var url = type;		
+	function onclickPage(value, type){
+		var url = type;        
 		var userId = $("#search").val();
-		
-		console.log(url);
-		console.log(userId);
-		
-		if(page >= 1 && page <= $("#maxPage").val()){
-  			if(value === 'plus'){
-  				if(page == $("#maxPage").val()){
-  					return;
+		$.ajax({
+   			url: url,
+   			type: "get",
+   			data:{"newCurrentPage":value, "userId":userId},
+   			success:function(data){
+	   
+	       		var list = data.map.list;
+	       		var pi = data.map.pi;
+				$(".values").html("");
+	       
+				for(var i = 0; i < list.length; i++){
+  					if(list[i].reportSum >= 2){
+  						$(".values").append("<tr><td>"+list[i].reporter+"</td><td>"+list[i].target+"</td><td>"+list[i].videoYN+"</td><td>"+list[i].content+"</td><td class='reportSum'>"+list[i].reportSum+"</td><td>"+list[i].reportDate+"</td><td><button class='btn btn-default detail'>자세히 보기</button></td><td style='display: none'>"+list[i].screen+"</td><td style='display: none;'>"+list[i].bCode+"</td><td style='display: none;' id='"+i+"'></td></tr>");
+  					}else {
+  						$(".values").append("<tr><td>"+list[i].reporter+"</td><td>"+list[i].target+"</td><td>"+list[i].videoYN+"</td><td>"+list[i].content+"</td><td>"+list[i].reportSum+"</td><td>"+list[i].reportDate+"</td><td><button class='btn btn-default detail'>자세히 보기</button></td><td style='display: none'>"+list[i].screen+"</td><td style='display: none;'>"+list[i].bCode+"</td><td style='display: none;' id='"+i+"'></td></tr>");
+  					}
   				}
-  				page += 1;
-  			}else if(value === 'minus'){
-  				if(page === 1){
-  					return;
-  				}
-  				page -= 1;
-  			}
-  			
-  			$.ajax({
-  				url: url,
-  				type: "get",
-  				data:{"newCurrentPage":page, "userId": userId},
-  				success:function(data){
-	  				var list = data.map.list;
-	  				var pi = data.map.pi;
-	  				
-	  				console.log(list);
-	  				
-	  				$(".values").html("");
-	  				
-	  				for(var i = 0; i < list.length; i++){
-	  					if(list[i].reportSum >= 2){
-	  						$(".values").append("<tr><td>"+list[i].reporter+"</td><td>"+list[i].target+"</td><td>"+list[i].videoYN+"</td><td>"+list[i].content+"</td><td class='reportSum'>"+list[i].reportSum+"</td><td>"+list[i].reportDate+"</td><td><button class='btn btn-default detail'>자세히 보기</button></td><td style='display: none'>"+list[i].screen+"</td></tr>");
-	  					}else {
-			  				$(".values").append("<tr><td>"+list[i].reporter+"</td><td>"+list[i].target+"</td><td>"+list[i].videoYN+"</td><td>"+list[i].content+"</td><td>"+list[i].reportSum+"</td><td>"+list[i].reportDate+"</td><td><button class='btn btn-default detail'>자세히 보기</button></td><td style='display: none'>"+list[i].screen+"</td></tr>");
-	  					}
-	  				}
-	  				
-	  				$("#page").text(page);
-	  				$("#maxPage").attr("value", pi.maxPage);
-	  				
-	  				if(userId != ""){
-	  					$("#all").remove();
-	  					$(".pageul").append("<br/><button class='btn btn-default' onclick='location.reload()' id='all'>전체보기</button>");
-	  				}
-	  				
-  				},
-  				error:function(data){
-  					console.log("에러!");
-  				}
-  			});
-			return false;
-		}
-	};
+	      		
+	      		$(".pageul").children().removeClass('active');
+	      		$("#cu"+value).addClass('active');
+	      		$("#maxPage").attr("value", pi.maxPage);
+   			},
+   			error:function(data){
+      			console.log("에러!");
+   			}
+		});
+ 		return false;
+	}
+	
+	function pageChange(pagenum, value, type){
+        var page = Number(pagenum);
+        var url = type;  
+        var userId = $("#search").val();
+        
+        if(page >= 1 && page <= $("#maxPage").val()){
+             if(value === 'plus'){
+                if(page == $("#maxPage").val()){
+                   return;
+                }
+                page += 1;
+             }else if(value === 'minus'){
+                if(page === 1){
+                   return;
+                }
+                page -= 1;
+             }
+             
+             $.ajax({
+                url: url,
+                type: "get",
+                data:{"newCurrentPage":page, "userId":userId},
+                success:function(data){
+                	
+                	var list = data.map.list;
+    	       		var pi = data.map.pi;
+
+    	       		if(list.length != 0){
+    	       			$(".values").html("");
+    	       		
+	    	      		for(var i = 0; i < list.length; i++){
+	    	      			if(list[i].reportSum >= 2){
+	    	      				$(".values").append("<tr><td>"+list[i].reporter+"</td><td>"+list[i].target+"</td><td>"+list[i].videoYN+"</td><td>"+list[i].content+"</td><td class='reportSum'>"+list[i].reportSum+"</td><td>"+list[i].reportDate+"</td><td><button class='btn btn-default detail'>자세히 보기</button></td><td style='display: none'>"+list[i].screen+"</td><td style='display: none;'>"+list[i].bCode+"</td><td style='display: none;' id='"+i+"'></td></tr>");
+	      					}else {
+	      						$(".values").append("<tr><td>"+list[i].reporter+"</td><td>"+list[i].target+"</td><td>"+list[i].videoYN+"</td><td>"+list[i].content+"</td><td>"+list[i].reportSum+"</td><td>"+list[i].reportDate+"</td><td><button class='btn btn-default detail'>자세히 보기</button></td><td style='display: none'>"+list[i].screen+"</td><td style='display: none;'>"+list[i].bCode+"</td><td style='display: none;' id='"+i+"'></td></tr>");
+	      					}
+	    	      		}
+	    	      		
+						$(".pageul").html("");
+	    	      		$(".pageul").append("<li class='page-item'><a class='page-link back'>이전</a></li>");
+	    	      		
+	    	      		console.log(pi);
+	    	      		for(var i = pi.startPage; i <= pi.endPage; i++){
+	    	      			if(i == pi.currentPage){
+	    	      				$(".pageul").append("<li class='page-item active' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
+	    	      			}else {
+	    	      				$(".pageul").append("<li class='page-item' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
+	    	      			}
+	    	      		}
+	    	      		
+	    	      		$(".pageul").append("<li class='page-item'><a class='page-link next'>다음</a></li>");
+	    	      		$(".page-item").attr("onclick", "return onclickPage($(this).text(), $('.type').attr('id'))");
+	    	      		$(".back").attr("onclick", "return pageChange($('.active').children().text(),'minus', $('.type').attr('id'))");
+	    	      		$(".next").attr("onclick", "return pageChange($('.active').children().text(),'plus', $('.type').attr('id'))");
+	    	      		$("#maxPage").attr("value", pi.maxPage);
+	    	      		
+	    	      		if(userId != ""){
+		  					$("#all").remove();
+		  					$(".pageul").append("<br/><button class='btn btn-default' onclick='location.reload()' id='all'>전체보기</button>");
+		  				}
+    	       		}else {
+    	       			alert("해당 유저의 정보가 없습니다.");
+    	       			location.reload();
+    	       		}
+                },
+                error:function(data){
+                   console.log("에러!");
+                }
+             });
+             return false;
+        }
+    };
 	
 	$(document).on("click", ".detail", function(){
 		var writer = $(this).parent().parent().children().eq(0).text();
 		var title = $(this).parent().parent().children().eq(1).text();
+		var videoYN = $(this).parent().parent().children().eq(2).text();
 		var content = $(this).parent().parent().children().eq(3).text();
 		var date = $(this).parent().parent().children().eq(5).text();
-		var screen = "/mt/resources/uploadFiles/" + $(this).parent().parent().children().last().text();
+		var screen = "/mt/resources/uploadFiles/" + $(this).parent().parent().children().eq(7).text();
+		var bCode = $(this).parent().parent().children().eq(8).text();	
+		var count = $(this).parent().parent().children().last().attr("id");
+		console.log(bCode);
 		
-		
-	    $('div.modal').modal();
+		$('div.modal').modal();
 		
 		$(".writer").val(writer);
 		$(".title").val(title);
 		$(".date").val(date);
 		$(".content").text(content);
 		$(".screen").attr("src", screen);
+		$(".bCode").val(bCode);
+		$("#check").val(count);
+		
+		if(videoYN === 'Y') {
+			$(".videoYN").val("O");
+		}else {
+			$(".videoYN").val("X");
+		}
 		
 	});
 	
 	function go(){
-		var target = $(".title").text();
+		var target = $(".title").val();
+		statusChange($(".bCode").val());
 		$.ajax({
 			url: "urlSearch.ad",
 			type: "get",
@@ -383,18 +453,30 @@ tr, th {
 				if(data.string === "N"){
 					location.href="memberMg.ad";
 				}else {
-					location.href=data.string;
+					alert(data.string);
+					location.href = "testLiveBj.lb#"+data.string;
 				}
-				
-			},
-			error: function(data) {
-				
-				
 			}
 		});
-		//window.open("http://www.naver.net", "네이버새창", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+		  
 	}
 	
+	function check() {
+		statusChange($(".bCode").val());
+		$(".close").click();
+		$("#"+$("#check").val()).prev().prev().prev().html("확인완료");
+	}
+	
+	function statusChange(value){
+		$.ajax({
+			url: "statusChange.ad",
+			type: "get",
+			data: {"bCode": value},
+			success: function(data){
+				console.log("성공");
+			}
+		});
+	}
     </script>
 </body>
 </html>

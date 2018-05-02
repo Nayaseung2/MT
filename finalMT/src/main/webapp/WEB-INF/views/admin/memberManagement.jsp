@@ -97,7 +97,10 @@
                             <a href="deposit.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 출금 완료</a>
                         </li>
                         <li>
-                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 신고 관리</a>
+                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 신고</a>
+                        </li>
+                        <li>
+                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 완료된 신고 내역</a>
                         </li>
                        	<li>
                             <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
@@ -402,7 +405,7 @@
   					$("#pagingArea").html("");
   					
   					$("tbody").append("<tr><td>"+m.mId+"</td><td>"+m.mName+"</td><td>"+m.mcode+"</td><td>"+addComma(m.peach)+"개</td><td>"+m.email+"</td><td>"+m.a_status+"</td><td>"+m.joinDate+"</td><td>"+addComma(m.readerCount)+"명</td><td><button class='stop btn btn-info'>정지</button></td></tr>");
-  					$("#pagingArea").append("<button class='btn btn-info' onclick='location.reload()'>전체보기</button>");
+  					$("#pagingArea").append("<br/><button class='btn btn-default' onclick='location.reload()' id='all'>전체보기</button>");
   				}
   			});
   			
@@ -457,7 +460,7 @@
   		}
   		
   		
-  		$(".stop").on("click", function(){
+  		$(document).on("click", ".stop", function(){
   			var td = $(this).parent();
   			var userId = $(this).parent().parent().children().first().text();
   			

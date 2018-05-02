@@ -169,6 +169,7 @@ label {
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 <link href="${ contextPath }/resources/css/fontawesome.min.css">
 
 </head>
@@ -372,7 +373,6 @@ label {
 					});
 					
 					$("#submitBtn").click(function(){
-						
 						var bullyId = $("#bullyId").val();
 						var rContent = $("#rContent").val();
 						var myFileUp = $("#myFileUp").val();
