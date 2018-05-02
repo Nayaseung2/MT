@@ -1,5 +1,8 @@
 package com.kh.mt.liveBJ.model.vo;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class LiveBj {
 	private String cate;
 	private String bsTitle;

@@ -79,4 +79,8 @@
     	SET B_COUNT=(SELECT B_COUNT FROM BOARD WHERE B_CODE = #{ b_code })+1 WHERE B_CODE = #{ b_code }
     </select>
 
+	<insert id="singoInsert">
+		INSERT INTO BOARD
+		VALUES( seq_bcode.nextval || (SELECT MID FROM MEMBER WHERE M_NICKNAME = #{ bwriter }), NULL, #{ b_type }, #{ b_title }, #{ b_content }, (SELECT MID FROM MEMBER WHERE M_NICKNAME = #{ bwriter }), SYSDATE, SYSDATE, 1, 'Y')
+	</insert>
 </mapper>

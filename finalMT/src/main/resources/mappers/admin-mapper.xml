@@ -51,6 +51,7 @@
   	 </resultMap>
   	 
   	 <resultMap type="Report" id="reportResultSet">
+  	 	<result property="bCode" column="B_CODE"/>
   	 	<result property="reporter" column="REPORTER"/>
   	 	<result property="target" column="TARGET"/>
   	 	<result property="videoYN" column="VIDEO_YN"/>
@@ -134,6 +135,11 @@
   	<update id="approval" parameterType="_int">
   		UPDATE WITHDRAWAL SET STATUS = 'Y', SUCCESS_DATE = SYSDATE
 		WHERE WD_CODE = #{wdCode}
+  	</update>
+  	
+  	<update id="refusal" parameterType="java.lang.String">
+		UPDATE WITHDRAWAL SET STATUS = 'A', SUCCESS_DATE = SYSDATE
+		WHERE WD_CODE = #{wdCode} 		
   	</update>
   	
   	<select id="depositList" resultMap="withdrawalResultSet">
@@ -236,14 +242,16 @@
   		SELECT COUNT(*)
   		FROM BOARD
   		WHERE B_TYPE = 'report'
+  		AND B_STATUS = 'Y'
   	</select>
   	
   	<select id="reportList" resultMap="reportResultSet">
-  		SELECT BWRITER AS REPORTER, B_TITLE AS TARGET, VIDEO_YN, B_CONTENT, (SELECT COUNT(*) FROM BOARD B2 WHERE B1.B_TITLE = B2.B_TITLE) AS REPORTSUM, TO_CHAR(B_CREATE_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS REPORTDATE, F_RENAME AS SCREEN
+  		SELECT B_CODE, BWRITER AS REPORTER, B_TITLE AS TARGET, VIDEO_YN, B_CONTENT, (SELECT COUNT(*) FROM BOARD B2 WHERE B1.B_TITLE = B2.B_TITLE) AS REPORTSUM, TO_CHAR(B_CREATE_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS REPORTDATE, F_RENAME AS SCREEN
 		FROM BOARD B1
 		JOIN MEMBER ON(B1.B_TITLE = MID)
 		JOIN UPLOADFILE ON (B1.B_CREATE_DATE = UPLOAD_DATE)
 		WHERE B1.B_TYPE = 'report'
+		AND B1.B_STATUS = 'Y'
   	</select>
   	
   	<select id="urlSearch" parameterType="java.lang.String" resultType="string">
@@ -263,7 +271,7 @@
   		FROM MEMBER
   		WHERE TO_CHAR(JOIN_DATE) = TO_CHAR(SYSDATE)
   	</select>
-  	
+
   	<select id="reportUserCount" parameterType="java.lang.String" resultType="_int">
   		SELECT COUNT(*)
   		FROM BOARD
@@ -272,7 +280,7 @@
   		AND B_TYPE = 'report'
   	</select>
   	<select id="searchReportUser" parameterType="java.lang.String" resultMap="reportResultSet">
-  		SELECT BWRITER AS REPORTER, B_TITLE AS TARGET, VIDEO_YN, B_CONTENT, (SELECT COUNT(*) FROM BOARD B2 WHERE B1.B_TITLE = B2.B_TITLE) AS REPORTSUM, TO_CHAR(B_CREATE_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS REPORTDATE, F_RENAME AS SCREEN
+  		SELECT B_CODE, BWRITER AS REPORTER, B_TITLE AS TARGET, VIDEO_YN, B_CONTENT, (SELECT COUNT(*) FROM BOARD B2 WHERE B1.B_TITLE = B2.B_TITLE) AS REPORTSUM, TO_CHAR(B_CREATE_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS REPORTDATE, F_RENAME AS SCREEN
 		FROM BOARD B1
 		JOIN MEMBER ON(B1.B_TITLE = MID)
 		JOIN UPLOADFILE ON (B1.B_CREATE_DATE = UPLOAD_DATE)
@@ -280,5 +288,38 @@
   		AND B_STATUS = 'Y'
   		AND B_TITLE = #{userId}
   	</select>
-  	
+  	<select id="sReportListCount" resultType="_int">
+  		SELECT COUNT(*)
+  		FROM BOARD
+  		WHERE B_TYPE = 'report'
+  		AND B_STATUS = 'N'
+  	</select>
+  	<select id="sReportList" resultMap="reportResultSet">
+  		SELECT B_CODE, BWRITER AS REPORTER, B_TITLE AS TARGET, VIDEO_YN, B_CONTENT, (SELECT COUNT(*) FROM BOARD B2 WHERE B1.B_TITLE = B2.B_TITLE) AS REPORTSUM, TO_CHAR(B_UPDATE_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS REPORTDATE, F_RENAME AS SCREEN
+		FROM BOARD B1
+		JOIN MEMBER ON(B1.B_TITLE = MID)
+		JOIN UPLOADFILE ON (B1.B_CREATE_DATE = UPLOAD_DATE)
+		WHERE B1.B_TYPE = 'report'
+		AND B1.B_STATUS = 'N'
+  	</select>
+  	<update id="statusChange">
+  		UPDATE BOARD SET B_STATUS = 'N', B_UPDATE_DATE = SYSDATE
+  		WHERE B_CODE = #{bCode}
+  	</update>
+  	<select id="sReportUserSearch" parameterType="java.lang.String" resultType="_int">
+  		SELECT COUNT(*)
+  		FROM BOARD
+  		WHERE B_TYPE = 'report'
+  		AND B_STATUS = 'N'
+  		AND B_TITLE = #{userId}
+  	</select>
+  	<select id="sReportUserList" parameterType="java.lang.String" resultMap="reportResultSet">
+  		SELECT B_CODE, BWRITER AS REPORTER, B_TITLE AS TARGET, VIDEO_YN, B_CONTENT, (SELECT COUNT(*) FROM BOARD B2 WHERE B1.B_TITLE = B2.B_TITLE) AS REPORTSUM, TO_CHAR(B_UPDATE_DATE, 'yyyy-MM-dd-hh24:mm:ss') AS REPORTDATE, F_RENAME AS SCREEN
+		FROM BOARD B1
+		JOIN MEMBER ON(B1.B_TITLE = MID)
+		JOIN UPLOADFILE ON (B1.B_CREATE_DATE = UPLOAD_DATE)
+		WHERE B1.B_TYPE = 'report'
+		AND B1.B_STATUS = 'N'
+		AND B1.B_TITLE = #{userId}
+  	</select>
   </mapper>

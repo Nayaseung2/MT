@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -60,10 +61,9 @@
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 <link href="${ contextPath }/resources/css/fontawesome.min.css">
 
 </head>
@@ -104,7 +104,7 @@
 		</div>
 		
 		<script>
-			
+
 			function personal(){
 				
 				location.href="${ contextPath }/helppersonal.hp";
@@ -126,6 +126,19 @@
 			}
 			
 			
+			var sock = new SockJS("<c:url value="/echo"/>");
+
+			sock.onopen = sendMessage;
+			var userId = "${loginUser.mId}/"
+
+			function sendMessage(){
+				sock.send(userId);
+				close();
+			}
+			function close(){
+				sock.close();
+				sock = null;
+			}
 		</script>
 
 		<div class="rightNav">

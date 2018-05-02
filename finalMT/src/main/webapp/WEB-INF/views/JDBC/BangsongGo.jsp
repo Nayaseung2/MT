@@ -32,15 +32,81 @@
 	.showRightPart{position:relative; width:940px; height:500px; 
 	left:240px;bottom:620px;}
 	.favoriteBJ{width:920px;height:170px; margin-left:10px;}
+	
+	.favoriteBJ, form {
+		background-color: #fff9f9;
+	}
+	
+	.insertBSTable {
+		border-top: 3px solid rgba(235, 104, 100, 0.5);
+		border-bottom: 3px solid rgba(235, 104, 100, 0.5);
+	}
+	
+	.insertBSTable th {
+		width: 150px;
+		text-align: center;
+		border-right: 1px solid rgba(235, 104, 100, 0.5);
+	}
+	
+	.insertBSTable td {
+		padding-left: 5%;
+	}
+	
+	.insertBSTable tr {
+		height: 65px;
+	}
+	
+	li {
+		padding-left: 5%;
+	}
+	
+	.check {
+		width:160px;
+		height:30px;
+		background:rgba(235, 104, 100, 0.5);
+		border:none;
+		color:white;
+	}
+	
+	.fileRegiBtn label {
+		height:30px;
+		width: 25%;
+		text-align: center;
+		display: inline-block; 
+		padding: .5em .75em; 
+		color: #ffffff; 
+		background-color: rgba(235, 104, 100, 0.5); 
+		cursor: pointer; 
+		border:none;
+	}
+	
+	.fileRegiBtn input[type="file"] {
+	
+		display: inline-block;
+		width: 1px; 
+		height: 1px; 
+		padding: 0; 
+		margin: -1px; 
+		overflow: hidden; 
+		clip:rect(0,0,0,0); 
+		border: 0;
+	}
+	
+	.form-control {
+		width: 400px;
+	
+	}
+	
+	
 </style>
 <title>나의 방송국</title>
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <div class="BSContainer">
-<div class="icon">
-<a href="index.jsp"><img src="<%=request.getContextPath() %>/resources/images/logo.png" style="width:200px;"></a>
-</div>
+<jsp:include page="../common/menubar.jsp" />
+<br/>
+<br/>
 <div class="BSframe">
 <div class="showBSname">
 <br>
@@ -92,7 +158,7 @@
 	</tr>
 	<tr>
 		<td>
-			<p><a class="bottom">일반 게시판</a></p>
+			<p><a class="bottom" href="BSmyBoard.board?mId=${ loginUser.mId }">일반 게시판</a></p>
 			<p><a class="bottom" href="showGuestBookList.JDBC">방명록</a></p>
 		</td>
 	</tr>
@@ -105,15 +171,16 @@
 </div>
 <!-- 즐겨찾기 보여주기 부분 -->
 <div class="showRightPart">
-<div class="favoriteBJ">
-<label style="font-size:20px; align:center;">방송내용</label>
+<div class="favoriteBJ" align="center">
+<br/><br/>
+<label style="font-size:20px;">방송하기</label>
 <br><br><br>
 <form action="insertBSCotent.lb" method="post"  encType="multipart/form-data">
 
 	<table class="insertBSTable" >
 		<tr>
-			<th>방송카테고리</th>
-			<td>&nbsp;
+			<th>카테고리</th>
+			<td>&nbsp;&nbsp;
 				<select name='cate' style='height:25px'> 
 					<option value='게임'>게임</option>
 					<option value='토크/캠방'>토크/캠방</option>
@@ -124,32 +191,88 @@
 				</select>
 				<p style="margin-left:10px;"> </p>
 			</td>
-			
 		</tr>
-		
 		<tr>
-			<th>방송제목</th>
-			<td><input type="text" size="50" name="bsTitle" style="margin-left:10px;"><br>
+			<th>제 목</th>
+			<td colspan="6"><input type="text" size="50" name="bsTitle" style="margin-left:10px;" class="form-control">
 			<p style="margin-left:10px;">*방송제목을 작성해주세요</p>
 		</tr>
 		<tr>
-			<th>방송내용</th>
-			<td><input type="text" size="50" name="bsContent" style="margin-left:10px;">
+			<th>내 용</th>
+			<td colspan="6"><input type="text" size="50" name="bsContent" style="margin-left:10px;" class="form-control">
 			<p style="margin-left:10px;">*방송을 소개할 수 있는 내용을 작성해주세요</p> 
 		</tr>
 		<tr>
-			<th>방송메인이미지</th>
-			<td><input type="file" size="50" name="bsImg" style="margin-left:10px;">
+			<th>메인이미지</th>
+			<td colspan="6">
+				<!-- <input type="file" size="50" name="bsImg" id="bsImg" style="margin-left:10px;">
+				<label for="bsImg">파일 선택하기</label> -->
+				<br/>
+				<div class="fileRegiBtn">
+					<input id="fileName" class="form-control" value="오른쪽 버튼을 눌러주세요" disabled="disabled" 
+								style="width:60%; display: inline; text-align:center; margin-left: 5%;">
+					<input type="file" size="50" name="bsImg" id="bsImg" style="margin-left:10px;">
+					<label for="bsImg">파일등록하기</label>
+				</div>
+				<br/>
 				<ul>
 					<li>최적의 로고 이미지 사이즈는 74x61px 입니다.</li>
-					<li>최대 200KB크기의 그림파일 (JPG,GIF,PNG)를 올릴 수 있습니다.</li>
+					<li>최대 200KB 크기의 그림파일 (JPG, GIF, PNG)를 올릴 수 있습니다.</li>
 					<li>변경하신 로고는 최대 1분 이내에 서비스에 반영됩니다.</li>
 				</ul>
+				<br/>
+			</td>
+		</tr>
+		<tr>
+			<th>미리보기</th>
+			<td colspan="6">
+				<div class="selectCover" style="padding-left: 0;">
+				 	<img id="cover" src="${ contextPath }/resources/images/help/no_img.png" style="width: 500px; height: 282px;"/>
+				</div>
 			</td>
 		</tr>
 	</table>
-	<button type="submit" class="check"><span class="glyphicon glyphicon-ok"></span>확인</button>
+	<br/>
+	<br/>
+	<script>
+	
+		/* 스크린샷 첨부 */
+		
+		function readURL(input) {
+	
+	        if (input.files && input.files[0]) {
+	        	
+				if(!input.files[0].type.match("image.*")){
+					
+					alert("스크린샷 첨부는 이미지 확장자만 가능합니다.");
+					return;
+					
+				} else {
+	
+			        var reader = new FileReader();
+			        reader.onload = function (e) {
+	
+		                $('#cover').attr('src', e.target.result);        //cover src로 붙여지고
+		                $('#fileName').val(input.files[0].name);    //파일선택 form으로 파일명이 들어온다
+		            }
+			        
+			        reader.readAsDataURL(input.files[0]);
+				}
+	        }
+	    }
+	
+		$("#bsImg").change(function(){
+	
+	        readURL(this);
+	    });
+	
+	</script>
+	
+	<button type="submit" class="check"><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;&nbsp;확 인</button>
 	<input type="hidden" value="${loginUser.mId}" name="mid" >
+	<br/>
+	<br/>
+	<br/>
 	</form>
 </div>
 </div>

@@ -210,10 +210,10 @@ public class AdminController {
 		PageInfo pi = addPage(newCurrentPage, "blackUser");
 		
 		HashMap<String, Object> map = as.blackUsers(pi);
+		map.put("pi", pi);
 		
 		System.out.println(map.get("mlist"));
-		
-		map.put("pi", pi);
+		System.out.println(map.get("pi"));
 		
 		mv.addObject("map", map);
 		if(newCurrentPage == null){
@@ -376,9 +376,9 @@ public class AdminController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int count = as.searchWithCount(userId);
 		PageInfo pi = addUserPage(newCurrentPage, count);
-		ArrayList<Withdrawal> rlist = as.searchWithdrawal(userId, pi);
+		ArrayList<Withdrawal> wlist = as.searchWithdrawal(userId, pi);
 		
-		map.put("rlist", rlist);
+		map.put("wlist", wlist);
 		map.put("pi", pi);
 		
 		mv.addObject("map", map);
@@ -393,9 +393,28 @@ public class AdminController {
 	public ModelAndView approval(ModelAndView mv, String wdCode){
 		
 		int approval = 0; 
+		
 		approval = as.approval(wdCode);
 		
+		System.out.println(approval);
+		
 		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	//출금신청 거절
+	@RequestMapping("refusal.ad")
+	public ModelAndView refusal(ModelAndView mv, String wdCode) {
+		
+		int refusal = 0; 
+		
+		refusal = as.refusal(wdCode);
+		
+		System.out.println(refusal);
+		
+		mv.setViewName("jsonView");
+		
 		
 		return mv;
 	}
@@ -448,20 +467,26 @@ public class AdminController {
 	@RequestMapping("reportMg.ad")
 	public ModelAndView reportMg(ModelAndView mv, String newCurrentPage){
 		int count = as.reportListCount();
-		System.out.println("count: " + count);
+		
+		System.out.println("reportMg.ad newCurrentPage: " + newCurrentPage);
+		System.out.println("reportMg.ad: " + count);
 		PageInfo pi = addUserPage(newCurrentPage, count);
 		
 		ArrayList<Report> list = as.reportList(pi);
 		
-		System.out.println(list);
+		System.out.println("reportMg.ad List: " + list);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("pi", pi);
 		map.put("list", list);
 
 		mv.addObject("map", map);
-		System.out.println(pi);
-		mv.setViewName("admin/reportManagement");
+
+		if(newCurrentPage == null) {
+			mv.setViewName("admin/reportManagement");
+		}else {
+			mv.setViewName("jsonView");
+		}
 		
 		return mv;
 	}
@@ -469,13 +494,12 @@ public class AdminController {
 	@RequestMapping("searchReport.ad")
 	public ModelAndView searchReport(ModelAndView mv, String newCurrentPage, String userId){
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		
 		int count = as.reportUserCount(userId);
-		System.out.println("searchReport.ad listCount: " + count);
+		
 		PageInfo pi = addUserPage(newCurrentPage, count);
 		
 		ArrayList<Report> list = as.searchReportUser(userId, pi);
-		
-		System.out.println("searchReport.ad list: " + list);
 		
 		map.put("list", list);
 		map.put("pi", pi);
@@ -500,6 +524,59 @@ public class AdminController {
 		
 		mv.setViewName("jsonView");
 		
+		return mv;
+	}
+	
+	//처리 완료된 신고내역
+	@RequestMapping("sReport.ad")
+	public ModelAndView seccessReport(ModelAndView mv, String newCurrentPage) {
+		int count = as.sReportListCount();
+		PageInfo pi = addUserPage(newCurrentPage, count);
+		
+		ArrayList<Report> list = as.sReportList(pi);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pi", pi);
+		map.put("list", list);
+
+		mv.addObject("map", map);
+		
+		if(newCurrentPage == null){
+			mv.setViewName("admin/successReport");
+		}else {
+			mv.setViewName("jsonView");
+		}
+		
+		return mv;
+	}
+	
+	//처리 완료된 유저 신고내역
+	@RequestMapping("sReportUser.ad")
+	public ModelAndView sReportUserSearch(ModelAndView mv, String newCurrentPage, String userId){
+		int count = as.sReportUserSearch(userId);
+		
+		PageInfo pi = addUserPage(newCurrentPage, count);
+		
+		ArrayList<Report> list = as.sReportUserList(pi, userId);
+		
+		System.out.println("sReportUser: " + list);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pi", pi);
+		map.put("list", list);
+
+		mv.addObject("map", map);
+		
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	
+	//신고 처리 상태변화
+	@RequestMapping("statusChange.ad")
+	public ModelAndView statusChange(ModelAndView mv, String bCode){
+		
+		int result = as.statusChange(bCode);
+		
+		mv.setViewName("jsonView");
 		return mv;
 	}
 //---------------------------------------------------------------------------------------------------------문의 내역----------------------------------------------------------------------------------------------------------	

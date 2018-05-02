@@ -93,7 +93,10 @@ th, td {
                             <a href="deposit.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 출금 완료</a>
                         </li>
                         <li>
-                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 신고 관리</a>
+                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 신고</a>
+                        </li>
+                        <li>
+                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 완료된 신고 내역</a>
                         </li>
                        	<li>
                             <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
@@ -178,7 +181,7 @@ th, td {
 	                                  	<tr>
 	                                  		<td>${ w.mId }</td>
 	                                  		<td>${ w.mName }</td>
-	                                  		<td>${ w.amount }</td>
+	                                  		<td><fmt:formatNumber value="${ w.amount }" groupingUsed="true"/>원</td>
 	                                  		<td>${ w.account }</td>
 	                                  		<td>${ w.wdDate }</td>
 	                                  		<td class='arBtn'><button class='approval btn btn-info'>승인</button></td>
@@ -226,12 +229,12 @@ th, td {
 	}
 	
 	function onclickPage(value, type){
-		
-		var url = type;        
+		var url = type;
+		var userId = $("#search").val();
 		$.ajax({
    			url: url,
    			type: "get",
-   			data:{"newCurrentPage":value},
+   			data:{"newCurrentPage":value, "userId":userId},
    			success:function(data){
 	   
 	       		var list = data.map.wlist;
@@ -239,7 +242,7 @@ th, td {
 				$("tbody").html("");
 	       
 	      		for(var i = 0; i < list.length; i++){
-	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class='approval btn btn-info'>승인</button></td><td class='arBtn'><button class='refusal btn btn-danger'>거절</button></td><td style='display: none;'>"+ list[i].wdDate +"</td></tr>");
+	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+addComma(list[i].amount)+"원</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class='approval btn btn-info'>승인</button></td><td class='arBtn'><button class='refusal btn btn-danger'>거절</button></td><td style='display: none;'>"+ list[i].wdDate +"</td><td style='display:none;'>"+list[i].wdCode+"</td></tr>");
 	      		}
 	      		
 	      		$(".pageul").children().removeClass('active');
@@ -289,7 +292,7 @@ th, td {
     				$("tbody").html("");
     	       
     	      		for(var i = 0; i < list.length; i++){
-    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class='approval btn btn-info'>승인</button></td><td class='arBtn'><button class='refusal btn btn-danger'>거절</button></td><td style='display: none;'>"+ list[i].wdDate +"</td></tr>");
+    	      			$("tbody").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+addComma(list[i].amount)+"원</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td><td class='arBtn'><button class='approval btn btn-info'>승인</button></td><td class='arBtn'><button class='refusal btn btn-danger'>거절</button></td><td style='display: none;'>"+ list[i].wdDate +"</td><td style='display:none;'>"+list[i].wdCode+"</td></tr>");
     	      		}
     	      		
 					$(".pageul").html("");
@@ -310,7 +313,7 @@ th, td {
     	      		
     	      		if(userId != ""){
 	  					$("#all").remove();
-	  					$(".pageul").append("<br/><br/><button class='btn btn-info' onclick='location.reload()' id='all'>전체보기</button>");
+	  					$(".pageul").append("<br/><br/><button class='btn btn-default' onclick='location.reload()' id='all'>전체보기</button>");
 	  				}
                 },
                 error:function(data){
@@ -321,7 +324,7 @@ th, td {
            }
         }
 	
-	$(".approval").on("click", function(){
+	$(document).on("click", ".approval", function(){
 		var wdCode = $(this).parent().parent().children().last().text();
 		
 		var approval = $(this).parent();
@@ -347,8 +350,10 @@ th, td {
 		
 	});
 	
-	$(".refusal").on("click", function(){
+	$(document).on("click", ".refusal", function(){
 		var wdCode = $(this).parent().parent().children().last().text();
+		
+		console.log(wdCode);
 		
 		var approval = $(this).parent().prev();
 		var refusal = $(this).parent();
@@ -356,7 +361,7 @@ th, td {
 		var con = confirm("거절하시겠습니까?"); 
 		if(con){
 			$.ajax({
-				url: "approval.ad", 
+				url: "refusal.ad", 
 				type: "get",
 				data: {"wdCode": wdCode},
 				success: function(data){
@@ -373,6 +378,10 @@ th, td {
 		
 	});
 	
+	function addComma(num) {
+		var regexp = /\B(?=(\d{3})+(?!\d))/g;
+		return num.toString().replace(regexp, ',');
+	}
 	
     </script>
 </body>
