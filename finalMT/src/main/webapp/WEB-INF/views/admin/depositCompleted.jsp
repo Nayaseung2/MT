@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!DOCTYPE html>
 <html>
 
@@ -42,6 +43,9 @@
 tr, th {
 	text-align: center;
 }
+#all {
+	margin-top: 10px;
+}
 </style>
 
 </head>
@@ -59,7 +63,7 @@ tr, th {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
+                <a class="navbar-brand" href="index.jsp"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -90,7 +94,10 @@ tr, th {
                             <a href="deposit.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 출금 완료</a>
                         </li>
                         <li>
-                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 신고 관리</a>
+                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 신고</a>
+                        </li>
+                        <li>
+                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 완료된 신고 내역</a>
                         </li>
                        	<li>
                             <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
@@ -147,7 +154,7 @@ tr, th {
                                   	<tr>
                                   		<td><c:out value="${ d.mId }"/></td>
                                   		<td><c:out value="${ d.mName }"/></td>
-                                  		<td><c:out value="${ d.amount }"/></td>
+                                  		<td><fmt:formatNumber value="${ d.amount }" groupingUsed="true"/>원</td>
                                   		<td><c:out value="${ d.account }"/></td>
                                   		<td><c:out value="${ d.wdDate }"/></td>
                                   	</tr>
@@ -207,7 +214,7 @@ tr, th {
 				$(".values").html("");
 	       
 	      		for(var i = 0; i < list.length; i++){
-	      			$(".values").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td></tr>");
+	      			$(".values").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+addComma(list[i].amount)+"원</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td></tr>");
 	      		}
 	      		
 	      		$(".pageul").children().removeClass('active');
@@ -256,7 +263,7 @@ tr, th {
     				$(".values").html("");
     	       
     	      		for(var i = 0; i < list.length; i++){
-    	      			$(".values").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+list[i].amount+"</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td></tr>");
+    	      			$(".values").append("<tr><td>"+list[i].mId+"</td><td>"+list[i].mName+"</td><td>"+addComma(list[i].amount)+"원</td><td>"+list[i].account+"</td><td>"+list[i].wdDate+"</td></tr>");
     	      		}
     	      		
 					$(".pageul").html("");
@@ -278,7 +285,7 @@ tr, th {
     	      		
     	      		if(userId != ""){
 	  					$("#all").remove();
-	  					$(".pageul").append("<br/><button onclick='location.reload()' id='all'>전체보기</button>");
+	  					$(".pageul").append("<br/><button class='btn btn-default' onclick='location.reload()' id='all'>전체보기</button>");
 	  				}
                 },
                 error:function(data){
@@ -288,6 +295,11 @@ tr, th {
               return false;
            }
         }
+	
+	function addComma(num) {
+		var regexp = /\B(?=(\d{3})+(?!\d))/g;
+		return num.toString().replace(regexp, ',');
+	}
     </script>
 </body>
 </html>

@@ -27,13 +27,13 @@
 
 	<insert id="insertMember">
 		INSERT INTO MEMBER
-		VALUES(SEQ_MCODE.NEXTVAL,#{mId},#{mPwd},#{mName},#{nickName},
-		#{email},#{account},SYSDATE,SYSDATE,'Y','N',0,NULL)
+		VALUES(SEQ_MCODE.NEXTVAL, #{mId}, #{mPwd}, #{mName}, #{nickName},
+		#{email}, NULL, SYSDATE,SYSDATE, 'Y', 'N', 0, NULL)
 	</insert>
 
 	<select id="loginCheck" resultMap="memberResultSet"
 		parameterType="Member">
-		SELECT * FROM MEMBER WHERE MID = #{mId} AND MSTATUS = 'Y'
+		SELECT MCODE, MID, MPWD,MNAME,M_NICKNAME,EMAIL,ACOUNT as ACCOUNT,JOIN_DATE,UPDATE_DATE,MSTATUS,A_STATUS,PEACH,VIDEO_YN FROM MEMBER WHERE MID=#{mId} AND MSTATUS='Y'
 	</select>
 	<select id="overlapCheck" parameterType="string"
 		resultType="string">
@@ -48,7 +48,7 @@
 	<!-- 네이버 아이디 로그인 체크용 -->
 	<select id="selectNaverOne" parameterType="string"
 		resultMap="memberResultSet">
-		SELECT * FROM MEMBER WHERE MID=#{id} AND MSTATUS='Y'
+		SELECT MCODE,MID, MPWD,MNAME,M_NICKNAME,EMAIL,ACOUNT as ACCOUNT,JOIN_DATE,UPDATE_DATE,MSTATUS,A_STATUS,PEACH,VIDEO_YN FROM MEMBER WHERE MID=#{id} AND MSTATUS='Y'
 	</select>
 	<!-- 네이버 아이디 insert -->
 	<insert id="insertNaverMember" parameterType="NaverLoginMember">

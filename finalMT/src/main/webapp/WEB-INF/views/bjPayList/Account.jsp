@@ -82,7 +82,7 @@
 
   			$.ajax({
   				url: "https://openapi.open-platform.or.kr/inquiry/real_name",
-  				type: "post",
+  				type: "POST",
   				data:
   				{
   				  "bank_code_std": "fc9c75f3ddce4d0c9bfa2b8f5a0e954b",

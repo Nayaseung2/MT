@@ -56,7 +56,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
+                <a class="navbar-brand" href="index.jsp"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -87,7 +87,10 @@
                             <a href="deposit.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 출금 완료</a>
                         </li>
                         <li>
-                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 신고 관리</a>
+                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 신고</a>
+                        </li>
+                        <li>
+                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 완료된 신고 내역</a>
                         </li>
                        	<li>
                             <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
@@ -116,12 +119,34 @@
                                     <i class="fa fa-qq fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">242</div>
-                                    <div>현재 접속자 수</div>
+                                    <div class="huge"><fmt:formatNumber value="${ todayTotal }" groupingUsed="true"/>명</div>
+                                    <div>오늘 접속자 수</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="memberMg.ad">
+                            <div class="panel-footer">
+                                <span class="pull-left">자세히</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-users fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge"><fmt:formatNumber value="${ userTotal }" groupingUsed="true"/>명</div>
+                                    <div>총 접속자 수</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="memberMg.ad">
                             <div class="panel-footer">
                                 <span class="pull-left">자세히</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -138,12 +163,12 @@
                                     <i class="fa fa-desktop fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge"><c:out value="${ list.allList.BJ }"/></div>
+                                    <div class="huge"><fmt:formatNumber value="${ list.allList.BJ }" groupingUsed="true"/>명</div>
                                     <div>방송중인 BJ</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="memberMg.ad">
                             <div class="panel-footer">
                                 <span class="pull-left">자세히</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -153,19 +178,19 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-yellow">
+                    <div class="panel panel-red">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-won fa-5x"></i>
+                                    <i class="fa fa-plus-circle fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge"><fmt:formatNumber value="${ list.allList.MT }" type="currency" groupingUsed="true"/></div>
-                                    <div>오늘의 수입</div>
+                                    <div class="huge"><c:out value="${ list.allList.NEWM }명"/></div>
+                                    <div>신규회원</div>
                                 </div>
                             </div>
-                        </div> 
-                        <a href="#">
+                        </div>
+                        <a href="memberMg.ad">
                             <div class="panel-footer">
                                 <span class="pull-left">자세히</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -187,7 +212,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="reportMg.ad">
                             <div class="panel-footer">
                                 <span class="pull-left">자세히</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -197,19 +222,19 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-red">
+                    <div class="panel panel-yellow">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-plus-circle fa-5x"></i>
+                                    <i class="fa fa-won fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge"><c:out value="${ list.allList.NEWM }명"/></div>
-                                    <div>신규회원</div>
+                                    <div class="huge"><fmt:formatNumber value="${ list.allList.MT }" groupingUsed="true"/>원</div>
+                                    <div>오늘의 수입</div>
                                 </div>
                             </div>
-                        </div>
-                        <a href="#">
+                        </div> 
+                        <a href="revenueMg.ad">
                             <div class="panel-footer">
                                 <span class="pull-left">자세히</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -231,7 +256,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="withdrawal.ad">
                             <div class="panel-footer">
                                 <span class="pull-left">자세히</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -253,31 +278,9 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="contactMg.ad">
                             <div class="panel-footer">
                                 <span class="pull-left">자세히</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <img src="resources/images/plusBtn.png" style="height: 75px;"/>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">추가하기</div>
-                                    <div></div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">추가하러가기</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>

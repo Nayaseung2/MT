@@ -54,7 +54,9 @@ public interface AdminService {
 	//출금신청 회원 조회
 	ArrayList<Withdrawal> searchWithdrawal(String userId, PageInfo pi);
 
-	int approval(String wdCode);
+	int approval(String wdCode); //출금신청 완료
+	
+	int refusal(String wdCode); //출금신청 거절
 
 	HashMap<String, Object> depositList(PageInfo pi);
 
@@ -87,6 +89,24 @@ public interface AdminService {
 	ArrayList<Report> reportList(PageInfo pi);
 
 	String urlSearch(String target);
+
+	int newUserCount(); //신규회원 리스트 카운트
+
+	ArrayList<Member> newUserList(PageInfo pi); //신규회원 리스트
+
+	int reportUserCount(String userId);	//신고회원 카운트
+
+	ArrayList<Report> searchReportUser(String userId, PageInfo pi); //신고대상 리스트 가져오기
+
+	int sReportListCount(); //신고 완료된 리스트
+
+	ArrayList<Report> sReportList(PageInfo pi); //처리 완료된 신고내역 
+
+	int statusChange(String bCode); //신고 처리 바꾸기
+
+	int sReportUserSearch(String userId); //신고 처리완료된 회원 리스트카운트 조회
+
+	ArrayList<Report> sReportUserList(PageInfo pi, String userId); //신고처리 완료된 회원 리스트 조회
 
 } 
  

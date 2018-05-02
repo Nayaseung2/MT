@@ -153,7 +153,6 @@
 		<url-pattern>*.lb</url-pattern>
 	</servlet-mapping>
 	
-	
 	<!-- payServlet 맵핑 -->
 	<servlet>
 		<servlet-name>pay</servlet-name>
@@ -219,13 +218,57 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
 	<filter>
-	    <filter-name>cors</filter-name>
-	    <filter-class>com.kh.mt.liveBJ.crossDomain.CrossDomainFilterController</filter-class>   <!-- Filterclass 위치 -->
+		<!-- 매개 변수가있는 CORS 필터 -->
+		<filter-name> CORS </filter-name>
+		<filter-class> org.apache.catalina.filters.CorsFilter </filter-class>
+		
+		<!-- <! - 참고 : 모든 매개 변수는 옵션이며 생략 된 경우 CORS 
+		     필터는 각각의 기본값으로 되돌아갑니다.
+		  -> -->
+		<init-param>
+			<param-name> cors.allowGenericHttpRequests </param-name>
+			<param-value> true </param-value>
+		</init-param>
+		
+		<init-param>
+			<param-name> cors.allowOrigin </param-name>
+			<param-value> * </param-value>
+		</init-param>
+		
+		<init-param>
+			<param-name> cors.allowSubdomains </param-name>
+			<param-value> false </param-value>
+		</init-param>
+		
+		<init-param>
+			<param-name> cors.supportedMethods </param-name>
+			<param-value> GET, HEAD, POST, OPTIONS </param-value>
+		</init-param>
+		
+		<init-param>
+			<param-name> cors.supportedHeaders </param-name>
+			<param-value> * </param-value>
+		</init-param>
+		
+		<init-param>
+			<param-name> cors.exposedHeaders </param-name>
+			<param-value> X-Test-1, X-Test-2 </param-value>
+		</init-param>
+		
+		<init-param>
+			<param-name> cors.supportsCredentials </param-name>
+			<param-value> true </param-value>
+		</init-param>
+		
+		<init-param>
+			<param-name> cors.maxAge </param-name>
+			<param-value> 3600 </param-value>
+		</init-param>
+
 	</filter>
 	<filter-mapping>
-	    <filter-name>cors</filter-name>
+	    <filter-name>CORS</filter-name>
 	    <url-pattern>/*</url-pattern> <!-- 전체도메인 해당 (크로스 도메인을 적용하고 싶은 url pattern)-->
 	</filter-mapping>
 

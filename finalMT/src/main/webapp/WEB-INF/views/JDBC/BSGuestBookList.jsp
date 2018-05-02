@@ -34,7 +34,39 @@
 	.favoriteBJ{width:920px;height:170px; margin-left:10px;}
 	/* 방명록 리스트 */
 	.showGuestBookList{width:860px; height:800px;
-	margin-left:auto; margin-right:auto; border:1px solid red;
+	margin-left:auto; margin-right:auto; 
+	}
+	
+	.gListTable {
+		margin-top: 3%;
+		margin-left: 100px;
+		width: 80%;
+		font-size: 16px;
+		
+	
+	
+	}
+	
+	.gListTable th {
+		background-color: rgba(255, 99, 71, 0.1);
+		width: 400px;
+		height: 40px;
+		text-align: center;
+		border-bottom: 2px solid lightgray;
+		
+	}
+	
+	.gListTable td {
+		background-color: hsla(0, 0%, 94%, 0.3);
+		width: 400px;
+		height: 200px;
+		text-align: center;
+	
+	}
+	
+	#gHome {
+		border: 0px solid white;
+		background-color: rgba(255, 99, 71, 0);
 	}
 	
 </style>
@@ -43,9 +75,9 @@
 <body>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <div class="BSContainer">
-<div class="icon">
-<a href="index.jsp"><img src="<%=request.getContextPath() %>/resources/images/logo.png" style="width:200px;"></a>
-</div>
+<jsp:include page="../common/menubar.jsp" />
+<br/>
+<br/> 
 <div class="BSframe">
 <div class="showBSname">
 <br>
@@ -86,7 +118,7 @@
 <label style="margin-left:15px;">방송국 방문 : 0명</label>
 </div>
 <br>
-<button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button>
+<button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button><br/><br/>
 <button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
 <br><br>
 <table class="bottomBox">
@@ -97,7 +129,7 @@
 	</tr>
 	<tr>
 		<td>
-			<p><a class="bottom">일반 게시판</a></p>
+			<p><a class="bottom" href="BSmyBoard.board?mId=${ loginUser.mId }">내 게시판</a></p>
 			<p><a class="bottom" href="showGuestBookList.JDBC">방명록</a></p>
 		</td>
 	</tr>
@@ -111,10 +143,35 @@
 <!-- 즐겨찾기 보여주기 부분 -->
 <div class="showRightPart">
 <div class="showGuestBookList">
-<label style="font-size:16px; width:930px; border-bottom:2px solid rgba(235, 104, 100, 0.5);"><span class="glyphicon glyphicon-list-alt"></span>방명록</label>
+<br/>
+<label style="font-size:16px; width:930px; height: 40px; border-bottom:2px solid rgba(235, 104, 100, 0.5);">&nbsp;&nbsp;<span class="glyphicon glyphicon-list-alt"></span>&nbsp;방명록</label>
 <div class="GuestBookListTableDiv">
-<table class="GBListTable">
-
+<table class="gListTable">
+	
+	<tr>
+		<th>${ loginUser.mId }&nbsp;&nbsp;&nbsp;&nbsp;
+			<button id="gHome"><img src="${ contextPath }/resources/images/house.png" width="25px"/></button>
+		</th>
+		<th>(${ loginUser.joinDate })</th>
+	</tr>
+	<tr>
+		<td colspan="2">방명록 내용 / 방명록 내용 / 방명록 내용 / 방명록 내용 / 방명록 내용 / 방명록 내용</td>
+	</tr>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </table>
 </div>
 </div>

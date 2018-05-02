@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,11 +62,37 @@ public class AdminController {
 	//관리자 메인화면
 	@RequestMapping("adminMain.ad")
 	public ModelAndView adminMain(ModelAndView mv){
-		
 		HashMap<String, HashMap<String, String>> list = as.allMenuList(); 
 		
-		mv.addObject("list", list);
+		int userTotal = 0;
+		int todayTotal = 0;
 		
+		File path = new File("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/");
+		File[] fileList = path.listFiles() ;
+		
+		for(int i = 0; i < fileList.length; i++){
+			try {
+				reader = new BufferedReader(new FileReader(fileList[i]));
+				
+				while(reader.readLine() != null){
+					if(i == 0){
+						todayTotal++;
+					}
+					userTotal++;
+				}
+				reader.close();
+			
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		mv.addObject("list", list);
+		mv.addObject("todayTotal", todayTotal);
+		mv.addObject("userTotal", userTotal);
+
 		mv.setViewName("admin/admin");
 		
 		return mv;
@@ -79,12 +107,13 @@ public class AdminController {
 		
 		ArrayList<Member> mlist = as.userAllList(pi);
 		ArrayList<String> times = userCount();
-		
+
 		mv.addObject("pi", pi);
 		mv.addObject("list", list);
 		mv.addObject("mlist", mlist);
 		mv.addObject("times", times);
-		
+		mv.addObject("todayTotal", todayCount());
+		mv.addObject("newUserCount", as.newUserCount());
 		mv.setViewName("admin/memberManagement");
 		
 		if(newCurrentPage != null){
@@ -128,6 +157,27 @@ public class AdminController {
 		return mv;
 	}
 	
+	//신규회원 List조회
+	@RequestMapping("searchNewUser.ad")
+	public ModelAndView searchNewUser(ModelAndView mv, String newCurrentPage){
+		int count = as.newUserCount();
+
+		PageInfo pi = addUserPage(newCurrentPage, count);
+		
+		ArrayList<Member> newUserList = as.newUserList(pi);
+		
+		HashMap<String, Object> list = new HashMap<String, Object>();
+		
+		list.put("pi", pi);
+		list.put("mlist", newUserList);
+		
+		mv.addObject("list", list);
+
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
 	//아이디로 회원 조회
 	@RequestMapping("searchMember.ad")
 	public ModelAndView searchMember(ModelAndView mv, String userId){
@@ -160,10 +210,10 @@ public class AdminController {
 		PageInfo pi = addPage(newCurrentPage, "blackUser");
 		
 		HashMap<String, Object> map = as.blackUsers(pi);
+		map.put("pi", pi);
 		
 		System.out.println(map.get("mlist"));
-		
-		map.put("pi", pi);
+		System.out.println(map.get("pi"));
 		
 		mv.addObject("map", map);
 		if(newCurrentPage == null){
@@ -326,9 +376,9 @@ public class AdminController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int count = as.searchWithCount(userId);
 		PageInfo pi = addUserPage(newCurrentPage, count);
-		ArrayList<Withdrawal> rlist = as.searchWithdrawal(userId, pi);
+		ArrayList<Withdrawal> wlist = as.searchWithdrawal(userId, pi);
 		
-		map.put("rlist", rlist);
+		map.put("wlist", wlist);
 		map.put("pi", pi);
 		
 		mv.addObject("map", map);
@@ -343,9 +393,28 @@ public class AdminController {
 	public ModelAndView approval(ModelAndView mv, String wdCode){
 		
 		int approval = 0; 
+		
 		approval = as.approval(wdCode);
 		
+		System.out.println(approval);
+		
 		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	//출금신청 거절
+	@RequestMapping("refusal.ad")
+	public ModelAndView refusal(ModelAndView mv, String wdCode) {
+		
+		int refusal = 0; 
+		
+		refusal = as.refusal(wdCode);
+		
+		System.out.println(refusal);
+		
+		mv.setViewName("jsonView");
+		
 		
 		return mv;
 	}
@@ -399,19 +468,44 @@ public class AdminController {
 	public ModelAndView reportMg(ModelAndView mv, String newCurrentPage){
 		int count = as.reportListCount();
 		
+		System.out.println("reportMg.ad newCurrentPage: " + newCurrentPage);
+		System.out.println("reportMg.ad: " + count);
 		PageInfo pi = addUserPage(newCurrentPage, count);
 		
 		ArrayList<Report> list = as.reportList(pi);
 		
-		System.out.println(list);
+		System.out.println("reportMg.ad List: " + list);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("pi", pi);
 		map.put("list", list);
 
 		mv.addObject("map", map);
+
+		if(newCurrentPage == null) {
+			mv.setViewName("admin/reportManagement");
+		}else {
+			mv.setViewName("jsonView");
+		}
 		
-		mv.setViewName("admin/reportManagement");
+		return mv;
+	}
+	
+	@RequestMapping("searchReport.ad")
+	public ModelAndView searchReport(ModelAndView mv, String newCurrentPage, String userId){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int count = as.reportUserCount(userId);
+		
+		PageInfo pi = addUserPage(newCurrentPage, count);
+		
+		ArrayList<Report> list = as.searchReportUser(userId, pi);
+		
+		map.put("list", list);
+		map.put("pi", pi);
+		
+		mv.addObject("map", map);
+		mv.setViewName("jsonView");
 		
 		return mv;
 	}
@@ -430,6 +524,59 @@ public class AdminController {
 		
 		mv.setViewName("jsonView");
 		
+		return mv;
+	}
+	
+	//처리 완료된 신고내역
+	@RequestMapping("sReport.ad")
+	public ModelAndView seccessReport(ModelAndView mv, String newCurrentPage) {
+		int count = as.sReportListCount();
+		PageInfo pi = addUserPage(newCurrentPage, count);
+		
+		ArrayList<Report> list = as.sReportList(pi);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pi", pi);
+		map.put("list", list);
+
+		mv.addObject("map", map);
+		
+		if(newCurrentPage == null){
+			mv.setViewName("admin/successReport");
+		}else {
+			mv.setViewName("jsonView");
+		}
+		
+		return mv;
+	}
+	
+	//처리 완료된 유저 신고내역
+	@RequestMapping("sReportUser.ad")
+	public ModelAndView sReportUserSearch(ModelAndView mv, String newCurrentPage, String userId){
+		int count = as.sReportUserSearch(userId);
+		
+		PageInfo pi = addUserPage(newCurrentPage, count);
+		
+		ArrayList<Report> list = as.sReportUserList(pi, userId);
+		
+		System.out.println("sReportUser: " + list);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pi", pi);
+		map.put("list", list);
+
+		mv.addObject("map", map);
+		
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	
+	//신고 처리 상태변화
+	@RequestMapping("statusChange.ad")
+	public ModelAndView statusChange(ModelAndView mv, String bCode){
+		
+		int result = as.statusChange(bCode);
+		
+		mv.setViewName("jsonView");
 		return mv;
 	}
 //---------------------------------------------------------------------------------------------------------문의 내역----------------------------------------------------------------------------------------------------------	
@@ -621,6 +768,25 @@ public class AdminController {
 		return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 	}
 	
+	//하루 접속자 읽기
+	public int todayCount(){
+		int result = 0;
+		
+		try {
+			reader = new BufferedReader(new FileReader("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log"));
+			
+			while(reader.readLine() != null){
+				result++;
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	
 	//회원 관리 시간별 그래프 메소드
 	public  ArrayList<String> userCount(){
@@ -679,7 +845,6 @@ public class AdminController {
 		String monthDay = as.searchDay();
 		String day = (new Date().toString().split(" "))[2];
 		ArrayList<String> list = new ArrayList<String>();
-		String line = null;
 		
 		String lastDay = monthDay.substring(monthDay.lastIndexOf("-")+1, monthDay.length());
 		String fileName = monthDay.substring(0, monthDay.lastIndexOf("-")+1);
@@ -700,7 +865,7 @@ public class AdminController {
 					reader = new BufferedReader(new FileReader("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log." + fileName + temp));
 				}
 				
-				while((line = reader.readLine()) != null){
+				while(reader.readLine() != null){
 					count++;
 				}
 				
@@ -913,36 +1078,36 @@ public class AdminController {
 		return mv;
 	}
 	
-//	public static void main(String[] args) {
-//		/*int num = 160;
-//		String str = "";
-//		
-//		String temp = "";
-//		for(int i = 0; i < str.length(); i++){
-//			if(i >= num){
-//				temp += str.charAt(i);
-//			}
-//		}
-//		System.out.println(temp);*/
-//		
-//        
-//        
-//        try{
-//            for(int i = 15; i < 25; i++){
-//            	String fileName = "C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log.2018-04-"+i;
-//            	
-//	            BufferedWriter fw = new BufferedWriter(new FileWriter(fileName, true));
-//	            
-//            	fw.write(" ");
-//            	fw.flush();
-//	            fw.close();
-//	             
-//            }
-//             
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//
+////	public static void main(String[] args) {
+////		int num = 34;
+////		String str = "";
+////		
+////		String temp = "VALUES ('6', 2, 300000, SYSDATE, N, NULL, '국민34363521546248')";
+////		for(int i = 0; i < str.length(); i++){
+////			if(i >= num){
+////				temp += str.charAt(i);
+////			}
+////		}
+////		System.out.println(temp);
+////		
+////        
+////       /* 
+////        try{
+////            for(int i = 15; i < 25; i++){
+////            	String fileName = "C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log.2018-04-"+i;
+////            	
+////	            BufferedWriter fw = new BufferedWriter(new FileWriter(fileName, true));
+////	            
+////            	fw.write(" ");
+////            	fw.flush();
+////	            fw.close();
+////	             
+////            }
+////             
+////        }catch(Exception e){
+////            e.printStackTrace();
+////        }
+////*/
 //
 //		
 //	}

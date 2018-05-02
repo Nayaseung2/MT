@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.mt.BJPayList.model.vo.BJPayList;
+import com.kh.mt.BJPayList.model.vo.Black;
 import com.kh.mt.BJPayList.model.vo.Expeach;
 import com.kh.mt.BJPayList.model.vo.Subscribe;
 import com.kh.mt.common.PageInfo;
@@ -142,6 +143,31 @@ public class BJPayListDaoImpl implements BJPayListDao{
 		
 		return list;
 	}
+
+	@Override
+	public HashMap<String, String> BlackListAllCount(SqlSessionTemplate sqlSession, String mcode) {
+		HashMap<String, String> list = sqlSession.selectOne("BJPayList.BlackListAllCount", mcode);
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<Black> selectBlackListAllList(SqlSessionTemplate sqlSession, String mcode, PageInfo pi) {
+		ArrayList<Black> list = null;
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		list = (ArrayList) sqlSession.selectList("BJPayList.selectBlackListAllList",mcode,rowBounds);
+		
+		return list;
+	}
+
+	@Override
+	public int BlackcancelUpdate(SqlSessionTemplate sqlSession , String mId) {
+		int result = sqlSession.insert("BJPayList.UpdateBlackcancel", mId);
+		return result;
+	}
+
 
 
 

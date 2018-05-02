@@ -38,26 +38,44 @@
 <script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
 
 <style>
-	.modalTable, .modalTable td, .modalTable input{
-		width: 100%;
-	}
-	
-	.modalTable input{
-		margin: 0px auto 20px auto; 
-		font-size: 18px;
-		font-weight: bold;
-	}
-	
-	.modalTable textarea{
-		width: 100%;
-		height: 200px;
-		resize: none;
-	}
-	.modal-content label{
-		float: inherit;
-	}
-	
-	
+.modalTable, .modalTable td, .modalTable input{
+	width: 100%;
+}
+
+.modalTable input{
+	margin: 0px auto 20px auto; 
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.modalTable textarea{
+	width: 100%;
+	height: 200px;
+	resize: none;
+}
+.modal-content label{
+	float: inherit;
+}
+th, td {
+	text-align: center;
+}
+#dataTables-example{
+	table-layout:fixed;
+}
+#dataTables-example td{
+	line-height: 2.5em;
+}
+#dataTables-example td:nth-child(4) {
+	display: block; 
+	width: 100%; 
+	overflow: hidden; 
+	text-overflow: ellipsis; 
+	white-space: nowrap;
+}
+#all {
+	margin-top: 10px;
+}
+
 </style>
 
 
@@ -76,7 +94,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
+                <a class="navbar-brand" href="index.jsp"><img src="resources/images/logo.png" style="height: 35px; width: 200px;"/></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -107,7 +125,10 @@
                             <a href="deposit.ad"><i class="fa fa-bar-chart-o fa-fw"></i> 출금 완료</a>
                         </li>
                         <li>
-                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 신고 관리</a>
+                            <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 신고</a>
+                        </li>
+                        <li>
+                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 완료된 신고 내역</a>
                         </li>
                        	<li>
                             <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
@@ -300,9 +321,9 @@
                                   		<td><c:out value="${ c.bWriter }"/></td>
                                   		<td><c:out value="${ c.bType }"/></td>
                                   		<td><c:out value="${ c.bTitle }"/></td>
-                                  		<td style="width: 20px; overflow: hidden; text-overflow; ellipsis;"><c:out value="${ c.bContent }"/></td>
+                                  		<td><c:out value="${ c.bContent }"/></td>
                                   		<td><c:out value="${ c.bCreateDate }"/></td>
-                                  		<td width="5%" align="center" class="detailTd"><button class="btn btn-default detail">자세히 보기</button></td>
+                                  		<td class="detailTd"><button class="btn btn-default detail">자세히 보기</button></td>
                                   		<td style="display:none;" id="${ c.bCode }"><c:out value="${ c.bCode }"/></td>
                                   	</tr>
                                   </c:forEach>
@@ -523,7 +544,7 @@
     	      		
     	      		if(userId != ""){
 	  					$("#all").remove();
-	  					$(".pageul").append("<br/><button onclick='location.reload()' id='all'>전체보기</button>");
+	  					$(".pageul").append("<br/><button class='btn btn-default' onclick='location.reload()' id='all'>전체보기</button>");
 	  				}
                 },
                 error:function(data){
@@ -567,7 +588,7 @@
       		
 	      		if(userId != ""){
 					$("#all").remove();
-					$(".pageul").append("<br/><button onclick='location.reload()' id='all'>전체보기</button>");
+					$(".pageul").append("<br/><button class='btn btn-default' onclick='location.reload()' id='all'>전체보기</button>");
 				}
            },
            error:function(data){

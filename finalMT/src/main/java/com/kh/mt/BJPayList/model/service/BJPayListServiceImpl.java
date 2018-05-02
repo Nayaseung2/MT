@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.mt.BJPayList.model.dao.BJPayListDao;
 import com.kh.mt.BJPayList.model.vo.BJPayList;
+import com.kh.mt.BJPayList.model.vo.Black;
 import com.kh.mt.BJPayList.model.vo.Expeach;
 import com.kh.mt.BJPayList.model.vo.Subscribe;
 import com.kh.mt.common.PageInfo;
@@ -116,6 +117,30 @@ public class BJPayListServiceImpl implements BJPayListService{
 		
 		return list;
 	}
+
+	@Override
+	public HashMap<String, String> BlackListAllCount(String mcode) {
+		HashMap<String, String> list = null;
+		
+		list = bjp.BlackListAllCount(sqlSession, mcode);
+		
+		 
+		return list;
+	}
+
+	@Override
+	public ArrayList<Black> selectBlackListAllList(String mcode, PageInfo pi) {
+		ArrayList<Black> list = bjp.selectBlackListAllList(sqlSession, mcode , pi);
+		
+		return list;
+	}
+
+	@Override
+	public int BlackcancelUpdate(String mId) {
+		int result = bjp.BlackcancelUpdate(sqlSession, mId);
+		return result;
+	}
+
 
 
 

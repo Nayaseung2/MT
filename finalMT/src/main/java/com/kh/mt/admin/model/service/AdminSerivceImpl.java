@@ -273,5 +273,55 @@ public class AdminSerivceImpl implements AdminService{
 		return ad.urlSearch(target);
 	}
 
+	@Override
+	public int newUserCount() {
+		return ad.newUserCount();
+	}
+
+	@Override
+	public ArrayList<Member> newUserList(PageInfo pi) {
+		return ad.newUserList(pi);
+	}
+
+	@Override
+	public int reportUserCount(String userId) {
+		return ad.reportUserCount(userId);
+	}
+
+	@Override
+	public ArrayList<Report> searchReportUser(String userId, PageInfo pi) {
+		return ad.searchReportUser(userId, pi);
+	}
+
+	@Override
+	public int sReportListCount() {
+		return ad.sReportListCount();
+	}
+
+	@Override
+	public ArrayList<Report> sReportList(PageInfo pi) {
+		return ad.sReportList(pi);
+	}
+
+	@Override
+	public int statusChange(String bCode) {
+		return ad.statusChange(bCode);
+	}
+
+	@Override
+	public int sReportUserSearch(String userId) {
+		return ad.sReportUserSearch(userId);
+	}
+
+	@Override
+	public ArrayList<Report> sReportUserList(PageInfo pi, String userId) {
+		return ad.sReportUserList(pi, userId);
+	}
+
+	@Override
+	public int refusal(String wdCode) {
+		return ad.refusal(wdCode);
+	}
+
 
 }
