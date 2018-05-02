@@ -26,58 +26,80 @@
 	.bottomBox{margin-left:20px;
 		width:200px;
 		height:200px;
-		border:1px solid #b3b3b3;}
+		border:1px solid #b3b3b3;
+		cursor:pointer;}
 	.bottomBox td{border-bottom:1px dotted lightgray;}
-	.bottom{color:black; text-decoration:none; margin-left:15px; cursor:pointer;}
-	.showRightPart{position:relative; width:940px; height:800px; 
-	left:240px;bottom:620px;}
-	.favoriteBJ{width:920px;height:170px; margin-left:10px;}
-	/* 방명록 리스트 */
-	.showGuestBookList{width:860px; height:800px;
-	margin-left:auto; margin-right:auto; 
+	.bottom{color:black; text-decoration:none; margin-left:15px;}
+	.showRightPart{position:relative; width:940px; height:850px; 
+	left:240px;bottom:640px;background-color: rgba(255, 245, 244, 0.9);}
+	
+	.equal{
+		width:20px;
+	}
+	/* 이미지 올리기 */
+	.inputImg{
+		margin-left:30px;
+		border:1px solid lightgray;
+	}/*  */
+	.okay{
+		width:80px;
+		height:30px;
+		background:rgba(235, 104, 100, 0.5);
+		border:none;
+		color:white;
 	}
 	
-	.gListTable {
-		margin-top: 3%;
-		margin-left: 100px;
-		width: 80%;
+	.okay2{
+		width:100px;
+		height:30px;
+		background:rgba(235, 104, 100, 0.9);
+		border:none;
+		color:white;
+	}
+	
+	
+	table {
+		border-top:2px solid #F08080;
+		border-bottom:2px solid #F08080;
+		padding-left: 3%;
+	}
+	
+	#listArea {
+		width:80%;
+		height: 400px;
 		font-size: 16px;
-		
-	
-	
-	}
-	
-	.gListTable th {
-		background-color: rgba(255, 99, 71, 0.1);
-		width: 400px;
-		height: 40px;
+		margin-top: 3%;
 		text-align: center;
-		border-bottom: 2px solid lightgray;
-		
 	}
 	
-	.gListTable td {
-		background-color: hsla(0, 0%, 94%, 0.3);
-		width: 400px;
-		height: 200px;
-		text-align: center;
-	
+	#listArea tr {
+		height: 50px;
+		border-bottom:1px solid #F08080;
+	}
+
+	#listArea td {
+		width: 100px;
 	}
 	
-	#gHome {
-		border: 0px solid white;
-		background-color: rgba(255, 99, 71, 0);
+	.tdClass {
+		border-right:1px solid #F08080;
 	}
+	
+	
+	
+	
+	
 	
 </style>
-<title>방송국 방명록 목록</title>
+<title>내 게시판</title>
+<!-- ckeditor -->
+<script src="<%= request.getContextPath()%>/resources/ckeditor/ckeditor.js">
+</script>
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <div class="BSContainer">
-<jsp:include page="../common/menubar.jsp" />
-<br/>
-<br/> 
+<jsp:include page="../common/menubar.jsp" /> 
 <div class="BSframe">
 <div class="showBSname">
 <br>
@@ -87,7 +109,7 @@
 <img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${jdbcLogoFile.f_rename}"style="width:80px; height:80px;">
 </c:if>
 <c:if test="${empty jdbcLogoFile }">
-<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/images/logo.png"style="width:80px; height:80px;">
+<img alt="회원 이미지" src="${ contextPath }/resources/images/logo.png"style="width:80px; height:80px;">
 </c:if>
 <div class="BStitle">
 <c:if test="${!empty jdbcInfo.jdbc_name }">
@@ -107,12 +129,12 @@
 <br>
 <label class="idnickname"><b>${loginUser.mId }</b></label><br>
 <span class="idnickname">${loginUser.nickName }</span>
-<span class="glyphicon glyphicon-cog" style="float:right;"><a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
-<c:if test="${empty jdbcInfo.jdbc_introduce }">
-<input class="introduction" type="text" value="자기소개가 없습니다." readonly>
+<span class="glyphicon glyphicon-cog" style="float:right;"><a style="text-decoration:none; color:black; cursor:pointer;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
+<c:if test="${!empty jdbcInfo.jdbc_name }">
+<input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce}" readonly>
 </c:if>
-<c:if test="${!empty jdbcInfo.jdbc_introduce }">
-<input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce }" readonly>
+<c:if test="${empty jdbcInfo.jdbc_name }">
+<input class="introduction" type="text" value="자기소개가 없습니다." readonly>
 </c:if>
 <br><br> <br>  
 <label style="margin-left:15px;">방송국 방문 : 0명</label>
@@ -129,7 +151,7 @@
 	</tr>
 	<tr>
 		<td>
-			<p><a class="bottom" href="BSmyBoard.board?mId=${ loginUser.mId }">내 게시판</a></p>
+			<p><a class="bottom" href="BSmyBoard.board?mId=${ loginUser.mId }">일반 게시판</a></p>
 			<p><a class="bottom" href="showGuestBookList.JDBC">방명록</a></p>
 		</td>
 	</tr>
@@ -140,42 +162,59 @@
 	</tr>
 </table>
 </div>
-<!-- 즐겨찾기 보여주기 부분 -->
+<!-- 오른쪽 부분 -->
 <div class="showRightPart">
-<div class="showGuestBookList">
 <br/>
-<label style="font-size:16px; width:930px; height: 40px; border-bottom:2px solid rgba(235, 104, 100, 0.5);">&nbsp;&nbsp;<span class="glyphicon glyphicon-list-alt"></span>&nbsp;방명록</label>
-<div class="GuestBookListTableDiv">
-<table class="gListTable">
-	
-	<tr>
-		<th>${ loginUser.mId }&nbsp;&nbsp;&nbsp;&nbsp;
-			<button id="gHome"><img src="${ contextPath }/resources/images/house.png" width="25px"/></button>
-		</th>
-		<th>(${ loginUser.joinDate })</th>
-	</tr>
-	<tr>
-		<td colspan="2">방명록 내용 / 방명록 내용 / 방명록 내용 / 방명록 내용 / 방명록 내용 / 방명록 내용</td>
-	</tr>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-</table>
-</div>
-</div>
-</div>
+<br/>
+
+	<h3 align="center"><b>내 게시판</b></h3>		
+	<br/>
+		<div class="tableArea">
+			<table align="center" id="listArea">
+				<!-- table header -->
+				<tr>
+					<td class="tdClass"><b>제 목</b></td>
+					<td colspan="5"><c:out value="${ hmap.mbListDetail.b_title }" /></td>
+				</tr>
+				<tr>
+					<td class="tdClass" rowspan="5"><b>내 용</b></td>
+					<td rowspan="5" colspan="5">
+						<br/><br/>
+						${ hmap.mbListDetail.b_content }
+						<br/><br/>
+						<img src="${ contextPath }/resources/BoardFile/${ hmap.mbListDetailP.f_rename }"/>
+						<br/><br/><br/>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<br/>
+		<br/>
+		<div align="right" style="padding-right: 70px;">
+			<button type="button" class="okay" onclick="deleteBtn();">삭제하기</button>
+		</div>
+		<br/>
+		<div align="center">
+			<button type="button" class="okay2" onclick="listBtn();">목록으로</button>
+		</div>
+			
+		<script>
+		
+			function deleteBtn(){
+				
+				var b_code = "${ hmap.mbListDetail.b_code }";
+				location.href="${ contextPath }/BSmyBoardDelete.board?b_code=" + b_code;
+			}
+			
+			function listBtn(){
+				
+				location.href="${ contextPath }/BSmyBoard.board?mId=${ loginUser.mId }";
+			}
+		
+		
+		
+		</script>
 </div>
 </div>
 </body>

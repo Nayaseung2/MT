@@ -26,58 +26,54 @@
 	.bottomBox{margin-left:20px;
 		width:200px;
 		height:200px;
-		border:1px solid #b3b3b3;}
+		border:1px solid #b3b3b3;
+		cursor:pointer;}
 	.bottomBox td{border-bottom:1px dotted lightgray;}
-	.bottom{color:black; text-decoration:none; margin-left:15px; cursor:pointer;}
+	.bottom{color:black; text-decoration:none; margin-left:15px;}
 	.showRightPart{position:relative; width:940px; height:800px; 
-	left:240px;bottom:620px;}
-	.favoriteBJ{width:920px;height:170px; margin-left:10px;}
-	/* 방명록 리스트 */
-	.showGuestBookList{width:860px; height:800px;
-	margin-left:auto; margin-right:auto; 
+	left:240px;bottom:640px;}
+	
+	/* 글쓰기 테이블 */
+	.writeTable{
+		margin-left:30px;
+		width:750px;
 	}
-	
-	.gListTable {
-		margin-top: 3%;
-		margin-left: 100px;
-		width: 80%;
-		font-size: 16px;
-		
-	
-	
+	.writeTable th{
+		width:100px;
+		height:30px;
+		text-align:center;
 	}
-	
-	.gListTable th {
-		background-color: rgba(255, 99, 71, 0.1);
-		width: 400px;
-		height: 40px;
-		text-align: center;
-		border-bottom: 2px solid lightgray;
-		
+	.writeTable tr{
+		height:35px;
 	}
-	
-	.gListTable td {
-		background-color: hsla(0, 0%, 94%, 0.3);
-		width: 400px;
-		height: 200px;
-		text-align: center;
-	
+	.equal{
+		width:20px;
 	}
-	
-	#gHome {
-		border: 0px solid white;
-		background-color: rgba(255, 99, 71, 0);
+	/* 이미지 올리기 */
+	.inputImg{
+		margin-left:30px;
+		border:1px solid lightgray;
+	}/*  */
+	.okay{
+		width:160px;
+		height:30px;
+		background:rgba(235, 104, 100, 0.5);
+		border:none;
+		color:white;
 	}
-	
 </style>
-<title>방송국 방명록 목록</title>
+<title>게시글 삭제</title>
+<!-- ckeditor -->
+<script src="<%= request.getContextPath()%>/resources/ckeditor/ckeditor.js">
+</script>
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <div class="BSContainer">
-<jsp:include page="../common/menubar.jsp" />
+<jsp:include page="../common/menubar.jsp" /> 
 <br/>
-<br/> 
+<br/>
+
 <div class="BSframe">
 <div class="showBSname">
 <br>
@@ -107,12 +103,12 @@
 <br>
 <label class="idnickname"><b>${loginUser.mId }</b></label><br>
 <span class="idnickname">${loginUser.nickName }</span>
-<span class="glyphicon glyphicon-cog" style="float:right;"><a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
-<c:if test="${empty jdbcInfo.jdbc_introduce }">
-<input class="introduction" type="text" value="자기소개가 없습니다." readonly>
+<span class="glyphicon glyphicon-cog" style="float:right;"><a style="text-decoration:none; color:black; cursor:pointer;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
+<c:if test="${!empty jdbcInfo.jdbc_name }">
+<input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce}" readonly>
 </c:if>
-<c:if test="${!empty jdbcInfo.jdbc_introduce }">
-<input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce }" readonly>
+<c:if test="${empty jdbcInfo.jdbc_name }">
+<input class="introduction" type="text" value="자기소개가 없습니다." readonly>
 </c:if>
 <br><br> <br>  
 <label style="margin-left:15px;">방송국 방문 : 0명</label>
@@ -129,7 +125,7 @@
 	</tr>
 	<tr>
 		<td>
-			<p><a class="bottom" href="BSmyBoard.board?mId=${ loginUser.mId }">내 게시판</a></p>
+			<p><a class="bottom" href="BSmyBoard.board?mId=${ loginUser.mId }">일반 게시판</a></p>
 			<p><a class="bottom" href="showGuestBookList.JDBC">방명록</a></p>
 		</td>
 	</tr>
@@ -140,43 +136,34 @@
 	</tr>
 </table>
 </div>
-<!-- 즐겨찾기 보여주기 부분 -->
+<!-- 오른쪽 부분 -->
 <div class="showRightPart">
-<div class="showGuestBookList">
-<br/>
-<label style="font-size:16px; width:930px; height: 40px; border-bottom:2px solid rgba(235, 104, 100, 0.5);">&nbsp;&nbsp;<span class="glyphicon glyphicon-list-alt"></span>&nbsp;방명록</label>
-<div class="GuestBookListTableDiv">
-<table class="gListTable">
-	
-	<tr>
-		<th>${ loginUser.mId }&nbsp;&nbsp;&nbsp;&nbsp;
-			<button id="gHome"><img src="${ contextPath }/resources/images/house.png" width="25px"/></button>
-		</th>
-		<th>(${ loginUser.joinDate })</th>
-	</tr>
-	<tr>
-		<td colspan="2">방명록 내용 / 방명록 내용 / 방명록 내용 / 방명록 내용 / 방명록 내용 / 방명록 내용</td>
-	</tr>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-</table>
+				<br />
+				<br/>
+				<br/>
+				<br/>
+				<div align="center">
+					<img src="${ contextPath }/resources/images/delete.png" /> <br />
+					<br />
+					<h4>정상적으로 게시글이 삭제되었습니다.</h4>
+				</div>
+				<br/>
+				<br/>
+				<div align="center">
+					<button class="okay" onclick="goMain();">방송국 메인으로</button>
+				</div>
+
+				<script>
+					function goMain() {
+
+						location.href = "myBroadcastStation.JDBC";
+					}
+				</script>
+				<br /> <br />
+
+			</div>
 </div>
 </div>
-</div>
-</div>
-</div>
+
 </body>
 </html>

@@ -72,12 +72,20 @@
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <div class="BSContainer">
 <jsp:include page="../common/menubar.jsp" /> 
+<br/>
+<br/>
+
 <div class="BSframe">
 <div class="showBSname">
 <br>
 <!-- 회원 이미지 넣기 -->
 <div class="profileImg">
-<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/images/logo.png"style="width:80px; height:80px;">
+<c:if test="${!empty jdbcLogoFile }">
+<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${jdbcLogoFile.f_rename}"style="width:80px; height:80px;">
+</c:if>
+<c:if test="${empty jdbcLogoFile }">
+<img alt="회원 이미지" src="${ contextPath }/resources/images/logo.png"style="width:80px; height:80px;">
+</c:if>
 <div class="BStitle">
 <c:if test="${!empty jdbcInfo.jdbc_name }">
 <label class="BStext"><a id="BStexta"href="#">${jdbcInfo.jdbc_name }</a></label><br>
@@ -149,6 +157,14 @@
 			</td>
 		</tr>
 	</table>
+	
+	<!-- editor안에 첨부파일 -->
+	<!-- <script>
+	    CKEDITOR.replace( 'b_content', {
+	   		filebrowserImageUploadUrl : '/dev-guide/ckeditorImageUpload.do'
+	    } );
+	</script> -->
+	
 	<div style="padding-left: 100px;">
 		<input type="file" class="inputImg" name="Boardfile" id="Boardfile">
 	</div>

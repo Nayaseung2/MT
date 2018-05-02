@@ -76,6 +76,7 @@
 		width:80%;
 		font-size: 14px;
 		margin-top: 3%;
+		text-align: center;
 	}
 	
 	#listArea th {
@@ -107,12 +108,19 @@
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <div class="BSContainer">
 <jsp:include page="../common/menubar.jsp" /> 
+<br/>
+<br/>
 <div class="BSframe">
 <div class="showBSname">
 <br>
 <!-- 회원 이미지 넣기 -->
 <div class="profileImg">
-<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/images/logo.png"style="width:80px; height:80px;">
+<c:if test="${!empty jdbcLogoFile }">
+<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${jdbcLogoFile.f_rename}"style="width:80px; height:80px;">
+</c:if>
+<c:if test="${empty jdbcLogoFile }">
+<img alt="회원 이미지" src="${ contextPath }/resources/images/logo.png"style="width:80px; height:80px;">
+</c:if>
 <div class="BStitle">
 <c:if test="${!empty jdbcInfo.jdbc_name }">
 <label class="BStext"><a id="BStexta"href="#">${jdbcInfo.jdbc_name }</a></label><br>
@@ -176,15 +184,13 @@
 						<!-- table header -->
 						<tr>
 							<th>제목</th>
-							<th colspan="3">내용</th>
 							<th>작성일</th>
 							<th></th>
 						</tr>
 						<c:forEach var="item" items="${ hmap.mbList }">
 							<tr>
-								<td style="padding-left: 3%;"><c:out value="${ item.b_title }"/></td>
-								<td style="padding-left: 3%;" colspan="3"><c:out value="${ item.b_content }"/></td>
-								<td align="center"><c:out value="${ item.b_update_date }"/></td>
+								<td><c:out value="${ item.b_title }"/></td>
+								<td><c:out value="${ item.b_update_date }"/></td>
 								<td><input type="hidden" value="${ item.b_code }" id="b_code" name="b_code"></td>
 							</tr>
 						</c:forEach>
@@ -257,9 +263,8 @@
 	                   
 	                   for(var i = 0; i < list.length; i++){
 	                      
-	                	   $("#listArea").append("<tr><td style='padding-left: 3%;'>" + list[i].b_title
-									 + "</td><td align='center'>" + list[i].b_content 
-									 + "</td><td align='center'>" + list[i].b_create_date 
+	                	   $("#listArea").append("<tr><td>" + list[i].b_title
+									 + "</td><td>" + list[i].b_create_date 
 									 + "</td><td><input type='hidden' value='" + list[i].b_code + "' id='b_code' name='b_code'>"
 									 + "</td></tr>");
 	                   }
@@ -318,9 +323,8 @@
 		                   
 		                   for(var i = 0; i < list.length; i++){
 		                      
-		                	   $("#listArea").append("<tr><td style='padding-left: 3%;'>" + list[i].b_title
-										 + "</td><td align='center'>" + list[i].b_content 
-										 + "</td><td align='center'>" + list[i].b_create_date 
+		                	   $("#listArea").append("<tr><td>" + list[i].b_title
+										 + "</td><td>" + list[i].b_create_date 
 										 + "</td><td><input type='hidden' value='" + list[i].b_code + "' id='b_code' name='b_code'>"
 										 + "</td></tr>");
 		                   }
@@ -358,8 +362,10 @@
 			}).click(function(){
 				
 				var b_code = $(this).parent().children(":last").children().val();
+				var bwriter = "${ loginUser.mId }";
 				console.log(b_code);
-				//location.href="${ contextPath }/helpnoticedetail.hp?b_code=" + b_code;
+				console.log(bwriter);
+				location.href="${ contextPath }/BSmyBoardDetail.board?b_code=" + b_code + "&bwriter=" + bwriter;
 			});
 		});
   		

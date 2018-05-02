@@ -58,4 +58,31 @@ public class BoardDaoImpl implements BoardDao {
     	return mbList;
 	}
 
-}
+	// 방송국 - 내 게시판 상세보기
+	@Override
+	public Board mbListDetail(Board b) {
+
+		Board mbListDetail = sqlSession.selectOne("Board.mbListDetail", b);
+		
+		return mbListDetail;
+	}
+
+	// 방송국  - 내 게시판 상세보기(사진)
+	@Override
+	public BoardFile mbListDetailP(BoardFile bf) {
+		
+		BoardFile mbListDetailP = sqlSession.selectOne("Board.mbListDetailP", bf);
+		
+		return mbListDetailP;
+	}
+
+	// 방송국 - 내 게시판 글 삭제
+	@Override
+	public int BSmyBoardDelete(String b_code) {
+		
+		System.out.println("dao's b_code : " + b_code);
+
+		int result = sqlSession.delete("Board.mbListDelete", b_code);
+		
+		return result;
+	}}

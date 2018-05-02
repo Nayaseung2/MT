@@ -9,7 +9,6 @@
   			<result property="jdbc_name" column="JDBC_NAME"/>
   			<result property="jdbc_introduce" column="JDBC_INTRODUCE"/>
   			<result property="jdbc_interest" column="JDBC_INTEREST"/>
-  			<result property="guest_book" column="GUEST_BOOK"/>
   			<result property="visitor" column="VISITOR"/>
   		</resultMap>
   		<!-- UPLOADFILE COLUMNS -->
@@ -49,12 +48,12 @@
   			SET F_ORNAME=#{f_orname}, F_RENAME=#{f_rename},FILEPATH=#{filepath},UPLOAD_DATE=SYSDATE
   			WHERE F_MCODE=#{f_mcode}
   		</update>
-  		<select id="selectForShow" parameterType="string" resultMap="JDBCResultSet">
-  			SELECT * FROM JDBCSTATION
+  		<select id="selectForShow" parameterType="java.lang.String" resultMap="JDBCResultSet">
+  			SELECT * 
+  			FROM JDBCSTATION
   			WHERE MID=#{mId}
-  		
   		</select>
-  		<select id="selectJDBCLogoForShow" parameterType="string" resultMap="JDBCLogoResultSet">
+  		<select id="selectJDBCLogoForShow" parameterType="java.lang.String" resultMap="JDBCLogoResultSet">
   			SELECT * FROM UPLOADFILE
   			WHERE F_MCODE=#{mId}
   			AND FROM_CODE='JDBCLogo'

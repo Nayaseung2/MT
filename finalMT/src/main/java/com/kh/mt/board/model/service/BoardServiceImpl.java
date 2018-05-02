@@ -50,5 +50,36 @@ public class BoardServiceImpl implements BoardService{
     	return mbList;
 	}
 	
+	// 방송국 - 내 게시판 상세보기
+	@Override
+	public Board mbListDetail(Board b) {
+	
+		Board mbListDetail = null;
+		
+		mbListDetail = bd.mbListDetail(b);
+		
+		return mbListDetail;
+	}
+	
+	// 방송국 - 내 게시판 상세보기(사진)
+	@Override
+	public BoardFile mbListDetailP(BoardFile bf) {
+
+		BoardFile mbListDetailP = null;
+		
+		mbListDetailP = bd.mbListDetailP(bf);
+		
+		return mbListDetailP;
+	}
+	
+	// 방송국 - 내 게시판 글 삭제
+	@Override
+	public void BSmyBoardDelete(String b_code) {
+
+		int BSmyBoardDelete = 0;
+		
+		BSmyBoardDelete = bd.BSmyBoardDelete(b_code);
+	}
+	
 
 }
