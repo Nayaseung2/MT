@@ -1,39 +1,39 @@
 package com.kh.mt.liveBJ.model.vo;
 
 public class Gudock implements java.io.Serializable{
-	private String READER_MCODE;	//구독자
-	private String READ_DATE;	//구독날짜
-	private String BJ_MCODE;	//구독방송
+	private String reder_mCode;	//구독자 READER_MCODE
+	private String read_date;	//구독날짜 READ_DATE
+	private String BJ_mCode;	//구독방송 BJ_MCODE
 	public Gudock() {
 		super();
 	}
-	public Gudock(String rEADER_MCODE, String rEAD_DATE, String bJ_MCODE) {
+	public Gudock(String reder_mCode, String read_date, String bJ_mCode) {
 		super();
-		READER_MCODE = rEADER_MCODE;
-		READ_DATE = rEAD_DATE;
-		BJ_MCODE = bJ_MCODE;
+		this.reder_mCode = reder_mCode;
+		this.read_date = read_date;
+		BJ_mCode = bJ_mCode;
 	}
-	public String getREADER_MCODE() {
-		return READER_MCODE;
+	public String getReder_mCode() {
+		return reder_mCode;
 	}
-	public void setREADER_MCODE(String rEADER_MCODE) {
-		READER_MCODE = rEADER_MCODE;
+	public void setReder_mCode(String reder_mCode) {
+		this.reder_mCode = reder_mCode;
 	}
-	public String getREAD_DATE() {
-		return READ_DATE;
+	public String getRead_date() {
+		return read_date;
 	}
-	public void setREAD_DATE(String rEAD_DATE) {
-		READ_DATE = rEAD_DATE;
+	public void setRead_date(String read_date) {
+		this.read_date = read_date;
 	}
-	public String getBJ_MCODE() {
-		return BJ_MCODE;
+	public String getBJ_mCode() {
+		return BJ_mCode;
 	}
-	public void setBJ_MCODE(String bJ_MCODE) {
-		BJ_MCODE = bJ_MCODE;
+	public void setBJ_mCode(String bJ_mCode) {
+		BJ_mCode = bJ_mCode;
 	}
 	@Override
 	public String toString() {
-		return "Gudock [READER_MCODE=" + READER_MCODE + ", READ_DATE=" + READ_DATE + ", BJ_MCODE=" + BJ_MCODE + "]";
+		return "Gudock [reder_mCode=" + reder_mCode + ", read_date=" + read_date + ", BJ_mCode=" + BJ_mCode + "]";
 	}
 	
 }

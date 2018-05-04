@@ -16,12 +16,15 @@ public class LiveBj {
 		private String introduce;
 		private String v_state;
 		private String v_href;
+		private int v_viewers;
 		
 		
-		
-	
-	
-
+	public int getV_viewers() {
+			return v_viewers;
+		}
+		public void setV_viewers(int v_viewers) {
+			this.v_viewers = v_viewers;
+		}
 	public String getNickname() {
 			return nickname;
 		}
@@ -101,6 +104,24 @@ public class LiveBj {
 		this.cate = cate;
 		this.bsTitle = bsTitle;
 		this.bsContent = bsContent;
+	}
+	
+	public LiveBj(String cate, String bsTitle, String bsContent, String mid, String nickname, String f_rename, int like,
+			String starttime, String jcode, String introduce, String v_state, String v_href, int v_viewers) {
+		super();
+		this.cate = cate;
+		this.bsTitle = bsTitle;
+		this.bsContent = bsContent;
+		this.mid = mid;
+		this.nickname = nickname;
+		this.f_rename = f_rename;
+		this.like = like;
+		this.starttime = starttime;
+		this.jcode = jcode;
+		this.introduce = introduce;
+		this.v_state = v_state;
+		this.v_href = v_href;
+		this.v_viewers = v_viewers;
 	}
 	@Override
 	public String toString() {

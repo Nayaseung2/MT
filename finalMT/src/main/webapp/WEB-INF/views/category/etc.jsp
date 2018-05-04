@@ -29,7 +29,7 @@
                 <div class="col-sm-6 col-md-3 themeix-half">
                     <div class="single-video">
                         <div class="video-img">
-                                <a href="single-video.html">
+                                <a href="https://${ip}:8443/mt/testLiveBj.lb#${item.v_href}">
 								<img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${item.f_rename}" style="display: inline;">
 								 <noscript>
 									&lt;img src="${contextPath }/resources/images/thumbnails/6.jpg" alt="video" /&gt;
@@ -38,21 +38,18 @@
                             <span class="video-duration">5.28</span>
                         </div>
                         <div class="video-content">
-                            <h4><a href="${item.v_href}" class="video-title">${item.bsTitle}</a></h4>
+                            <h4><a href="https://${ip}:8443/mt/testLiveBj.lb#${item.v_href}" class="video-title">${item.bsTitle}</a></h4>
                             <div class="video-counter">
                                 <div class="video-viewers">
                                     <span class="fa fa-eye view-icon"></span>
-                                    <span>241,021</span>
+                                    <span>${item.v_viewers}</span>
                                 </div>
                                 <div class="video-feedback">
                                     <div class="video-like-counter">
                                         <span class="fa fa-thumbs-o-up like-icon"></span>
                                         <span>${item.like}</span>
                                     </div>
-                                    <div class="video-like-counter">
-                                         <span class="fa fa-thumbs-o-down dislike-icon"></span>
-                                        <span>2140</span>
-                                    </div>
+                                   
                                 </div>
                             </div>
                         </div>

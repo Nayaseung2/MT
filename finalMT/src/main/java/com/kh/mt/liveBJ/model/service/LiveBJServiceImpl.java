@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.liveBJ.model.dao.LiveBJDao;
+import com.kh.mt.liveBJ.model.vo.Gudock;
 import com.kh.mt.liveBJ.model.vo.LiveBj;
 import com.kh.mt.liveBJ.model.vo.Peach;
 import com.kh.mt.member.model.vo.BJBlackMember;
@@ -29,9 +30,11 @@ public class LiveBJServiceImpl implements LiveBJService{
 
 
 	@Override
-	public void insertBSCotent(LiveBj bj) {
+	public String insertBSCotent(LiveBj bj) {
 		// TODO Auto-generated method stub
-		int result=ld.insertBSCotent(sqlSession,bj);
+		String bjJcode = ld.insertBSCotent(sqlSession,bj);
+		
+		return bjJcode;
 	}
 
 
@@ -50,8 +53,8 @@ public class LiveBJServiceImpl implements LiveBJService{
 
 
 	@Override
-	public void startBrod(String roomid,String mid) {
-		int result = ld.startBrod(sqlSession,roomid,mid);
+	public void startBrod(String roomid,String mid,String bjJCode) {
+		int result = ld.startBrod(sqlSession,roomid,mid,bjJCode);
 		
 	}
 
@@ -64,7 +67,7 @@ public class LiveBJServiceImpl implements LiveBJService{
 
 
 	@Override
-	public LiveBj JDBCInfo2(String href3) {
+	public LiveBj JDBCInfo2(LiveBj href3) {
 		LiveBj bj = ld.JDBCInfo2(sqlSession,href3);
 		return bj;
 	}
@@ -89,6 +92,27 @@ public class LiveBJServiceImpl implements LiveBJService{
 		
 		ArrayList bmArr = ld.insertBJBlackMember(sqlSession, bm); 
 		return bmArr;
+	}
+
+
+	@Override
+	public int insertGudock(Gudock gd) {
+		int result = ld.insertGudock(sqlSession, gd);
+		return result;
+	}
+
+
+	@Override
+	public int updateViewer(LiveBj bj) {
+		int viewers = ld.updateViewers(sqlSession, bj);
+		return viewers;
+	}
+
+
+	@Override
+	public int bangjong(LiveBj bj) {
+		int result = ld.bangjong(sqlSession, bj);
+		return result;
 	}
 
 

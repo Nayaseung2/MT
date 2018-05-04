@@ -26,7 +26,7 @@
 		<typeAlias alias="BJBlackMember" type="com.kh.mt.member.model.vo.BJBlackMember"/>
 		<!-- 회원가입시 방송국 생성 -->
 		<typeAlias alias='insertJDBC' type="com.kh.mt.member.model.vo.InsertJDBCstation"/>
-
+		<typeAlias alias="Gudock" type="com.kh.mt.liveBJ.model.vo.Gudock"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource='mappers/member-mapper.xml' />
@@ -40,5 +40,6 @@
 		<mapper resource='mappers/liveBJ-mapper.xml' />
 		<mapper resource='mappers/peach-mapper.xml' />
 		<mapper resource='mappers/BJBlackMember-mapper.xml' />
+		<mapper resource='mappers/gudock-mapper.xml' />
 	</mappers>
 </configuration>
