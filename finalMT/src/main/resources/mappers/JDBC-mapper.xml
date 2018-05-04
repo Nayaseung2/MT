@@ -24,10 +24,10 @@
   		<select id="selectJDBCstation" parameterType="JDBC1" resultMap="JDBCResultSet">
   			SELECT * FROM JDBCSTATION WHERE MID=#{mid}
   		</select>
-  		<!-- <insert id="insertJDBCstation">
+  		<insert id="insertJDBCstation">
   			INSERT INTO JDBCSTATION
   			VALUES(#{mid},#{jdbc_name},#{jdbc_introduce},#{jdbc_interest},0)
-  		</insert> -->
+  		</insert> 
   		
   		<update id="updateJDBCstation">
   			UPDATE JDBCSTATION

@@ -14,11 +14,11 @@ public class JDBCDaoImpl implements JDBCDao{
 	private SqlSessionTemplate sqlSession;
 	
 	//방송국 정보가 없으면 insert
-	/*@Override
+	@Override
 	public int insertJDBCstation(JDBC j) {
 		return sqlSession.insert("JDBC1.insertJDBCstation",j);
 	}
-*/
+
 	//JDBC정보 유무 확인
 	@Override
 	public JDBC selectJDBCstation(JDBC j) {
@@ -57,7 +57,7 @@ public class JDBCDaoImpl implements JDBCDao{
 	public JDBC selectForShow(String mId) {
 		JDBC j = null;
 		j=sqlSession.selectOne("JDBC1.selectForShow",mId);
-		System.out.println("j : "+j);
+		//System.out.println("j : "+j);
 		return j;
 	}
 

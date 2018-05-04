@@ -5,7 +5,7 @@ import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
 
 public interface JDBCDao {
 
-	//int insertJDBCstation(JDBC j);
+	int insertJDBCstation(JDBC j);
 
 	JDBC selectJDBCstation(JDBC j);
 
