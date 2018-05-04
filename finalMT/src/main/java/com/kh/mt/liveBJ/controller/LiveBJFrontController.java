@@ -25,6 +25,7 @@ import com.kh.mt.JDBC.model.vo.JDBC;
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.liveBJ.model.service.LiveBJService;
+import com.kh.mt.liveBJ.model.vo.Gudock;
 import com.kh.mt.liveBJ.model.vo.LiveBj;
 import com.kh.mt.liveBJ.model.vo.Peach;
 import com.kh.mt.member.model.vo.BJBlackMember;
@@ -53,9 +54,11 @@ public class LiveBJFrontController {
 	}
 	//bj가 자기정보방 가저오기
 	@RequestMapping(value="JDBCInfo2.lb")
-	public ModelAndView JDBCInfo2(ModelAndView mv,String href3){
-		
-		LiveBj bj = ls.JDBCInfo2(href3);
+	public ModelAndView JDBCInfo2(ModelAndView mv,String href3, String jCode){
+		LiveBj bj1 = new LiveBj();
+		bj1.setJcode(jCode);
+		bj1.setMid(href3);
+		LiveBj bj = ls.JDBCInfo2(bj1);
 		mv.setViewName("jsonView");
 		mv.addObject("bj", bj);
 		
@@ -68,10 +71,10 @@ public class LiveBJFrontController {
 	}
 	//방송시작버튼누르면 db에 주소값 저장
 	@RequestMapping(value="startBrod.lb")
-	public String startBrod(String roomid,String mid){
+	public String startBrod(String roomid,String mid, String bjJCode){
 		System.out.println(roomid);
 		System.out.println(mid);
-		ls.startBrod(roomid,mid);
+		ls.startBrod(roomid,mid,bjJCode);
 
 		return "성공";
 	}
@@ -135,10 +138,13 @@ public class LiveBJFrontController {
 		f.setFilepath(filePath);
 		f.setF_mcode(bj.getMid());
 		
-		ls.insertBSCotent(bj);
+		String bjJcode = ls.insertBSCotent(bj);
 		ls.insertBSTitleImg(f);
+		bj.setJcode(bjJcode);
+		model.addAttribute("bjJ", bj);
 		
-		
+		System.out.println("live bj front controller"+bjJcode);
+		//여기 JCODE 리턴 받아서 페이지로 가져가야 함
 		return "LiveBj/LiveBjPage";
 	}
 	@RequestMapping(value="peach.lb")
@@ -189,6 +195,43 @@ public class LiveBJFrontController {
 		return mv;
 	}
 	
+	//구독 있으면 삭제 없으면 삽입
+	@RequestMapping(value="gudockins.lb")
+	public ModelAndView insertGudock(ModelAndView mv, String BJ_mCode, String reder_mCode){
+		System.out.println("BJ_mCode"+BJ_mCode);
+		System.out.println("reder_mCode"+reder_mCode);
+		
+		Gudock gd = new Gudock();
+		
+		gd.setBJ_mCode(BJ_mCode);
+		gd.setReder_mCode(reder_mCode);
+		
+		int result = ls.insertGudock(gd);
+		
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	@RequestMapping(value="insertViewers.lb")
+	public ModelAndView insertGudock(ModelAndView mv, int viewers, String bjId9){
+		System.out.println("viewers"+viewers);
+		System.out.println("bjId9"+bjId9);
+        		
+		LiveBj bj = new LiveBj();
+		bj.setMid(bjId9);
+		bj.setV_viewers(viewers);
+		int reViewers = ls.updateViewer(bj);
+		mv.addObject("reViewers", reViewers);
+		mv.setViewName("jsonView");
+		return mv;
+	}
 	
-	
+	@RequestMapping(value="bangjong.lb")
+	public ModelAndView bangjong(ModelAndView mv, String bjid){
+		System.out.println("bjid"+bjid);
+		LiveBj bj = new LiveBj();
+		bj.setMid(bjid);
+		int result = ls.bangjong(bj);
+		mv.setViewName("jsonView");
+		return mv;
+	}
 }

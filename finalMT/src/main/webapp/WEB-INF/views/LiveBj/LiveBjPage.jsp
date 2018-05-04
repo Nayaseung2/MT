@@ -221,12 +221,12 @@
 				            </div>
 				            <div id="video-preview" controls loop></div>
 					</div>
-					<div align="right">
+					<div id="buttons" align="right">
 					
 						<button id="open-or-join-cam" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px; display:none"><i align="left" class="fa fa-send-o"></i>&nbsp;&nbsp;방송시작하기</button>
 					 	<button id="open-or-join" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px; display:none"><i align="left" class="fa fa-send-o"></i>&nbsp;&nbsp;스크린 방송하기</button>
-						<button id="peach" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-apple"></i>&nbsp;&nbsp;피치</button>
-						<button id="gudock" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-thumbs-o-up"></i>&nbsp;&nbsp;구독하기</button>
+						<button id="peach" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align='center' class='fa fa-apple'></i>&nbsp;&nbsp;피치</button>
+						<button id="gudock" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align='center' class='fa fa-thumbs-o-up'></i>&nbsp;&nbsp;구독하기</button>
 						<button id="BJSinggo"class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px"><i align="center" class="fa fa-warning"></i>&nbsp;&nbsp;신고하기</button>
 						<button id="stop-broadcast"class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="margin-top:15px; display:none"><i align="center" class="fa fa-send-o"></i>&nbsp;&nbsp;방송종료</button>
 						
@@ -270,6 +270,9 @@
                       <a href="#"><img alt="" src="${contextPath}/resources/images/bjSemple/bj1.jpg" style="border-radius: 50px;"></a> 
                      </td>
                      <td><h1 id='title1'></h1></td>
+                     <td>
+                     	<h1 id="viewers" row="3" style="color:blue">0 명</h1>
+                     </td>
                   </tr>
                   <tr>
                      <td><h3 id='nick1'></h3></td>
@@ -294,6 +297,7 @@
          </ul>
      	</li>
       </div> -->
+    <input id="bjJCode" class="bjJCode" type="hidden" value="${bjJ.jcode}"/>
 	<input id="bjId1" class="bjId1" type="hidden"/>
 	<input id="mid" type="hidden" value="${loginUser.mId}"/>
 	<input id="myId" type="hidden" value="${loginUser.mId}"/>
@@ -334,9 +338,26 @@
 			$(".panel-body").css({"height":"960px"});
 		}); */
 		document.getElementById("stop-broadcast").onclick = function(){
-			connection.send(alert("방송종료"));
+			connection.send("<i class='fa fa-github-alt fa-fw'></i><strong class='primary-font'>"+"${loginUser.nickName}"+"</strong>"+"<div style='position:relative; width:240px; height:127px;'><img src='resources/images/bangjong.jpg' style='position:absolute'/></div>+<h3>방송종료</h2>");
 			connection.close();
-			
+			var bjId8 = $("#bjId1").val();
+		
+			$.ajax({
+				url:"bangjong.lb",
+				type:"POST",
+				data:{
+					"bjid":bjId8
+				},
+				success:function(data){
+					
+					appendDIV("<i class='fa fa-github-alt fa-fw'></i><strong class='primary-font'>"+"${loginUser.nickName}"+"</strong>"+"<div style='position:relative; width:240px; height:127px;'><img src='resources/images/bangjong.jpg' style='position:absolute'/></div>+<h3>방송종료</h2>");
+					alert("수고하셨어요!");
+					
+				}
+			});
+			$("#viewers").text(0 +" 명");
+			$('#stop-broadcast').attr('disabled', true);
+			$("#open-or-join").attr('disabled', true);
 		};
 			
 		
@@ -372,11 +393,21 @@
                 connection.join(document.getElementById('broadcast-id').value);
             }; */
             window.onload = function() {
+            	 $('#stop-broadcast').attr('disabled', true);
+            	var jCode = $("#bjJCode").val();
+            	console.log("jCode"+jCode);
                 connection.openOrJoin(document.getElementById('broadcast-id').value, function(isRoomExists, roomid) {
                     if(!isRoomExists) {
                         showRoomURL(roomid);
                     }
                 });
+                var loginUser = "${loginUser.mId}";
+                console.log(loginUser == null);
+                console.log(loginUser == "");
+                if(loginUser == ""){
+                	$("#buttons").css({"display":"none"});
+                	$(".panel-footer").css({"display":"none"});
+                }
             };
             // ......................................................
             // ..................RTCMultiConnection Code.............
@@ -437,6 +468,22 @@
                     mediaElement.media.play();
                 }, 5000);
                 mediaElement.id = event.streamid;
+                
+                //시청자수
+                var numberOfUsers = connection.getAllParticipants().length;
+                connection.connectSocket(function() {
+                	numberOfUsers = connection.getAllParticipants().length;
+	                viewerCount(numberOfUsers);
+       		        console.log(numberOfUsers+"명이다!");
+       		        if(numberOfUsers === "0"){
+       		        	$("#viewers").text(0 +" 명");
+       		        }
+                });
+                
+            };
+            connection.onExtraDataUpdated = function(event) {
+            	var numberOfUsers = connection.getAllParticipants().length;
+            	 viewerCount(numberOfUsers);
             };
             connection.onstreamended = function(event) {
                 var mediaElement = document.getElementById(event.streamid);
@@ -602,7 +649,7 @@
                 roomid = connection.token();
             }
             
-            document.getElementById('broadcast-id').value=roomid+"1";
+            document.getElementById('broadcast-id').value=roomid+"${loginUser.mId}";
            
             document.getElementById('broadcast-id').onkeyup = function() {
                 localStorage.setItem(connection.socketMessageEvent, this.value);
@@ -635,23 +682,25 @@
             }
    </script>
    <script>
-   
    $("#open-or-join-cam").click(function(){
 	      var roomid = document.getElementById('broadcast-id').value;
 	      var mid = document.getElementById('mid').value;
-	      
+	      var bjJCode = document.getElementById('bjJCode').value;
+	     /* $("#open-or-join-cam").disabled = true; */
+	     $('#open-or-join-cam').attr('disabled', true);
 	      $.ajax({
 	         url:"startBrod.lb",
 	         type:"POST",
 	         data:{
 	            roomid:roomid,
-	            mid:mid
+	            mid:mid,
+	            bjJCode:bjJCode
 	         },
 	         success:function(data){
-	            console.log("성공")
+	            console.log("성공");
 	         }
-	         
-	      })
+	      });
+	      $('#stop-broadcast').attr('disabled', false);
 	   })
     /* function singo(){
        location.href="${contextPath}"
@@ -664,6 +713,7 @@
 	    var href2 = href1.split('#');
 	    //실질적으로 필요한 url
 	    var href3 = '';
+	    var bjJcode = $("#bjJCode").val();
 	    if(href2.length!=1){
 	    href3 = href2[1];
 	    $.ajax({
@@ -671,6 +721,7 @@
 	    	type:'post',
 	    	data:{
 	    		href3:href3
+	    		
 	    	},
 	    	success:function(data){
 	    		var loginUserMid = "${loginUser.mId}";	
@@ -678,6 +729,7 @@
 	    		$("#title1").text(data.bj.bsTitle);
 	    		$("#nick1").text(data.bj.nickname);
 	    		$("#content1").text(data.bj.bsContent);
+	    		$("#viewers").text(data.bj.v_viewers+" 명");
 	    		var bool = "${loginUser.mId}" == data.bj.mid;
 	    		console.log(bool+"투루펄스");
 	    		if(loginUserMid === data.bj.mid){
@@ -689,11 +741,13 @@
 	    });
 	    }else{
 	     href3 = document.getElementById('mid').value; 
+	     var jCode = $("#bjJCode").val();
 	    	$.ajax({
 		    	url:'JDBCInfo2.lb',
 		    	type:'post',
 		    	data:{
-		    		href3:href3
+		    		href3:href3,
+		    		"jCode":jCode
 		    	},
 		    	success:function(data){
 					var loginUserMid = "${loginUser.mId}";	    		
@@ -701,6 +755,7 @@
 		    		$("#nick1").text(data.bj.nickname);
 		    		$("#content1").text(data.bj.bsContent);
 		    		$("#bjId1").val(data.bj.mid);
+		    		$("#viewers").text(data.bj.v_viewers+" 명");
 		    		var bool = "${loginUser.mId}" == data.bj.mid;
 		    		console.log(bool+"투루펄스");
 		    		if(loginUserMid === data.bj.mid){
@@ -725,6 +780,8 @@
 	   
 	   if(userPeach < peachNum){
 		   alert("피치갯수가 모자랍니다");
+	   }else if(peachNum == "0"){
+		   alert("0 개는 후원할 수 없습니다.");
 	   }else{
 		
 	   $.ajax({
@@ -849,10 +906,32 @@
 			location.href="${contextPath}/helpreport.hp";
 		});
 		$("#gudock").click(function(){
-			var gudockBjId = $("#bjId1").val();
+			var BJ_mCode = $("#bjId1").val();
+			var reder_mCode = "${loginUser.mId}";
+			
+			var tt = document.getElementById("gudock").innerHTML;
+			console.log($("#gudock").text());
+			console.log(tt);
+			/* $("#gudock").text("구독취소하기"); */
+			var before = '<i align="center" class="fa fa-thumbs-o-up"></i>&nbsp;&nbsp;구독하기';
+			var after = '<i align="center" class="fa fa-thumbs-o-up"></i>구독취소하기';
 			$.ajax({
-				
+				url:"gudockins.lb",
+				type:"POST",
+				data:{
+					"BJ_mCode":BJ_mCode,
+					"reder_mCode":reder_mCode
+				},
+				success:function(data){
+					if( tt == before){
+						document.getElementById("gudock").innerHTML = after; 
+					}else{
+						document.getElementById("gudock").innerHTML = before;
+					}
+				}
 			});
+			console.log("1"+BJ_mCode);
+			console.log("2"+reder_mCode);
 		});
 		
 		jQuery(document).ready(function($) {
@@ -862,10 +941,25 @@
 		    });
 		    $(window).on("beforeunload", function () {
 		        if (checkload == true) return "레알 나감????????????";
-		        
+		        //여기여 나가는 로그
 		    });
 		    
 		});
+		function viewerCount(value){
+			var bjId9 = $("#bjId1").val();
+			var viewers = value;
+			$.ajax({
+				url:"insertViewers.lb",
+				type:"POST",
+				data:{
+					"bjId9":bjId9,
+					"viewers":viewers
+				},
+				success:function(data){
+					$("#viewers").text(value +" 명");
+				}
+			});
+		}
 	</script>
 </div>
 </body>
