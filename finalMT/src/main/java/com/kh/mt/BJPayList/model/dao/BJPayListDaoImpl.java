@@ -198,13 +198,13 @@ public class BJPayListDaoImpl implements BJPayListDao{
 
 	@Override
 	public int SelectMyFanCount(SqlSessionTemplate sqlSession, String mcode) {
-		int MyFanCount = sqlSession.selectOne("BJPayList.Selectwdloding", mcode);
+		int MyFanCount = sqlSession.selectOne("BJPayList.SelectMyFanCount", mcode);
 		return MyFanCount;
 	}
 
 	@Override
 	public int SelectProfitPeach(SqlSessionTemplate sqlSession, String mcode) {
-		int ProfitPeach = sqlSession.selectOne("BJPayList.Selectwdloding", mcode);
+		int ProfitPeach = sqlSession.selectOne("BJPayList.SelectProfitPeach", mcode);
 		return ProfitPeach;
 	}
 
