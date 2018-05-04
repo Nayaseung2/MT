@@ -134,7 +134,7 @@
 <c:if test="${empty jdbcInfo.jdbc_name }">
 <label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">모두의 TV</a></label><br>
 </c:if>
-<label class="BStext" style="font-size: 16px; color: white;">${loginUser.nickName}님의 방송국입니다!</label><br>
+<label class="BStext" style="font-size: 16px; color: white;">${jdbcInfo.mid}님의 방송국입니다!</label><br>
 </div>
 </div>
 </div>
@@ -143,9 +143,16 @@
 <!-- 좌측 회원 정보,자기소개등 보기 -->
 <div class="myInfo">
 <br>
-<label class="idnickname"><b>${loginUser.mId }</b></label><br>
-<span class="idnickname">${loginUser.nickName }</span>
-<span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;"><a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
+<label class="idnickname"><b>${jdbcInfo.mid }</b></label><br>
+<span class="idnickname">${jdbcInfo.jdbc_name }</span>
+<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+	<span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;">
+		<a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a>
+	</span><br>
+</c:if>
+<c:if test="${ loginUser.mId ne jdbcInfo.mid }">
+	<br/>
+</c:if>
 <br/>
 <c:if test="${empty jdbcInfo.jdbc_introduce }">
 <input class="introduction" type="text" value="자기소개가 없습니다." style="padding-left: 3%;" readonly>
@@ -154,12 +161,14 @@
 <input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce }" readonly>
 </c:if>
 <br><br>
-<label style="margin-left:15px;">방송국 방문 : 0명</label>
 </div>
+<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
 <br>
-<button class="sideBtn" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button><br><br>
-<button class="sideBtn" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
-<br><br>
+	<button class="sideBtn" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button><br><br>
+	<button class="sideBtn" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
+<br>
+</c:if>
+<br/>
 <table class="bottomBox">
 	<tr>
 		<td>
@@ -168,15 +177,17 @@
 	</tr>
 	<tr> 	
 		<td>
-			<p><a class="bottom" href="BSmyBoard.board?mId=${ loginUser.mId }">내 게시판</a></p>
-			<p><a class="bottom" href="showGuestBookList.JDBC">방명록</a></p>
+			<p><a class="bottom" href="BSmyBoard.board?mId=${ jdbcInfo.mid }">게시판</a></p>
+			<p><a class="bottom" href="guestBookList.board?mId=${ jdbcInfo.mid }">방명록</a></p>
 		</td>
 	</tr>
-	<tr>
-		<td>
-			<p><a class="bottom">수익관리</a></p>
-		</td>
-	</tr>
+	<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+		<tr>
+			<td>
+				<p><a class="bottom">수익관리</a></p>
+			</td>
+		</tr>
+	</c:if>
 </table>
 </div>
 <!-- 오른쪽 부분 -->
@@ -186,23 +197,22 @@
 
 			<c:if test="${ hmap.mbList[0] eq null}">
 				<br/><br/><br/><br/>
-				<h4 align="center"><b>등록된 글이 없습니다. </b><br/><br/> 왼쪽의 글쓰기 버튼을 눌러 새 글을 작성해주세요.</h4>
+				<h4 align="center"><b>등록된 글이 없습니다. </b><br/><br/> 좌측의 글쓰기 버튼을 눌러 새 글을 작성해주세요.</h4>
 			</c:if>
 			<!-- table header -->
-				<c:if test="${ hmap.mbList ne null }">
-				<h4 align="center">내 게시판</h4>		
+				<c:if test="${ hmap.mbList[0] ne null }">
+				<h4 align="center">" ${ jdbcInfo.mid } "님의 게시판 입니다.</h4>		
 				<br/>
 					<div class="tableArea">
 						<table align="center" id="listArea">
 									<tr>
 										<th>제목</th>
 										<th>작성일</th>
-										<th></th>
 									</tr>
 									<c:forEach var="item" items="${ hmap.mbList }">
 									<tr>
-										<td><c:out value="${ item.b_title }"/></td>
-										<td><c:out value="${ item.b_update_date }"/></td>
+										<td style="width:60%;"><c:out value="${ item.b_title }"/></td>
+										<td style="width:40%;"><c:out value="${ item.b_update_date }"/></td>
 										<td><input type="hidden" value="${ item.b_code }" id="b_code" name="b_code"></td>
 									</tr>
 									</c:forEach>
@@ -212,7 +222,7 @@
 				
 				<br/>
 				<br/>
-					<c:if test="${ hmap.mbList ne null }">
+					<c:if test="${ hmap.mbList[0] ne null }">
 				
 				<div id="pagingArea" align="center">
 				
@@ -378,7 +388,7 @@
 			}).click(function(){
 				
 				var b_code = $(this).parent().children(":last").children().val();
-				var bwriter = "${ loginUser.mId }";
+				var bwriter = "${ jdbcInfo.mid }";
 				console.log(b_code);
 				console.log(bwriter);
 				location.href="${ contextPath }/BSmyBoardDetail.board?b_code=" + b_code + "&bwriter=" + bwriter;

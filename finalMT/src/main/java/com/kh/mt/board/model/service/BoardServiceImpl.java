@@ -81,5 +81,16 @@ public class BoardServiceImpl implements BoardService{
 		BSmyBoardDelete = bd.BSmyBoardDelete(b_code);
 	}
 	
+	// 방송국 - 방명록 목록
+	@Override
+	public ArrayList<Board> gList(String mId) {
+
+		ArrayList<Board> gList = null;
+		
+		gList = bd.gList(mId);
+		
+		return gList;
+	}
+	
 
 }

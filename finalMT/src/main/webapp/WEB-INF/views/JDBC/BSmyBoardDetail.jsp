@@ -127,7 +127,7 @@
 <c:if test="${empty jdbcInfo.jdbc_name }">
 <label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">모두의 TV</a></label><br>
 </c:if>
-<label class="BStext" style="font-size: 16px; color: white;">${loginUser.nickName}님의 방송국입니다!</label><br>
+<label class="BStext" style="font-size: 16px; color: white;">${jdbcInfo.mid}님의 방송국입니다!</label><br>
 </div>
 </div>
 </div>
@@ -136,9 +136,16 @@
 <!-- 좌측 회원 정보,자기소개등 보기 -->
 <div class="myInfo">
 <br>
-<label class="idnickname"><b>${loginUser.mId }</b></label><br>
-<span class="idnickname">${loginUser.nickName }</span>
-<span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;"><a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
+<label class="idnickname"><b>${jdbcInfo.mid }</b></label><br>
+<span class="idnickname">${jdbcInfo.jdbc_name }</span>
+<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+	<span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;">
+		<a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a>
+	</span><br>
+</c:if>
+<c:if test="${ loginUser.mId ne jdbcInfo.mid }">
+	<br/>
+</c:if>
 <br/>
 <c:if test="${empty jdbcInfo.jdbc_introduce }">
 <input class="introduction" type="text" value="자기소개가 없습니다." style="padding-left: 3%;" readonly>
@@ -147,12 +154,14 @@
 <input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce }" readonly>
 </c:if>
 <br><br>
-<label style="margin-left:15px;">방송국 방문 : 0명</label>
 </div>
+<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
 <br>
-<button class="sideBtn" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button><br><br>
-<button class="sideBtn" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
-<br><br>
+	<button class="sideBtn" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button><br><br>
+	<button class="sideBtn" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
+<br>
+</c:if>
+<br/>
 <table class="bottomBox">
 	<tr>
 		<td>
@@ -161,15 +170,17 @@
 	</tr>
 	<tr> 	
 		<td>
-			<p><a class="bottom" href="BSmyBoard.board?mId=${ loginUser.mId }">내 게시판</a></p>
-			<p><a class="bottom" href="showGuestBookList.JDBC">방명록</a></p>
+			<p><a class="bottom" href="BSmyBoard.board?mId=${ jdbcInfo.mid }">게시판</a></p>
+			<p><a class="bottom" href="guestBookList.board?mId=${ jdbcInfo.mid }">방명록</a></p>
 		</td>
 	</tr>
-	<tr>
-		<td>
-			<p><a class="bottom">수익관리</a></p>
-		</td>
-	</tr>
+	<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+		<tr>
+			<td>
+				<p><a class="bottom">수익관리</a></p>
+			</td>
+		</tr>
+	</c:if>
 </table>
 </div>
 <!-- 오른쪽 부분 -->
@@ -177,7 +188,7 @@
 <br/>
 <br/>
 
-	<h3 align="center"><b>내 게시판</b></h3>		
+	<h3 align="center"><b>" ${ jdbcInfo.mid } "님의 게시판 입니다.</b></h3>		
 	<br/>
 		<div class="tableArea">
 			<table align="center" id="listArea">
@@ -201,9 +212,11 @@
 		
 		<br/>
 		<br/>
-		<div align="right" style="padding-right: 70px;">
-			<button type="button" class="okay" onclick="deleteBtn();">삭제하기</button>
-		</div>
+		<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+			<div align="right" style="padding-right: 70px;">
+				<button type="button" class="okay" onclick="deleteBtn();">삭제하기</button>
+			</div>
+		</c:if>
 		<br/>
 		<div align="center">
 			<button type="button" class="okay2" onclick="listBtn();">목록으로</button>
@@ -219,7 +232,8 @@
 			
 			function listBtn(){
 				
-				location.href="${ contextPath }/BSmyBoard.board?mId=${ loginUser.mId }";
+				var mId = "${ jdbcInfo.mid }";
+				location.href="${ contextPath }/BSmyBoard.board?mId=" + mId;
 			}
 		
 		

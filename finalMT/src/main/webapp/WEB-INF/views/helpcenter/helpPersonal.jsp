@@ -222,7 +222,7 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 				* 아래의 문의 카테고를 꼭! 선택해주세요.
 			</h4>
 			<br/>	
-				<form action="helpanswer.hp" method="post">
+				<form action="helpanswer.hp" method="post" name="personalForm">
 					<table class="qTable" align="center">
 						<tr>
 							<td colspan="3" style="height: 70px;">
@@ -271,7 +271,7 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 					<br/>
 					<br/>
 					<div class="qBtn">
-						<button type="submit" class="btn btn-danger" style="font-size:20px;">등록하기</button>&nbsp;&nbsp;
+						<button type="button" class="btn btn-danger" id="goWrite" style="font-size:20px;">등록하기</button>&nbsp;&nbsp;
 						<button type="reset" class="btn btn-danger" style="font-size:20px;">모두지우기</button>	
 					</div>
 				</form>
@@ -283,12 +283,37 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 			
 				$(function(){
 					
+					var qType1 = $("input:radio[name='qRadio']:checked").val();
+					var qTitle1 = $("#qTitle").val();
+					var qContent1 = $("#qContent").val();
+					
 					$("input:radio[name='qRadio']").click(function(){
-						
-						var qType = $("input:radio[name='qRadio']:checked").val();
-						
-						$("#qType").val(qType);
+						$("#qType").val($(this).val());
+						console.log($("#qType").val());
 					});
+					
+					$("#goWrite").click(function(){
+						
+						theForm = document.personalForm;
+
+						if($("#qType").val() === ""){
+							alert("카테고리를 선택해주세요.");
+							return theForm.qTitle.focus();
+						} 
+						
+						if(theForm.qTitle1 == ""){
+							alert("제목을 확인해주세요.");
+							return theForm.qTitle.focus();
+						} 
+						
+						if(theForm.qContent1 == ""){
+							alert("내용을 확인해주세요.");
+							return theForm.qContent.focus();
+						} 
+						
+						theForm.submit();
+					});
+					
 				});
 			
 			</script>

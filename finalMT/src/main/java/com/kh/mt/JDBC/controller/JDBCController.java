@@ -25,7 +25,7 @@ public class JDBCController {
 	JDBCService js;
 
 	//2018.04.13
-	//방명록쓰기
+	// 방명록 목록
 	@RequestMapping(value = "showGuestBookList.JDBC")
 	public String showGuestBookList() {
 		return "JDBC/BSGuestBookList";
