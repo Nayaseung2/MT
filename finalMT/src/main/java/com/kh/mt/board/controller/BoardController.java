@@ -64,15 +64,39 @@ public class BoardController {
 		return "JDBC/BSwriteSuccess";
 	}
 	
+
+	// 방명록 글쓰러 가기
+	@RequestMapping(value="insertGuestBook1.board")
+	public String insertGuestBook1(){
+		
+		return "JDBC/BSguestBook";
+	}
+	
 	//방명록 insert
 	@RequestMapping(value="insertGuestBook.board")
 	public String insertGuestBook(Board b){
-		b.setB_type("GuestBook");
+		
 		bs.insertGuestBook(b);
-		return "JDBC/myBroadcastStation";
+		
+		return "JDBC/BSwriteSuccess";
 	}
 	
-	
+	// 방명록 목록
+	@RequestMapping(value = "guestBookList.board")
+	public ModelAndView showGuestBookList(ModelAndView mv, String mId) {
+		
+		ArrayList<Board> gList = bs.gList(mId);
+		
+		HashMap hmap = new HashMap();
+		
+		hmap.put("gList", gList);
+		
+		mv.addObject("hmap", hmap);
+		
+		mv.setViewName("JDBC/BSGuestBookList");
+		
+		return mv;
+	}
 	
 	// 방송국 - 내 게시판 목록
 	@RequestMapping(value="BSmyBoard.board")
