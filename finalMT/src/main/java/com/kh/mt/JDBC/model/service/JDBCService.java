@@ -5,7 +5,7 @@ import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
 
 public interface JDBCService {
 
-	//void insertJDBCstation(JDBC j);
+	void insertJDBCstation(JDBC j);
 
 	JDBC selectJDBCstation(JDBC j);
 

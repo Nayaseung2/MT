@@ -47,7 +47,7 @@ public class JDBCController {
 		HttpSession session = request.getSession();
 		session.setAttribute("jdbcInfo", j);
 		if(f!=null){
-			System.out.println("controller f : "+f);
+			//System.out.println("controller f : "+f);
 			session.setAttribute("jdbcLogoFile", f);
 		}
 		return "JDBC/myBroadcastStation";
@@ -135,11 +135,11 @@ public class JDBCController {
 		JDBC getInfo = null;
 		getInfo = js.selectJDBCstation(j);
 
-		/*if (getInfo == null) {
+		if (getInfo == null) {
 			js.insertJDBCstation(j);
 		} else {
 			js.updateJDBCstation(j);
-		}*/
+		}
 		//방송국 정보 update
 		js.updateJDBCstation(j);
 		JDBC getInfo1 = null;
