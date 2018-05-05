@@ -39,4 +39,6 @@ public interface LiveBJDao {
 
 	int bangjong(SqlSessionTemplate sqlSession, LiveBj bj);
 
+	ArrayList<LiveBj> mainTopBJ(SqlSessionTemplate sqlSession);
+
 }

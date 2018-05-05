@@ -42,7 +42,15 @@ public class LiveBJDaoImpl implements LiveBJDao{
 	@Override
 	public ArrayList<LiveBj> allBJ(SqlSessionTemplate sqlSession) {
 		ArrayList<LiveBj> list = (ArrayList)sqlSession.selectList("LiveBJ.allBJ");
-		
+		/*ArrayList<LiveBj> list1 = new ArrayList<>();
+		if(list1.size()!=0){
+			for(int i=0 ; i<list1.size();i++){
+				System.out.println("@"+list1.get(i));
+				String mId = list1.get(i);
+				LiveBj bj = sqlSession.selectOne("LiveBJ.allBJ", mId);
+				list.add(bj); 
+			}
+		}*/
 		return list;
 	}
 	@Override
@@ -123,6 +131,11 @@ public class LiveBJDaoImpl implements LiveBJDao{
 	public int bangjong(SqlSessionTemplate sqlSession, LiveBj bj) {
 		int result = sqlSession.update("LiveBJ.bangjong", bj);
 		return result;
+	}
+	@Override
+	public ArrayList<LiveBj> mainTopBJ(SqlSessionTemplate sqlSession) {
+		ArrayList<LiveBj> list = (ArrayList)sqlSession.selectList("LiveBJ.mainTopBJ");
+		return list;
 	}
 	
 }

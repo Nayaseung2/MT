@@ -26,34 +26,34 @@
                     </div>
                     <div class="video-carousel">
                     
-                    <c:forEach begin="1" end="10" step="1">
+                    <c:forEach var="item" items="${list1}">
                     
                         <div class="single-video">
                             <div class="video-img">
                                 <a href="https://localhost:3000">
-								<img class="lazy" data-src="${contextPath }/resources/images/thumbnails/1.jpg" alt="Video" />
+								<img class="lazy" data-src="${contextPath }/resources/bsTitleImages/${item.f_rename}" alt="Video" style="width:260px; height:180px;"/>
 								 <noscript>
 									<img src="${contextPath }/resources/images/thumbnails/1.jpg" alt="video" />
 								</noscript>
 								</a>
-                                <span class="video-duration">8.17</span>
+                                <span class="video-duration">${item.starttime}</span>
                             </div>
                             <div class="video-content">
-                                <h4><a href="testLiveBj.lb" class="video-title">Greek-Style Pasta Bake (Pasticcio) - English Video</a></h4>
+                                <h4><a href="https://${ip}:8443/mt/testLiveBj.lb#${item.v_href}" class="video-title">${item.bsTitle}</a></h4>
                                 <div class="video-counter">
                                     <div class="video-viewers">
                                         <span class="fa fa-eye view-icon"></span>
-                                        <span>881,021</span>
+                                        <span>${item.v_viewers}</span>
                                     </div>
                                     <div class="video-feedback">
                                         <div class="video-like-counter">
                                             <span class="fa fa-thumbs-o-up like-icon"></span>
-                                            <span>120</span>
+                                            <span>${item.like}</span>
                                         </div>
                                         <div class="video-like-counter">
-                                            <span class="fa fa-thumbs-o-down dislike-icon"></span>
-                                            <span>2140</span>
-                                        </div>
+                                         <span><i class="fa fa-github-alt fa-fw"></i></span>
+                                        <span>${item.nickname}</span>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                     <div class="single-video">
                         <div class="video-img">
                                 <a href="https://localhost:8443/mt/testLiveBj.lb#${item.v_href}">
-								<img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${item.f_rename}" style="display: inline;">
+								<img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${item.f_rename}" style="display: inline; width:260px; height:180px;">
 								 <noscript>
 									&lt;img src="${contextPath }/resources/images/thumbnails/6.jpg" alt="video" /&gt;
 								</noscript>
@@ -108,10 +108,10 @@
                                         <span class="fa fa-thumbs-o-up like-icon"></span>
                                         <span>${item.like}</span>
                                     </div>
-                                    <!-- <div class="video-like-counter">
-                                         <span class="fa fa-thumbs-o-down dislike-icon"></span>
-                                        <span>2140</span>
-                                    </div> -->
+                                    <div class="video-like-counter">
+                                         <span><i class="fa fa-github-alt fa-fw"></i></span>
+                                        <span>${item.nickname}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
