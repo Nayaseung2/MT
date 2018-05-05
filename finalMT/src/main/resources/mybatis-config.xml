@@ -27,6 +27,7 @@
 		<!-- 회원가입시 방송국 생성 -->
 		<typeAlias alias='insertJDBC' type="com.kh.mt.member.model.vo.InsertJDBCstation"/>
 		<typeAlias alias="Gudock" type="com.kh.mt.liveBJ.model.vo.Gudock"/>
+		<typeAlias alias="JDBCInfo" type="com.kh.mt.JDBC.model.vo.JDBCInfo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource='mappers/member-mapper.xml' />

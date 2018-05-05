@@ -145,7 +145,7 @@ public class MemberController {
 		ms.insertMember(m);
 		//방송국 생성
 		String mid=m.getmId();
-		ms.insertJDBCStation(mid);
+		//ms.insertJDBCStation(mid);
 		//System.out.println("Member : "+m);
 		return "member/celebration";
 	}

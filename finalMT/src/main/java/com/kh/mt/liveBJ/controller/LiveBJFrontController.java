@@ -226,10 +226,11 @@ public class LiveBJFrontController {
 	}
 	
 	@RequestMapping(value="bangjong.lb")
-	public ModelAndView bangjong(ModelAndView mv, String bjid){
+	public ModelAndView bangjong(ModelAndView mv, String bjid,String maxViewer){
 		System.out.println("bjid"+bjid);
 		LiveBj bj = new LiveBj();
 		bj.setMid(bjid);
+		bj.setV_viewers(Integer.parseInt(maxViewer));
 		int result = ls.bangjong(bj);
 		mv.setViewName("jsonView");
 		return mv;

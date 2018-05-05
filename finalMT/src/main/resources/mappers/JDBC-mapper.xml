@@ -21,6 +21,29 @@
   			<result property="f_mcode" column="F_MCODE"/>
   			<result property="upload_date" column="UPLOAD_DATE"/>
   		</resultMap>
+  		<resultMap type="Gudock" id="JDBCGudockResultSet" >
+  			<result property="reder_mCode" column="READER_MCODE"/>
+  			<result property="read_date" column="READ_DATE"/>
+  			<result property="BJ_mCode" column="BJ_MCODE"/>
+  		</resultMap>
+  		
+  		<resultMap type="JDBCInfo" id="BJJDBCResultSet" >
+  			<id property="file_code" column="FILE_CODE"/>
+  			<result property="from_code" column="FROM_CODE"/>
+  			<result property="f_orname" column="F_ORNAME"/>
+  			<result property="f_rename" column="F_RENAME"/>
+  			<result property="filepath" column="FILEPATH"/>
+  			<result property="f_mcode" column="F_MCODE"/>
+  			<result property="upload_date" column="UPLOAD_DATE"/>
+  			<result property="jdbc_nickName" column="M_NICKNAME"/>
+  			<result property="jdbc_name" column="JDBC_NAME"/>
+  			<result property="jdbc_introduce" column="JDBC_INTRODUCE"/>
+  			<result property="jdbc_interest" column="JDBC_INTEREST"/>
+  			<result property="visitor" column="VISITOR"/>
+  			
+  		</resultMap>
+  		
+  		
   		<select id="selectJDBCstation" parameterType="JDBC1" resultMap="JDBCResultSet">
   			SELECT * FROM JDBCSTATION WHERE MID=#{mid}
   		</select>
@@ -59,4 +82,20 @@
   			AND FROM_CODE='JDBCLogo'
   		</select>
   		
+  		<select id="selectGudockList" parameterType="Gudock" resultMap="JDBCGudockResultSet">
+  			SELECT READER_MCODE, READ_DATE, BJ_MCODE FROM SUBSCRIBE WHERE READER_MCODE = (SELECT MCODE FROM MEMBER WHERE MID = #{reder_mCode})
+  		</select>
+  		
+  		<select id="selectNickName" parameterType="java.lang.String" resultType="string">
+  			SELECT M_NICKNAME FROM MEMBER WHERE MID = #{mid}
+  		</select>
+  		
+  		<select id="selectGudockJDBC" parameterType="java.lang.String" resultMap="BJJDBCResultSet">
+			SELECT F.FROM_CODE, F.F_ORNAME, F.F_RENAME, F.FILEPATH, F.F_MCODE, F.UPLOAD_DATE, (SELECT M_NICKNAME FROM MEMBER WHERE MCODE= #{mId}) M_NICKNAME, F.FILE_CODE ,J.MID, J.JDBC_NAME, J.JDBC_INTRODUCE, J.JDBC_INTEREST, J.VISITOR 
+			FROM UPLOADFILE F 
+			JOIN JDBCSTATION J ON (F.F_MCODE = J.MID)  
+			WHERE F_MCODE=(SELECT MID FROM MEMBER WHERE MCODE = #{mId}) 
+			AND FROM_CODE='JDBCLogo'
+
+  		</select>
 </mapper>

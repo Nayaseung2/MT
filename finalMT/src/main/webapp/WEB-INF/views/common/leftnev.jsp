@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,9 +31,13 @@
 						</span>
 					</div> <!-- /input-group -->
 				</li>
-				<li><a href="${contextPath }/good.cg"><i class="fa fa-star"></i>&nbsp;&nbsp;&nbsp;&nbsp;즐겨찾기</a></li>
+					<c:if test="${!empty loginUser}">
+						<li><a href="${contextPath }/good.cg?mId=${loginUser.mId}"><i class="fa fa-star"></i>&nbsp;&nbsp;&nbsp;&nbsp;즐겨찾기</a></li>
+					</c:if>
+					<c:if test="${empty loginUser}">
+						<li><a href="${contextPath }/showLoginPage.me"><i class="fa fa-star"></i>&nbsp;&nbsp;&nbsp;&nbsp;즐겨찾기</a></li>
+					</c:if>
 				<li><a href="${contextPath }/bestBJ.cg"><i class="fa fa-thumbs-o-up"></i>&nbsp;&nbsp;&nbsp;&nbsp;베스트 BJ</a></li>
-				<li><a href="${contextPath }/upBJ.cg"><i class="fa fa-hand-o-right"></i>&nbsp;&nbsp;&nbsp;&nbsp;추천 BJ</a></li>
 				<li><a href="${contextPath }/rankBJ.cg"><i class="fa fa-tags"></i>&nbsp;&nbsp;&nbsp;&nbsp;별별랭킹</a></li>
 				<li><a href="${contextPath }/game.cg"><i class="fa fa-gamepad"></i>&nbsp;&nbsp;&nbsp;&nbsp;게임</a></li>
 				<li><a href="${contextPath }/talk.cg"><i class="fa fa-video-camera"></i>&nbsp;&nbsp;&nbsp;&nbsp;토크/캠방</a></li>
@@ -47,4 +52,5 @@
 		</div>
 	</div>
 </body>
+
 </html>

@@ -24,31 +24,34 @@
                   </div>
                </div>   
             </div>
-            <div class="row">
-             <c:forEach var="item" items="${list}">
-            
+            <div class="row000">
+             <c:forEach var="list" items="${map.list}">
                 <div class="col-sm-6 col-md-3 themeix-half">
                     <div class="single-video">
                         <div class="video-img">
-                                <a href="https://${ip}:8443/mt/testLiveBj.lb#${item.v_href}">
-								<img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${item.f_rename}" style="display: inline;">
+                                <a href="https://${ip}:8443/mt/testLiveBj.lb#${list.v_href}">
+								<img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${list.f_rename}" style="display: inline; width:260px; height:180px;;">
 								 <noscript>
 									&lt;img src="${contextPath }/resources/images/thumbnails/6.jpg" alt="video" /&gt;
 								</noscript>
 								</a>
-                            <span class="video-duration">${item.starttime}</span>
+                            <span class="video-duration">${list.starttime}</span>
                         </div>
                         <div class="video-content">
-                            <h4><a href="https://${ip}:8443/mt/testLiveBj.lb#${item.v_href}" class="video-title">${item.bsTitle}</a></h4>
+                            <h4><a href="https://${ip}:8443/mt/testLiveBj.lb#${list.v_href}" class="video-title">${list.bsTitle}</a></h4>
                             <div class="video-counter">
                                 <div class="video-viewers">
                                     <span class="fa fa-eye view-icon"></span>
-                                    <span>${item.v_viewers}</span>
+                                    <span>${list.v_viewers}</span>
                                 </div>
                                 <div class="video-feedback">
                                     <div class="video-like-counter">
                                         <span class="fa fa-thumbs-o-up like-icon"></span>
-                                        <span>${item.like}</span>
+                                        <span>${list.like}</span>
+                                    </div>
+                                    <div class="video-like-counter">
+                                         <span><i class="fa fa-github-alt fa-fw"></i></span>
+                                        <span>${list.nickname}</span>
                                     </div>
                                 </div>
                             </div>
@@ -57,12 +60,26 @@
                 </div>
             
             </c:forEach>
-                
+			              
             </div>
         </div>
+			<div id="pagingArea" align="center">
+		        <ul class="pagination pageul">
+		           <li class="page-item"><a class="page-link" onclick="return pageChange($('.active').children().text(),'minus')">이전</a></li>
+		               <c:forEach var="p" begin="${map.pi.startPage}" end="${map.pi.endPage == 0? 1 : map.pi.endPage }">
+		                  <c:if test="${p eq map.pi.currentPage }">
+		                     <li class="page-item active" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text())">${ p }</a></li>
+		                  </c:if>
+		                  <c:if test="${p ne map.pi.currentPage }">
+		                     <li class="page-item" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text())">${ p }</a></li>
+		                  </c:if>
+		               </c:forEach>
+		           <li class="page-item"><a class="page-link" onclick="return pageChange($('.active').children().text(),'plus')">다음</a></li>
+		        </ul>
+		     </div>
     </div>
 	
-	
+	 <input type="hidden" value="${ pi.maxPage }" id="maxPage"/>
 	 <jsp:include page="../common/footer.jsp"/>
     
 	
@@ -99,6 +116,75 @@
     <!-- Main JS -->
     <script src="${contextPath }/resources/js/main.js"></script>
 	
+	
+	
+	
+	<script>
+	function onclickPage(value){
+		var url = "game.cg"; 
+		$.ajax({
+   			url: url,
+   			type: "get",
+   			data:{"newCurrentPage":value},
+   			success:function(data){
+	       		var list = data.map.list;
+	       		var pi = data.map.pi;
+				$(".row000").html("");
+				for(var i = 0; i < list.length; i++){
+					$(".row000").append("<div class='col-sm-6 col-md-3 themeix-half'><div class='single-video'><div class='video-img'><a href='https://${ip}:8443/mt/testLiveBj.lb#"+list[i].v_href+"'><img class='lazy' alt='Video' src='${contextPath }/resources/bsTitleImages/"+list[i].f_rename+"' style='display: inline; width:260px; height:180px;'><noscript>&lt;img src='${contextPath }/resources/images/thumbnails/6.jpg' alt='video' /&gt;</noscript></a><span class='video-duration'>"+ list[i].starttime +"'</span></div><div class='video-content'><h4><a href='https://${ip}:8443/mt/testLiveBj.lb#"+ list[i].v_href +"' class='video-title'>"+ list[i].bsTitle +"</a></h4><div class='video-counter'><div class='video-viewers'><span class='fa fa-eye view-icon'></span><span>"+ list[i].v_viewers +"</span></div><div class='video-feedback'><div class='video-like-counter'><span class='fa fa-thumbs-o-up like-icon'></span><span>"+ list[i].like +"</span></div><div class='video-like-counter'><span><i class='fa fa-github-alt fa-fw'></i></span><span>"+list[i].nickname+"</span></div></div></div></div></div></div>");
+	      		}
+	      		$(".pageul").children().removeClass('active');
+	      		$("#cu"+value).addClass('active');
+	      		$("#maxPage").attr("value", pi.maxPage);
+   			},
+   			error:function(data){
+      			console.log("에러!");
+   			}
+		});
+ 		return false;
+	 }
+    
+     function pageChange(pagenum, value){
+        var page = Number(pagenum);
+        var url = "game.cg";         
+        console.log(page)
+        if(page >= 1 && page <= $("#maxPage").val()){
+             if(value === 'plus'){
+                if(page == $("#maxPage").val()){
+                   return;
+                }
+                page += 1;
+             }else if(value === 'minus'){
+                if(page === 1){
+                   return;
+                }
+                page -= 1;
+             }
+             
+             $.ajax({
+                url: url,
+                type: "get",
+                data:{"newCurrentPage":page},
+                success:function(data){
+                	var list = data.map.list;
+    	       		var pi = data.map.pi;
+    				$(".row000").html("");
+    	      		for(var i = 0; i < list.length; i++){
+    	      			$(".row000").append("<div class='col-sm-6 col-md-3 themeix-half'><div class='single-video'><div class='video-img'><a href='https://${ip}:8443/mt/testLiveBj.lb#"+list[i].v_href+"'><img class='lazy' alt='Video' src='${contextPath }/resources/bsTitleImages/"+list[i].f_rename+"' style='display: inline; width:260px; height:180px;'><noscript>&lt;img src='${contextPath }/resources/images/thumbnails/6.jpg' alt='video' /&gt;</noscript></a><span class='video-duration'>"+ list[i].starttime +"'</span></div><div class='video-content'><h4><a href='https://${ip}:8443/mt/testLiveBj.lb#"+ list[i].v_href +"' class='video-title'>"+ list[i].bsTitle +"</a></h4><div class='video-counter'><div class='video-viewers'><span class='fa fa-eye view-icon'></span><span>"+ list[i].v_viewers +"</span></div><div class='video-feedback'><div class='video-like-counter'><span class='fa fa-thumbs-o-up like-icon'></span><span>"+ list[i].like +"</span></div><div class='video-like-counter'><span><i class='fa fa-github-alt fa-fw'></i></span><span>"+list[i].nickname+"</span></div></div></div></div></div></div>");
+    	      		}
+    	      		$(".pageul").children().removeClass('active');
+    	      		$("#cu"+page).addClass('active');
+    	      		$("#maxPage").attr("value", pi.maxPage);
+                },
+                error:function(data){
+                   console.log("에러!");
+                }
+             });
+              return false;
+           }
+        }
+  		
+	</script>
 
 </body>
 </html>

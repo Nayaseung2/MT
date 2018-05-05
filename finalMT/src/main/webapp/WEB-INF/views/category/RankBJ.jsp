@@ -19,7 +19,7 @@
 			style="margin-left: 0px;">
 
 			<!-- 베스트 BJ 폼 시작 -->
-
+		
 			<div class="right-sidebar">
 
 				<!-- 아이콘 + 폼 title 시작 -->
@@ -30,23 +30,23 @@
 				</div>
 
 				<!-- 아이콘 + 폼 title 끝 -->
-				<c:forEach begin="1" end="5" step="1">
+				<c:forEach var="item" items="${list1}">
 
 
 					<div class="single-contributor">
 						<div class="contributor-img">
 
 							<!-- BJ 사진 -->
-							<a href="#"><img src="${contextPath }/resources/images/bjSemple/bj1.jpg" alt="team"></a>
+							<a href="bjJDBC.JDBC?mid=${item.mid}"><img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${item.f_rename}" style="display: inline;"></a>
 						</div>
 
 						<!-- BJ 이름 + 설명 -->
 						<div class="contributor-content">
 							<h4>
-								<a href="#" class="heading-link">철구형2@</a>
+								<a href="bjJDBC.JDBC?mid=${item.mid}" class="heading-link">${item.nickname}</a>
 							</h4>
-							<p>구독자 200000</p>
-							<p>2001.03.22</p>
+							<p>${item.v_viewers}</p>
+							<p>${item.bsTitle}</p>
 						</div>
 					</div>
 
@@ -75,23 +75,23 @@
 				</div>
 
 				<!-- 아이콘 + 폼 title 끝 -->
-				<c:forEach begin="1" end="5" step="1">
+				<c:forEach var="item" items="${list2}">
 
 
 					<div class="single-contributor">
 						<div class="contributor-img">
 
 							<!-- BJ 사진 -->
-							<a href="#"><img src="${contextPath }/resources/images/bjSemple/bj2.jpg" alt="team"></a>
+							<a href="bjJDBC.JDBC?mid=${item.mid}"><img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${item.f_rename}" style="display: inline;"></a>
 						</div>
 
 						<!-- BJ 이름 + 설명 -->
 						<div class="contributor-content">
 							<h4>
-								<a href="#" class="heading-link">킴성태</a>
+								<a href="bjJDBC.JDBC?mid=${item.mid}" class="heading-link">${item.nickname}</a>
 							</h4>
-							<p>구독자440000</p>
-							<p>2003.12.23</p>
+							<p>${item.v_viewers}</p>
+							<p>${item.bsTitle}</p>
 						</div>
 					</div>
 
@@ -119,23 +119,23 @@
 				</div>
 
 				<!-- 아이콘 + 폼 title 끝 -->
-				<c:forEach begin="1" end="5" step="1">
+				<c:forEach var="item" items="${list3}">
 
 
 					<div class="single-contributor">
 						<div class="contributor-img">
 
 							<!-- BJ 사진 -->
-							<a href="#"><img src="${contextPath }/resources/images/bjSemple/bj3.jpg" alt="team"></a>
+							<a href="bjJDBC.JDBC?mid=${item.mid}"><img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${item.f_rename}" style="display: inline;"></a>
 						</div>
 
 						<!-- BJ 이름 + 설명 -->
 						<div class="contributor-content">
 							<h4>
-								<a href="#" class="heading-link">뜨뜨뜨뜨</a>
+								<a href="bjJDBC.JDBC?mid=${item.mid}" class="heading-link">${item.nickname}</a>
 							</h4>
-							<p>구독자 107777</p>
-							<p>2015.11.12</p>
+							<p>${item.v_viewers}</p>
+							<p>${item.bsTitle}</p>
 						</div>
 					</div>
 
@@ -163,23 +163,22 @@
 				</div>
 
 				<!-- 아이콘 + 폼 title 끝 -->
-				<c:forEach begin="1" end="5" step="1">
+				<c:forEach var="item" items="${list4}">
 
 
 					<div class="single-contributor">
 						<div class="contributor-img">
 
-							<!-- BJ 사진 -->
-							<a href="#"><img src="${contextPath }/resources/images/bjSemple/bj4.jpg" alt="team"></a>
+							<a href="bjJDBC.JDBC?mid=${item.mid}"><img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${item.f_rename}" style="display: inline;"></a>
 						</div>
 
 						<!-- BJ 이름 + 설명 -->
 						<div class="contributor-content">
 							<h4>
-								<a href="#" class="heading-link">벤쯔</a>
+								<a href="bjJDBC.JDBC?mid=${item.mid}" class="heading-link">${item.nickname}</a>
 							</h4>
-							<p>구독자1000222</p>
-							<p>2013.01.03</p>
+							<p>${item.v_viewers}</p>
+							<p>${item.bsTitle}</p>
 						</div>
 					</div>
 

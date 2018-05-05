@@ -69,7 +69,7 @@
 <c:if test="${empty jdbcInfo.jdbc_name }">
 <label class="BStext"><a id="BStexta"href="#">모두의TV</a></label><br>
 </c:if>
-<label class="BStext">${loginUser.nickName}</label><br>
+<label class="BStext">${m.nickName}</label><br>
 </div>
 </div>
 </div>
@@ -78,8 +78,8 @@
 <!-- 좌측 회원 정보,자기소개등 보기 -->
 <div class="myInfo">
 <br>
-<label class="idnickname"><b>${loginUser.mId }</b></label><br>
-<span class="idnickname">${loginUser.nickName }</span>
+<label class="idnickname"><b>${jdbcInfo.mid }</b></label><br>
+<span class="idnickname">${m.nickName }</span>
 <span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;"><a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
 <br/>
 <c:if test="${empty jdbcInfo.jdbc_introduce }">
@@ -103,7 +103,7 @@
 	</tr>
 	<tr> 	
 		<td>
-			<p><a class="bottom" href="BSmyBoard.board?mId=${ loginUser.mId }">내 게시판</a></p>
+			<p><a class="bottom" href="BSmyBoard.board?mId=${ jdbcInfo.mid }">내 게시판</a></p>
 			<p><a class="bottom" href="showGuestBookList.JDBC">방명록</a></p>
 		</td>
 	</tr>
@@ -121,15 +121,20 @@
 <br><br><br>
 
 <script>
-
-
 </script>
-
-
-
-
-<label style="margin-left:200px;">즐겨찾기가 없습니다.</label>
-</div>
+<br>
+<%-- <c:forEach var="item" items="${gu}"> --%>
+<c:forEach var="i" items="${Gudock}">
+	<c:forEach var="j" items="${ i.value}">
+	<%-- <c:if test="${!empty jdbcLogoFile }">
+	</c:if> --%>
+		<img src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${j.f_rename}"style="width:80px; height:80px;"><br>
+		<label class="BStext" style="color:black;"><a id="BStexta"href="#" style="color:black;">${j.jdbc_name}</a></label><br>
+		<label class="BStext" style="color:black;">${j.jdbc_nickName}</label>
+	</c:forEach>
+</c:forEach>
+	<br>
+	</div>
 </div>
 </div>
 </div>

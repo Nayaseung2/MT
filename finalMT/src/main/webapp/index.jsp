@@ -10,7 +10,7 @@
 <body>
 <h1>메인이다!</h1>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
-<c:set var="ip" value="172.30.1.30" scope="application"/>
+<c:set var="ip" value="59.11.248.22" scope="application"/>
  <jsp:forward page="allBJ.lb"></jsp:forward> 
 <%-- <jsp:forward page="WEB-INF/views/main/main.jsp"></jsp:forward> --%>
 </body>

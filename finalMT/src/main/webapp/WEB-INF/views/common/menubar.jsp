@@ -89,7 +89,7 @@
 			                                 	</c:when>
 			                                 	<c:when test="${!empty loginUser }">
 				                                 	<li><a href="${contextPath }/payform.pay?mcode=${loginUser.mcode}">피치결제</a> <span class="arrow"></span></li>
-				                                   	<li><a href="bringJDBC.JDBC?mId=${loginUser.mId }" target="blank">방송국가기</a> <span class="arrow"></span></li>
+				                                   	<li><a href="bjJDBC.JDBC?mid=${loginUser.mId}" target="blank">방송국가기</a> <span class="arrow"></span></li>
 				                                    <li><a href="bjPayMain.bjp?mcode=${loginUser.mcode}">내수익관리</a> <span class="arrow"></span></li>
 				                                    <li><a href="${ contextPath }/myPageEntry.mp">myPage</a> <span class="arrow"></span></li>
 				                                    <li><a href="logout.me">Logout</a> <span class="arrow"></span></li>

@@ -297,6 +297,7 @@
          </ul>
      	</li>
       </div> -->
+      <input id="maxViewer" class="maxViewer" type="hidden" value="0"/>
     <input id="bjJCode" class="bjJCode" type="hidden" value="${bjJ.jcode}"/>
 	<input id="bjId1" class="bjId1" type="hidden"/>
 	<input id="mid" type="hidden" value="${loginUser.mId}"/>
@@ -341,12 +342,13 @@
 			connection.send("<i class='fa fa-github-alt fa-fw'></i><strong class='primary-font'>"+"${loginUser.nickName}"+"</strong>"+"<div style='position:relative; width:240px; height:127px;'><img src='resources/images/bangjong.jpg' style='position:absolute'/></div>+<h3>방송종료</h2>");
 			connection.close();
 			var bjId8 = $("#bjId1").val();
-		
+			var maxViewer = $("#maxViewer").val();		
 			$.ajax({
 				url:"bangjong.lb",
 				type:"POST",
 				data:{
-					"bjid":bjId8
+					"bjid":bjId8,
+					"maxViewer":maxViewer
 				},
 				success:function(data){
 					
@@ -477,6 +479,10 @@
        		        console.log(numberOfUsers+"명이다!");
        		        if(numberOfUsers === "0"){
        		        	$("#viewers").text(0 +" 명");
+       		        	var maxViewers = $("#maxViewer").val();
+       		        	if(maxViewers < numberOfUsers){
+       		        		$("#maxViewer").val(numberOfUsers);
+       		        	}
        		        }
                 });
                 
