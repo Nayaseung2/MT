@@ -108,7 +108,7 @@
 </c:if>
 <div class="BStitle">
 <c:if test="${!empty jdbcInfo.jdbc_name }">
-<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">${jdbcInfo.jdbc_name }</a></label><br>
+<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/bjJDBC.JDBC?mid=${jdbcInfo.mid}">${jdbcInfo.jdbc_name }</a></label><br>
 </c:if>
 <c:if test="${empty jdbcInfo.jdbc_name }">
 <label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">모두의 TV</a></label><br>
@@ -123,6 +123,7 @@
 <div class="myInfo">
 <br>
 <label class="idnickname"><b>${jdbcInfo.mid }</b></label><br>
+
 <span class="idnickname">${jdbcInfo.jdbc_name }</span>
 <c:if test="${ loginUser.mId eq jdbcInfo.mid }">
 	<span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;">
@@ -189,10 +190,11 @@
 			<h4 align="center"><b>등록된 방명록이 없습니다. </b><br/><br/> 하단의 버튼을 눌러 새 글을 작성해주세요.</h4>
 			<br/>
 			<br/>
+		</c:if>
+		<br/>
 			<div align="center">
 				<button class="check" onclick="goWrite();">방명록 남기기</button>
 			</div>
-		</c:if>
 	</c:if>
 	
 	
@@ -211,18 +213,6 @@
 			</tr>
 		</table>
 	</c:forEach>
-<%-- <table class="gListTable">
-	<tr>
-		<th>${ loginUser.mId }&nbsp;&nbsp;&nbsp;&nbsp;
-			<button id="gHome"><img src="${ contextPath }/resources/images/house.png" width="25px"/></button>
-		</th>
-		<th>(${ loginUser.joinDate })</th>
-	</tr>
-	<tr>
-		<td colspan="2">방명록 내용 / 방명록 내용 / 방명록 내용 / 방명록 내용 / 방명록 내용 / 방명록 내용</td>
-	</tr>
-	
-</table> --%>
 </div>
 
 	<script>

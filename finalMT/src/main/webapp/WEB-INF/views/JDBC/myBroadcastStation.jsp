@@ -46,6 +46,15 @@
 <title>나의 방송국</title>
 </head>
 <body>
+
+<script>
+
+console.log("${jdbcInfo.jdbc_name }");
+
+</script>
+
+
+
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <div class="BSContainer">
 <jsp:include page="../common/menubar.jsp" /> 
@@ -70,7 +79,7 @@
 <label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">모두의 TV</a></label><br>
 </c:if>
 
-<label class="BStext" style="font-size: 16px; color: white;>${m.nickName} 님의 방송국입니다!</label><br>
+<label class="BStext" style="font-size: 16px; color: white;">${jdbcInfo.mid}님의 방송국입니다!</label><br>
 
 </div>
 </div>
@@ -82,9 +91,15 @@
 <br>
 <label class="idnickname"><b>${jdbcInfo.mid }</b></label><br>
 
-<span class="idnickname">${m.nickName }</span>
-<span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;"><a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
-
+<span class="idnickname">${jdbcInfo.jdbc_name }</span>
+<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+	<span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;">
+		<a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a>
+	</span><br>
+</c:if>
+<c:if test="${ loginUser.mId ne jdbcInfo.mid }">
+	<br/>
+</c:if>
 <br/>
 <c:if test="${empty jdbcInfo.jdbc_introduce }">
 <input class="introduction" type="text" value="자기소개가 없습니다." style="padding-left: 3%;" readonly>

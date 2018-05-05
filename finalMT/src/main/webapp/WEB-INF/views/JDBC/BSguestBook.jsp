@@ -33,15 +33,6 @@
 	left:240px;bottom:620px;}
 	.favoriteBJ{width:920px;height:170px; margin-left:10px;}
 	
-	/* 방명록 쓰기 */
-	/* .inputGuestBookOuter{width:860px; height:300px;
-	margin-left:auto; margin-right:auto;}
-	.inputGuestBook{width:860px; height:200px;background:#ffe6e6;
-	margin-left:auto; margin-right:auto;}
-	.guestBookarea{	margin-left:30px;margin-top:5px;resize:none;}
-	.insertGuestBook{width:100px; height:30px;border-radius:10px; background:white;
-	border:1px solid #b3b3b3;float:right;margin-right:30px;} */
-	
 		.sideBtn {
 		 margin-left: 20px;
 		 border: 2px solid rgba(235, 104, 100, 0.5);
@@ -112,7 +103,7 @@
 </c:if>
 <div class="BStitle">
 <c:if test="${!empty jdbcInfo.jdbc_name }">
-<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">${jdbcInfo.jdbc_name }</a></label><br>
+<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/bjJDBC.JDBC?mid=${jdbcInfo.mid}">${jdbcInfo.jdbc_name }</a></label><br>
 </c:if>
 <c:if test="${empty jdbcInfo.jdbc_name }">
 <label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">모두의 TV</a></label><br>

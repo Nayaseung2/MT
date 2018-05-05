@@ -52,14 +52,14 @@ public class JDBCController {
 		HttpSession session = request.getSession();
 		session.setAttribute("jdbcInfo", j);
 		if(f!=null){
-			//System.out.println("controller f : "+f);
+			System.out.println("controller f : "+f);
 			session.setAttribute("jdbcLogoFile", f);
 		}
 		return "JDBC/myBroadcastStation";
 	}
 	
 	@RequestMapping(value = "bjJDBC.JDBC")
-	public String bjJDBC(String mid, Model model) {
+	public String bjJDBC(String mid, Model model, HttpServletRequest request) {
 		//방송국 정보 불러오기
 		
 		JDBC j = js.selectForShow(mid);
@@ -74,11 +74,15 @@ public class JDBCController {
 		f=js.selectJDBCLogoForShow(mid);
 		
 		//session.setAttribute("jdbcInfo", j);
+		HttpSession session = request.getSession();
+		session.setAttribute("jdbcInfo", j);
+		
 		model.addAttribute("m", m);
 		model.addAttribute("jdbcInfo", j);
 		if(f!=null){
-			System.out.println("controller f : "+f);
-			model.addAttribute("jdbcLogoFile", f);
+			//System.out.println("controller f : "+f);
+			//model.addAttribute("jdbcLogoFile", f);
+			session.setAttribute("jdbcLogoFile", f);
 		}
 		return "JDBC/myBroadcastStation";
 	}
