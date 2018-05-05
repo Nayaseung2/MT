@@ -29,4 +29,7 @@ public interface BoardDao {
 	// 방송국 - 내 게시판 글 삭제
 	int BSmyBoardDelete(String b_code);
 
+	// 방송국 - 방명록 목록
+	ArrayList<Board> gList(String mId);
+
 }

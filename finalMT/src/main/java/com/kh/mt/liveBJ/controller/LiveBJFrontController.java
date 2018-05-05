@@ -49,7 +49,8 @@ public class LiveBJFrontController {
 			if(loginUser != null){
      		userId = loginUser.getmId();
      	}
-		log.debug("id : [" + userId + "] 가 id : ["+ bj.getMid() +"] 방송 [접속]");
+	//A가B에게 접속
+		log.debug("[" + userId + "]["+ bj.getMid() +"][접속]");
 		return mv;
 	}
 	//bj가 자기정보방 가저오기

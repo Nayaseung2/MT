@@ -30,7 +30,7 @@ public class JDBCController {
 	JDBCService js;
 
 	//2018.04.13
-	//방명록쓰기
+	// 방명록 목록
 	@RequestMapping(value = "showGuestBookList.JDBC")
 	public String showGuestBookList() {
 		return "JDBC/BSGuestBookList";
@@ -52,7 +52,7 @@ public class JDBCController {
 		HttpSession session = request.getSession();
 		session.setAttribute("jdbcInfo", j);
 		if(f!=null){
-			System.out.println("controller f : "+f);
+			//System.out.println("controller f : "+f);
 			session.setAttribute("jdbcLogoFile", f);
 		}
 		return "JDBC/myBroadcastStation";
@@ -165,11 +165,11 @@ public class JDBCController {
 		JDBC getInfo = null;
 		getInfo = js.selectJDBCstation(j);
 
-		/*if (getInfo == null) {
+		if (getInfo == null) {
 			js.insertJDBCstation(j);
 		} else {
 			js.updateJDBCstation(j);
-		}*/
+		}
 		//방송국 정보 update
 		js.updateJDBCstation(j);
 		JDBC getInfo1 = null;

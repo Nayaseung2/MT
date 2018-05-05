@@ -15,9 +15,9 @@
 	.BSframe{border:1px solid black;margin-left:auto;margin-right:auto;
 		border-radius:10px;width:1200px;height:1200px;}
 	.showBSname{width:1200px;height:150px;background: rgba(235, 104, 100, 0.5);border-radius:5px 5px 0px 0px;}	
-	.profileImg{width:80px;height:80px;margin-left:100px;}
-	.BStitle{position:relative;left:100px;bottom:60px;}
-	.BStext{color:white;}
+	.profileImg{width:100px;height:80px;margin-left:70px; padding-top: auto; padding-bottom: auto;}
+	.BStitle{position:relative;left:100px;bottom:60px;width: 250px; padding-left:40%;}
+	.BStext{ padding-left: 10px; }
 	#BStexta{text-decoration:none;color:white;}
 	.memberInfo{width:1000px;height:650px;border-radius:0px 0px 5px 5px;}
 	.myInfo{margin-left:20px;margin-top:10px;width:200px;height:200px;border:1px solid #b3b3b3;}
@@ -34,41 +34,90 @@
 	.favoriteBJ{width:920px;height:170px; margin-left:10px;}
 	
 	/* 방명록 쓰기 */
-	.inputGuestBookOuter{width:860px; height:300px;
+	/* .inputGuestBookOuter{width:860px; height:300px;
 	margin-left:auto; margin-right:auto;}
 	.inputGuestBook{width:860px; height:200px;background:#ffe6e6;
 	margin-left:auto; margin-right:auto;}
 	.guestBookarea{	margin-left:30px;margin-top:5px;resize:none;}
 	.insertGuestBook{width:100px; height:30px;border-radius:10px; background:white;
-	border:1px solid #b3b3b3;float:right;margin-right:30px;}
+	border:1px solid #b3b3b3;float:right;margin-right:30px;} */
+	
+		.sideBtn {
+		 margin-left: 20px;
+		 border: 2px solid rgba(235, 104, 100, 0.5);
+		 width: 200px; 
+		 background: white;
+		 height: 40px;"
+	}
+	
+		.gListTable {
+		margin-top: 3%;
+		margin-left: 100px;
+		width: 80%;
+		font-size: 16px;
+		
+	
+	
+	}
+	
+	.gListTable th {
+		background-color: rgba(255, 99, 71, 0.1);
+		width: 400px;
+		height: 40px;
+		text-align: center;
+		border-bottom: 2px solid lightgray;
+		
+	}
+	
+	.gListTable td {
+		background-color: hsla(0, 0%, 94%, 0.3);
+		width: 400px;
+		height: 200px;
+		text-align: center;
+	
+	}
+	
+	#gHome {
+		border: 0px solid white;
+		background-color: rgba(255, 99, 71, 0);
+	}
+	
+	.check {
+		width:160px;
+		height:30px;
+		background:rgba(235, 104, 100, 0.5);
+		border:none;
+		color:white;
+	}
+	
 </style>
 <title>방명록</title>
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <div class="BSContainer">
-<div class="icon">
-<a href="index.jsp"><img src="<%=request.getContextPath() %>/resources/images/logo.png" style="width:200px;"></a>
-</div>
+<jsp:include page="../common/menubar.jsp" /> 
+<br/>
+<br/>
 <div class="BSframe">
 <div class="showBSname">
 <br>
 <!-- 회원 이미지 넣기 -->
 <div class="profileImg">
 <c:if test="${!empty jdbcLogoFile }">
-<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${jdbcLogoFile.f_rename}"style="width:80px; height:80px;">
+<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${jdbcLogoFile.f_rename}"style="width:100px; height:80px;">
 </c:if>
 <c:if test="${empty jdbcLogoFile }">
-<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/images/logo.png"style="width:80px; height:80px;">
+<img alt="회원 이미지" src="${ contextPath }/resources/images/logo_JDBC.png"style="width:100px; height:80px;">
 </c:if>
 <div class="BStitle">
 <c:if test="${!empty jdbcInfo.jdbc_name }">
-<label class="BStext"><a id="BStexta"href="#">${jdbcInfo.jdbc_name }</a></label><br>
+<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">${jdbcInfo.jdbc_name }</a></label><br>
 </c:if>
 <c:if test="${empty jdbcInfo.jdbc_name }">
-<label class="BStext"><a id="BStexta"href="#">모두의TV</a></label><br>
+<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">모두의 TV</a></label><br>
 </c:if>
-<label class="BStext">${loginUser.nickName }</label><br>
+<label class="BStext" style="font-size: 16px; color: white;">${jdbcInfo.mid}님의 방송국입니다!</label><br>
 </div>
 </div>
 </div>
@@ -77,39 +126,51 @@
 <!-- 좌측 회원 정보,자기소개등 보기 -->
 <div class="myInfo">
 <br>
-<label class="idnickname"><b>${loginUser.mId }</b></label><br>
-<span class="idnickname">${loginUser.nickName }</span>
-<span class="glyphicon glyphicon-cog" style="float:right;"><a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
+<label class="idnickname"><b>${jdbcInfo.mid }</b></label><br>
+<span class="idnickname">${jdbcInfo.jdbc_name }</span>
+<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+	<span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;">
+		<a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a>
+	</span><br>
+</c:if>
+<c:if test="${ loginUser.mId ne jdbcInfo.mid }">
+	<br/>
+</c:if>
+<br/>
 <c:if test="${empty jdbcInfo.jdbc_introduce }">
-<input class="introduction" type="text" value="자기소개가 없습니다." readonly>
+<input class="introduction" type="text" value="자기소개가 없습니다." style="padding-left: 3%;" readonly>
 </c:if>
 <c:if test="${!empty jdbcInfo.jdbc_introduce }">
 <input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce }" readonly>
 </c:if>
-<br><br> <br>  
-<label style="margin-left:15px;">방송국 방문 : 0명</label>
-</div>
-<br>
-<button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button>
-<button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
 <br><br>
+</div>
+<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+<br>
+	<button class="sideBtn" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button><br><br>
+	<button class="sideBtn" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
+<br>
+</c:if>
+<br/>
 <table class="bottomBox">
 	<tr>
 		<td>
-			<p><a class="bottom">즐겨찾기 BJ</a></p>
+			<p><a class="bottom">구독중인 BJ</a></p>
 		</td>
 	</tr>
-	<tr>
+	<tr> 	
 		<td>
-			<p><a class="bottom">일반 게시판</a></p>
-			<p><a class="bottom" href="showGuestBookList.JDBC">방명록</a></p>
+			<p><a class="bottom" href="BSmyBoard.board?mId=${ jdbcInfo.mid }">게시판</a></p>
+			<p><a class="bottom" href="guestBookList.board?mId=${ jdbcInfo.mid }">방명록</a></p>
 		</td>
 	</tr>
-	<tr>
-		<td>
-			<p><a class="bottom">수익관리</a></p>
-		</td>
-	</tr>
+	<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+		<tr>
+			<td>
+				<p><a class="bottom">수익관리</a></p>
+			</td>
+		</tr>
+	</c:if>
 </table>
 </div>
 <!-- 즐겨찾기 보여주기 부분 -->
@@ -117,15 +178,55 @@
 <div class="inputGuestBookOuter">
 <label style="font-size:16px; width:930px; border-bottom:2px solid rgba(235, 104, 100, 0.5);"><span class="glyphicon glyphicon-list-alt"></span>방명록</label>
 <div class="inputGuestBook">
+<br/>
 <form action="insertGuestBook.board" method="post">
-<textarea class="guestBookarea" name="b_content" cols="110" rows="9"  >
-</textarea>
-<br><br>
-<button class="insertGuestBook" type="submit">등록</button>
-<input type="hidden" value="${loginUser.mId }" name="bwriter">
-<input type="hidden" value="${jdbcInfo.mid }" name="v_code">
+	<!-- <textarea class="guestBookarea" name="b_content" cols="110" rows="9"  >
+	</textarea> -->
+	
+	<table class="gListTable">
+		<tr>
+			<th>${ loginUser.mId }&nbsp;&nbsp;&nbsp;&nbsp;
+				<button id="gHome"><img src="${ contextPath }/resources/images/house.png" width="25px"/></button>
+			</th>
+		</tr>
+		<tr>
+			<td rowspan="9">
+				<textarea class="guestBookarea" name="b_content" cols="80" rows="8" style="resize: none;"></textarea>
+			</td>
+		</tr>
+	</table>
+	<br><br>
+	<div align="center">
+		<button class="check" type="submit">등 록</button>
+		<input type="hidden" value="${ loginUser.mId }" name="bwriter">
+		<input type="hidden" value="${ jdbcInfo.mid }" name="v_code">
+	</div>
 </form>
 </div>
+<script>
+	
+	function gHome(){
+		
+		var mId = "${ loginUser.mId }";
+		location.href="${ contextPath }/bringJDBC.JDBC?mId=" + mId;
+		
+	}
+	
+	$(function(){
+		
+		$(".check").click(function(){
+			
+			var check = $(".guestBookarea").val;
+			
+			if(check == ""){
+				alert("내용을 입력해주세요.");
+				location.reload();
+			}
+		});
+	});
+
+
+</script>
 </div>
 </div>
 </div>

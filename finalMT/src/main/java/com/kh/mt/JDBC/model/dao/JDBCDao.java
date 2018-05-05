@@ -12,7 +12,7 @@ import com.kh.mt.liveBJ.model.vo.Gudock;
 
 public interface JDBCDao {
 
-	//int insertJDBCstation(JDBC j);
+	int insertJDBCstation(JDBC j);
 
 	JDBC selectJDBCstation(JDBC j);
 

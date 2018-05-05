@@ -29,5 +29,8 @@ public interface BoardService {
 	// 방송국 - 내 게시판 글 삭제
 	void BSmyBoardDelete(String b_code);
 
+	// 방송국 - 방명록 목록
+	ArrayList<Board> gList(String mId);
+
 
 }

@@ -41,21 +41,9 @@
 	border-radius: 5px 5px 0px 0px;
 }
 
-.profileImg {
-	width: 80px;
-	height: 80px;
-	margin-left: 100px;
-}
-
-.BStitle {
-	position: relative;
-	left: 100px;
-	bottom: 60px;
-}
-
-.BStext {
-	color: white;
-}
+	.profileImg{width:100px;height:80px;margin-left:70px; padding-top: auto; padding-bottom: auto;}
+	.BStitle{position:relative;left:100px;bottom:60px;width: 250px; padding-left:40%;}
+	.BStext{ padding-left: 10px; }
 
 #BStexta {
 	text-decoration: none;
@@ -109,9 +97,10 @@
 .showRightPart {
 	position: relative;
 	width: 940px;
-	height: 800px;
+	height: 700px;
 	left: 240px;
 	bottom: 640px;
+	background-color: #fff9f9;
 }
 
 /* 관리 테이블 */
@@ -121,109 +110,172 @@
 }
 .insertBSTable th{
 	text-align:center;
-	padding-bottom:45px;	
+	padding-bottom:45px;
+	font-size: 15px;	
 }
-.check{
-	background:white;
-	border:1px solid black;
-	float:right;
-	margin-right:250px;
+.insertBSTable td{
+	padding-left: 5%;	
 }
+
+	.check {
+		width:160px;
+		height:30px;
+		background:rgba(235, 104, 100, 0.5);
+		border:none;
+		color:white;
+	}
+
+	.sideBtn {
+		 margin-left: 20px;
+		 border: 2px solid rgba(235, 104, 100, 0.5);
+		 width: 200px; 
+		 background: white;
+		 height: 40px;"
+	}
+
+
+	.fileRegiBtn label {
+		height:30px;
+		width: 20%;
+		text-align: center;
+		display: inline-block; 
+		padding: .5em .75em; 
+		color: #ffffff; 
+		background-color: rgba(235, 104, 100, 0.5); 
+		cursor: pointer; 
+		border:none;
+	}
+	
+	.fileRegiBtn input[type="file"] {
+	
+		display: inline-block;
+		width: 1px; 
+		height: 1px; 
+		padding: 0; 
+		margin: -1px; 
+		overflow: hidden; 
+		clip:rect(0,0,0,0); 
+		border: 0;
+	}
+	
+	.hrLine {
+		width:400px;
+		padding-right: 50%;
+		border: 1px solid rgba(235, 104, 100, 0.5);
+	}
+	
 </style>
 </head>
 <body>
-	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
-	<div class="BSContainer">
-		<div class="icon">
-			<a href="index.jsp"><img
-				src="<%=request.getContextPath()%>/resources/images/logo.png"
-				style="width: 200px;"></a>
-		</div>
-		<div class="BSframe">
-			<div class="showBSname">
-				<br>
-				<!-- 회원 이미지 넣기 -->
-				<div class="profileImg">
-					<img alt="회원 이미지"
-						src="<%=request.getContextPath()%>/resources/images/logo.png"
-						style="width: 80px; height: 80px;">
-					<div class="BStitle">
-						<c:if test="${!empty jdbcInfo.jdbc_name }">
-<label class="BStext"><a id="BStexta"href="#">${jdbcInfo.jdbc_name }</a></label><br>
+	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
+<div class="BSContainer">
+<jsp:include page="../common/menubar.jsp" /> 
+<br/>
+<br/>
+<div class="BSframe">
+<div class="showBSname">
+<br>
+<!-- 회원 이미지 넣기 -->
+<div class="profileImg">
+<c:if test="${!empty jdbcLogoFile }">
+<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${jdbcLogoFile.f_rename}"style="width:100px; height:80px;">
+</c:if>
+<c:if test="${empty jdbcLogoFile }">
+<img alt="회원 이미지" src="${ contextPath }/resources/images/logo_JDBC.png"style="width:100px; height:80px;">
+</c:if>
+<div class="BStitle">
+<c:if test="${!empty jdbcInfo.jdbc_name }">
+<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">${jdbcInfo.jdbc_name }</a></label><br>
 </c:if>
 <c:if test="${empty jdbcInfo.jdbc_name }">
-<label class="BStext"><a id="BStexta"href="#">모두의TV</a></label><br>
+<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">모두의 TV</a></label><br>
 </c:if>
-<label class="BStext">${loginUser.nickName }</label><br>
-					</div>
-				</div>
-			</div>
-			<!-- 회원정보관리  -->
-			<div class="memberInfo">
-				<!-- 좌측 회원 정보,자기소개등 보기 -->
-				<div class="myInfo">
-				<br>
-					<label class="idnickname"><b>${loginUser.mId }</b></label><br>
-		<span class="idnickname">${loginUser.nickName }</span>
-					<span class="glyphicon glyphicon-cog" style="float: right;"><a style="text-decoration: none; color: black; cursor: pointer;"id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br> <input class="introduction"
-						type="text" value="자기소개가 없습니다." readonly> <br>
-					<br> <br> <label style="margin-left: 15px;">방송국
-						방문 : 0명</label>
-				</div>
-				<br>
-				<button style="margin-left: 20px; border: 1px solid #ff6699; width: 200px; background: white; height: 40px;" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button>
-				<button style="margin-left:20px;border:1px solid #ff6699;width:200px; background:white;height:40px;" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
-				<br>
-				<br>
-				<table class="bottomBox">
-					<tr>
-						<td>
-							<p>
-								<a class="bottom">즐겨찾기 BJ</a>
-							</p>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<p>
-								<a class="bottom">일반 게시판</a>
-							</p>
-								<p><a class="bottom" href="showGuestBookList.JDBC">방명록</a></p>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<p>
-								<a class="bottom">수익관리</a>
-							</p>
-						</td>
-					</tr>
-				</table>
-			</div>
+<label class="BStext" style="font-size: 16px; color: white;">${jdbcInfo.mid}님의 방송국입니다!</label><br>
+</div>
+</div>
+</div>
+<!-- 회원정보관리  -->
+<div class="memberInfo">
+<!-- 좌측 회원 정보,자기소개등 보기 -->
+<div class="myInfo">
+<br>
+<label class="idnickname"><b>${jdbcInfo.mid }</b></label><br>
+<span class="idnickname">${jdbcInfo.jdbc_name }</span>
+<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+	<span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;">
+		<a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a>
+	</span><br>
+</c:if>
+<c:if test="${ loginUser.mId ne jdbcInfo.mid }">
+	<br/>
+</c:if>
+<br/>
+<c:if test="${empty jdbcInfo.jdbc_introduce }">
+<input class="introduction" type="text" value="자기소개가 없습니다." style="padding-left: 3%;" readonly>
+</c:if>
+<c:if test="${!empty jdbcInfo.jdbc_introduce }">
+<input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce }" readonly>
+</c:if>
+<br><br>
+</div>
+<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+<br>
+	<button class="sideBtn" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button><br><br>
+	<button class="sideBtn" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
+<br>
+</c:if>
+<br/>
+<table class="bottomBox">
+	<tr>
+		<td>
+			<p><a class="bottom">구독중인 BJ</a></p>
+		</td>
+	</tr>
+	<tr> 	
+		<td>
+			<p><a class="bottom" href="BSmyBoard.board?mId=${ jdbcInfo.mid }">게시판</a></p>
+			<p><a class="bottom" href="guestBookList.board?mId=${ jdbcInfo.mid }">방명록</a></p>
+		</td>
+	</tr>
+	<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+		<tr>
+			<td>
+				<p><a class="bottom">수익관리</a></p>
+			</td>
+		</tr>
+	</c:if>
+</table>
+</div>
 			<!-- 오른쪽 부분 -->
 			<div class="showRightPart">
-				<h4>
-					<span class="glyphicon glyphicon-option-vertical"></span>&nbsp;방송국
-					기본정보
+			<br/><br/>
+				<h4 style="padding-left: 5%;">
+					<span class="glyphicon glyphicon-option-vertical"></span>&nbsp;<b>방송국 기본정보</b>
 				</h4>
-				<hr>
+				<hr class="hrLine"/>
 				<form action="insertJDBCstation.JDBC" method="post"  encType="multipart/form-data">
-					<table class="insertBSTable" >
+					<table class="insertBSTable" align="center">
 						<tr>
 							<th>방송국 이름</th>
-							<td><input type="text" size="30" name="jdbc_name" style="margin-left:10px;"><br>
+							<td><input type="text" size="30" id="jdbc_name" name="jdbc_name" style="margin-left:10px; height: 30px; border:1px solid lightgray;">
 								<p style="margin-left:10px;">*방송국과 방송 화면에 보이는 이름입니다.(최대 한글 6자 영문 12자)<p></td>
 						</tr>
 						<tr>
 							<th>방송국 소개</th>
-							<td><input type="text" size="50" name="jdbc_introduce" style="margin-left:10px;">
+							<td><input type="text" size="50" id="jdbc_introduce" name="jdbc_introduce" style="margin-left:10px; height: 30px; border:1px solid lightgray;">
 								<p style="margin-left:10px;">*방송국 웹페이지 상단에 들어가는 소개입니다.</p> 
 								<p style="margin-left:10px;">*방송국을 설명할 수 있는 문구를 넣으실 수 있습니다.(최대 한글 32자 영문 64자)</p></td>
 						</tr>
 						<tr>
 							<th>방송국 로고</th>
-							<td><input type="file" size="50" name="jdbcLogo" style="margin-left:10px;">
-								<ul>
+							<td><!-- <input type="file" size="50" name="jdbcLogo" style="margin-left:10px;"> -->
+								<div class="fileRegiBtn">
+									<input id="fileName" class="form-control" value="오른쪽 버튼을 눌러주세요" disabled="disabled" 
+												style="width:60%; display: inline; text-align:center; margin-left: 5%;">
+									<input type="file" size="40" name="jdbcLogo" id="bsImg" style="margin-left:10px;">
+									<label for="bsImg">파일등록하기</label>
+								</div>
+								<ul style="margin-left:50px;">
 									<li>최적의 로고 이미지 사이즈는 74x61px 입니다.</li>
 									<li>최대 200KB크기의 그림파일 (JPG,GIF,PNG)를 올릴 수 있습니다.</li>
 									<li>변경하신 로고는 최대 1분 이내에 서비스에 반영됩니다.</li>
@@ -232,34 +284,82 @@
 						<tr>
 							<th>관심 분야</th>
 							<td>
-								<div style="width: 400px; height: 70px; margin-left:20px;">
+								<div style="width: 550px; height: 70px; margin-left:20px;
+										font-size: 16px;">
 									<input type="checkbox" name="jdbc_interest" id="game" value="게임"> 
-									<label for='game'>게임</label> &nbsp;
+									<label for='game'>게 임</label> &nbsp;
 									<input type="checkbox" name="jdbc_interest" id="talking" value="토크"> 
-									<label for='talking'>토크</label>&nbsp; 
+									<label for='talking'>토 크</label>&nbsp; 
 									<input type="checkbox" name="jdbc_interest" id="eating" value="먹방"> 
-									<label for='eating'>먹방</label>&nbsp; 
+									<label for='eating'>먹 방</label>&nbsp; 
 									<input type="checkbox" name="jdbc_interest" id="sports" value="스포츠"> 
 									<label for='sports'>스포츠</label>&nbsp; 
-									<input type="checkbox" name="jdbc_interest" id="music" value="음악"> 
-									<label for='music'>음악</label> &nbsp;
+									<input type="checkbox" name="jdbc_interest" id="music" value="음악">
+									<label for='music'>음 악</label> &nbsp;
 									<input type="checkbox" name="jdbc_interest" id="stock" value="주식"> 
-									<label for='stock'>주식</label> &nbsp;
+									<label for='stock'>주 식</label> &nbsp;
 									<input type="checkbox" name="jdbc_interest" id="pet" value="펫"> 
 									<label for='pet'>펫</label> &nbsp;&nbsp;
 									<input type="checkbox" name="jdbc_interest" id="hobby" value="취미"> 
-									<label for='hobby'>취미</label> &nbsp;
+									<label for='hobby'>취 미</label> &nbsp;
 									<input type="checkbox" name="jdbc_interest" id="study" value="학습"> 
-									<label for='study'>학습</label> &nbsp;
+									<label for='study'>학 습</label> &nbsp;
 								</div>
 							</td>
 						</tr>
 					</table>
-					<button type="submit" class="check"><span class="glyphicon glyphicon-ok"></span>확인</button>
-					<input type="hidden" value="${loginUser.mId }" name="mid" >
+					<div align="center">
+						<button type="submit" class="check"><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;확 인</button>
+						<input type="hidden" value="${loginUser.mId }" name="mid" >
+					</div>
 				</form>
 			</div>
 		</div>
+		<script>
+		
+			/* 스크린샷 첨부 */
+					
+				function readURL(input) {
+			
+			        if (input.files && input.files[0]) {
+			        	
+						if(!input.files[0].type.match("image.*")){
+							
+							alert("방송 로고는 이미지 확장자만 가능합니다.");
+							return;
+							
+						} else {
+			
+					        var reader = new FileReader();
+					        reader.onload = function (e) {
+			
+				                $('#cover').attr('src', e.target.result);        //cover src로 붙여지고
+				                $('#fileName').val(input.files[0].name);    //파일선택 form으로 파일명이 들어온다
+				            }
+					        
+					        reader.readAsDataURL(input.files[0]);
+						}
+			        } 
+			    }
+			
+				$("#bsImg").change(function(){
+			
+			        readURL(this);
+			    });
+				
+				$("#check").click(function(){
+					
+					var jdbc_name = $("#jdbc_name").val();
+					var jdbc_introduce = $("#jdbc_introduce").val();
+					
+					if(jdbc_name == "" || jdbc_introduce == ""){
+						alert("방송국 이름 또는 방송 소개글을 입력해주세요");
+					}
+					
+				});
+		
+		
+		</script>
 	</div>
 </body>
 </html>

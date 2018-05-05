@@ -22,10 +22,10 @@ public class JDBCServiceImpl implements JDBCService {
 	private SqlSessionTemplate sqlSession;
 	
 	//방송국 정보가 없으면 insert
-	/*@Override
+	@Override
 	public void insertJDBCstation(JDBC j) {
 		int result=jd.insertJDBCstation(j);
-	}*/
+	}
 
 	//방송국 정보가 잇는지 없는지 체크
 	@Override

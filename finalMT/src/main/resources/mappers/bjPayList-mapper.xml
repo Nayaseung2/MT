@@ -124,10 +124,10 @@
 	<select id="SelectCountBlack" resultType="_int" parameterType="java.lang.String">
 	   	SELECT COUNT(LIVE_MCODE) FROM BLACKMEMBER WHERE BJ_MCODE = #{mcode} AND BLACK_STATUS = 'Y'
 	 </select>
-	 <select id="SelectwdSuccese" resultType="_int" parameterType="java.lang.String">
+	 <select id="SelectMyFanCount" resultType="_int" parameterType="java.lang.String">
 	   	SELECT SUM(PRICE) FROM WITHDRAWAL WHERE MCODE = #{mcode} AND STATUS = 'Y'
 	 </select>
-	 <select id="Selectwdloding" resultType="_int" parameterType="java.lang.String">
+	 <select id="SelectProfitPeach" resultType="_int" parameterType="java.lang.String">
 	   	SELECT SUM(PRICE) FROM WITHDRAWAL WHERE MCODE = #{mcode} AND STATUS = 'N'
 	 </select>
 
