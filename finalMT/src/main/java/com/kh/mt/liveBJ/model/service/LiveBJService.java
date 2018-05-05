@@ -37,5 +37,7 @@ public interface LiveBJService {
 
 	int bangjong(LiveBj bj);
 
+	ArrayList<LiveBj> mainTopBJ();
+
 
 }

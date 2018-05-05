@@ -116,4 +116,11 @@ public class LiveBJServiceImpl implements LiveBJService{
 	}
 
 
+	@Override
+	public ArrayList<LiveBj> mainTopBJ() {
+		ArrayList<LiveBj> list = ld.mainTopBJ(sqlSession);
+		return list;
+	}
+
+
 }

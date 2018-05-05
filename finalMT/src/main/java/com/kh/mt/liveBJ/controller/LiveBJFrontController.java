@@ -85,9 +85,15 @@ public class LiveBJFrontController {
 	@RequestMapping(value="allBJ.lb")
 	public ModelAndView allBJ(ModelAndView mv){
 		ArrayList<LiveBj> list = ls.allBJ();
+		
+		ArrayList<LiveBj> list1 = ls.mainTopBJ();
 		mv.addObject("list",list);
+		mv.addObject("list1", list1);
 		mv.setViewName("main/main");
 		System.out.println(list.size());
+		System.out.println(list1.size());
+		System.out.println(list1.get(0).getNickname());
+		System.out.println(list1);
 		
 		return mv;
 	}
