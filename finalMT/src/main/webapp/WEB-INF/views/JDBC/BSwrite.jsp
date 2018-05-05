@@ -119,6 +119,16 @@
 </script>
 </head>
 <body>
+
+<script>
+
+	console.log("${loginUser.mId}");
+	console.log("${jdbcInfo.mid}");
+	console.log("${jdbcLogoFile.f_rename}");
+</script>
+
+
+
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <div class="BSContainer">
 <jsp:include page="../common/menubar.jsp" /> 
@@ -130,14 +140,14 @@
 <!-- 회원 이미지 넣기 -->
 <div class="profileImg">
 <c:if test="${!empty jdbcLogoFile }">
-<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${jdbcLogoFile.f_rename}"style="width:100px; height:80px;">
+<img alt="회원 이미지" src="${contextPath }/resources/jdbcStationFileLogo/${jdbcLogoFile.f_rename}"style="width:100px; height:80px;">
 </c:if>
 <c:if test="${empty jdbcLogoFile }">
 <img alt="회원 이미지" src="${ contextPath }/resources/images/logo_JDBC.png"style="width:100px; height:80px;">
 </c:if>
 <div class="BStitle">
 <c:if test="${!empty jdbcInfo.jdbc_name }">
-<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">${jdbcInfo.jdbc_name }</a></label><br>
+<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/bjJDBC.JDBC?mid=${jdbcInfo.mid}">${jdbcInfo.jdbc_name }</a></label><br>
 </c:if>
 <c:if test="${empty jdbcInfo.jdbc_name }">
 <label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">모두의 TV</a></label><br>
