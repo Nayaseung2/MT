@@ -69,7 +69,9 @@
 <c:if test="${empty jdbcInfo.jdbc_name }">
 <label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">모두의 TV</a></label><br>
 </c:if>
-<label class="BStext" style="font-size: 16px; color: white;">${jdbcInfo.mid}님의 방송국입니다!</label><br>
+
+<label class="BStext" style="font-size: 16px; color: white;>${m.nickName} 님의 방송국입니다!</label><br>
+
 </div>
 </div>
 </div>
@@ -79,15 +81,10 @@
 <div class="myInfo">
 <br>
 <label class="idnickname"><b>${jdbcInfo.mid }</b></label><br>
-<span class="idnickname">${jdbcInfo.jdbc_name }</span>
-<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
-	<span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;">
-		<a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a>
-	</span><br>
-</c:if>
-<c:if test="${ loginUser.mId ne jdbcInfo.mid }">
-	<br/>
-</c:if>
+
+<span class="idnickname">${m.nickName }</span>
+<span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;"><a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
+
 <br/>
 <c:if test="${empty jdbcInfo.jdbc_introduce }">
 <input class="introduction" type="text" value="자기소개가 없습니다." style="padding-left: 3%;" readonly>
@@ -112,8 +109,10 @@
 	</tr>
 	<tr> 	
 		<td>
+
 			<p><a class="bottom" href="BSmyBoard.board?mId=${ jdbcInfo.mid }">게시판</a></p>
 			<p><a class="bottom" href="guestBookList.board?mId=${ jdbcInfo.mid }">방명록</a></p>
+
 		</td>
 	</tr>
 	<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
@@ -132,15 +131,20 @@
 <br><br><br>
 
 <script>
-
-
 </script>
-
-
-
-
-<label style="margin-left:200px;">즐겨찾기가 없습니다.</label>
-</div>
+<br>
+<%-- <c:forEach var="item" items="${gu}"> --%>
+<c:forEach var="i" items="${Gudock}">
+	<c:forEach var="j" items="${ i.value}">
+	<%-- <c:if test="${!empty jdbcLogoFile }">
+	</c:if> --%>
+		<img src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${j.f_rename}"style="width:80px; height:80px;"><br>
+		<label class="BStext" style="color:black;"><a id="BStexta"href="#" style="color:black;">${j.jdbc_name}</a></label><br>
+		<label class="BStext" style="color:black;">${j.jdbc_nickName}</label>
+	</c:forEach>
+</c:forEach>
+	<br>
+	</div>
 </div>
 </div>
 </div>

@@ -1,12 +1,17 @@
 package com.kh.mt.JDBC.model.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.mt.JDBC.model.dao.JDBCDao;
 import com.kh.mt.JDBC.model.vo.JDBC;
+import com.kh.mt.JDBC.model.vo.JDBCInfo;
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
+import com.kh.mt.liveBJ.model.vo.Gudock;
 import com.kh.mt.member.model.dao.MemberDao;
 
 @Service
@@ -70,6 +75,18 @@ public class JDBCServiceImpl implements JDBCService {
 		JDBCLogoFile f=null;
 		f=jd.selectJDBCLogoForShow(mId);
 		return f;
+	}
+
+	@Override
+	public HashMap<Integer,ArrayList<JDBCInfo>> selectGudock(String mid) {
+		HashMap<Integer,ArrayList<JDBCInfo>> gu = jd.selectGudock(mid);
+		return gu;
+	}
+
+	@Override
+	public String selectNickName(String mid) {
+		String nickName = jd.selectNickName(mid);
+		return nickName;
 	}
 
 

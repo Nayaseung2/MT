@@ -3,6 +3,8 @@ package com.kh.mt.JDBC.controller;
 import java.io.File;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,7 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.mt.JDBC.model.service.JDBCService;
 import com.kh.mt.JDBC.model.vo.JDBC;
+import com.kh.mt.JDBC.model.vo.JDBCInfo;
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
+import com.kh.mt.common.PageInfo;
+import com.kh.mt.liveBJ.model.vo.Gudock;
 import com.kh.mt.member.model.vo.Member;
 
 @Controller
@@ -49,6 +54,31 @@ public class JDBCController {
 		if(f!=null){
 			//System.out.println("controller f : "+f);
 			session.setAttribute("jdbcLogoFile", f);
+		}
+		return "JDBC/myBroadcastStation";
+	}
+	
+	@RequestMapping(value = "bjJDBC.JDBC")
+	public String bjJDBC(String mid, Model model) {
+		//방송국 정보 불러오기
+		
+		JDBC j = js.selectForShow(mid);
+		HashMap<Integer,ArrayList<JDBCInfo>> gu = js.selectGudock(mid);
+		model.addAttribute("Gudock", gu);
+		System.out.println("gu"+gu);
+		Member m = new Member();
+		String nickName = js.selectNickName(mid);
+		m.setNickName(nickName);
+		//방송국 로고 파일 불러오기
+		JDBCLogoFile f = new JDBCLogoFile();
+		f=js.selectJDBCLogoForShow(mid);
+		
+		//session.setAttribute("jdbcInfo", j);
+		model.addAttribute("m", m);
+		model.addAttribute("jdbcInfo", j);
+		if(f!=null){
+			System.out.println("controller f : "+f);
+			model.addAttribute("jdbcLogoFile", f);
 		}
 		return "JDBC/myBroadcastStation";
 	}
@@ -157,6 +187,37 @@ public class JDBCController {
 	@RequestMapping(value = "bangsonggo.JDBC")
 	public String bangsonggo(){
 		return "JDBC/BangsongGo";
+	}
+	
+	//페이징처리
+	public PageInfo addUserPage(String newCurrentPage, int count){
+		
+		int currentPage = 1;
+		int limit = 0;
+		int maxPage = 0;
+		int startPage = 0;
+		int endPage = 0;
+		int listCount = 0;
+
+		limit = 10;
+		
+		listCount = count; 
+		
+		if(newCurrentPage != null){
+			currentPage = Integer.parseInt(newCurrentPage);
+		}
+		
+		maxPage = (int)((double)listCount / limit + 0.9);
+		
+		startPage = ((int)((double)currentPage / limit + 0.9)-1) * limit + 1;
+		
+		endPage = startPage + limit -1;
+		
+		if(maxPage < endPage){
+			endPage = maxPage;
+		}
+		
+		return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 	}
 
 }

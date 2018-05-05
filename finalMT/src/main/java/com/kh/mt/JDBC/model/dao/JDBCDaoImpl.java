@@ -1,12 +1,18 @@
 package com.kh.mt.JDBC.model.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.kh.mt.JDBC.model.vo.JDBC;
+import com.kh.mt.JDBC.model.vo.JDBCInfo;
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
+import com.kh.mt.liveBJ.model.vo.Gudock;
 
 @Repository
 public class JDBCDaoImpl implements JDBCDao{
@@ -67,6 +73,30 @@ public class JDBCDaoImpl implements JDBCDao{
 		JDBCLogoFile f= null;
 		f=sqlSession.selectOne("JDBC1.selectJDBCLogoForShow",mId);
 		return f;
+	}
+
+	@Override
+	public HashMap<Integer,ArrayList<JDBCInfo>> selectGudock(String mid) {
+		ArrayList<Gudock> gulist = new ArrayList<>(); 
+		Gudock gu = new Gudock();
+		gu.setReder_mCode(mid);
+		gulist = (ArrayList)sqlSession.selectList("JDBC1.selectGudockList", gu);
+		System.out.println("gulist: " + gulist);
+		HashMap<Integer,ArrayList<JDBCInfo>> hmap = new LinkedHashMap<Integer,ArrayList<JDBCInfo>>();
+		
+		for(int i =0; i<gulist.size();i++){
+			String mId = String.valueOf(gulist.get(i).getBJ_mCode());
+			ArrayList<JDBCInfo> list = new ArrayList<>();  
+			list = (ArrayList)sqlSession.selectList("JDBC1.selectGudockJDBC", mId);
+			hmap.put(i, list);
+		};
+		return hmap;
+	}
+
+	@Override
+	public String selectNickName(String mid) {
+		String nickName = sqlSession.selectOne("JDBC1.selectNickName", mid);
+		return nickName;
 	}
 
 
