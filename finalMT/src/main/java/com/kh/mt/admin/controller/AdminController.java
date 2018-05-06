@@ -31,6 +31,7 @@ import com.kh.mt.admin.model.service.AdminService;
 import com.kh.mt.admin.model.vo.Contact;
 import com.kh.mt.admin.model.vo.Report;
 import com.kh.mt.admin.model.vo.Revenue;
+import com.kh.mt.admin.model.vo.SuccessContact;
 import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
@@ -588,23 +589,20 @@ public class AdminController {
 		
 		HashMap<String, Object> map = as.contactList(pi);
 		
-		ArrayList<Contact> list = (ArrayList<Contact>) map.get("clist");
-		
-		int[] temp = addArr(list);
-		
-		ArrayList<Integer> count = new ArrayList<Integer>();
-		for(int i = 0; i < temp.length; i++){
-			count.add(temp[i]);
-		}
-		
+		HashMap<String, Object> count = as.typeCount();
 		
 		map.put("count", count);
 		map.put("pi", pi);
+		
+		System.out.println("map: " + map);
 		mv.addObject("map", map);
 		
 		System.out.println("controller: " + map);
-
-		mv.setViewName("admin/contactManagement");
+		if(newCurrentPage == null){
+			mv.setViewName("admin/contactManagement");
+		}else {
+			mv.setViewName("jsonView");
+		}
 		
 		return mv;
 	}
@@ -619,22 +617,19 @@ public class AdminController {
 		
 		as.addAnswer(map);
 		
-		System.out.println(code);
-		System.out.println(content);
-		
 		mv.setViewName("jsonView");
 		
 		return mv;
 	}
 	
 	@RequestMapping("contactTypeChange.ad")
-	public ModelAndView contactTypeChange(ModelAndView mv, String newCurrentPage, String type){
-		System.out.println(type);
-		int listCount = as.contactTypeCount(type);
+	public ModelAndView contactTypeChange(ModelAndView mv, String newCurrentPage, String userId){
+		System.out.println(userId);
+		int listCount = as.contactTypeCount(userId);
 		
 		PageInfo pi = addUserPage(newCurrentPage, listCount);
 		
-		HashMap<String, Object> map = as.contactTypeList(pi, type);
+		HashMap<String, Object> map = as.contactTypeList(pi, userId);
 		
 		map.put("pi", pi);
 		mv.addObject("map", map);
@@ -655,6 +650,55 @@ public class AdminController {
 		PageInfo pi = addUserPage(newCurrentPage, count);
 		
 		ArrayList<Contact> clist = as.searchContactUser(userId, pi);
+		
+		map.put("clist", clist);
+		map.put("pi", pi);
+		
+		mv.addObject("map", map);
+		
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	
+	//처리 완료된 문의내역
+	@RequestMapping("successContact.ad")
+	public ModelAndView successContact(ModelAndView mv, String newCurrentPage) {
+		int count = as.successContactCount(); 
+				
+		PageInfo pi = addUserPage(newCurrentPage, count);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>(); 
+				
+		ArrayList<SuccessContact> list = as.successContactList(pi);
+		
+		System.out.println("successContact list: " + list);
+		 
+		map.put("pi", pi);
+		map.put("clist", list);
+		
+		mv.addObject("map", map);
+		
+		if(newCurrentPage != null){
+			mv.setViewName("jsonView");
+		}else {
+			mv.setViewName("admin/successContact");
+		}
+		
+		
+		return mv;
+	}
+	
+	//문의 내역 아이디 검색
+	@RequestMapping("searchSuccessContact.ad")
+	public ModelAndView searchSuccessContact(ModelAndView mv, String newCurrentPage, String userId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int count = as.searchSuccessContact(userId);
+		PageInfo pi = addUserPage(newCurrentPage, count);
+		
+		ArrayList<SuccessContact> clist = as.searchSuccessContactUser(userId, pi);
 		
 		map.put("clist", clist);
 		map.put("pi", pi);

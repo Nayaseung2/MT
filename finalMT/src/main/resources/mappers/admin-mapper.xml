@@ -3,13 +3,13 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="Admin">
-  	<resultMap type="Revenue" id="revenueResultSet">
-      <result property="mId" column="MID"/>   
-      <result property="mName" column="MNAME"/>   
-      <result property="peach_code" column="PEACH_CODE"/>  
-      <result property="p_date" column="P_DATE"/>
-   </resultMap>
+<mapper namespace="Admin">
+	<resultMap type="Revenue" id="revenueResultSet">
+	   <result property="mId" column="MID"/>   
+	   <result property="mName" column="MNAME"/>   
+	   <result property="peach_code" column="PEACH_CODE"/>  
+	   <result property="p_date" column="P_DATE"/>
+	</resultMap>
   	
   	<resultMap type="Member" id="memberResultSet" >
 		<id property="mcode" column="MCODE"/>
@@ -37,30 +37,40 @@
   		<result property="wdCode" column="WD_CODE"/>
   	</resultMap>
   	 
-  	 <resultMap type="Contact" id="contactResultSet">
-  	 	<result property="bCode" column="B_CODE"/>
-  	 	<result property="vCode" column="V_CODE"/>
-  	 	<result property="bType" column="B_TYPE"/>
-  	 	<result property="bTitle" column="B_TITLE"/>
-  	 	<result property="bContent" column="B_CONTENT"/>
-  	 	<result property="bWriter" column="BWRITER"/>
-  	 	<result property="bCreateDate" column="B_CREATE_DATE"/>
-  	 	<result property="bUpdateDate" column="B_UPDATE_DATE"/>
-  	 	<result property="bCount" column="B_COUNT"/>
-  	 	<result property="bStatus" column="B_STATUS"/>
-  	 </resultMap>
-  	 
-  	 <resultMap type="Report" id="reportResultSet">
-  	 	<result property="bCode" column="B_CODE"/>
-  	 	<result property="reporter" column="REPORTER"/>
-  	 	<result property="target" column="TARGET"/>
-  	 	<result property="videoYN" column="VIDEO_YN"/>
-  	 	<result property="content" column="B_CONTENT"/>
-  	 	<result property="reportSum" column="REPORTSUM"/>
-  	 	<result property="reportDate" column="REPORTDATE"/>
-  	 	<result property="screen" column="SCREEN"/>
-  	 </resultMap>
-  	 
+	<resultMap type="Contact" id="contactResultSet">
+		<result property="bCode" column="B_CODE"/>
+		<result property="vCode" column="V_CODE"/>
+		<result property="bType" column="B_TYPE"/>
+		<result property="bTitle" column="B_TITLE"/>
+		<result property="bContent" column="B_CONTENT"/>
+		<result property="bWriter" column="BWRITER"/>
+		<result property="bCreateDate" column="B_CREATE_DATE"/>
+		<result property="bUpdateDate" column="B_UPDATE_DATE"/>
+		<result property="bCount" column="B_COUNT"/>
+		<result property="bStatus" column="B_STATUS"/>
+	</resultMap>
+	
+	<resultMap type="Report" id="reportResultSet">
+		<result property="bCode" column="B_CODE"/>
+		<result property="reporter" column="REPORTER"/>
+		<result property="target" column="TARGET"/>
+		<result property="videoYN" column="VIDEO_YN"/>
+		<result property="content" column="B_CONTENT"/>
+		<result property="reportSum" column="REPORTSUM"/>
+		<result property="reportDate" column="REPORTDATE"/>
+		<result property="screen" column="SCREEN"/>
+	</resultMap>
+	
+	<resultMap type="SuccessContact" id="successContactResultSet">
+		<result property="b_code" column="B_CODE"/>
+		<result property="bwriter" column="BWRITER"/>
+		<result property="b_type" column="B_TYPE"/>
+		<result property="b_title" column="B_TITLE"/>
+		<result property="b_content" column="B_CONTENT"/>
+		<result property="b_create_date" column="B_CREATE_DATE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="create_date" column="CREATE_DATE"/>
+	</resultMap>  	 
   	 
   	<!-- 관리자 메인화면 -->
   	<select id="allMenuList" resultType="hashmap">
@@ -71,7 +81,7 @@
 		        (SELECT COUNT(*) FROM BOARD WHERE B_TYPE = 'report' AND B_STATUS = 'Y') report,
 		        (SELECT COUNT(*) FROM MEMBER WHERE TO_CHAR(JOIN_DATE) =	TO_CHAR(SYSDATE)) newm,
 		        (SELECT COUNT(*) FROM WITHDRAWAL WHERE STATUS = 'N') withdrawal,            
-		        (SELECT COUNT(*) FROM BOARD WHERE B_TYPE = 'personal' AND B_STATUS = 'Y') personal
+		        (SELECT COUNT(*) FROM BOARD WHERE B_TYPE LIKE 'personal%' AND B_STATUS = 'Y') personal
 	FROM MEMBER 
 	GROUP BY 2
   	</select> 
@@ -183,6 +193,7 @@
 		FROM BOARD 
 		WHERE B_TYPE LIKE 'personal%'
 		AND B_CODE NOT IN (SELECT B_CODE FROM REPLY)
+		AND B_STATUS = 'Y'
   	</select>
   	
   	<select id="contactTypeCount" parameterType="java.lang.String" resultType="_int">
@@ -190,6 +201,7 @@
 		FROM BOARD 
 		WHERE B_TYPE = 'personal/'||#{type}
 		AND B_CODE NOT IN (SELECT B_CODE FROM REPLY)
+		AND B_STATUS = 'Y'
   	</select>
   	
   	<select id="contactTypeList" parameterType="java.lang.String" resultMap="contactResultSet">
@@ -197,6 +209,7 @@
 		FROM BOARD 
 		WHERE B_TYPE = 'personal/'||#{type}
 		AND B_CODE NOT IN (SELECT B_CODE FROM REPLY)
+		AND B_STATUS = 'Y'
   	</select>
   	
   	<select id="searchContact" parameterType="java.lang.String" resultType="_int">
@@ -205,6 +218,7 @@
 		WHERE B_TYPE LIKE 'personal%'
 		AND B_CODE NOT IN (SELECT B_CODE FROM REPLY)
 		AND BWRITER = #{userId}
+		AND B_STATUS = 'Y'
   	</select>
   	
   	<select id="searchContactUser" parameterType="java.lang.String" resultMap="contactResultSet">
@@ -213,6 +227,7 @@
 		WHERE B_TYPE LIKE 'personal%'
 		AND B_CODE NOT IN (SELECT B_CODE FROM REPLY)
 		AND BWRITER = #{userId}
+		AND B_STATUS = 'Y'
   	</select>
   	
   	<update id="stopUser" parameterType="java.lang.String">
@@ -258,6 +273,7 @@
   		SELECT V_HREF
   		FROM JDBC
   		WHERE MCODE = #{target}
+  		AND V_STATE = 'Y'
   	</select>
   	
   	<select id="newUserCount" resultType="_int">
@@ -322,4 +338,42 @@
 		AND B1.B_STATUS = 'N'
 		AND B1.B_TITLE = #{userId}
   	</select>
-  </mapper>
+  	
+  	<select id="typeCount" resultType="hashmap">
+  		SELECT (SELECT COUNT(*) FROM BOARD WHERE B_TYPE LIKE '%계정' AND B_STATUS = 'Y')a, (SELECT COUNT(*) FROM BOARD WHERE B_TYPE LIKE '%방송시청' AND B_STATUS = 'Y')b, (SELECT COUNT(*) FROM BOARD WHERE B_TYPE LIKE '%피치' AND B_STATUS = 'Y')c, (SELECT COUNT(*) FROM BOARD WHERE B_TYPE LIKE '%결제' AND B_STATUS = 'Y')d, (SELECT COUNT(*) FROM BOARD WHERE B_TYPE LIKE '%기타' AND B_STATUS = 'Y')e, (SELECT COUNT(*) FROM BOARD WHERE B_TYPE LIKE 'personal%' AND B_STATUS = 'Y')f 
+  		FROM DUAL
+  	</select>
+  	
+  	<select id="successContactCount" resultType="_int">
+  		SELECT COUNT(*) 
+		FROM REPLY
+		WHERE R_CODE LIKE '%personal'
+  	</select>
+  	
+  	<select id="successContactList" resultMap="successContactResultSet">
+  		SELECT B_CODE, BWRITER, SUBSTR(B_TYPE, 10) B_TYPE, B_TITLE, B_CONTENT, B_CREATE_DATE, CONTENT, CREATE_DATE
+		FROM (SELECT B_CODE AS BCODE, R_CONTENT AS CONTENT, R_CREATE_DATE AS CREATE_DATE
+		      FROM REPLY)
+		JOIN BOARD B ON (BCODE = B.B_CODE)
+		WHERE B.B_TYPE LIKE 'personal%'
+		ORDER BY CREATE_DATE DESC
+  	</select>
+  	
+  	<select id="searchSuccessContact" parameterType="java.lang.String" resultType="_int">
+  		SELECT COUNT(*)
+		FROM REPLY R
+		JOIN BOARD B ON(R.B_CODE = B.B_CODE)
+		WHERE B.BWRITER = #{userId}
+  	</select>
+  	
+  	<select id="searchSuccessContactUser" parameterType="java.lang.String" resultMap="successContactResultSet">
+  		SELECT B_CODE, BWRITER, SUBSTR(B_TYPE, 10) B_TYPE, B_TITLE, B_CONTENT, B_CREATE_DATE, CONTENT, CREATE_DATE
+		FROM (SELECT B_CODE AS BCODE, R_CONTENT AS CONTENT, R_CREATE_DATE AS CREATE_DATE
+		      FROM REPLY)
+		JOIN BOARD B ON (BCODE = B.B_CODE)
+		WHERE B.B_TYPE LIKE 'personal%'
+		AND B.BWRITER = #{userId}
+		ORDER BY CREATE_DATE DESC
+  	</select>
+  	
+</mapper>

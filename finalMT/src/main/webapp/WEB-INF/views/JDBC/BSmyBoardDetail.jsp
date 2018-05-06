@@ -30,7 +30,7 @@
 		cursor:pointer;}
 	.bottomBox td{border-bottom:1px dotted lightgray;}
 	.bottom{color:black; text-decoration:none; margin-left:15px;}
-	.showRightPart{position:relative; width:940px; height:850px; 
+	.showRightPart{position:relative; width:940px; 
 	left:240px;bottom:640px;background-color: rgba(255, 245, 244, 0.9);}
 	
 	.equal{
@@ -66,7 +66,7 @@
 	
 	#listArea {
 		width:80%;
-		height: 400px;
+		height:400px;
 		font-size: 16px;
 		margin-top: 3%;
 		text-align: center;
@@ -183,6 +183,7 @@
 	</c:if>
 </table>
 </div>
+
 <!-- 오른쪽 부분 -->
 <div class="showRightPart">
 <br/>
@@ -203,15 +204,47 @@
 						<br/><br/>
 						${ hmap.mbListDetail.b_content }
 						<br/><br/>
-						<img src="${ contextPath }/resources/BoardFile/${ hmap.mbListDetailP.f_rename }" style="padding-left: 5%;"/>
-						<br/><br/><br/>
+						<img src="${ contextPath }/resources/BoardFile/${ hmap.mbListDetailP.f_rename }" style="padding-left: 5%; max-height:180px;" />
+						<br/>
 					</td>
 				</tr>
+				<tfoot>
+				<tr>
+					<td class="tdClass"><b>댓글 쓰기</b></td>
+					<td colspan="5">
+						<br>
+						<textarea cols="65%" rows="2" placeholder="댓글을 입력하세요." style="resize:none;"></textarea>
+						<button id="replyContent" class="okay"style="float:right; height:45px;" onclick="reply();">댓글쓰기</button>
+						<br><br>
+					</td>
+				</tr>
+				</tfoot>
 			</table>
-		</div>
+			<input type="hidden" id="bCode" value="${hmap.mbListDetail.b_code}">
+			<br>
+			<h4 style="margin-left:92px;">댓글</h4>
+			<div style="border: solid rgba(235, 104, 100, 0.9) 1px; width:780px; height:200px; margin-left:92px;">
+			
+			<div id="pagingArea" align="center">
+		        <ul class="pagination pageul">
+		           <li class="page-item"><a class="page-link" onclick="return pageChange($('.active').children().text(),'minus')">이전</a></li>
+		               <c:forEach var="p" begin="${map.pi.startPage}" end="${map.pi.endPage == 0? 1 : map.pi.endPage }">
+		                  <c:if test="${p eq map.pi.currentPage }">
+		                     <li class="page-item active" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text())">${ p }</a></li>
+		                  </c:if>
+		                  <c:if test="${p ne map.pi.currentPage }">
+		                     <li class="page-item" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text())">${ p }</a></li>
+		                  </c:if>
+		               </c:forEach>
+		           <li class="page-item"><a class="page-link" onclick="return pageChange($('.active').children().text(),'plus')">다음</a></li>
+		        </ul>
+		     </div>
+			</div>
 		
+		</div>
 		<br/>
 		<br/>
+
 		<div style="display: block;">
 			<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
 				<div align="right" style="padding-right: 70px;">
@@ -220,11 +253,11 @@
 				</div>
 			</c:if>
 		</div>
+
 		<br/>
 		<div align="center">
 			<button type="button" class="okay2" onclick="listBtn();">목록으로</button>
 		</div>
-			
 		<script>
 		
 			function modifyBtn(){
@@ -244,10 +277,29 @@
 				var mId = "${ jdbcInfo.mid }";
 				location.href="${ contextPath }/BSmyBoard.board?mId=" + mId;
 			}
-		
-		
-		
+			
+			function reply(){
+				var replyContent = $("replyContent").text();
+				var writer = "${loginUser.mId}";
+				var boardno = "${ hmap.mbListDetail.b_code }";
+				
+				/* $.ajax({
+					url:"insertReply.board",
+					type:"post",
+					data:{
+						"replyContent":replyContent,
+						"writer":writer,
+						"boardno":Boardno
+					},
+					success:function(data){
+						
+					}
+				}); */
+					
+			}
 		</script>
+
+</div>
 </div>
 </div>
 </body>

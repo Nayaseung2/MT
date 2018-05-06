@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.mt.board.model.dao.BoardDao;
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
+import com.kh.mt.board.model.vo.Reply;
 import com.kh.mt.common.PageInfo;
 
 @Service
@@ -91,6 +92,11 @@ public class BoardServiceImpl implements BoardService{
 		
 		return gList;
 	}
+	/*@Override
+	public int insertReply(Reply re) {
+		int result = bd.insertReply(re);
+		return result;
+	}*/
 	
 	// 방송국 - 내 게시판 글 수정
 	@Override

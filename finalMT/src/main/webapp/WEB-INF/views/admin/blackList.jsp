@@ -98,10 +98,13 @@
                             <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 신고</a>
                         </li>
                         <li>
-                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 완료된 신고 내역</a>
+                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 신고 내역</a>
                         </li>
                        	<li>
-                            <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
+                            <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 문의</a>
+                        </li>
+                        <li>
+                            <a href="successContact.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
                         </li>
                     </ul>
                 </div>
@@ -286,7 +289,8 @@
 	  					$("tbody").append("<tr><td>"+m.mId+"</td><td>"+m.mName+"</td><td>"+m.mcode+"</td><td>"+addComma(m.peach)+"개</td><td>"+m.email+"</td><td>"+m.updateDate+"</td><td><button class='stop btn btn-info'>복원</button></td></tr>");
 	  					$("#pagingArea").append("<br/><button class='btn btn-default' onclick='location.reload()' id='all'>전체보기</button>");
 	 				}else {
-	 					alert("존재하지 않는 아이디입니다.");
+	 					alert("블랙리스트에 존재하지 않는 아이디입니다.");
+	 					$("#search").focus();
 	 				}
   					
   				}
@@ -301,22 +305,26 @@
   		
   		
   		$(document).on("click", ".stop", function(){
-  			var td = $(this).parent();
-  			var userId = $(this).parent().parent().children().first().text();
-  			
-  			$.ajax({
-  				url: "restore.ad",
-  				type: "get",
-  				data: {"userId":userId},
-  				success: function(data){
-					td.html("");
-  					td.append("처리완료");
-  				
-  				},
-  				error: function(data){
-  					
-  				}
-  			});
+  			var con = confirm("해당 사용자를 복원 하시겠습니까?"); 
+
+  			if(con == true) {
+	  			var td = $(this).parent();
+	  			var userId = $(this).parent().parent().children().first().text();
+	  			
+	  			$.ajax({
+	  				url: "restore.ad",
+	  				type: "get",
+	  				data: {"userId":userId},
+	  				success: function(data){
+						td.html("");
+	  					td.append("처리완료");
+	  				
+	  				},
+	  				error: function(data){
+	  					
+	  				}
+	  			});
+  			}
   		});
   		
   	</script>

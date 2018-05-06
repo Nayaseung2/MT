@@ -65,8 +65,8 @@ th, td {
 #dataTables-example td{
 	line-height: 2.5em;
 }
-#dataTables-example td:nth-child(4) {
-	display: block; 
+#dataTables-example td:nth-child(3), #dataTables-example td:nth-child(4) {
+	display: table-cell; 
 	width: 100%; 
 	overflow: hidden; 
 	text-overflow: ellipsis; 
@@ -128,10 +128,13 @@ th, td {
                             <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 신고</a>
                         </li>
                         <li>
-                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 완료된 신고 내역</a>
+                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 신고 내역</a>
                         </li>
                        	<li>
-                            <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
+                            <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 문의</a>
+                        </li>
+                        <li>
+                            <a href="successContact.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
                         </li>
                     </ul>
                 </div>
@@ -142,7 +145,7 @@ th, td {
 		<div id="page-wrapper" style="margin-top: 63px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header" style="font-weight: bold;">문의 내역</h1>
+                    <h1 class="page-header" style="font-weight: bold;">문의</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -155,7 +158,7 @@ th, td {
                                     <i class="fa fa-lightbulb-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge account"><c:out value="${ map.count[0] }건"/></div>
+                                    <div class="huge account"><c:out value="${ map.count.A }건"/></div>
                                     <div>계정관련</div>
                                 </div>
                             </div>
@@ -177,7 +180,7 @@ th, td {
                                     <i class="fa fa-lightbulb-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge watch"><c:out value="${ map.count[1] }건"/></div>
+                                    <div class="huge watch"><c:out value="${ map.count.B }건"/></div>
                                     <div>방송시청관련</div>
                                 </div>
                             </div>
@@ -199,7 +202,7 @@ th, td {
                                     <i class="fa fa-lightbulb-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge peach"><c:out value="${ map.count[2] }건"/></div>
+                                    <div class="huge peach"><c:out value="${ map.count.C }건"/></div>
                                     <div>피치관련</div>
                                 </div>
                             </div>
@@ -221,7 +224,7 @@ th, td {
                                     <i class="fa fa-lightbulb-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge payment"><c:out value="${ map.count[3] }건"/></div>
+                                    <div class="huge payment"><c:out value="${ map.count.D }건"/></div>
                                     <div>결제관련</div>
                                 </div>
                             </div>
@@ -243,7 +246,7 @@ th, td {
                                     <i class="fa fa-lightbulb-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge others"><c:out value="${ map.count[4] }건"/></div>
+                                    <div class="huge others"><c:out value="${ map.count.E }건"/></div>
                                     <div>기타</div>
                                 </div>
                             </div>
@@ -265,7 +268,7 @@ th, td {
                                     <i class="fa fa-lightbulb-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge total"><c:out value="${ map.count[5] }건"/></div>
+                                    <div class="huge total"><c:out value="${ map.count.F }건"/></div>
                                     <div>전체 문의</div>
                                 </div>
                             </div>
@@ -399,7 +402,9 @@ th, td {
 	</div>
 	<!-- /.modal -->
 	<input type="hidden" value="${ map.pi.maxPage }" id="maxPage"/>
-    <input type="hidden" class="type" id="contactTypeChange.ad"/>
+    <input type="hidden" class="type" id="contactMg.ad"/>
+    <input type="hidden" class="inquiryType" id=""/>
+    
     </c:if>
     <c:if test="${ loginUser.mId ne 'admin' || loginUser == null}">
 		<c:redirect url="index.jsp"/>
@@ -460,17 +465,24 @@ th, td {
 	}
 	
 	function onclickPage(value, type){
+		var url = type; 
+		var userId;        
+        if($("#search").val() != ""){
+	        userId = $("#search").val();
+        }else {
+        	userId = $(".inquiryType").attr("id");
+        	
+        }	
 		
-		var url = type;        
 		$.ajax({
    			url: url,
    			type: "get",
-   			data:{"newCurrentPage":value},
+   			data:{"newCurrentPage":value, "userId": userId},
    			success:function(data){
 	   
 	       		var list = data.map.clist;
 	       		var pi = data.map.pi;
-				$("tbody").html("");
+				$(".values").html("");
 	       
 	      		for(var i = 0; i < list.length; i++){
 	      			$(".values").append("<tr><td>"+list[i].bWriter+"</td><td>"+list[i].bType+"</td><td>"+list[i].bTitle+"</td><td>"+list[i].bContent+"</td><td>"+list[i].bCreateDate+"</td><td class='detailTd'><button class='btn btn-default detail'>자세히 보기</button></td></tr>");
@@ -490,7 +502,13 @@ th, td {
 	function pageChange(pagenum, value, type){
         var page = Number(pagenum);
         var url = type;  
-        var userId = $("#search").val();
+		var userId;        
+        if($("#search").val() != ""){
+	        userId = $("#search").val();
+        }else {
+        	userId = $(".inquiryType").attr("id");
+        	
+        }
         
         console.log("url: "+url);
         console.log("page: " + page);
@@ -515,9 +533,11 @@ th, td {
                 success:function(data){
                 	var list = data.map.clist;
     	       		var pi = data.map.pi;
-    	       		console.log(pi.currentPage);
+    	       		console.log(pi);
     	       		console.log(list);
-    	       		
+    	       		/* if(list.length == 0){
+    	       			return false;
+    	       		} */
     	       		
     				$(".values").html("");
     	       
@@ -558,7 +578,7 @@ th, td {
         $.ajax({
 	    	url: url,
 	        type: "get",
-	        data:{"newCurrentPage":"1", "type":type},
+	        data:{"newCurrentPage":"1", "userId":type},
 	        success:function(data){
 		       	var list = data.map.clist;
 		   		var pi = data.map.pi;
@@ -590,6 +610,8 @@ th, td {
 					$("#all").remove();
 					$(".pageul").append("<br/><button class='btn btn-default' onclick='location.reload()' id='all'>전체보기</button>");
 				}
+	      		$(".type").attr("id", url);
+	      		$(".inquiryType").attr("id", type);
            },
            error:function(data){
               console.log("에러!");

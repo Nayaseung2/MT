@@ -12,14 +12,14 @@
 	
 	<appender name="fileLogger" class="org.apache.log4j.DailyRollingFileAppender">
 		
-	<param name="file" value="C:/Users/jooseung/git/repository/finalMT/src/main/resources/logs/system.log"/>
+	<param name="file" value="C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/logs/system.log"/>
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="[%d{HH:mm:ss}] %m%n"/>
 		</layout>
 	</appender>
 	
 	<appender name="BSLogger" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="file" value="C:/Users/jooseung/git/repository/finalMT/src/main/resources/BSLogs/system.log"/>
+		<param name="file" value="C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/BSLogs/system.log"/>
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="[%d{HH:mm:ss}] %m%n"/>
 			<param name="" value=""/>

@@ -39,5 +39,10 @@ public interface LiveBJService {
 
 	ArrayList<LiveBj> mainTopBJ();
 
+	ArrayList<LiveBj> scroll();
+
+	ArrayList<String> selectFan(String href3);
+
+
 
 }
