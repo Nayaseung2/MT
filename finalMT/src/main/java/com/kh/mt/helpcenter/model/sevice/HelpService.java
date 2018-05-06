@@ -2,6 +2,7 @@ package com.kh.mt.helpcenter.model.sevice;
 
 import java.util.ArrayList;
 
+import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.helpcenter.model.vo.HelpMainVo;
@@ -34,6 +35,12 @@ public interface HelpService {
 
 	// 총 공지글 수
 	int nListTotal();
+
+	// 공지글 쓰기
+	void helpnoticeWrite(Board b);
+
+	// 공지글 수정하기
+	void helpnoticeModify(Board b);
 
 
 }

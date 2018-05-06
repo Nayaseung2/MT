@@ -83,4 +83,18 @@
 		INSERT INTO BOARD
 		VALUES( seq_bcode.nextval || (SELECT MID FROM MEMBER WHERE M_NICKNAME = #{ bwriter }), NULL, #{ b_type }, #{ b_title }, #{ b_content }, (SELECT MID FROM MEMBER WHERE M_NICKNAME = #{ bwriter }), SYSDATE, SYSDATE, 1, 'Y')
 	</insert>
+	
+	<!-- 공지글 쓰기 -->
+	<insert id="helpnoticeWrite">
+		INSERT INTO BOARD
+   		VALUES( seq_bcode.nextval || 'notice', NULL, 'notice', #{ b_title }, #{ b_content }, '모두의 TV', SYSDATE, SYSDATE, 0, 'Y')
+	</insert>
+	
+	<!-- 공지글 수정하기 -->
+	<update id="helpnoticeModify">
+		UPDATE BOARD
+		SET B_TITLE = #{ b_title }, B_CONTENT = #{ b_content }, B_UPDATE_DATE = SYSDATE
+		WHERE B_CODE = #{ b_code }
+	</update>
+	
 </mapper>

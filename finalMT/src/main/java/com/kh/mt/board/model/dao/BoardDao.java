@@ -32,4 +32,10 @@ public interface BoardDao {
 	// 방송국 - 방명록 목록
 	ArrayList<Board> gList(String mId);
 
+	// 방송국 - 내 게시판 글 수정(글)
+	int BSmyBoardModify(Board b);
+
+	// 방송국 - 내 게시판 글 수정(사진)
+	int BSmyBoardModifyP(BoardFile f);
+
 }

@@ -30,8 +30,25 @@
 		cursor:pointer;}
 	.bottomBox td{border-bottom:1px dotted lightgray;}
 	.bottom{color:black; text-decoration:none; margin-left:15px;}
-	.showRightPart{position:relative; width:940px; height:850px; 
-	left:240px;bottom:640px;background-color: rgba(255, 245, 244, 0.9);}
+	.showRightPart{position:relative; width:940px; height:800px; 
+	left:240px;bottom:640px;}
+	
+	/* 글쓰기 테이블 */
+	.writeTable{
+		margin-left:30px;
+		width:750px;
+	}
+	.writeTable th{
+		width:100px;
+		height:30px;
+		text-align:center;
+	}
+	.writeTable tr{
+		height:35px;
+	}
+	.writeTable td {
+		height: 40px;
+	}
 	
 	.equal{
 		width:20px;
@@ -42,49 +59,12 @@
 		border:1px solid lightgray;
 	}/*  */
 	.okay{
-		width:80px;
+		width:100px;
 		height:30px;
 		background:rgba(235, 104, 100, 0.5);
 		border:none;
 		color:white;
 	}
-	
-	.okay2{
-		width:100px;
-		height:30px;
-		background:rgba(235, 104, 100, 0.9);
-		border:none;
-		color:white;
-	}
-	
-	
-	table {
-		border-top:2px solid #F08080;
-		border-bottom:2px solid #F08080;
-		padding-left: 3%;
-	}
-	
-	#listArea {
-		width:80%;
-		height: 400px;
-		font-size: 16px;
-		margin-top: 3%;
-		text-align: center;
-	}
-	
-	#listArea tr {
-		height: 50px;
-		border-bottom:1px solid #F08080;
-	}
-
-	#listArea td {
-		width: 100px;
-	}
-	
-	.tdClass {
-		border-right:1px solid #F08080;
-	}
-	
 	
 	.sideBtn {
 		 margin-left: 20px;
@@ -94,16 +74,61 @@
 		 height: 40px;"
 	}
 	
+	.showRightPart {
+		background-color: #fff9f9;
+	}
 	
+	.fileRegiBtn {
+		padding-left: 10%;
+	}
 	
+	.fileRegiBtn label {
+		height:32px;
+		width: 20%;
+		text-align: center;
+		display: inline-block; 
+		padding: .5em .75em; 
+		color: #ffffff; 
+		background-color: rgba(235, 104, 100, 0.5); 
+		cursor: pointer; 
+		border:none;
+	}
+	
+	.fileRegiBtn input[type="file"] {
+	
+		display: inline-block;
+		width: 1px; 
+		height: 1px; 
+		padding: 0; 
+		margin: -1px; 
+		overflow: hidden; 
+		clip:rect(0,0,0,0); 
+		border: 0;
+	}
+	
+	.hrLine {
+		width:400px;
+		padding-right: 50%;
+		border: 1px solid rgba(235, 104, 100, 0.5);
+	}
 	
 </style>
-<title>내 게시판</title>
+<title>글수정</title>
 <!-- ckeditor -->
 <script src="<%= request.getContextPath()%>/resources/ckeditor/ckeditor.js">
 </script>
 </head>
 <body>
+
+<script>
+
+	console.log("${loginUser.mId}");
+	console.log("${jdbcInfo.mid}");
+	console.log("${jdbcLogoFile.f_rename}");
+</script>
+
+
+
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <div class="BSContainer">
 <jsp:include page="../common/menubar.jsp" /> 
@@ -115,7 +140,7 @@
 <!-- 회원 이미지 넣기 -->
 <div class="profileImg">
 <c:if test="${!empty jdbcLogoFile }">
-<img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${jdbcLogoFile.f_rename}"style="width:100px; height:80px;">
+<img alt="회원 이미지" src="${contextPath }/resources/jdbcStationFileLogo/${jdbcLogoFile.f_rename}"style="width:100px; height:80px;">
 </c:if>
 <c:if test="${empty jdbcLogoFile }">
 <img alt="회원 이미지" src="${ contextPath }/resources/images/logo_JDBC.png"style="width:100px; height:80px;">
@@ -185,70 +210,81 @@
 </div>
 <!-- 오른쪽 부분 -->
 <div class="showRightPart">
+<br/><br/>
+<div align="center">
+	<label style="font-size:20px;">게시글 수정하기</label>
+</div>
 <br/>
+<hr class="hrLine"/>
 <br/>
-
-	<h3 align="center"><b>" ${ jdbcInfo.mid } "님의 게시판 입니다.</b></h3>		
+<form method="post" action="BSmyBoardModify.board" encType="multipart/form-data">
+	<table class="writeTable" >
+		<tr>
+			<th>제목</th>
+			<td><input type="text" name="b_title" id="b_title" size="90" style="height: 33px; border:1px solid lightgray;"></td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td colspan="3" style="height:330px;">
+				<textarea name="b_content" id="b_content" class="ckeditor" rows="30" cols="50">
+				</textarea>
+			</td>
+		</tr>
+	</table>
+	
+	<div class="fileRegiBtn">
+		<input id="fileName" class="form-control"  value="오른쪽 버튼을 눌러주세요" disabled="disabled" 
+					style="width:53%; display: inline; text-align:center; margin-left: 5%;">
+		<input type="file" size="52" name="Boardfile" id="bsImg" style="margin-left:10px;">
+		<label for="bsImg">파일등록하기</label>
+	</div>
+	<br>
 	<br/>
-		<div class="tableArea">
-			<table align="center" id="listArea">
-				<!-- table header -->
-				<tr>
-					<td class="tdClass"><b>제 목</b></td>
-					<td colspan="5"><c:out value="${ hmap.mbListDetail.b_title }" /></td>
-				</tr>
-				<tr>
-					<td class="tdClass" rowspan="5"><b>내 용</b></td>
-					<td rowspan="5" colspan="5">
-						<br/><br/>
-						${ hmap.mbListDetail.b_content }
-						<br/><br/>
-						<img src="${ contextPath }/resources/BoardFile/${ hmap.mbListDetailP.f_rename }" style="padding-left: 5%;"/>
-						<br/><br/><br/>
-					</td>
-				</tr>
-			</table>
-		</div>
-		
-		<br/>
-		<br/>
-		<div style="display: block;">
-			<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
-				<div align="right" style="padding-right: 70px;">
-					<button type="button" class="okay" onclick="modifyBtn();">수정하기</button>
-					<button type="button" class="okay" onclick="deleteBtn();">삭제하기</button>
-				</div>
-			</c:if>
-		</div>
-		<br/>
-		<div align="center">
-			<button type="button" class="okay2" onclick="listBtn();">목록으로</button>
-		</div>
-			
-		<script>
-		
-			function modifyBtn(){
+	<div align="center">
+		<button type="submit"class="okay">확인</button>
+		<input type="hidden" name="bwriter" value="${loginUser.mId }"/>
+	</div>
+</form>
+</div>
+
+<script>
+
+/* 스크린샷 첨부 */
+
+	function readURL(input) {
+	
+	    if (input.files && input.files[0]) {
+	    	
+			if(!input.files[0].type.match("image.*")){
 				
-				var b_code = "${ hmap.mbListDetail.b_code }";
-				location.href="${ contextPath }/BSmodify.board?b_code=" + b_code;
-			}
-			
-			function deleteBtn(){
+				alert("파일은 이미지 확장자만 가능합니다.");
+				return;
 				
-				var b_code = "${ hmap.mbListDetail.b_code }";
-				location.href="${ contextPath }/BSmyBoardDelete.board?b_code=" + b_code;
+			} else {
+	
+		        var reader = new FileReader();
+		        reader.onload = function (e) {
+	
+	                $('#fileName').val(input.files[0].name);    //파일선택 form으로 파일명이 들어온다
+	            }
+		        
+		        reader.readAsDataURL(input.files[0]);
 			}
-			
-			function listBtn(){
-				
-				var mId = "${ jdbcInfo.mid }";
-				location.href="${ contextPath }/BSmyBoard.board?mId=" + mId;
-			}
-		
-		
-		
-		</script>
+	    }
+	}
+	
+	$("#bsImg").change(function(){
+	
+	    readURL(this);
+	});
+
+
+</script>
+
+
+
 </div>
 </div>
+
 </body>
 </html>
