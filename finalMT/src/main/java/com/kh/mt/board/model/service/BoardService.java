@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
+import com.kh.mt.board.model.vo.Reply;
 import com.kh.mt.common.PageInfo;
 
 public interface BoardService {
@@ -28,6 +29,11 @@ public interface BoardService {
 
 	// 방송국 - 내 게시판 글 삭제
 	void BSmyBoardDelete(String b_code);
+
+	// 방송국 - 방명록 목록
+	ArrayList<Board> gList(String mId);
+
+	//int insertReply(Reply re);
 
 
 }

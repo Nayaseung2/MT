@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Gudock">
+	
+	<resultMap type="Gudock" id="GudockResultSet">
+		<result property="reder_mCode" column="READER_MCODE"/>
+		<result property="read_date" column="READ_DATE"/>
+		<result property="BJ_mCode" column="BJ_MCODE"/>
+	</resultMap>	
+	
+	<insert id="insertGudock">
+		INSERT INTO SUBSCRIBE VALUES((SELECT MCODE FROM MEMBER WHERE MID = #{reder_mCode}), SYSDATE, (SELECT MCODE FROM MEMBER WHERE MID =#{BJ_mCode}))
+	</insert>
+	
+	<select id="selectGudock" resultType="_int">
+		SELECT COUNT(*) FROM SUBSCRIBE WHERE BJ_MCODE = (SELECT MCODE FROM MEMBER WHERE MID =#{BJ_mCode}) AND READER_MCODE = (SELECT MCODE FROM MEMBER WHERE MID = #{reder_mCode})
+	</select>
+	
+	<delete id="deleteGudock">
+		DELETE FROM SUBSCRIBE WHERE READER_MCODE=(SELECT MCODE FROM MEMBER WHERE MID = #{reder_mCode}) AND BJ_MCODE = (SELECT MCODE FROM MEMBER WHERE MID =#{BJ_mCode})
+	</delete>
+</mapper>

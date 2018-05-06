@@ -39,4 +39,11 @@ public interface LiveBJDao {
 
 	int bangjong(SqlSessionTemplate sqlSession, LiveBj bj);
 
+	ArrayList<LiveBj> mainTopBJ(SqlSessionTemplate sqlSession);
+
+	ArrayList<LiveBj> scroll(SqlSessionTemplate sqlSession);
+
+	ArrayList<String> selectFan(String href3);
+
+
 }

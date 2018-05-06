@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
+import com.kh.mt.board.model.vo.Reply;
 import com.kh.mt.common.PageInfo;
 
 @Repository
@@ -64,6 +65,8 @@ public class BoardDaoImpl implements BoardDao {
 
 		Board mbListDetail = sqlSession.selectOne("Board.mbListDetail", b);
 		
+		//System.out.println("dao's 글 시간 : "  + mbListDetail.getB_create_date());
+		
 		return mbListDetail;
 	}
 
@@ -72,6 +75,8 @@ public class BoardDaoImpl implements BoardDao {
 	public BoardFile mbListDetailP(BoardFile bf) {
 		
 		BoardFile mbListDetailP = sqlSession.selectOne("Board.mbListDetailP", bf);
+		
+		//System.out.println("dao's 사진 시간 : "  + mbListDetailP.getUpload_date());
 		
 		return mbListDetailP;
 	}
@@ -85,4 +90,20 @@ public class BoardDaoImpl implements BoardDao {
 		int result = sqlSession.delete("Board.mbListDelete", b_code);
 		
 		return result;
-	}}
+	}
+
+	// 방송국 - 방명록 목록
+	@Override
+	public ArrayList<Board> gList(String mId) {
+		
+		ArrayList<Board> gList = (ArrayList)sqlSession.selectList("Board.gList", mId);
+		
+		return gList;
+	}
+
+	/*@Override
+	public int insertReply(Reply re) {
+		int result = sqlSession.insert("Board.insertReply", re);
+		return result;
+	}*/
+}

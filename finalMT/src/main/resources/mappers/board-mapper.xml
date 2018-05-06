@@ -26,6 +26,13 @@
   			<result property="f_mcode" column="F_MCODE"/>
   			<result property="upload_date" column="UPLOAD_DATE"/>
   		</resultMap>
+  		<!-- <resultMap type="Reply" id="ReplyResultSet" >
+  			<result property="replyContent" column="FILEPATH"/>
+  			<result property="writer" column="F_MCODE"/>
+  			<result property="Boardno" column="UPLOAD_DATE"/>
+  			<result property="writer" column="F_MCODE"/>
+  			<result property="Boardno" column="UPLOAD_DATE"/>
+  		</resultMap> -->
   		
 	<insert id="insertBoard">
 		INSERT INTO BOARD
@@ -40,7 +47,7 @@
 	<!-- 방명록 insert -->
 	<insert id="insertGuestBook">
 		INSERT INTO BOARD
-		VALUES(SEQ_BCODE.NEXTVAL,#{v_code},#{b_type},NULL,#{b_content},#{bwriter},SYSDATE,SYSDATE,0,'Y')	
+		VALUES(SEQ_BCODE.NEXTVAL,#{v_code},'GuestBook','null',#{b_content},#{bwriter},SYSDATE,SYSDATE,0,'Y')	
 	</insert>
 	
 	<!-- 신고글 파일업로드 -->
@@ -82,6 +89,14 @@
 	<delete id="mbListDelete">
 		DELETE FROM BOARD WHERE B_CODE = #{ b_code }
 	</delete>
+	
+	<!-- 방송국 - 방명록 목록 -->
+	<select id="gList" resultMap="BoardResultSet">
+		SELECT *
+		FROM BOARD
+		WHERE B_TYPE = 'GuestBook' AND V_CODE = #{ mId }
+		ORDER BY B_CREATE_DATE DESC
+	</select>
 	
 	
 	

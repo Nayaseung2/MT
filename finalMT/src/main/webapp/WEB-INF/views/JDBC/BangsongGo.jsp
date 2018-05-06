@@ -126,16 +126,16 @@
 <img alt="회원 이미지" src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${jdbcLogoFile.f_rename}"style="width:100px; height:80px;">
 </c:if>
 <c:if test="${empty jdbcLogoFile }">
-<img alt="회원 이미지" src="${ contextPath }/resources/images/logo.png"style="width:100px; height:80px;">
+<img alt="회원 이미지" src="${ contextPath }/resources/images/logo_JDBC.png"style="width:100px; height:80px;">
 </c:if>
 <div class="BStitle">
 <c:if test="${!empty jdbcInfo.jdbc_name }">
-<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">${jdbcInfo.jdbc_name }</a></label><br>
+<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/bjJDBC.JDBC?mid=${jdbcInfo.mid}">${jdbcInfo.jdbc_name }</a></label><br>
 </c:if>
 <c:if test="${empty jdbcInfo.jdbc_name }">
 <label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">모두의 TV</a></label><br>
 </c:if>
-<label class="BStext" style="font-size: 16px; color: white;">${loginUser.nickName}님의 방송국입니다!</label><br>
+<label class="BStext" style="font-size: 16px; color: white;">${jdbcInfo.mid}님의 방송국입니다!</label><br>
 </div>
 </div>
 </div>
@@ -144,9 +144,16 @@
 <!-- 좌측 회원 정보,자기소개등 보기 -->
 <div class="myInfo">
 <br>
-<label class="idnickname"><b>${loginUser.mId }</b></label><br>
-<span class="idnickname">${loginUser.nickName }</span>
-<span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;"><a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
+<label class="idnickname"><b>${jdbcInfo.mid }</b></label><br>
+<span class="idnickname">${jdbcInfo.jdbc_name }</span>
+<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+	<span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;">
+		<a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a>
+	</span><br>
+</c:if>
+<c:if test="${ loginUser.mId ne jdbcInfo.mid }">
+	<br/>
+</c:if>
 <br/>
 <c:if test="${empty jdbcInfo.jdbc_introduce }">
 <input class="introduction" type="text" value="자기소개가 없습니다." style="padding-left: 3%;" readonly>
@@ -155,12 +162,14 @@
 <input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce }" readonly>
 </c:if>
 <br><br>
-<label style="margin-left:15px;">방송국 방문 : 0명</label>
 </div>
+<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
 <br>
-<button class="sideBtn" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button><br><br>
-<button class="sideBtn" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
-<br><br>
+	<button class="sideBtn" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button><br><br>
+	<button class="sideBtn" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
+<br>
+</c:if>
+<br/>
 <table class="bottomBox">
 	<tr>
 		<td>
@@ -169,15 +178,17 @@
 	</tr>
 	<tr> 	
 		<td>
-			<p><a class="bottom" href="BSmyBoard.board?mId=${ loginUser.mId }">내 게시판</a></p>
-			<p><a class="bottom" href="showGuestBookList.JDBC">방명록</a></p>
+			<p><a class="bottom" href="BSmyBoard.board?mId=${ jdbcInfo.mid }">게시판</a></p>
+			<p><a class="bottom" href="guestBookList.board?mId=${ jdbcInfo.mid }">방명록</a></p>
 		</td>
 	</tr>
-	<tr>
-		<td>
-			<p><a class="bottom">수익관리</a></p>
-		</td>
-	</tr>
+	<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+		<tr>
+			<td>
+				<p><a class="bottom">수익관리</a></p>
+			</td>
+		</tr>
+	</c:if>
 </table>
 </div>
 <!-- 즐겨찾기 보여주기 부분 -->
@@ -205,12 +216,12 @@
 		</tr>
 		<tr>
 			<th>제 목</th>
-			<td colspan="6"><input type="text" size="50" name="bsTitle" style="margin-left:10px;" class="form-control">
+			<td colspan="6"><input type="text" size="50" id="bsTitle" name="bsTitle" style="margin-left:10px;" class="form-control">
 			<p style="margin-left:10px;">*방송제목을 작성해주세요</p>
 		</tr>
 		<tr>
 			<th>내 용</th>
-			<td colspan="6"><input type="text" size="50" name="bsContent" style="margin-left:10px;" class="form-control">
+			<td colspan="6"><input type="text" size="50" id="bsContent" name="bsContent" style="margin-left:10px;" class="form-control">
 			<p style="margin-left:10px;">*방송을 소개할 수 있는 내용을 작성해주세요</p> 
 		</tr>
 		<tr>
@@ -270,6 +281,10 @@
 			        
 			        reader.readAsDataURL(input.files[0]);
 				}
+	        } else {
+	        	
+	        	alert("방송 썸네일 사진을 등록해주세요.");
+	        	location.reload();
 	        }
 	    }
 	
@@ -277,8 +292,8 @@
 	
 	        readURL(this);
 	    });
-	
-	</script>
+
+		</script>
 	
 	<button type="submit" class="check"><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;&nbsp;확 인</button>
 	<input type="hidden" value="${loginUser.mId}" name="mid" >
@@ -287,6 +302,25 @@
 	<br/>
 	</form>
 </div>
+
+	<script>
+		
+		$(function(){
+			
+			$(".check").click(function(){
+				
+				var bsTitle = $("#bsTitle").val;
+				var bsContent = $("#bsContent").val();
+				
+				if(bsTitle == "" || bsContent == ""){
+					alert("방송 제목 또는 내용을 입력해주세요.");
+					location.reload();
+				}
+			});
+		});	
+	
+	</script>
+	
 </div>
 </div>
 </div>

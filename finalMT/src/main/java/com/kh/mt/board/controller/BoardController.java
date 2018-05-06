@@ -19,6 +19,7 @@ import com.kh.mt.JDBC.model.vo.JDBC;
 import com.kh.mt.board.model.service.BoardService;
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
+import com.kh.mt.board.model.vo.Reply;
 import com.kh.mt.common.PageInfo;
 
 @Controller
@@ -64,15 +65,39 @@ public class BoardController {
 		return "JDBC/BSwriteSuccess";
 	}
 	
+
+	// 방명록 글쓰러 가기
+	@RequestMapping(value="insertGuestBook1.board")
+	public String insertGuestBook1(){
+		
+		return "JDBC/BSguestBook";
+	}
+	
 	//방명록 insert
 	@RequestMapping(value="insertGuestBook.board")
 	public String insertGuestBook(Board b){
-		b.setB_type("GuestBook");
+		
 		bs.insertGuestBook(b);
-		return "JDBC/myBroadcastStation";
+		
+		return "JDBC/BSwriteSuccess";
 	}
 	
-	
+	// 방명록 목록
+	@RequestMapping(value = "guestBookList.board")
+	public ModelAndView showGuestBookList(ModelAndView mv, String mId) {
+		
+		ArrayList<Board> gList = bs.gList(mId);
+		
+		HashMap hmap = new HashMap();
+		
+		hmap.put("gList", gList);
+		
+		mv.addObject("hmap", hmap);
+		
+		mv.setViewName("JDBC/BSGuestBookList");
+		
+		return mv;
+	}
 	
 	// 방송국 - 내 게시판 목록
 	@RequestMapping(value="BSmyBoard.board")
@@ -159,6 +184,10 @@ public class BoardController {
 		hmap.put("mbListDetail", mbListDetail);
 		hmap.put("mbListDetailP", mbListDetailP);
 		
+		//댓글페이징
+		//hmap.put(key, value);
+		//pageInfo pi = addUserPage(newCurrentPage, count)
+		
 		mv.addObject("hmap", hmap);
 		
 		return mv;
@@ -174,8 +203,48 @@ public class BoardController {
 	}
 	
 	
+	public PageInfo addUserPage(String newCurrentPage, int count){
+		
+		int currentPage = 1;
+		int limit = 0;
+		int maxPage = 0;
+		int startPage = 0;
+		int endPage = 0;
+		int listCount = 0;
+
+		limit = 5;
+			
+		listCount = count; 
+			
+		if(newCurrentPage != null){
+			currentPage = Integer.parseInt(newCurrentPage);
+		}
+			
+		maxPage = (int)((double)listCount / limit + 0.9);
+		
+		startPage = (((int)((double)currentPage / limit + 0.9 -1)) * limit) +1;
+		
+		endPage = startPage + limit -1;
+			
+		if(maxPage < endPage){
+			endPage = maxPage;
+		}
+		
+		return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+	}
 	
-	
+	/*@RequestMapping(value="insertReply.board")
+	public ModelAndView BSmyBoardDelete(ModelAndView mv, String replyContent, String writer, String boardno){
+		
+		Reply re = new Reply();
+		re.setBoardno(boardno);
+		re.setReplyContent(replyContent);
+		re.setWriter(writer);
+		int result = bs.insertReply(re);
+		
+		mv.setViewName("JDBC/BSmyBoardDetail");
+		return mv;
+	}*/
 	
 	
 	

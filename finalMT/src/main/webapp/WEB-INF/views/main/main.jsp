@@ -8,6 +8,17 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>모두의 TV</title>
+<style>
+/*  body{
+ overflow-y:scroll;
+ } */
+ .video-carousel{
+ height:250px;
+ }
+ .wide-video-section{
+ height:500px;
+ }
+</style>
 </head>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
@@ -26,34 +37,34 @@
                     </div>
                     <div class="video-carousel">
                     
-                    <c:forEach begin="1" end="10" step="1">
+                    <c:forEach var="item" items="${list1}">
                     
                         <div class="single-video">
                             <div class="video-img">
                                 <a href="https://localhost:3000">
-								<img class="lazy" data-src="${contextPath }/resources/images/thumbnails/1.jpg" alt="Video" />
+								<img class="lazy" data-src="${contextPath }/resources/bsTitleImages/${item.f_rename}" alt="Video" style="width:260px; height:180px;"/>
 								 <noscript>
 									<img src="${contextPath }/resources/images/thumbnails/1.jpg" alt="video" />
 								</noscript>
 								</a>
-                                <span class="video-duration">8.17</span>
+                                <span class="video-duration">${item.starttime}</span>
                             </div>
                             <div class="video-content">
-                                <h4><a href="testLiveBj.lb" class="video-title">Greek-Style Pasta Bake (Pasticcio) - English Video</a></h4>
+                                <h4><a href="https://${ip}:8443/mt/testLiveBj.lb#${item.v_href}" class="video-title">${item.bsTitle}</a></h4>
                                 <div class="video-counter">
                                     <div class="video-viewers">
                                         <span class="fa fa-eye view-icon"></span>
-                                        <span>881,021</span>
+                                        <span>${item.v_viewers}</span>
                                     </div>
                                     <div class="video-feedback">
                                         <div class="video-like-counter">
                                             <span class="fa fa-thumbs-o-up like-icon"></span>
-                                            <span>120</span>
+                                            <span>${item.like}</span>
                                         </div>
                                         <div class="video-like-counter">
-                                            <span class="fa fa-thumbs-o-down dislike-icon"></span>
-                                            <span>2140</span>
-                                        </div>
+                                         <span><i class="fa fa-github-alt fa-fw"></i></span>
+                                        <span>${item.nickname}</span>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +91,7 @@
                   </div>
                </div>   
             </div>
-            <div class="row">
+            <div class="row000">
 
             <c:forEach var="item" items="${list}">
             
@@ -88,7 +99,7 @@
                     <div class="single-video">
                         <div class="video-img">
                                 <a href="https://localhost:8443/mt/testLiveBj.lb#${item.v_href}">
-								<img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${item.f_rename}" style="display: inline;">
+								<img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${item.f_rename}" style="display: inline; width:260px; height:180px;">
 								 <noscript>
 									&lt;img src="${contextPath }/resources/images/thumbnails/6.jpg" alt="video" /&gt;
 								</noscript>
@@ -108,10 +119,10 @@
                                         <span class="fa fa-thumbs-o-up like-icon"></span>
                                         <span>${item.like}</span>
                                     </div>
-                                    <!-- <div class="video-like-counter">
-                                         <span class="fa fa-thumbs-o-down dislike-icon"></span>
-                                        <span>2140</span>
-                                    </div> -->
+                                    <div class="video-like-counter">
+                                         <span><i class="fa fa-github-alt fa-fw"></i></span>
+                                        <span>${item.nickname}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +135,7 @@
             </div>
         </div>
     </div>
-    
+    <input type="hidden" id="scrollNum" value='1'/>
     <jsp:include page="../common/footer.jsp"/>
     
 	
@@ -161,6 +172,39 @@
     <!-- Main JS -->
     <script src="${contextPath }/resources/js/main.js"></script>
 	
+	<script>
+		$(document).ready(function(){
+			$(window).scroll(function(){
+				var scrollHeight = $(window).scrollTop()+$(window).height();
+				var documentHeight =$(document).height();
+				var num = $("#scrollNum").val();
+				if(scrollHeight == documentHeight){
+					$.ajax({
+						url:"scroll.lb",
+						type:"POST",
+						data:{
+							"num":num
+						},success:function(data){
+							var list = data.list;
+							console.log("list.size"+ list.length);
+							if(list.length == 0){
+								console.log("잉");
+								$(".row000").html("");
+								$(".row000").append("<h2>방송중인 BJ가 없습니다</h2>")
+							}else{
+								console.log("잉");
+								$("#scrollNum").val(num+1);
+								//data.list
+								for(var i=0;  i < list.length ;i++){
+									$(".row000").append("<div class='col-sm-6 col-md-3 themeix-half'><div class='single-video'><div class='video-img'><a href='https://${ip}:8443/mt/testLiveBj.lb#"+list[i].v_href+"'><img class='lazy' alt='Video' src='${contextPath }/resources/bsTitleImages/"+list[i].f_rename+"' style='display: inline; width:260px; height:180px;'><noscript>&lt;img src='${contextPath }/resources/images/thumbnails/6.jpg' alt='video' /&gt;</noscript></a><span class='video-duration'>"+ list[i].starttime +"'</span></div><div class='video-content'><h4><a href='https://${ip}:8443/mt/testLiveBj.lb#"+ list[i].v_href +"' class='video-title'>"+ list[i].bsTitle +"</a></h4><div class='video-counter'><div class='video-viewers'><span class='fa fa-eye view-icon'></span><span>"+ list[i].v_viewers +"</span></div><div class='video-feedback'><div class='video-like-counter'><span class='fa fa-thumbs-o-up like-icon'></span><span>"+ list[i].like +"</span></div><div class='video-like-counter'><span><i class='fa fa-github-alt fa-fw'></i></span><span>"+list[i].nickname+"</span></div></div></div></div></div></div>");
+								}
+							}
+						}
+					});
+				}
+			});
+		});
+	</script>
 	
 </body>
 </html>

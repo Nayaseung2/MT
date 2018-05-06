@@ -30,7 +30,7 @@
 		cursor:pointer;}
 	.bottomBox td{border-bottom:1px dotted lightgray;}
 	.bottom{color:black; text-decoration:none; margin-left:15px;}
-	.showRightPart{position:relative; width:940px; height:850px; 
+	.showRightPart{position:relative; width:940px; 
 	left:240px;bottom:640px;background-color: rgba(255, 245, 244, 0.9);}
 	
 	.equal{
@@ -66,7 +66,7 @@
 	
 	#listArea {
 		width:80%;
-		height: 400px;
+		height:400px;
 		font-size: 16px;
 		margin-top: 3%;
 		text-align: center;
@@ -122,12 +122,12 @@
 </c:if>
 <div class="BStitle">
 <c:if test="${!empty jdbcInfo.jdbc_name }">
-<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">${jdbcInfo.jdbc_name }</a></label><br>
+<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/bjJDBC.JDBC?mid=${jdbcInfo.mid}">${jdbcInfo.jdbc_name }</a></label><br>
 </c:if>
 <c:if test="${empty jdbcInfo.jdbc_name }">
 <label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">모두의 TV</a></label><br>
 </c:if>
-<label class="BStext" style="font-size: 16px; color: white;">${loginUser.nickName}님의 방송국입니다!</label><br>
+<label class="BStext" style="font-size: 16px; color: white;">${jdbcInfo.mid}님의 방송국입니다!</label><br>
 </div>
 </div>
 </div>
@@ -136,9 +136,16 @@
 <!-- 좌측 회원 정보,자기소개등 보기 -->
 <div class="myInfo">
 <br>
-<label class="idnickname"><b>${loginUser.mId }</b></label><br>
-<span class="idnickname">${loginUser.nickName }</span>
-<span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;"><a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a></span><br>
+<label class="idnickname"><b>${jdbcInfo.mid }</b></label><br>
+<span class="idnickname">${jdbcInfo.jdbc_name }</span>
+<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+	<span class="glyphicon glyphicon-cog" style="float:right; padding-right:5%;">
+		<a style="text-decoration:none; color:black;" id="showManage" href="showBSmanage.JDBC"><b>관리</b></a>
+	</span><br>
+</c:if>
+<c:if test="${ loginUser.mId ne jdbcInfo.mid }">
+	<br/>
+</c:if>
 <br/>
 <c:if test="${empty jdbcInfo.jdbc_introduce }">
 <input class="introduction" type="text" value="자기소개가 없습니다." style="padding-left: 3%;" readonly>
@@ -147,12 +154,14 @@
 <input class="introduction" type="text" value="${jdbcInfo.jdbc_introduce }" readonly>
 </c:if>
 <br><br>
-<label style="margin-left:15px;">방송국 방문 : 0명</label>
 </div>
+<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
 <br>
-<button class="sideBtn" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button><br><br>
-<button class="sideBtn" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
-<br><br>
+	<button class="sideBtn" onclick="location.href='JDBCwrite.JDBC'">글쓰기</button><br><br>
+	<button class="sideBtn" onclick="location.href='bangsonggo.JDBC'">방송하러가기</button>
+<br>
+</c:if>
+<br/>
 <table class="bottomBox">
 	<tr>
 		<td>
@@ -161,23 +170,26 @@
 	</tr>
 	<tr> 	
 		<td>
-			<p><a class="bottom" href="BSmyBoard.board?mId=${ loginUser.mId }">내 게시판</a></p>
-			<p><a class="bottom" href="showGuestBookList.JDBC">방명록</a></p>
+			<p><a class="bottom" href="BSmyBoard.board?mId=${ jdbcInfo.mid }">게시판</a></p>
+			<p><a class="bottom" href="guestBookList.board?mId=${ jdbcInfo.mid }">방명록</a></p>
 		</td>
 	</tr>
-	<tr>
-		<td>
-			<p><a class="bottom">수익관리</a></p>
-		</td>
-	</tr>
+	<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+		<tr>
+			<td>
+				<p><a class="bottom">수익관리</a></p>
+			</td>
+		</tr>
+	</c:if>
 </table>
 </div>
+
 <!-- 오른쪽 부분 -->
 <div class="showRightPart">
 <br/>
 <br/>
 
-	<h3 align="center"><b>내 게시판</b></h3>		
+	<h3 align="center"><b>" ${ jdbcInfo.mid } "님의 게시판 입니다.</b></h3>		
 	<br/>
 		<div class="tableArea">
 			<table align="center" id="listArea">
@@ -192,23 +204,55 @@
 						<br/><br/>
 						${ hmap.mbListDetail.b_content }
 						<br/><br/>
-						<img src="${ contextPath }/resources/BoardFile/${ hmap.mbListDetailP.f_rename }" style="padding-left: 5%;"/>
-						<br/><br/><br/>
+						<img src="${ contextPath }/resources/BoardFile/${ hmap.mbListDetailP.f_rename }" style="padding-left: 5%; max-height:180px;" />
+						<br/>
 					</td>
 				</tr>
+				<tfoot>
+				<tr>
+					<td class="tdClass"><b>댓글 쓰기</b></td>
+					<td colspan="5">
+						<br>
+						<textarea cols="65%" rows="2" placeholder="댓글을 입력하세요." style="resize:none;"></textarea>
+						<button id="replyContent" class="okay"style="float:right; height:45px;" onclick="reply();">댓글쓰기</button>
+						<br><br>
+					</td>
+				</tr>
+				</tfoot>
 			</table>
-		</div>
+			<input type="hidden" id="bCode" value="${hmap.mbListDetail.b_code}">
+			<br>
+			<h4 style="margin-left:92px;">댓글</h4>
+			<div style="border: solid rgba(235, 104, 100, 0.9) 1px; width:780px; height:200px; margin-left:92px;">
+			
+			<div id="pagingArea" align="center">
+		        <ul class="pagination pageul">
+		           <li class="page-item"><a class="page-link" onclick="return pageChange($('.active').children().text(),'minus')">이전</a></li>
+		               <c:forEach var="p" begin="${map.pi.startPage}" end="${map.pi.endPage == 0? 1 : map.pi.endPage }">
+		                  <c:if test="${p eq map.pi.currentPage }">
+		                     <li class="page-item active" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text())">${ p }</a></li>
+		                  </c:if>
+		                  <c:if test="${p ne map.pi.currentPage }">
+		                     <li class="page-item" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text())">${ p }</a></li>
+		                  </c:if>
+		               </c:forEach>
+		           <li class="page-item"><a class="page-link" onclick="return pageChange($('.active').children().text(),'plus')">다음</a></li>
+		        </ul>
+		     </div>
+			</div>
 		
-		<br/>
-		<br/>
-		<div align="right" style="padding-right: 70px;">
-			<button type="button" class="okay" onclick="deleteBtn();">삭제하기</button>
 		</div>
+		<br/>
+		<br/>
+		<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+			<div align="right" style="padding-right: 95px;">
+				<button type="button" class="okay" onclick="deleteBtn();">삭제하기</button>
+			</div>
+		</c:if>
 		<br/>
 		<div align="center">
 			<button type="button" class="okay2" onclick="listBtn();">목록으로</button>
 		</div>
-			
 		<script>
 		
 			function deleteBtn(){
@@ -219,12 +263,32 @@
 			
 			function listBtn(){
 				
-				location.href="${ contextPath }/BSmyBoard.board?mId=${ loginUser.mId }";
+				var mId = "${ jdbcInfo.mid }";
+				location.href="${ contextPath }/BSmyBoard.board?mId=" + mId;
 			}
-		
-		
-		
+			
+			function reply(){
+				var replyContent = $("replyContent").text();
+				var writer = "${loginUser.mId}";
+				var boardno = "${ hmap.mbListDetail.b_code }";
+				
+				/* $.ajax({
+					url:"insertReply.board",
+					type:"post",
+					data:{
+						"replyContent":replyContent,
+						"writer":writer,
+						"boardno":Boardno
+					},
+					success:function(data){
+						
+					}
+				}); */
+					
+			}
 		</script>
+
+</div>
 </div>
 </div>
 </body>

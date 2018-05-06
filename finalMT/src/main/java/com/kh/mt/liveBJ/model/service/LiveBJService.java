@@ -37,5 +37,12 @@ public interface LiveBJService {
 
 	int bangjong(LiveBj bj);
 
+	ArrayList<LiveBj> mainTopBJ();
+
+	ArrayList<LiveBj> scroll();
+
+	ArrayList<String> selectFan(String href3);
+
+
 
 }

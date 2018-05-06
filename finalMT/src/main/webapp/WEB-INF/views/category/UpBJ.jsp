@@ -13,13 +13,13 @@
 	<jsp:include page="../common/leftnev.jsp"/>
 	
 	<!--     전체 무한스크롤 구현 필요 -->
-    <div class="wide-video-section themeix-ptb bg-semi-white">
+   <div class="wide-video-section themeix-ptb bg-semi-white">
         <div class="container">
             <div class="row">
                <div class="col-sm-12">
                  <div class="themeix-section-h">
                       <span class="heading-icon"><i class="fa fa-book"></i></span>
-                       <h3>추천 BJ</h3> 
+                       <h3>게임</h3> 
                        
                   </div>
                </div>   
@@ -30,29 +30,25 @@
                 <div class="col-sm-6 col-md-3 themeix-half">
                     <div class="single-video">
                         <div class="video-img">
-                                <a href="single-video.html">
+                                <a href="https://${ip}:8443/mt/testLiveBj.lb#${item.v_href}">
 								<img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${item.f_rename}" style="display: inline;">
 								 <noscript>
 									&lt;img src="${contextPath }/resources/images/thumbnails/6.jpg" alt="video" /&gt;
 								</noscript>
 								</a>
-                            <span class="video-duration">5.28</span>
+                            <span class="video-duration">${item.starttime}</span>
                         </div>
                         <div class="video-content">
-                            <h4><a href="${item.v_href}" class="video-title">${item.bsTitle}</a></h4>
+                            <h4><a href="https://${ip}:8443/mt/testLiveBj.lb#${item.v_href}" class="video-title">${item.bsTitle}</a></h4>
                             <div class="video-counter">
                                 <div class="video-viewers">
                                     <span class="fa fa-eye view-icon"></span>
-                                    <span>241,021</span>
+                                    <span>${item.v_viewers}</span>
                                 </div>
                                 <div class="video-feedback">
                                     <div class="video-like-counter">
                                         <span class="fa fa-thumbs-o-up like-icon"></span>
                                         <span>${item.like}</span>
-                                    </div>
-                                    <div class="video-like-counter">
-                                         <span class="fa fa-thumbs-o-down dislike-icon"></span>
-                                        <span>2140</span>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +58,6 @@
             
             </c:forEach>
                 
-
             </div>
         </div>
     </div>

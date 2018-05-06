@@ -30,7 +30,6 @@ public class LiveBJDaoImpl implements LiveBJDao{
 		if(result == 1){
 			bjJcode = sqlSession.selectOne("LiveBJ.selectBjJcode", bj);
 		}
-		System.out.println("dao "+bjJcode);
 		return bjJcode;
 	}
 	@Override
@@ -42,7 +41,6 @@ public class LiveBJDaoImpl implements LiveBJDao{
 	@Override
 	public ArrayList<LiveBj> allBJ(SqlSessionTemplate sqlSession) {
 		ArrayList<LiveBj> list = (ArrayList)sqlSession.selectList("LiveBJ.allBJ");
-		
 		return list;
 	}
 	@Override
@@ -54,22 +52,16 @@ public class LiveBJDaoImpl implements LiveBJDao{
 		bj.setMid(mid);
 		bj.setJcode(bjJCode);
 		int result = sqlSession.update("LiveBJ.startBrod", bj);
-		System.out.println(result+"ㄱㄹㄹ");
 		return result;
 	}
 	@Override
 	public LiveBj JDBCInfo(SqlSessionTemplate sqlSession, String href3) {
-		System.out.println(href3);
 		LiveBj bj = sqlSession.selectOne("LiveBJ.JDBCInfo", href3);
-		System.out.println("방정보 : "+bj);
 		return bj;
 	}
 	@Override
 	public LiveBj JDBCInfo2(SqlSessionTemplate sqlSession, LiveBj href3) {
-		System.out.println(href3);
 		LiveBj bj = sqlSession.selectOne("LiveBJ.JDBCInfo2", href3);
-		System.out.println("얍얍얍1 "+bj);
-		System.out.println("방정보 : "+bj);
 		return bj;
 	}
 	@Override
@@ -84,7 +76,6 @@ public class LiveBJDaoImpl implements LiveBJDao{
 	@Override
 	public int insertSingo(SqlSessionTemplate sqlSession, Board b) {
 		int result = sqlSession.insert("QnA.singoInsert", b);
-		System.out.println("daoImpl : "+result);
 		return result;
 	}
 	@Override
@@ -94,14 +85,11 @@ public class LiveBJDaoImpl implements LiveBJDao{
 		if(result == 1){
 			bmArr = (ArrayList) sqlSession.selectList("BJBlackMember.selectBlackMembers", bm);
 		}
-		System.out.println("lbDaoImpl : "+result);
-		System.out.println("lbDaoImpl : "+bmArr);
 		return bmArr;
 	}
 	@Override
 	public int insertGudock(SqlSessionTemplate sqlSession, Gudock gd) {
 		int result = sqlSession.selectOne("Gudock.selectGudock",gd);
-		System.out.println("GudockDaoImpl"+result);
 		if(result == 0){
 			result = sqlSession.insert("Gudock.insertGudock",gd);
 		}else if(result != 0){
@@ -113,7 +101,6 @@ public class LiveBJDaoImpl implements LiveBJDao{
 	public int updateViewers(SqlSessionTemplate sqlSession, LiveBj bj) {
 		int result = sqlSession.update("LiveBJ.insertViewer", bj);
 		int viewers = 0;
-		System.out.println("방송 시청자 수 update : "+result);
 		if(result == 1){
 			viewers = sqlSession.selectOne("LiveBJ.selectViewers",bj);
 		}
@@ -123,6 +110,27 @@ public class LiveBJDaoImpl implements LiveBJDao{
 	public int bangjong(SqlSessionTemplate sqlSession, LiveBj bj) {
 		int result = sqlSession.update("LiveBJ.bangjong", bj);
 		return result;
+	}
+	@Override
+	public ArrayList<LiveBj> mainTopBJ(SqlSessionTemplate sqlSession) {
+		ArrayList<LiveBj> list = (ArrayList)sqlSession.selectList("LiveBJ.mainTopBJ");
+		return list;
+	}
+	@Override
+	public ArrayList<LiveBj> scroll(SqlSessionTemplate sqlSession) {
+		ArrayList<LiveBj> list = (ArrayList)sqlSession.selectList("LiveBJ.scroll");
+		return list;
+	}
+	@Override
+	public ArrayList<String> selectFan(String href3) {
+		String mId = href3;
+		ArrayList<String> list1 = (ArrayList)sqlSession.selectList("LiveBJ.selectFan", mId);
+		ArrayList<String> list = new ArrayList<>();
+		for(int i = 0; i < list1.size() ;i++){
+			mId = list1.get(i);
+			list.add(sqlSession.selectOne("LiveBJ.selectFanid", mId));
+		}
+		return list;
 	}
 	
 }

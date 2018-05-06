@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.mt.board.model.dao.BoardDao;
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
+import com.kh.mt.board.model.vo.Reply;
 import com.kh.mt.common.PageInfo;
 
 @Service
@@ -80,6 +81,22 @@ public class BoardServiceImpl implements BoardService{
 		
 		BSmyBoardDelete = bd.BSmyBoardDelete(b_code);
 	}
+	
+	// 방송국 - 방명록 목록
+	@Override
+	public ArrayList<Board> gList(String mId) {
+
+		ArrayList<Board> gList = null;
+		
+		gList = bd.gList(mId);
+		
+		return gList;
+	}
+	/*@Override
+	public int insertReply(Reply re) {
+		int result = bd.insertReply(re);
+		return result;
+	}*/
 	
 
 }
