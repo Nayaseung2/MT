@@ -3,12 +3,14 @@ package com.kh.mt.liveBJ.model.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
 import com.kh.mt.board.model.vo.Board;
+import com.kh.mt.common.PageInfo;
 import com.kh.mt.liveBJ.model.vo.Gudock;
 import com.kh.mt.liveBJ.model.vo.LiveBj;
 import com.kh.mt.liveBJ.model.vo.Peach;
@@ -117,8 +119,10 @@ public class LiveBJDaoImpl implements LiveBJDao{
 		return list;
 	}
 	@Override
-	public ArrayList<LiveBj> scroll(SqlSessionTemplate sqlSession) {
-		ArrayList<LiveBj> list = (ArrayList)sqlSession.selectList("LiveBJ.scroll");
+	public ArrayList<LiveBj> scroll(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		ArrayList<LiveBj> list = (ArrayList)sqlSession.selectList("LiveBJ.scroll", null, rowBounds);
 		return list;
 	}
 	@Override
@@ -131,6 +135,12 @@ public class LiveBJDaoImpl implements LiveBJDao{
 			list.add(sqlSession.selectOne("LiveBJ.selectFanid", mId));
 		}
 		return list;
+	}
+	@Override
+	public int selectCount() {
+		ArrayList<LiveBj> list = (ArrayList)sqlSession.selectList("LiveBJ.scroll");
+		int count = list.size();
+		return count;
 	}
 	
 }

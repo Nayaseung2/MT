@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
 import com.kh.mt.board.model.vo.Board;
+import com.kh.mt.common.PageInfo;
 import com.kh.mt.liveBJ.model.vo.Gudock;
 import com.kh.mt.liveBJ.model.vo.LiveBj;
 import com.kh.mt.liveBJ.model.vo.Peach;
@@ -41,9 +42,11 @@ public interface LiveBJDao {
 
 	ArrayList<LiveBj> mainTopBJ(SqlSessionTemplate sqlSession);
 
-	ArrayList<LiveBj> scroll(SqlSessionTemplate sqlSession);
+	ArrayList<LiveBj> scroll(SqlSessionTemplate sqlSession, PageInfo pi);
 
 	ArrayList<String> selectFan(String href3);
+
+	int selectCount();
 
 
 }

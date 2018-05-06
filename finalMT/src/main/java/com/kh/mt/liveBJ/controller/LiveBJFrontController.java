@@ -24,6 +24,7 @@ import com.common.LoggerInterceptor;
 import com.kh.mt.JDBC.model.vo.JDBC;
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
 import com.kh.mt.board.model.vo.Board;
+import com.kh.mt.common.PageInfo;
 import com.kh.mt.liveBJ.model.service.LiveBJService;
 import com.kh.mt.liveBJ.model.vo.Gudock;
 import com.kh.mt.liveBJ.model.vo.LiveBj;
@@ -246,17 +247,49 @@ public class LiveBJFrontController {
 	}
 	@RequestMapping(value="scroll.lb")
 	public ModelAndView scroll(ModelAndView mv,int num){
-		int minus = num * 8;
-		int count = (num+1) * 8;
-		int result = count - minus;
-		ArrayList<LiveBj> list = new ArrayList<>();
-		ArrayList<LiveBj> list1 = ls.scroll();
-		for(int i = result;i < list1.size();i++){
+		num = num+1;
+		String newCurrentPage = String.valueOf(num);
+		
+		int count = ls.selectCount();
+		PageInfo pi =  addUserPage(newCurrentPage, count);
+		
+		ArrayList<LiveBj> list1 = ls.scroll(pi);
+		/*ArrayList<LiveBj> list = new ArrayList<>();
+		for(int i = 0 ;i < count ;i++){
 			LiveBj bj = list1.get(i);
-			list.add(bj); 
-		}
-		mv.addObject("list", list);
+			list.add(bj);
+		}*/
+		mv.addObject("list", list1);
 		mv.setViewName("jsonView");
 		return mv;
 	}
+	public PageInfo addUserPage(String newCurrentPage, int count){
+		
+		int currentPage = 1;
+		int limit = 0;
+		int maxPage = 0;
+		int startPage = 0;
+		int endPage = 0;
+		int listCount = 0;
+
+		limit = 8;
+			
+		listCount = count; 
+			
+		if(newCurrentPage != null){
+			currentPage = Integer.parseInt(newCurrentPage);
+		}
+			
+		maxPage = (int)((double)listCount / limit + 0.9);
+		
+		startPage = (((int)((double)currentPage / limit + 0.9 -1)) * limit) +1;
+		
+		endPage = startPage + limit -1;
+			
+		if(maxPage < endPage){
+			endPage = maxPage;
+		}
+		
+		return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+	}	
 }
