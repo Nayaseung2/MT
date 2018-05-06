@@ -95,7 +95,7 @@
 
             <c:forEach var="item" items="${list}">
             
-                <div class="col-sm-6 col-md-3 themeix-half">
+                <div class="col-sm-6 col-md-3 themeix-half"  style="height:285px; width:271.97px;">
                     <div class="single-video">
                         <div class="video-img">
                                 <a href="https://localhost:8443/mt/testLiveBj.lb#${item.v_href}">
@@ -176,27 +176,32 @@
 		$(document).ready(function(){
 			$(window).scroll(function(){
 				var scrollHeight = $(window).scrollTop()+$(window).height();
+				//var documentHeight =$(window).height();
 				var documentHeight =$(document).height();
 				var num = $("#scrollNum").val();
-				if(scrollHeight == documentHeight){
+				var num1 = Number(num);
+				
+				if(scrollHeight >= (documentHeight)){
+				console.log("뭐냐"+ num1);
 					$.ajax({
 						url:"scroll.lb",
 						type:"POST",
 						data:{
-							"num":num
+							"num":num1
 						},success:function(data){
 							var list = data.list;
 							console.log("list.size"+ list.length);
 							if(list.length == 0){
 								console.log("잉");
-								$(".row000").html("");
-								$(".row000").append("<h2>방송중인 BJ가 없습니다</h2>")
+								$(".row000").append("<h2>방송중인 BJ가 없습니다</h2>");
 							}else{
 								console.log("잉");
-								$("#scrollNum").val(num+1);
-								//data.list
+								var num2 = num1 + 1;
+								console.log("보이"+num2);
+								$("#scrollNum").val(num2);
+								console.log($("#scrollNum").val());
 								for(var i=0;  i < list.length ;i++){
-									$(".row000").append("<div class='col-sm-6 col-md-3 themeix-half'><div class='single-video'><div class='video-img'><a href='https://${ip}:8443/mt/testLiveBj.lb#"+list[i].v_href+"'><img class='lazy' alt='Video' src='${contextPath }/resources/bsTitleImages/"+list[i].f_rename+"' style='display: inline; width:260px; height:180px;'><noscript>&lt;img src='${contextPath }/resources/images/thumbnails/6.jpg' alt='video' /&gt;</noscript></a><span class='video-duration'>"+ list[i].starttime +"'</span></div><div class='video-content'><h4><a href='https://${ip}:8443/mt/testLiveBj.lb#"+ list[i].v_href +"' class='video-title'>"+ list[i].bsTitle +"</a></h4><div class='video-counter'><div class='video-viewers'><span class='fa fa-eye view-icon'></span><span>"+ list[i].v_viewers +"</span></div><div class='video-feedback'><div class='video-like-counter'><span class='fa fa-thumbs-o-up like-icon'></span><span>"+ list[i].like +"</span></div><div class='video-like-counter'><span><i class='fa fa-github-alt fa-fw'></i></span><span>"+list[i].nickname+"</span></div></div></div></div></div></div>");
+									$(".row000").append("<div class='col-sm-6 col-md-3 themeix-half' style='height:285px; width:271.97px;'><div class='single-video'><div class='video-img'><a href='https://${ip}:8443/mt/testLiveBj.lb#"+list[i].v_href+"'><img class='lazy' alt='Video' src='${contextPath }/resources/bsTitleImages/"+list[i].f_rename+"' style='display: inline; width:260px; height:180px;'><noscript>&lt;img src='${contextPath }/resources/images/thumbnails/6.jpg' alt='video' /&gt;</noscript></a><span class='video-duration'>"+ list[i].starttime +"'</span></div><div class='video-content'><h4><a href='https://${ip}:8443/mt/testLiveBj.lb#"+ list[i].v_href +"' class='video-title'>"+ list[i].bsTitle +"</a></h4><div class='video-counter'><div class='video-viewers'><span class='fa fa-eye view-icon'></span><span>"+ list[i].v_viewers +"</span></div><div class='video-feedback'><div class='video-like-counter'><span class='fa fa-thumbs-o-up like-icon'></span><span>"+ list[i].like +"</span></div><div class='video-like-counter'><span><i class='fa fa-github-alt fa-fw'></i></span><span>"+list[i].nickname+"</span></div></div></div></div></div></div>");
 								}
 							}
 						}

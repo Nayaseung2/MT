@@ -234,7 +234,7 @@ public class CategoryController {
 		int endPage = 0;
 		int listCount = 0;
 
-		limit = 16;
+		limit = 12;
 			
 		listCount = count; 
 			

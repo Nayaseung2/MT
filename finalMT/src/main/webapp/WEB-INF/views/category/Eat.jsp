@@ -27,7 +27,7 @@
             <div class="row000">
              <c:forEach var="list" items="${map.list}">
             
-                <div class="col-sm-6 col-md-3 themeix-half">
+                <div class="col-sm-6 col-md-3 themeix-half"  style="height:285px;">
                     <div class="single-video">
                         <div class="video-img">
                                 <a href="https://${ip}:8443/mt/testLiveBj.lb#${list.v_href}">

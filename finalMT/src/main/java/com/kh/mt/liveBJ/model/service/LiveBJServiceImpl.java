@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.mt.JDBC.model.vo.JDBCLogoFile;
 import com.kh.mt.board.model.vo.Board;
+import com.kh.mt.common.PageInfo;
 import com.kh.mt.liveBJ.model.dao.LiveBJDao;
 import com.kh.mt.liveBJ.model.vo.Gudock;
 import com.kh.mt.liveBJ.model.vo.LiveBj;
@@ -124,8 +125,8 @@ public class LiveBJServiceImpl implements LiveBJService{
 
 
 	@Override
-	public ArrayList<LiveBj> scroll() {
-		ArrayList<LiveBj> list = ld.scroll(sqlSession);
+	public ArrayList<LiveBj> scroll(PageInfo pi) {
+		ArrayList<LiveBj> list = ld.scroll(sqlSession, pi);
 		return list;
 	}
 
@@ -134,6 +135,13 @@ public class LiveBJServiceImpl implements LiveBJService{
 	public ArrayList<String> selectFan(String href3) {
 		ArrayList<String> arr =  ld.selectFan(href3) ;
 		return arr;
+	}
+
+
+	@Override
+	public int selectCount() {
+		int count = ld.selectCount();
+		return count;
 	}
 
 

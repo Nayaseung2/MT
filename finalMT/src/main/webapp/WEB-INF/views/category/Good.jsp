@@ -14,7 +14,7 @@
 	<jsp:include page="../common/leftnev.jsp"/>
 	
 	<!--     전체 무한스크롤 구현 필요 -->
-    <div class="wide-video-section themeix-ptb bg-semi-white">
+    <div class="wide-video-section themeix-ptb bg-semi-white" >
         <div class="container">
             <div class="row">
                <div class="col-sm-12">
@@ -27,7 +27,7 @@
             </div>
             <div class="row000">
           <c:forEach var="list" items="${map.list}">
-                <div class="col-sm-6 col-md-3 themeix-half">
+                <div class="col-sm-6 col-md-3 themeix-half"  style="height:285px;">
                     <div class="single-video">
                         <div class="video-img">
                                 <a href="https://${ip}:8443/mt/testLiveBj.lb#${list.v_href}">

@@ -26,11 +26,11 @@
             </div>
             <div class="row000">
              <c:forEach var="list" items="${map.list}">
-                <div class="col-sm-6 col-md-3 themeix-half">
+                <div class="col-sm-6 col-md-3 themeix-half" style="height:285px;">
                     <div class="single-video">
                         <div class="video-img">
                                 <a href="https://${ip}:8443/mt/testLiveBj.lb#${list.v_href}">
-								<img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${list.f_rename}" style="display: inline; width:260px; height:180px;">
+								<img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${list.f_rename}" style="display:inline; width:260px; height:180px;">
 								 <noscript>
 									&lt;img src="${contextPath }/resources/images/thumbnails/6.jpg" alt="video" /&gt;
 								</noscript>
@@ -79,8 +79,8 @@
 		     </div>
     </div>
 	
-	 <input type="hidden" value="${ pi.maxPage }" id="maxPage"/>
 	 <jsp:include page="../common/footer.jsp"/>
+	 <input type="hidden" value="${ pi.maxPage }" id="maxPage"/>
     
 	
 	 <!-- jQuery -->
