@@ -26,6 +26,13 @@
   			<result property="f_mcode" column="F_MCODE"/>
   			<result property="upload_date" column="UPLOAD_DATE"/>
   		</resultMap>
+  		<!-- <resultMap type="Reply" id="ReplyResultSet" >
+  			<result property="replyContent" column="FILEPATH"/>
+  			<result property="writer" column="F_MCODE"/>
+  			<result property="Boardno" column="UPLOAD_DATE"/>
+  			<result property="writer" column="F_MCODE"/>
+  			<result property="Boardno" column="UPLOAD_DATE"/>
+  		</resultMap> -->
   		
 	<insert id="insertBoard">
 		INSERT INTO BOARD
