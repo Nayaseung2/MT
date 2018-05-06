@@ -28,6 +28,7 @@
 		<typeAlias alias='insertJDBC' type="com.kh.mt.member.model.vo.InsertJDBCstation"/>
 		<typeAlias alias="Gudock" type="com.kh.mt.liveBJ.model.vo.Gudock"/>
 		<typeAlias alias="JDBCInfo" type="com.kh.mt.JDBC.model.vo.JDBCInfo"/>
+		<!-- <typeAlias alias="Reply" type="com.kh.mt.board.model.vo.Reply"/> -->
 	</typeAliases>
 	<mappers>
 		<mapper resource='mappers/member-mapper.xml' />

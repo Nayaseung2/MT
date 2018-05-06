@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
+import com.kh.mt.board.model.vo.Reply;
 import com.kh.mt.common.PageInfo;
 
 @Repository
@@ -98,4 +99,11 @@ public class BoardDaoImpl implements BoardDao {
 		ArrayList<Board> gList = (ArrayList)sqlSession.selectList("Board.gList", mId);
 		
 		return gList;
-	}}
+	}
+
+	/*@Override
+	public int insertReply(Reply re) {
+		int result = sqlSession.insert("Board.insertReply", re);
+		return result;
+	}*/
+}
