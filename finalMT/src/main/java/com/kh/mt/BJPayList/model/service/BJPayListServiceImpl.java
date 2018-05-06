@@ -180,6 +180,37 @@ public class BJPayListServiceImpl implements BJPayListService{
 		return ProfitPeach;
 	}
 
+	@Override
+	public String SelectMid(String mcode) {
+		String mId = bjp.SelectMid(sqlSession, mcode);
+		
+		return mId;
+	}
+
+	@Override
+	public int SelectLiveTime(String mId) {
+		int time = bjp.SelectLiveTime(sqlSession, mId);
+		return time;
+	}
+
+	@Override
+	public int SelectAllLiveTime(String mId) {
+		int AllLiveTime = bjp.SelectAllLiveTime(sqlSession, mId);
+		return AllLiveTime;
+	}
+
+	@Override
+	public int SelectTodayLiveTime(String mId) {
+		int TodayLiveTime = bjp.SelectTodayLiveTime(sqlSession, mId);
+		return TodayLiveTime;
+	}
+
+	@Override
+	public int SelectLiveTimeYday(String mId) {
+		int LiveTimeYday = bjp.SelectLiveTimeYday(sqlSession, mId);
+		return LiveTimeYday;
+	}
+
 
 
 

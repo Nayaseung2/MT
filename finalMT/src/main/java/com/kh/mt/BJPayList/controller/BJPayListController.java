@@ -1,6 +1,11 @@
 package com.kh.mt.BJPayList.controller;
 
 import java.awt.RenderingHints.Key;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,6 +43,47 @@ public class BJPayListController {
 	//BJ 수익관리 페이지  메인
 	@RequestMapping("bjPayMain.bjp")
 	public ModelAndView BJPayMain(ModelAndView mv, String mcode){
+		//아이디 조회  
+		//로그기록 조회
+		String mId = bjp.SelectMid(mcode);
+		File path = new File("C:/Users/sosoc/git/MT/finalMT/src/main/resources/BSLogs/");
+		File[] fileList = path.listFiles() ;
+		 BufferedReader reader = null;
+		 String line = null;
+		 int userTotal = 0;
+		 int todayTotal = 0;
+		 for(int i = 0; i < fileList.length; i++){
+			 try {
+				 reader = new BufferedReader(new FileReader(fileList[i]));
+				 while((line = reader.readLine()) != null){
+					 String word1 = line.split("/")[0];
+					 String word2 = line.split("/")[1];
+					 String word3 = line.split("/")[2];
+					 String word4 = line.split("/")[3];
+					 System.out.println(word1+"?"+word2+"?"+word3+"?"+word4);
+
+
+					 if (i==0) {
+						 if (mId.equals(word3)) {
+							 todayTotal++;
+						 }
+					 }
+					 if (mId.equals(word3)) {
+						 userTotal++;
+					 }
+					
+
+
+				 }
+				 reader.close();
+			 } catch (FileNotFoundException e) {
+				 // TODO Auto-generated catch block
+				 e.printStackTrace();
+			 } catch (IOException e) {
+				 // TODO Auto-generated catch block
+				 e.printStackTrace();
+			 }
+		 }
 		
 		//블랙회원수 조회 
 		int BlackCount = bjp.SelectCountBlack(mcode);
@@ -50,15 +96,22 @@ public class BJPayListController {
 		
 		//오늘의 구독자 수
 		int MyFanCount = bjp.SelectMyFanCount(mcode);
-		
+
 		//오늘의 수익(피치수)
 		int ProfitPeach = bjp.SelectProfitPeach(mcode);
 		
+		//누적방송시간 
+		int time = bjp.SelectLiveTime(mId);
+		
+		
+		mv.addObject("todayTotal", todayTotal);
+		mv.addObject("userTotal", userTotal);
 		mv.addObject("BlackCount", BlackCount);
 		mv.addObject("wdSuccese", wdSuccese);
 		mv.addObject("wdloding", wdloding);
 		mv.addObject("MyFanCount", MyFanCount);
 		mv.addObject("ProfitPeach", ProfitPeach);
+		mv.addObject("time", time);
 		mv.setViewName("bjPayList/bjPayMain");
 		return mv;
 				
@@ -294,7 +347,7 @@ public class BJPayListController {
 		System.out.println("list2 이다 팬관리"+list2);
 		
 		System.out.println("??????????????????????????????????????????제발"+newCurrentPage);
-		ArrayList<Subscribe> list= bjp.selectMyFanList(mcode);;
+		ArrayList<Subscribe> list= bjp.selectMyFanList(mcode);
 		String day = null;
 		ArrayList<Subscribe> Subscribe = new ArrayList<Subscribe>();
 		for (int i = 0; i < list.size(); i++) {
@@ -503,8 +556,80 @@ public class BJPayListController {
 	
 	//BJ 방송시간 관리
 	@RequestMapping("LiveTime.bjp")
-	public ModelAndView LiveTime(ModelAndView mv){
+	public ModelAndView LiveTime(ModelAndView mv, String mcode){
 		
+		//ID 조회
+		String mId = bjp.SelectMid(mcode);
+		
+		// 총방송시간
+		int allLiveTime = bjp.SelectAllLiveTime(mId);
+		
+		// 오늘의 방송시간
+		int TodayLiveTime = bjp.SelectTodayLiveTime(mId);
+		
+		//전낧 방송시간
+		int LiveTimeYday = bjp.SelectLiveTimeYday(mId);
+		
+		// 누적 시청자수
+		int allSeeUser  = 0;
+		
+		// 오늘의 시청자수
+		int TodaySeeUser = 0;
+		
+		// 전날의 시청자수
+		int SeeUserY = 0;
+		
+		//로그기록 조회
+		File path = new File("C:/Users/sosoc/git/MT/finalMT/src/main/resources/BSLogs/");
+		File[] fileList = path.listFiles() ;
+		 BufferedReader reader = null;
+		 String line = null;
+
+		 for(int i = 0; i < fileList.length; i++){
+			 try {
+				 reader = new BufferedReader(new FileReader(fileList[i]));
+				 while((line = reader.readLine()) != null){
+					 String word1 = line.split("/")[0];
+					 String word2 = line.split("/")[1];
+					 String word3 = line.split("/")[2];
+					 String word4 = line.split("/")[3];
+					 System.out.println(word1+"?"+word2+"?"+word3+"?"+word4);
+
+
+					 if (i==0) {
+						 if (mId.equals(word3)) {
+							 TodaySeeUser++;
+						 }
+					 }
+					 if (mId.equals(word3)) {
+						 allSeeUser++;
+					 }
+					 if(i==fileList.length-1) {
+						 if (mId.equals(word3)) {
+							 SeeUserY++;
+						 }
+					 }
+					
+
+
+				 }
+				 reader.close();
+			 } catch (FileNotFoundException e) {
+				 // TODO Auto-generated catch block
+				 e.printStackTrace();
+			 } catch (IOException e) {
+				 // TODO Auto-generated catch block
+				 e.printStackTrace();
+			 }
+		 }
+
+		
+		mv.addObject("allLiveTime", allLiveTime );
+		mv.addObject("TodayLiveTime", TodayLiveTime );
+		mv.addObject("LiveTimeYday", LiveTimeYday );
+		mv.addObject("TodaySeeUser", TodaySeeUser );
+		mv.addObject("allSeeUser", allSeeUser );
+		mv.addObject("SeeUserY", SeeUserY );
 		mv.setViewName("bjPayList/LiveTime");
 		return mv;
 				

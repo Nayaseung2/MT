@@ -29,14 +29,14 @@
                                     <i class="fa fa-users fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">3230</div>
-                                    <div>시간별 시청자 수(평균)</div>
+                                    <div class="huge">${todayTotal}</div>
+                                    <div>오늘의 시청자 수</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="LiveTime.bjp?mcode=${loginUser.mcode}">
                             <div class="panel-footer">
-                                <span class="pull-left">시철자  그래프 보기</span>
+                                <span class="pull-left">시청자  그래프 보기</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -51,12 +51,12 @@
                                     <i class="fa fa-thumbs-o-up fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">1020</div>
+                                    <div class="huge">${MyFanCount }</div>
                                     <div>오늘의 구독자 수</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="MyFan.bjp?mcode=${loginUser.mcode}">
                             <div class="panel-footer">
                                 <span class="pull-left">내 팬 관리</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -73,12 +73,12 @@
                                     <i class="fa fa-giftㄴ fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">11010</div>
+                                    <div class="huge">${ProfitPeach }</div>
                                     <div>오늘의 수익(피치 수)</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="ProfitBj.bjp?mcode=${loginUser.mcode}">
                             <div class="panel-footer">
                                 <span class="pull-left">수익 그래프 보기</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -161,7 +161,7 @@
                                     <i class="fa fa-plus-circle fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">3329489</div>
+                                    <div class="huge">${userTotal }</div>
                                     <div>내 방송 누적 시청자수</div>
                                 </div>
                             </div>
@@ -183,12 +183,12 @@
                                     <i class="fa fa-video-camera fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">3345</div>
+                                    <div class="huge">${time }</div>
                                     <div>총 방송시간(시간)</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="LiveTime.bjp?mcode=${loginUser.mcode}">
                             <div class="panel-footer">
                                 <span class="pull-left">방송  관리</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

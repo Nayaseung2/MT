@@ -122,14 +122,36 @@
 		UPDATE BLACKMEMBER SET BLACK_STATUS = 'N' WHERE LIVE_MCODE = (SELECT MCODE FROM MEMBER WHERE MID = #{mId})
 	</update>
 	<select id="SelectCountBlack" resultType="_int" parameterType="java.lang.String">
-	   	SELECT COUNT(LIVE_MCODE) FROM BLACKMEMBER WHERE BJ_MCODE = #{mcode} AND BLACK_STATUS = 'Y'
+	   	SELECT nvl(COUNT(LIVE_MCODE),0) FROM BLACKMEMBER WHERE BJ_MCODE = #{mcode} AND BLACK_STATUS = 'Y'
 	 </select>
-	 <select id="SelectMyFanCount" resultType="_int" parameterType="java.lang.String">
-	   	SELECT SUM(PRICE) FROM WITHDRAWAL WHERE MCODE = #{mcode} AND STATUS = 'Y'
+	<select id="SelectwdSuccese" resultType="_int" parameterType="java.lang.String">
+	   SELECT nvl(SUM(PRICE),0) FROM WITHDRAWAL WHERE MCODE = #{mcode} AND STATUS = 'Y'
 	 </select>
-	 <select id="SelectProfitPeach" resultType="_int" parameterType="java.lang.String">
-	   	SELECT SUM(PRICE) FROM WITHDRAWAL WHERE MCODE = #{mcode} AND STATUS = 'N'
+	 <select id="Selectwdloding" resultType="_int" parameterType="java.lang.String">
+	   	SELECT nvl(SUM(PRICE),0) FROM WITHDRAWAL WHERE MCODE = #{mcode} AND STATUS = 'N'
 	 </select>
+	 <select id="SelectMyFanCount" resultType="_int" >
+	   	SELECT nvl(COUNT(READER_MCODE),0) FROM SUBSCRIBE WHERE BJ_MCODE = #{bj_mcode} AND READ_DATE = TO_DATE(#{read_date},'YY/MM/DD')
+	 </select>
+	 <select id="SelectProfitPeach" resultType="_int">
+	   	SELECT nvl(SUM(PEACHCOUNT),0) FROM EXPEACH WHERE TO_MCODE = #{from_mcode} AND SEND_DATE = TO_DATE(#{send_date},'YY/MM/DD')
+	 </select>
+	 <select id="SelectMid" resultType="java.lang.String" parameterType="java.lang.String">
+	   	SELECT MID FROM MEMBER WHERE MCODE =  #{mcode}
+	 </select>
+	 <select id="SelectLiveTime" resultType="_int"  parameterType="java.lang.String">
+	   	SELECT nvl(round(sum((V_lIKE - V_STARTTIME)*24)), 0) FROM JDBC WHERE MCODE = #{mId}
+	 </select>
+	 <select id="SelectAllLiveTime" resultType="_int"  parameterType="java.lang.String">
+	   	SELECT nvl(round(sum((V_lIKE - V_STARTTIME)*24)), 0) FROM JDBC WHERE MCODE = #{mId}
+	 </select>
+	 <select id="SelectTodayLiveTime" resultType="_int"  parameterType="java.lang.String">
+	   	SELECT nvl(round(sum((V_lIKE - V_STARTTIME)*24)), 0) FROM JDBC WHERE MCODE = #{mId} AND TO_DATE(V_STARTTIME, 'yyyy-mm-dd') = TO_DATE(SYSDATE, 'yyyy-mm-dd')
+	 </select>
+	 <select id="SelectLiveTimeYday" resultType="_int"  parameterType="java.lang.String">
+	   	SELECT nvl(round(sum((V_lIKE - V_STARTTIME)*24)), 0) FROM JDBC WHERE MCODE = #{mId} AND TO_DATE(V_STARTTIME, 'yyyy-mm-dd') = TO_DATE(SYSDATE-1, 'yyyy-mm-dd')
+	 </select>
+	 
 
 
 </mapper>

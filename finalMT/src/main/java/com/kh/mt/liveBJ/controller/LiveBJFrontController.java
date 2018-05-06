@@ -50,7 +50,7 @@ public class LiveBJFrontController {
      		userId = loginUser.getmId();
      	}
 	//A가B에게 접속
-		log.debug("[" + userId + "]["+ bj.getMid() +"][접속]");
+		log.debug("/" + userId + "/"+ bj.getMid() +"/접속");
 		return mv;
 	}
 	//bj가 자기정보방 가저오기

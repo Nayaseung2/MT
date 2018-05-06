@@ -1,10 +1,14 @@
 package com.kh.mt.pay.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.mt.member.model.vo.Member;
 import com.kh.mt.pay.model.service.PayService;
 import com.kh.mt.pay.model.vo.Pay;
 
@@ -32,7 +36,7 @@ public class PayController {
 	
 	//pay ajax 페이지
 	@RequestMapping("paysuccess.pay")
-	public ModelAndView PaySuccess(String mcode,String pay_code, int price, int peach_code ,ModelAndView mv){
+	public ModelAndView PaySuccess(String mcode,String pay_code, int price, int peach_code ,ModelAndView mv,  HttpServletRequest request){
 		System.out.println("여기는 오니???"+mcode+" pay_code 직자~!"+pay_code);
 		Pay p = new Pay();
 		p.setPay_code(pay_code);
@@ -41,8 +45,9 @@ public class PayController {
 		p.setPeach_code(peach_code);
 		
 		ps.insertPayList(p);
-		
-		
+		int peach = ps.selectPeach(mcode);		
+		HttpSession session = request.getSession();
+		((Member)session.getAttribute("loginUser")).setPeach(peach);
 						
 		mv.setViewName("pay/payform");
 		return mv;
