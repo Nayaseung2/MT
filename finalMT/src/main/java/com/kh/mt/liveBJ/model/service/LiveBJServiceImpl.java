@@ -123,4 +123,20 @@ public class LiveBJServiceImpl implements LiveBJService{
 	}
 
 
+	@Override
+	public ArrayList<LiveBj> scroll() {
+		ArrayList<LiveBj> list = ld.scroll(sqlSession);
+		return list;
+	}
+
+
+	@Override
+	public ArrayList<String> selectFan(String href3) {
+		ArrayList<String> arr =  ld.selectFan(href3) ;
+		return arr;
+	}
+
+
+
+
 }

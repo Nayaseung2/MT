@@ -40,10 +40,23 @@ public class LiveBJFrontController {
 	
 	//시청자가 방의 정보 가저오기
 	@RequestMapping(value="JDBCInfo.lb")
-	public ModelAndView JDBCInfo(HttpServletRequest request, ModelAndView mv,String href3){
+	public ModelAndView JDBCInfo(HttpServletRequest request, ModelAndView mv,String href3, String mId){
 		LiveBj bj = ls.JDBCInfo(href3);
+		String bjid = bj.getMid();
+		
+		ArrayList<String> list = ls.selectFan(bjid);
+		
+		ArrayList<Member> fanlist = new ArrayList<>();
+		for(int i =0; i <list.size();i++){
+			Member mem = new Member();
+			mem.setmId(list.get(i));
+			fanlist.add(mem);
+		};;
 		mv.setViewName("jsonView");
 		mv.addObject("bj", bj);
+		mv.addObject("fanlist", fanlist);
+		
+		
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		String userId = "gost";
 			if(loginUser != null){
@@ -59,9 +72,20 @@ public class LiveBJFrontController {
 		LiveBj bj1 = new LiveBj();
 		bj1.setJcode(jCode);
 		bj1.setMid(href3);
+		//fan
+		ArrayList<String> list = ls.selectFan(href3);
+		ArrayList<Member> fanlist = new ArrayList<>();
+		for(int i =0; i <list.size();i++){
+			Member mem = new Member();
+			mem.setmId(list.get(i));
+			fanlist.add(mem);
+		};
+		
+		
 		LiveBj bj = ls.JDBCInfo2(bj1);
 		mv.setViewName("jsonView");
 		mv.addObject("bj", bj);
+		mv.addObject("fanlist", fanlist);
 		
 		return mv;
 	}
@@ -73,8 +97,6 @@ public class LiveBJFrontController {
 	//방송시작버튼누르면 db에 주소값 저장
 	@RequestMapping(value="startBrod.lb")
 	public String startBrod(String roomid,String mid, String bjJCode){
-		System.out.println(roomid);
-		System.out.println(mid);
 		ls.startBrod(roomid,mid,bjJCode);
 
 		return "성공";
@@ -90,10 +112,6 @@ public class LiveBJFrontController {
 		mv.addObject("list",list);
 		mv.addObject("list1", list1);
 		mv.setViewName("main/main");
-		System.out.println(list.size());
-		System.out.println(list1.size());
-		System.out.println(list1.get(0).getNickname());
-		System.out.println(list1);
 		
 		return mv;
 	}
@@ -135,7 +153,6 @@ public class LiveBJFrontController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(bj);
 		
 		// UPLOADFILE insert
 		JDBCLogoFile f = new JDBCLogoFile();
@@ -150,21 +167,16 @@ public class LiveBJFrontController {
 		bj.setJcode(bjJcode);
 		model.addAttribute("bjJ", bj);
 		
-		System.out.println("live bj front controller"+bjJcode);
 		//여기 JCODE 리턴 받아서 페이지로 가져가야 함
 		return "LiveBj/LiveBjPage";
 	}
 	@RequestMapping(value="peach.lb")
 	public ModelAndView updatePeach(ModelAndView mv, String userId, int peachNum, String bjId , HttpServletRequest request){
-		System.out.println("1 : "+userId);
-		System.out.println("2 : "+peachNum);
-		System.out.println("3 : "+bjId);
 		Peach p = new Peach();
 		p.setBjId(bjId);
 		p.setPeachNum(peachNum);
 		p.setUserId(userId);
 		int result = ls.updatePeach(p);
-		System.out.println("lb result ="+result);
 		HttpSession session = request.getSession();
 		Member m = (Member)session.getAttribute("loginUser");
 		m.getPeach();
@@ -175,9 +187,6 @@ public class LiveBJFrontController {
 	
 	@RequestMapping(value="textsingo.lb")
 	public ModelAndView insertSingo(ModelAndView mv, String singoja,String singoMem, String singoContent){
-		System.out.println("1 : "+singoja);
-		System.out.println("2 : "+singoMem);
-		System.out.println("3 : "+singoContent);
 		Board b = new Board();
 		b.setB_title(singoMem);
 		b.setB_type("report");
@@ -189,8 +198,6 @@ public class LiveBJFrontController {
 	}
 	@RequestMapping(value="bjBlackMember.lb")
 	public ModelAndView insertBJBlackMember(ModelAndView mv, String adminbj, String blackMember){
-		System.out.println("adminbj"+adminbj);
-		System.out.println("blackMember"+blackMember);
 		
 		BJBlackMember bm = new BJBlackMember();
 		bm.setBjMember(adminbj);
@@ -205,8 +212,6 @@ public class LiveBJFrontController {
 	//구독 있으면 삭제 없으면 삽입
 	@RequestMapping(value="gudockins.lb")
 	public ModelAndView insertGudock(ModelAndView mv, String BJ_mCode, String reder_mCode){
-		System.out.println("BJ_mCode"+BJ_mCode);
-		System.out.println("reder_mCode"+reder_mCode);
 		
 		Gudock gd = new Gudock();
 		
@@ -220,8 +225,6 @@ public class LiveBJFrontController {
 	}
 	@RequestMapping(value="insertViewers.lb")
 	public ModelAndView insertGudock(ModelAndView mv, int viewers, String bjId9){
-		System.out.println("viewers"+viewers);
-		System.out.println("bjId9"+bjId9);
         		
 		LiveBj bj = new LiveBj();
 		bj.setMid(bjId9);
@@ -234,11 +237,25 @@ public class LiveBJFrontController {
 	
 	@RequestMapping(value="bangjong.lb")
 	public ModelAndView bangjong(ModelAndView mv, String bjid,String maxViewer){
-		System.out.println("bjid"+bjid);
 		LiveBj bj = new LiveBj();
 		bj.setMid(bjid);
 		bj.setV_viewers(Integer.parseInt(maxViewer));
 		int result = ls.bangjong(bj);
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	@RequestMapping(value="scroll.lb")
+	public ModelAndView scroll(ModelAndView mv,int num){
+		int minus = num * 8;
+		int count = (num+1) * 8;
+		int result = count - minus;
+		ArrayList<LiveBj> list = new ArrayList<>();
+		ArrayList<LiveBj> list1 = ls.scroll();
+		for(int i = result;i < list1.size();i++){
+			LiveBj bj = list1.get(i);
+			list.add(bj); 
+		}
+		mv.addObject("list", list);
 		mv.setViewName("jsonView");
 		return mv;
 	}

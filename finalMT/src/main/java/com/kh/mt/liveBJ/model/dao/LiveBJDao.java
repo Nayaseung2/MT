@@ -41,4 +41,9 @@ public interface LiveBJDao {
 
 	ArrayList<LiveBj> mainTopBJ(SqlSessionTemplate sqlSession);
 
+	ArrayList<LiveBj> scroll(SqlSessionTemplate sqlSession);
+
+	ArrayList<String> selectFan(String href3);
+
+
 }

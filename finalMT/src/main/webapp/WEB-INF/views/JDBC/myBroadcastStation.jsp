@@ -40,6 +40,13 @@
 		 background: white;
 		 height: 40px;"
 	}
+	.okay2{
+		width:100px;
+		height:30px;
+		background:rgba(235, 104, 100, 0.9);
+		border:none;
+		color:white;
+	}
 	
 	
 </style>
@@ -148,16 +155,25 @@ console.log("${jdbcInfo.jdbc_name }");
 <script>
 </script>
 <br>
-<%-- <c:forEach var="item" items="${gu}"> --%>
-<c:forEach var="i" items="${Gudock}">
-	<c:forEach var="j" items="${ i.value}">
-	<%-- <c:if test="${!empty jdbcLogoFile }">
-	</c:if> --%>
-		<img src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${j.f_rename}"style="width:80px; height:80px;"><br>
-		<label class="BStext" style="color:black;"><a id="BStexta"href="#" style="color:black;">${j.jdbc_name}</a></label><br>
-		<label class="BStext" style="color:black;">${j.jdbc_nickName}</label>
+<div>
+<table>
+	<c:forEach var="i" items="${Gudock}">
+		<c:forEach var="j" items="${ i.value}">
+			<tr>
+				<td>
+					<img src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${j.f_rename}"style="width:160px; height:160px; border: 3px solid rgba(235, 104, 100, 0.9); border-radius: 80px; -moz-border-radius: 80px; -khtml-border-radius: 80px; -webkit-border-radius: 80px;">
+				</td>
+				<td>
+					<label class="BStext" style="color:black;"><a id="BStexta"href="#" style="color:black;">${j.jdbc_name}</a></label><br><br>
+					<label class="BStext" style="color:black;">${j.jdbc_nickName}</label><br><br>
+					<button type="button" class="okay2"><a href="bjJDBC.JDBC?mid=${j.f_mcode}" style="color:white;">방송국 가기</a></button>
+				</td>
+			</tr>			
+		</c:forEach>
 	</c:forEach>
-</c:forEach>
+</table>
+	
+</div>
 	<br>
 	</div>
 </div>
