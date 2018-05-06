@@ -98,6 +98,21 @@
 		ORDER BY B_CREATE_DATE DESC
 	</select>
 	
+	<!-- 방송국 - 내 게시글 수정(글) -->
+	<update id="BSmyBoardModify">
+		UPDATE BOARD
+		SET B_TITLE = #{ b_title }, B_CONTENT = #{ b_content }, B_UPDATE_DATE = SYSDATE
+		WHERE B_CODE = #{ b_code }
+	</update>
+	
+	<!-- 방송국 - 내 게시글 수정(사진) -->
+	<update id="BSmyBoardModifyP">
+		UPDATE UPLOADFILE
+		SET (F_ORNAME, F_RENAME, FILEPATH, UPLOAD_DATE) = (#{ f_orname }, #{ f_rename }, #{ filepath }, SYSDATE)
+		WHERE UPLOAD_DATE IN (SELECT *
+							FROM UPLOADFILE
+							WHERE F_MCODE = #{ f_mcode } AND TO_CHAR(UPLOAD_DATE, 'yyyy-MM-dd hh24:mi:ss') = #{ upload_date }) 
+	</update>
 	
 	
 </mapper>

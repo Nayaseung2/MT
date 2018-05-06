@@ -33,7 +33,14 @@ public interface BoardService {
 	// 방송국 - 방명록 목록
 	ArrayList<Board> gList(String mId);
 
+	// 방송국 - 내 게시판 글 수정(글)
+	void BSmyBoardModify(Board B);
+
+	// 방송국 - 내 게시판 글 수정(사진)
+	void BSmyBoardModifyP(BoardFile f);
+
 	//int insertReply(Reply re);
+
 
 
 }

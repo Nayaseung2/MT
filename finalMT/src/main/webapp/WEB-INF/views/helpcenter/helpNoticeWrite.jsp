@@ -78,7 +78,7 @@ table {
 #listArea td {
 	height: 400px;
 	background: rgba(255, 99, 71, 0.05);
-	
+	padding-left: 100px;
 }
 
 .conArea {
@@ -86,8 +86,14 @@ table {
 	font-size: 20px;
 	text-align: center;
 	background: white;
-	border: 0px solid white;
-	background: rgba(255, 99, 71, 0);
+	border: 1px solid lightgray;
+	background: white;
+	resize: none;
+}
+
+#b_title {
+	border: 1px solid lightgray;
+	width: 900px;
 }
 
 </style>
@@ -194,53 +200,33 @@ table {
 			<h1 style="font-family: 'Hanna', sans-serif;">공지사항</h1>		
 			<br/>
 				<div class="tableArea">
-					<table align="center" id="listArea">
-						<!-- table header -->
-						<tr>
-							<th colspan="3"><c:out value="${ nListDetail[0].b_title }"/></th>
-							<th><c:out value="${ nListDetail[0].b_update_date }"/></th>
-						</tr>
-						<tr>
-							<td colspan="4" rowspan="10">
-								<pre class="conArea"><c:out value="${ nListDetail[0].b_content }"/></pre>
-								<input type="hidden" value="${ nListDetail[0].b_code }" id="b_code">
-							</td>
-						</tr>
-					</table>
+					<form action="helpnoticeWrite.hp" method="post">
+						<table align="center" id="listArea">
+							<!-- table header -->
+							<tr>
+								<th colspan="3">
+									<b>제 목</b>&nbsp;&nbsp;&nbsp;
+									<input type="text" name="b_title" id="b_title">
+								</th>
+							</tr>
+							<tr>
+								<td colspan="3" rowspan="10">
+									<b>내용을 입력하세요.</b>
+									<textarea rows="8" cols="80" class="conArea" name="b_content">
+										
+									</textarea>
+								</td>
+							</tr>
+						</table>
+						<br/>
+						<br/>
+						<br/>
+						<div align="center">
+							<button type="submit" class="btn btn-danger" style="font-size:20px;">등록하기</button>
+						</div>
+					</form>
 				</div>
 				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<div align="center">
-					<button type="button" class="btn btn-danger" style="font-size:20px;" onclick="goList();">목록으로 돌아가기</button>
-				</div>
-				<c:if test="${ loginUser.mId eq 'admin' }">
-					<div align="right" style="padding-right: 200px;">
-						<button type="button" class="btn btn-danger" style="font-size:20px;" onclick="goModify();">수정하기</button>
-						<button type="button" class="btn btn-danger" style="font-size:20px;" onclick="goDelete();">삭제하기</button>
-					</div>			
-				</c:if>
-			
-				<script>
-				
-					function goList(){
-						
-						location.href="${ contextPath }/helpnotice.hp";	
-					}
-					
-					function goModify(){
-						
-						var b_code = $("#b_code").val();
-						location.href="${ contextPath }/goModifyNotice.hp?b_code=" + b_code;	
-					}
-					
-					function goDelete(){
-						
-						location.href="${ contextPath }/goDeleteNotice.hp";	
-					}
-				
-				</script>
 				<br/>
 			</div>
 		</div>

@@ -98,5 +98,25 @@ public class BoardServiceImpl implements BoardService{
 		return result;
 	}*/
 	
+	// 방송국 - 내 게시판 글 수정
+	@Override
+	public void BSmyBoardModify(Board b) {
+
+		int BSmyBoardModify = 0;
+		
+		BSmyBoardModify = bd.BSmyBoardModify(b);
+		
+	}
+	
+	// 방송국 - 내 게시판 글 수정
+	@Override
+	public void BSmyBoardModifyP(BoardFile f) {
+
+		int BSmyBoardModifyP = 0;
+		
+		BSmyBoardModifyP = bd.BSmyBoardModifyP(f);
+		
+	}
+	
 
 }

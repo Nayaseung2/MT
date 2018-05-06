@@ -9,6 +9,7 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.helpcenter.model.dao.HelpDao;
@@ -107,6 +108,20 @@ public class HelpServiceImpl implements HelpService{
 		int nListTotal = hd.nListTotal();
 		
 		return nListTotal;
+	}
+
+	// 공지글 쓰기
+	@Override
+	public void helpnoticeWrite(Board b) {
+		
+		int helpnoticeWrite = hd.helpnoticeWrite(b);
+	}
+	
+	// 공지글 수정하기
+	@Override
+	public void helpnoticeModify(Board b) {
+		
+		hd.helpnoticeModify(b);
 	}
 
 	

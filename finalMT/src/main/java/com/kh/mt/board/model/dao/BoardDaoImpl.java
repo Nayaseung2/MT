@@ -101,9 +101,31 @@ public class BoardDaoImpl implements BoardDao {
 		return gList;
 	}
 
+	// 방송국 - 내 게시판 글 수정(글)
+	@Override
+	public int BSmyBoardModify(Board b) {
+
+		int BSmyBoardModify = sqlSession.update("Board.BSmyBoardModify", b);
+		
+		return BSmyBoardModify;
+	}
+	
+	// 방송국 - 내 게시판 글 수정(사진)
+	@Override
+	public int BSmyBoardModifyP(BoardFile f) {
+
+		int BSmyBoardModifyP = sqlSession.update("Board.BSmyBoardModifyP", f);
+		
+		return BSmyBoardModifyP;
+	}
+	
+
+}
+
 	/*@Override
 	public int insertReply(Reply re) {
 		int result = sqlSession.insert("Board.insertReply", re);
 		return result;
 	}*/
 }
+

@@ -30,9 +30,22 @@
 		cursor:pointer;}
 	.bottomBox td{border-bottom:1px dotted lightgray;}
 	.bottom{color:black; text-decoration:none; margin-left:15px;}
-	.showRightPart{position:relative; width:940px; 
-	left:240px;bottom:640px;background-color: rgba(255, 245, 244, 0.9);}
+	.showRightPart{position:relative; width:940px; height:800px; 
+	left:240px;bottom:640px;}
 	
+	/* 글쓰기 테이블 */
+	.writeTable{
+		margin-left:30px;
+		width:750px;
+	}
+	.writeTable th{
+		width:100px;
+		height:30px;
+		text-align:center;
+	}
+	.writeTable tr{
+		height:35px;
+	}
 	.equal{
 		width:20px;
 	}
@@ -42,49 +55,12 @@
 		border:1px solid lightgray;
 	}/*  */
 	.okay{
-		width:80px;
+		width:160px;
 		height:30px;
 		background:rgba(235, 104, 100, 0.5);
 		border:none;
 		color:white;
 	}
-	
-	.okay2{
-		width:100px;
-		height:30px;
-		background:rgba(235, 104, 100, 0.9);
-		border:none;
-		color:white;
-	}
-	
-	
-	table {
-		border-top:2px solid #F08080;
-		border-bottom:2px solid #F08080;
-		padding-left: 3%;
-	}
-	
-	#listArea {
-		width:80%;
-		height:400px;
-		font-size: 16px;
-		margin-top: 3%;
-		text-align: center;
-	}
-	
-	#listArea tr {
-		height: 50px;
-		border-bottom:1px solid #F08080;
-	}
-
-	#listArea td {
-		width: 100px;
-	}
-	
-	.tdClass {
-		border-right:1px solid #F08080;
-	}
-	
 	
 	.sideBtn {
 		 margin-left: 20px;
@@ -94,11 +70,8 @@
 		 height: 40px;"
 	}
 	
-	
-	
-	
 </style>
-<title>내 게시판</title>
+<title>게시글 수정완료</title>
 <!-- ckeditor -->
 <script src="<%= request.getContextPath()%>/resources/ckeditor/ckeditor.js">
 </script>
@@ -183,124 +156,34 @@
 	</c:if>
 </table>
 </div>
-
 <!-- 오른쪽 부분 -->
 <div class="showRightPart">
-<br/>
-<br/>
-
-	<h3 align="center"><b>" ${ jdbcInfo.mid } "님의 게시판 입니다.</b></h3>		
-	<br/>
-		<div class="tableArea">
-			<table align="center" id="listArea">
-				<!-- table header -->
-				<tr>
-					<td class="tdClass"><b>제 목</b></td>
-					<td colspan="5"><c:out value="${ hmap.mbListDetail.b_title }" /></td>
-				</tr>
-				<tr>
-					<td class="tdClass" rowspan="5"><b>내 용</b></td>
-					<td rowspan="5" colspan="5">
-						<br/><br/>
-						${ hmap.mbListDetail.b_content }
-						<br/><br/>
-						<img src="${ contextPath }/resources/BoardFile/${ hmap.mbListDetailP.f_rename }" style="padding-left: 5%; max-height:180px;" />
-						<br/>
-					</td>
-				</tr>
-				<tfoot>
-				<tr>
-					<td class="tdClass"><b>댓글 쓰기</b></td>
-					<td colspan="5">
-						<br>
-						<textarea cols="65%" rows="2" placeholder="댓글을 입력하세요." style="resize:none;"></textarea>
-						<button id="replyContent" class="okay"style="float:right; height:45px;" onclick="reply();">댓글쓰기</button>
-						<br><br>
-					</td>
-				</tr>
-				</tfoot>
-			</table>
-			<input type="hidden" id="bCode" value="${hmap.mbListDetail.b_code}">
-			<br>
-			<h4 style="margin-left:92px;">댓글</h4>
-			<div style="border: solid rgba(235, 104, 100, 0.9) 1px; width:780px; height:200px; margin-left:92px;">
-			
-			<div id="pagingArea" align="center">
-		        <ul class="pagination pageul">
-		           <li class="page-item"><a class="page-link" onclick="return pageChange($('.active').children().text(),'minus')">이전</a></li>
-		               <c:forEach var="p" begin="${map.pi.startPage}" end="${map.pi.endPage == 0? 1 : map.pi.endPage }">
-		                  <c:if test="${p eq map.pi.currentPage }">
-		                     <li class="page-item active" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text())">${ p }</a></li>
-		                  </c:if>
-		                  <c:if test="${p ne map.pi.currentPage }">
-		                     <li class="page-item" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text())">${ p }</a></li>
-		                  </c:if>
-		               </c:forEach>
-		           <li class="page-item"><a class="page-link" onclick="return pageChange($('.active').children().text(),'plus')">다음</a></li>
-		        </ul>
-		     </div>
-			</div>
-		
-		</div>
-		<br/>
-		<br/>
-
-		<div style="display: block;">
-			<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
-				<div align="right" style="padding-right: 70px;">
-					<button type="button" class="okay" onclick="modifyBtn();">수정하기</button>
-					<button type="button" class="okay" onclick="deleteBtn();">삭제하기</button>
+				<br />
+				<br/>
+				<br/>
+				<br/>
+				<div align="center">
+					<img src="${ contextPath }/resources/images/myPage/edit.png" /> <br />
+					<br />
+					<h4>정상적으로 게시글이 수정되었습니다.</h4>
 				</div>
-			</c:if>
-		</div>
+				<br/>
+				<br/>
+				<div align="center">
+					<button class="okay" onclick="goMain();">방송국 메인으로</button>
+				</div>
 
-		<br/>
-		<div align="center">
-			<button type="button" class="okay2" onclick="listBtn();">목록으로</button>
-		</div>
-		<script>
-		
-			function modifyBtn(){
-				
-				var b_code = "${ hmap.mbListDetail.b_code }";
-				location.href="${ contextPath }/BSmodify.board?b_code=" + b_code;
-			}
-			
-			function deleteBtn(){
-				
-				var b_code = "${ hmap.mbListDetail.b_code }";
-				location.href="${ contextPath }/BSmyBoardDelete.board?b_code=" + b_code;
-			}
-			
-			function listBtn(){
-				
-				var mId = "${ jdbcInfo.mid }";
-				location.href="${ contextPath }/BSmyBoard.board?mId=" + mId;
-			}
-			
-			function reply(){
-				var replyContent = $("replyContent").text();
-				var writer = "${loginUser.mId}";
-				var boardno = "${ hmap.mbListDetail.b_code }";
-				
-				/* $.ajax({
-					url:"insertReply.board",
-					type:"post",
-					data:{
-						"replyContent":replyContent,
-						"writer":writer,
-						"boardno":Boardno
-					},
-					success:function(data){
-						
+				<script>
+					function goMain() {
+
+						location.href = "myBroadcastStation.JDBC";
 					}
-				}); */
-					
-			}
-		</script>
+				</script>
+				<br /> <br />
 
+			</div>
 </div>
 </div>
-</div>
+
 </body>
 </html>

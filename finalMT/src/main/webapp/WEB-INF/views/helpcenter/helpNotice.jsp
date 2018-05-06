@@ -238,11 +238,21 @@ table {
 				</div>
 			</div>
 			
+			<c:if test="${ loginUser.mId eq 'admin' }">
+				<div align="right" style="padding-right: 200px;">
+					<button type="button" class="btn btn-danger" style="font-size:20px;" onclick="goList();">글쓰기</button>
+				</div>			
+			</c:if>
+			
     <input type="hidden" value="${ hmap.pi.maxPage }" id="maxPage"/>
   	<script>
   	
   	
-  	
+	  	function goList(){
+			
+			location.href="${ contextPath }/goWriteNotice.hp";	
+		}
+
   	
  	 	function onclickPage(value){
  	 		

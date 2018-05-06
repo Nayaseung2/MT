@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.helpcenter.model.vo.HelpMainVo;
@@ -39,6 +40,12 @@ public interface HelpDao {
 
 	// 게시글 조회수
 	int updateCount(String b_code);
+
+	// 공지글 쓰기
+	int helpnoticeWrite(Board b);
+
+	// 공지글 수정하기
+	void helpnoticeModify(Board b);
 
 	
 }

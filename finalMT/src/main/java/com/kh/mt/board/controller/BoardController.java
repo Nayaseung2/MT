@@ -192,6 +192,55 @@ public class BoardController {
 		
 		return mv;
 	}
+	
+	
+	// 방송국 - 내 게시판 글 수정하러 가기
+	@RequestMapping(value="BSmodify.board")
+	public String BSmodify(String b_code){
+		
+		return "JDBC/BSmodify";
+	}
+	
+	// 방송국 - 내 게시판 글 수정
+	@RequestMapping(value="BSmyBoardModify.board")
+	public String BSmyBoardModify(Board b,Model model,@RequestParam(name="Boardfile",required=false)MultipartFile photo,HttpServletRequest request) {
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String filePath = root + "\\BoardFile";
+		String originalFileName=photo.getOriginalFilename();
+		String ext = originalFileName.substring(originalFileName.lastIndexOf('.'));
+		String changedName = authNum() + ext;
+		
+		try {
+			photo.transferTo(new File(filePath + "\\" + changedName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		// 게시판 파일 update
+		BoardFile f = new BoardFile();
+		f.setFrom_code("BoardFile");
+		f.setF_orname(originalFileName);
+		f.setF_rename(changedName);
+		f.setFilepath(filePath);
+		f.setF_mcode(b.getBwriter());
+		bs.BSmyBoardModifyP(f);
+		
+		// Board넣기
+		bs.BSmyBoardModify(b);
+		
+		return "JDBC/BSwriteSuccess";
+	}
+	
+	
+	
+	// 방송국 - 내 게시판 글 수정 완료
+	@RequestMapping(value="BSmyBoardModifySuccess.board")
+	public String BSmyBoardModifySuccess(String b_code){
+		
+		return "JDBC/BSmyBoardModifySuccess";
+	}
+		
 		
 	// 방송국 - 내 게시판 글 삭제
 	@RequestMapping(value="BSmyBoardDelete.board")

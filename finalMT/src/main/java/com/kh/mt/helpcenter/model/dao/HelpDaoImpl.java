@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.helpcenter.model.vo.HelpMainVo;
@@ -132,5 +133,20 @@ public class HelpDaoImpl implements HelpDao{
 		return result;
 	}
 
+	// 공지글 쓰기
+	@Override
+	public int helpnoticeWrite(Board b) {
+
+		int helpnoticeWrite = sqlSession.update("QnA.helpnoticeWrite", b);
+		
+		return helpnoticeWrite;
+	}
+
+	// 공지글 수정하기
+	@Override
+	public void helpnoticeModify(Board b) {
+
+		sqlSession.update("QnA.helpnoticeModify", b);
+	}
 
 }

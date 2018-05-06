@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.helpcenter.model.sevice.HelpService;
@@ -266,8 +267,48 @@ public class HelpController {
 		return mv;
 	}
 
+	// 공지글 쓰러가기
+	@RequestMapping(value="goWriteNotice.hp")
+	public String goWriteNotice(){
+		
+		return "helpcenter/helpNoticeWrite";
+	}
 
-
+	// 공지글 쓰기
+	@RequestMapping(value="helpnoticeWrite.hp")
+	public String helpnoticeWrite(Board b) {
+		
+		System.out.println("controller's b : " + b);
+		hs.helpnoticeWrite(b);
+		
+		return "helpcenter/helpWriteSuccess";
+	}
+	
+	// 공지글 수정하러 가기
+	@RequestMapping(value="goModifyNotice.hp")
+	public String goModifyNotice(Model model, String b_code) {
+		
+		ArrayList<HelpMainVo> nListDetail = null;
+				
+		nListDetail = hs.nListDetail(b_code);
+		
+		System.out.println("controller's nListDetail : " + nListDetail);
+		
+		model.addAttribute(nListDetail);
+		System.out.println(model.toString());
+		
+		return "helpcenter/helpNoticeModify";
+	}
+	
+	// 공지글 수정하기
+	@RequestMapping(value="helpnoticeModify.hp")
+	public String helpnoticeModify(Board b) {
+		
+		hs.helpnoticeModify(b);
+		
+		return "helpcenter/helpModifySuccess";
+	}
+	
 
 
 }
