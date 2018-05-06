@@ -183,6 +183,7 @@
 	</c:if>
 </table>
 </div>
+
 <!-- 오른쪽 부분 -->
 <div class="showRightPart">
 <br/>
@@ -207,9 +208,22 @@
 						<br/><br/><br/>
 					</td>
 				</tr>
+				<%-- <tr>
+					<td class="tdClass"><b>댓글</b></td>
+					<td colspan="5">
+						<c:out value="${ hmap.mbListDetail.b_title }" />
+					</td>
+				</tr>
+				<tr>
+					<td class="tdClass"><b>댓글 쓰기</b></td>
+					<td colspan="5">
+						<textarea  placeholder="댓글을 입력하세요."></textarea>
+						<button class="okay">댓글쓰기</button>
+					</td>
+				</tr> --%>
 			</table>
-		</div>
 		
+		</div>
 		<br/>
 		<br/>
 		<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
@@ -221,7 +235,6 @@
 		<div align="center">
 			<button type="button" class="okay2" onclick="listBtn();">목록으로</button>
 		</div>
-			
 		<script>
 		
 			function deleteBtn(){
@@ -235,10 +248,9 @@
 				var mId = "${ jdbcInfo.mid }";
 				location.href="${ contextPath }/BSmyBoard.board?mId=" + mId;
 			}
-		
-		
-		
 		</script>
+
+</div>
 </div>
 </div>
 </body>

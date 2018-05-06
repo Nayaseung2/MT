@@ -288,15 +288,10 @@
             </div>
          </div>
       </div> 
+      <div id="fan" style="display:none;">
+      </div>
      
-      <!-- <div class="dropdown1">
-      	<li><a href="#" id="current">승구</a>
-         <ul>
-           <li><button id="singo" class="singo122">신고하기</button></li>
-           <li><button id="black" class="black">블랙하기</button></li>
-         </ul>
-     	</li>
-      </div> -->
+      
       <input id="maxViewer" class="maxViewer" type="hidden" value="0"/>
     <input id="bjJCode" class="bjJCode" type="hidden" value="${bjJ.jcode}"/>
 	<input id="bjId1" class="bjId1" type="hidden"/>
@@ -524,11 +519,33 @@
                 // 먼저 input의 공백과 특수문자들 제거
                 this.value = this.value.replace(/^\s+|\s+$/g, '');
                 if (!this.value.length) return;
-                 
-               connection.send("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+this.value);
+               
+                var fans = $("#fan").text();
+            	var fan = fans.split(", ");
+            	var bool = 1;
+            	var userid = "${loginUser.mId}";
+            	for(var i in fan){
+					console.log("fan[i]"+fan[i]);	            		
+            		if(fan[i] == userid){
+					bool=2;	
+            		break;
+            		}
+            	}
+            	if(bool == 1){
+ 	           		connection.send("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+this.value);
+            		appendDIV("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+this.value);
+            		this.value = '';
+            		BJblack();
+            	}else if(bool == 2){
+            		connection.send("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font' style='color:blue'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"++this.value);
+            		appendDIV("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font' style='color:blue'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"++this.value);
+            		this.value = '';
+            		BJblack();
+            	}
+               /* connection.send("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+this.value);
                appendDIV("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+this.value);
                 this.value = '';
-                BJblack();
+                BJblack(); */
             };
             //피치쏘기
             /* document.getElementById("peach").onclick = function(){
@@ -566,10 +583,29 @@
             }; 
             document.getElementById("btn-chat").onclick = function(){
             	var text11 = document.getElementById('btn-input');
-            	connection.send("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+text11.value);
-            	appendDIV("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+text11.value);
-            	text11.value ='';
-            	BJblack();
+            	var fans = $("#fan").text();
+            	var fan = fans.split(", ");
+            	var bool = 1;
+            	var userid = "${loginUser.mId}";
+            	for(var i in fan){
+					console.log("fan[i]"+fan[i]);
+					console.log(fans);
+            		if(fan[i] == userid){
+					bool=2;	
+            		break;
+            		}
+            	}
+            	if(bool == 1){
+ 	           		connection.send("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+text11.value);
+            		appendDIV("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+text11.value);
+            		text11.value ='';
+            		BJblack();
+            	}else if(bool == 2){
+            		connection.send("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font' style='color:blue'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+text11.value);
+            		appendDIV("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font' style='color:blue'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+text11.value);
+            		text11.value ='';
+            		BJblack();
+            	}
             };
             
             function appendDIV(event) {
@@ -606,7 +642,7 @@
                 div.innerHTML = event.data || event;
                 chat_small.append(div);
               div.tabIndex = 0;
-              div.focus();
+              //div.focus();
               BJblack();
                 document.getElementById('btn-input').focus();
                 if(event.data) {
@@ -720,14 +756,14 @@
 	    //실질적으로 필요한 url
 	    var href3 = '';
 	    var bjJcode = $("#bjJCode").val();
+	    /* var BJmId = "${bjJ.jcode}"; */
 	    if(href2.length!=1){
 	    href3 = href2[1];
 	    $.ajax({
 	    	url:'JDBCInfo.lb',
 	    	type:'post',
 	    	data:{
-	    		href3:href3
-	    		
+	    		href3:href3,
 	    	},
 	    	success:function(data){
 	    		var loginUserMid = "${loginUser.mId}";	
@@ -742,6 +778,13 @@
 	    			$("#open-or-join-cam").css({"display":"inline","margin-top":"15px"});
 		    		$("#open-or-join").css({"display":"inline","margin-top":"15px"});
 		    		$("#stop-broadcast").css({"display":"inline","margin-top":"15px"});
+	    		}
+	    		console.log(data.fanlist.length);
+	    		console.log(data.fanlist);
+	    		console.log(data.fanlist[0].mId);
+	    		for(var i =0; i < data.fanlist.length; i++){
+	    			var fan = data.fanlist[i].mId;
+		    		$("#fan").append(fan+", ");
 	    		}
 	    	}
 	    });
@@ -769,6 +812,13 @@
 			    		$("#open-or-join").css({"display":"inline","margin-top":"15px"});
 			    		$("#stop-broadcast").css({"display":"inline","margin-top":"15px"});
 		    		}
+		    		console.log(data.fanlist.length);
+		    		console.log(data.fanlist);
+		    		console.log(data.fanlist[0].mId);
+		    		for(var i =0; i < data.fanlist.length; i++){
+		    			var fan = data.fanlist[i].mId;
+			    		$("#fan").append(fan+", ");
+		    		}
 		    	}
 		    });
 	    }
@@ -783,7 +833,9 @@
 	   var bjId = document.getElementById("bjId").value;
 	   var userPeach = $("#peachNumber").val();
 	   var num =userPeach-peachNum;
-	   
+	   console.log(userPeach+"내꺼");
+	   console.log(peachNum+"줄거");
+	   console.log(num);
 	   if(userPeach < peachNum){
 		   alert("피치갯수가 모자랍니다");
 	   }else if(peachNum == "0"){
@@ -811,6 +863,22 @@
 	             appendDIV(text111);
 	             $("#peachNumber").val(num);
 	             $("#peachNum").value="";
+	             
+	             
+	            var fans = $("#fan").text();
+	            var fan = fans.split(", ");
+	            var bool = 1;
+	            
+	            for(var i in fan){
+					console.log("fan[i]"+fan[i]);
+					console.log(fans);
+	            	if(fan[i] == userId){
+					bool=2;	
+	            	break;
+	            	}
+	            }if(bool == 1){
+		            $("#fan").append(userId+", ");
+	            }
 	         }
 	         
 	   	});
@@ -940,17 +1008,7 @@
 			console.log("2"+reder_mCode);
 		});
 		
-		jQuery(document).ready(function($) {
-		    var checkload = true;
-		    $("#submit-btn").click(function () {
-		        checkload = false;
-		    });
-		    $(window).on("beforeunload", function () {
-		        if (checkload == true) return "레알 나감????????????";
-		        //여기여 나가는 로그
-		    });
-		    
-		});
+		
 		function viewerCount(value){
 			var bjId9 = $("#bjId1").val();
 			var viewers = value;

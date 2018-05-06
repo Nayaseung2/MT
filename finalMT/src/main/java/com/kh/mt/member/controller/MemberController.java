@@ -49,7 +49,7 @@ public class MemberController {
 	@RequestMapping(value="showMainPage.me")
 	public String showshowMainPage() {
 
-		return "main/main";
+		return "allBJ.lb";
 	}
 	@RequestMapping(value="showLoginPage.me")
 	public String showLoginPage() {
@@ -91,7 +91,8 @@ public class MemberController {
 	            out.flush();
 
 				mv.setViewName("main/main");
-				
+				//return "allBJ.lb";
+				//mv.setViewName("../../allBJ.lb");
 			}else{
 				
 				out.println("<script>alert('아이디 또는 비밀번호를 확인해주세요.');</script>");

@@ -24,7 +24,7 @@
                   </div>
                </div>   
             </div>
-            <div class="row">
+            <div class="row000">
             <c:forEach var="list" items="${map.list}">
             
                 <div class="col-sm-6 col-md-3 themeix-half">
