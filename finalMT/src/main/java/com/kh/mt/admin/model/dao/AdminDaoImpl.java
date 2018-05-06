@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.mt.admin.model.vo.Contact;
 import com.kh.mt.admin.model.vo.Report;
 import com.kh.mt.admin.model.vo.Revenue;
+import com.kh.mt.admin.model.vo.SuccessContact;
 import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
@@ -359,6 +360,46 @@ public class AdminDaoImpl implements AdminDao{
 	@Override
 	public int refusal(String wdCode) {
 		return sqlSession.update("Admin.refusal", wdCode);
+	}
+
+	@Override
+	public int successContactCount() {
+		return sqlSession.selectOne("Admin.successContactCount");
+	}
+
+	@Override
+	public HashMap<String, Object> typeCount() {
+		
+		HashMap<String, Object> list = (HashMap)sqlSession.selectOne("Admin.typeCount");
+		
+		System.out.println("typeCount list : " + list);
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<SuccessContact> successContactList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		ArrayList<SuccessContact> list = (ArrayList)sqlSession.selectList("Admin.successContactList", null, rowBounds);
+		
+		return list;
+	}
+
+	@Override
+	public int searchSuccessContact(String userId) {
+		return sqlSession.selectOne("Admin.searchSuccessContact", userId);
+	}
+
+	@Override
+	public ArrayList<SuccessContact> searchSuccessContactUser(String userId, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		ArrayList<SuccessContact> list = (ArrayList)sqlSession.selectList("Admin.searchSuccessContactUser", userId, rowBounds);
+		
+		return list;
 	}
 
 	

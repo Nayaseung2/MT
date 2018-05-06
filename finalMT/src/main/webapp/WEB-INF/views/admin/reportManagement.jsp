@@ -79,12 +79,12 @@ tr, th {
 #dataTables-example td{
 	line-height: 2.5em;
 }
-#dataTables-example td:nth-child(4){
-	display: block; 
-	width:100%; 
-	overflow:hidden; 
-	text-overflow:ellipsis; 
-	white-space:nowrap;
+#dataTables-example td:nth-child(3), #dataTables-example td:nth-child(4) {
+	display: table-cell; 
+	width: 100%; 
+	overflow: hidden; 
+	text-overflow: ellipsis; 
+	white-space: nowrap;
 }
 #all {
 	margin-top: 10px;
@@ -146,10 +146,13 @@ tr, th {
                             <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 신고</a>
                         </li>
                         <li>
-                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 완료된 신고 내역</a>
+                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 신고 내역</a>
                         </li>
                        	<li>
-                            <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
+                            <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 문의</a>
+                        </li>
+                        <li>
+                            <a href="successContact.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
                         </li>
                     </ul>
                 </div>
@@ -160,7 +163,7 @@ tr, th {
 		<div id="page-wrapper" style="margin-top: 63px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header" style="font-weight: bold;">신고 내역</h1>
+                    <h1 class="page-header" style="font-weight: bold;">신고</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -260,7 +263,7 @@ tr, th {
 	      <!-- body -->
 	      <div class="modal-body">
 				<div class="modal-left">
-					<img style="width: 100%; height: 100%;" src="" class="screen"/>
+					<img style="width: 100%; height: 100%; max-height: 800px;" src="" class="screen"/>
 				</div>
 				<div class="modal-right">
 					<table class="modalTable">
@@ -367,7 +370,7 @@ tr, th {
                 	var list = data.map.list;
     	       		var pi = data.map.pi;
 
-    	       		if(list.length != 0){
+    	       		if(list.length > 0){
     	       			$(".values").html("");
     	       		
 	    	      		for(var i = 0; i < list.length; i++){
@@ -402,7 +405,7 @@ tr, th {
 		  				}
     	       		}else {
     	       			alert("해당 유저의 정보가 없습니다.");
-    	       			location.reload();
+    	       			$("#search").focus();
     	       		}
                 },
                 error:function(data){
