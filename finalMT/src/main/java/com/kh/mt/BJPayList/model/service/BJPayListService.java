@@ -54,6 +54,16 @@ public interface BJPayListService {
 
 	int SelectProfitPeach(String mcode);
 
+	String SelectMid(String mcode);
+
+	int SelectLiveTime(String mId);
+
+	int SelectAllLiveTime(String mId);
+
+	int SelectTodayLiveTime(String mId);
+
+	int SelectLiveTimeYday(String mId);
+
 
 
 

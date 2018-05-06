@@ -34,7 +34,7 @@
 				<div align="left" style="width: 50%; height: 30%;">
 					&nbsp;&nbsp;&nbsp;
 					<img src="${contextPath }/resources/images/pay/peach.png" style="width: 20%">&nbsp;&nbsp;&nbsp;
-					<label style="font-size: 200%;">&nbsp;&nbsp;&nbsp;보유 피치 수 : ${peach}개</label>
+					<label style="font-size: 200%;">&nbsp;&nbsp;&nbsp;보유 피치 수 : ${loginUser.peach}개</label>
 				</div>
 				<br><br>
 				<table style="text-align: center;">
@@ -78,7 +78,7 @@
 	    pay_method : 'card', //card(신용카드), trans(실시간계좌이체), vbank(가상계좌), phone(휴대폰소액결제)
 	    merchant_uid : 'merchant_' + new Date().getTime(), //상점에서 관리하시는 고유 주문번호를 전달
 	    name : '피치 결제 '+payname+' 개',
-	    amount : 100,
+	    amount : peach,
 	    buyer_email : 'sosoccdd22@gmail.com',
 	    buyer_name : '서은별',
 	    buyer_tel : '010-1234-5678', //누락되면 이니시스 결제창에서 오류

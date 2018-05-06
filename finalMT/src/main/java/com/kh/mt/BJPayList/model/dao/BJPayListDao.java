@@ -56,6 +56,16 @@ public interface BJPayListDao {
 
 	int SelectProfitPeach(SqlSessionTemplate sqlSession, String mcode);
 
+	String SelectMid(SqlSessionTemplate sqlSession, String mcode);
+
+	int SelectLiveTime(SqlSessionTemplate sqlSession, String mId);
+
+	int SelectAllLiveTime(SqlSessionTemplate sqlSession, String mId);
+
+	int SelectTodayLiveTime(SqlSessionTemplate sqlSession, String mId);
+
+	int SelectLiveTimeYday(SqlSessionTemplate sqlSession, String mId);
+
 	
 
 

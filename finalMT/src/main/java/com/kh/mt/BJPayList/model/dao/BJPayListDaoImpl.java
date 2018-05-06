@@ -1,6 +1,8 @@
 package com.kh.mt.BJPayList.model.dao;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
@@ -198,14 +200,65 @@ public class BJPayListDaoImpl implements BJPayListDao{
 
 	@Override
 	public int SelectMyFanCount(SqlSessionTemplate sqlSession, String mcode) {
-		int MyFanCount = sqlSession.selectOne("BJPayList.SelectMyFanCount", mcode);
+		Date from = new Date();
+
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		String to = transFormat.format(from);
+		System.out.println(to);
+		Subscribe sc = new Subscribe();
+		sc.setBj_mcode(mcode);
+		sc.setRead_date(to);
+		int MyFanCount = sqlSession.selectOne("BJPayList.SelectMyFanCount", sc);
 		return MyFanCount;
 	}
 
 	@Override
 	public int SelectProfitPeach(SqlSessionTemplate sqlSession, String mcode) {
-		int ProfitPeach = sqlSession.selectOne("BJPayList.SelectProfitPeach", mcode);
+		Date from = new Date();
+
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		String to = transFormat.format(from);
+		System.out.println(to);
+		Expeach ep = new Expeach();
+		ep.setFrom_mcode(mcode);
+		ep.setSend_date(to);
+
+		int ProfitPeach = sqlSession.selectOne("BJPayList.SelectProfitPeach", ep);
 		return ProfitPeach;
+	}
+
+	@Override
+	public String SelectMid(SqlSessionTemplate sqlSession, String mcode) {
+		String mId = sqlSession.selectOne("BJPayList.SelectMid", mcode);
+		return mId;
+	}
+
+	@Override
+	public int SelectLiveTime(SqlSessionTemplate sqlSession, String mId) {
+		int time = sqlSession.selectOne("BJPayList.SelectLiveTime", mId);
+		return time;
+	}
+
+	@Override
+	public int SelectAllLiveTime(SqlSessionTemplate sqlSession, String mId) {
+		int AllLiveTime = sqlSession.selectOne("BJPayList.SelectAllLiveTime", mId);
+		return AllLiveTime;
+	}
+
+	@Override
+	public int SelectTodayLiveTime(SqlSessionTemplate sqlSession, String mId) {
+		int TodayLiveTime = sqlSession.selectOne("BJPayList.SelectTodayLiveTime", mId);
+		System.out.println(TodayLiveTime);
+		return TodayLiveTime;
+	}
+
+	@Override
+	public int SelectLiveTimeYday(SqlSessionTemplate sqlSession, String mId) {
+		int LiveTimeYday = sqlSession.selectOne("BJPayList.SelectLiveTimeYday", mId);
+		System.out.println(LiveTimeYday);
+		return LiveTimeYday;
 	}
 
 
