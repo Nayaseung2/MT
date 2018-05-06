@@ -425,8 +425,8 @@
                 });
             };
             // by default, socket.io server is assumed to be deployed on your own URL
-            connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
             //connection.socketURL = 'http://localhost:9001/';
+            connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
             // comment-out below line if you do not have your own socket.io server
             // connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
             connection.socketMessageEvent = 'audio-video-screen-demo';
@@ -493,25 +493,6 @@
                 }
             };
             
-
-        	/* 채팅 div 형태
-        	<div class="panel-body" style="height: 460px; overflow: overlay;">
-        		<ul class="chat">
-        			<li class="left clearfix">
-        				<span class="chat-img pull-left"></span>
-        				<div class="chat-body clearfix">
-        					<div class="header">
-        						<i class="fa fa-github-alt fa-fw"></i> 
-        						<strong class="primary-font">아프리카 청춘이다</strong> 
-        						<small class="pull-right text-muted"></small>
-        					</div>
-        				<p>오늘도 즐방 하세요~~!</p>
-        				</div>
-        			</li>
-        		</ul>
-        	</div> */
-        	
-        	/* UI코드 */
         	
         	/*  채팅코드  */ 
         	 document.getElementById('btn-input').onkeyup = function(e) {
@@ -537,8 +518,8 @@
             		this.value = '';
             		BJblack();
             	}else if(bool == 2){
-            		connection.send("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font' style='color:blue'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"++this.value);
-            		appendDIV("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font' style='color:blue'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"++this.value);
+            		connection.send("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font' style='color:blue'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+this.value);
+            		appendDIV("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font' style='color:blue'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+this.value);
             		this.value = '';
             		BJblack();
             	}
@@ -728,7 +709,6 @@
 	      var roomid = document.getElementById('broadcast-id').value;
 	      var mid = document.getElementById('mid').value;
 	      var bjJCode = document.getElementById('bjJCode').value;
-	     /* $("#open-or-join-cam").disabled = true; */
 	     $('#open-or-join-cam').attr('disabled', true);
 	      $.ajax({
 	         url:"startBrod.lb",
@@ -744,9 +724,6 @@
 	      });
 	      $('#stop-broadcast').attr('disabled', false);
 	   })
-    /* function singo(){
-       location.href="${contextPath}"
-    } */
    $(function(){
 	    console.log("href: "+$(location).attr('href'));
 	    //현재 url전체
@@ -1025,6 +1002,6 @@
 			});
 		}
 	</script>
-</div>
+
 </body>
 </html>
