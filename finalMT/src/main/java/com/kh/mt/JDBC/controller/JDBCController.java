@@ -80,8 +80,8 @@ public class JDBCController {
 		model.addAttribute("m", m);
 		model.addAttribute("jdbcInfo", j);
 		if(f!=null){
-			//System.out.println("controller f : "+f);
-			//model.addAttribute("jdbcLogoFile", f);
+			System.out.println("controller f : "+f);
+			model.addAttribute("jdbcLogoFile", f);
 			session.setAttribute("jdbcLogoFile", f);
 		}
 		return "JDBC/myBroadcastStation";

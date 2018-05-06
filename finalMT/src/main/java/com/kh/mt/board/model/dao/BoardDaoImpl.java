@@ -127,5 +127,5 @@ public class BoardDaoImpl implements BoardDao {
 		int result = sqlSession.insert("Board.insertReply", re);
 		return result;
 	}*/
-}
+
 
