@@ -37,23 +37,17 @@
 <!-- Custom Theme JavaScript -->
 <script src="/mt/resources/admin/dist/js/sb-admin-2.js"></script>
 
-
 <style>
-tr, th {
-	text-align: center;
-}
 .modalTable, .modalTable td, .modalTable input{
 	width: 100%;
 }
+
 .modalTable input{
 	margin: 0px auto 20px auto; 
 	font-size: 18px;
 	font-weight: bold;
 }
-.modal-dialog{
-	width: 70%;
-	
-}
+
 .modalTable textarea{
 	width: 100%;
 	height: 200px;
@@ -62,16 +56,8 @@ tr, th {
 .modal-content label{
 	float: inherit;
 }
-
-.modal-left{
-	width: 69%;
-	display: inline-block;
-	vertical-align: top;
-}
-
-.modal-right {
-	width: 30%;
-	display: inline-block;
+th, td {
+	text-align: center;
 }
 #dataTables-example{
 	table-layout:fixed;
@@ -79,23 +65,19 @@ tr, th {
 #dataTables-example td{
 	line-height: 2.5em;
 }
-#dataTables-example td:nth-child(3){
+#dataTables-example td:nth-child(4), #dataTables-example td:nth-child(6) {
 	display: table-cell; 
-	width:100%; 
-	overflow:hidden; 
-	text-overflow:ellipsis; 
-	white-space:nowrap;
+	width: 100%; 
+	overflow: hidden; 
+	text-overflow: ellipsis; 
+	white-space: nowrap;
 }
 #all {
 	margin-top: 10px;
 }
 
-.reportSum {
-	font-weight: bold;
-	color: red;
-	
-}
 </style>
+
 
 </head>
 
@@ -163,10 +145,11 @@ tr, th {
 		<div id="page-wrapper" style="margin-top: 63px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header" style="font-weight: bold;">신고 내역</h1>
+                    <h1 class="page-header" style="font-weight: bold;">문의 내역</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+             
             <div class="row" style="margin-top: 30px;">
 				<div class="searchArea" align="center">
 					<table>
@@ -175,7 +158,7 @@ tr, th {
 								<div class="input-group custom-search-form" style="width: 100%; float: right;" >
 	                                <input type="text" class="form-control" placeholder="Search..." id="search">
 	                                <span class="input-group-btn">
-		                                <button class="btn btn-default" type="button" onclick="typeChange('sReportUser.ad')">
+		                                <button class="btn btn-default" type="button" onclick="typeChange('searchSuccessContact.ad')">
 		                                    <i class="fa fa-search"></i>
 		                                </button>
 	                            	</span>
@@ -185,8 +168,8 @@ tr, th {
 					</table>
 				</div>
             </div>
-			<div class="row" style="margin-top: 40px;">
-		        <div class="col-lg-12">
+            <div class="row" style="margin-top: 30px;">
+            	<div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">회원 정보</div>
                         <!-- /.panel-heading -->
@@ -194,24 +177,28 @@ tr, th {
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example" style="text-align: center;">
                                 <thead>
                                     <tr>
-                                        <th>신고자</th>
-                                        <th>신고 대상</th>
-										<th>신고 내용</th>
-										<th>누적 신고 수</th>
-                                        <th>처리 된 날짜</th>
+                                        <th>아이디</th>
+                                        <th>분류</th>
+                                        <th>문의 제목</th>
+                                        <th>문의 내용</th>
+                                        <th>문의 날짜</th>
+                                        <th>답변 내용</th>
+                                        <th>답변 날짜</th>
                                         <th align="center">자세히 보기</th>
                                     </tr>
                                 </thead>
                                 <tbody class="values">
-                                  <c:forEach var="i" items="${ map.list }">
+                                  <c:forEach var="c" items="${ map.clist }">
                                   	<tr>
-                                  		<td><c:out value="${ i.reporter }"/></td>
-                                  		<td><c:out value="${ i.target }"/></td>
-                                  		<td><c:out value="${ i.content }"/></td>
-                               			<td><c:out value="${ i.reportSum }"/></td>
-                                  		<td><c:out value="${ i.reportDate }"/></td>
-                                  		<td width="5%" align="center"><button class="btn btn-default detail">자세히 보기</button></td>
-                                  		<td style="display: none"><c:out value="${ i.screen }"/></td>
+                                  		<td><c:out value="${ c.bwriter }"/></td>
+                                  		<td><c:out value="${ c.b_type }"/></td>
+                                  		<td><c:out value="${ c.b_title }"/></td>
+                                  		<td><c:out value="${ c.b_content }"/></td>
+                                  		<td><c:out value="${ c.b_create_date }"/></td>
+                                  		<td><c:out value="${ c.content }"/></td>
+                                  		<td><c:out value="${ c.create_date }"/></td>
+                                  		<td class="detailTd"><button class="btn btn-default detail">자세히 보기</button></td>
+                                  		<td style="display:none;" id="${ c.b_code }"><c:out value="${ c.b_code }"/></td>
                                   	</tr>
                                   </c:forEach>
                                 </tbody>
@@ -225,7 +212,7 @@ tr, th {
 	                                    <li class="page-item active" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${p}</a></li>
 	                                 </c:if>
 	                                 <c:if test="${p ne map.pi.currentPage }">
-	                                    <li class="page-item " id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${p}</a></li>
+	                                    <li class="page-item" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text(), $('.type').attr('id'))">${p}</a></li>
 	                                 </c:if>
 	                              
 	                              </c:forEach>
@@ -237,9 +224,10 @@ tr, th {
                     </div>
                     <!-- /.panel -->
                 </div>
-			</div>            
+            </div>
         </div>
     </div>
+    <!-- /#wrapper -->
     <!-- .modal -->
     <div class="modal fade" id="layerpop" >
 	  <div class="modal-dialog">
@@ -253,64 +241,90 @@ tr, th {
 	      </div>
 	      <!-- body -->
 	      <div class="modal-body">
-				<div class="modal-left">
-					<img style="width: 100%; height: 100%;" src="" class="screen"/>
-				</div>
-				<div class="modal-right">
-					<table class="modalTable">
-				      	<tr>
-				      		<td><label>처리한 날짜</label><input type="text" class="date" readonly/></td>
-				      		<td style="display: none;" class="code"></td>
-				      	</tr>
-				      	<tr>
-				      		<td><label>신고자</label><input type="text" class="writer" readonly/></td>
-				      	</tr>
-				      	<tr>
-				      		<td style="width: 49%;"><label>신고 대상</label><input type="text" class="title" readonly/></td>
-				      	</tr>
-				      	<tr>
-				      		<td><label>내용</label><textarea class="content" readonly></textarea></td>
-				      	</tr>
-				      </table>
-				</div>
+		      <table class="modalTable">
+		      	<tr>
+		      		<td><label>분류</label><input type="text" class="ptype" readonly/></td>
+		      		<td style="display: none;" class="code"></td>
+		      	</tr>
+		      	<tr>
+		      		<td><label>날짜</label><input type="text" class="date" readonly/></td>
+		      	</tr>
+		      	<tr>
+		      		<td><label>작성자</label><input type="text" class="writer" readonly/></td>
+		      	</tr>
+		      	<tr>
+		      		<td><label>제목</label><input type="text" class="title" readonly/></td>
+		      	</tr>
+		      	<tr>
+		      		<td><label>내용</label><textarea class="content" readonly></textarea></td>
+		      	</tr>
+		      </table>
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
+	      	<label style="float: left;" class='replyDate'>답변날짜</label>
+				      	
+	      	<textarea style="width: 100%; height: 200px; resize: none;" class="replyContent" readonly></textarea>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 	<!-- /.modal -->
-    <!-- /#wrapper -->
-    <input type="hidden" value="${ map.pi.maxPage }" id="maxPage"/>
-    <input type="hidden" class="type" id="sReport.ad"/>
-	</c:if>
+	<input type="hidden" value="${ map.pi.maxPage }" id="maxPage"/>
+    <input type="hidden" class="type" id="successContact.ad"/>
+    </c:if>
     <c:if test="${ loginUser.mId ne 'admin' || loginUser == null}">
 		<c:redirect url="index.jsp"/>
     </c:if>
     <script>
-	    
-    function typeChange(type){
+   	
+   	$(document).on("click", ".detail", function(){
+		var writer = $(this).parent().parent().children().eq(0).text();
+		var ptype = $(this).parent().parent().children().eq(1).text();
+		var title = $(this).parent().parent().children().eq(2).text();
+		var content = $(this).parent().parent().children().eq(3).text();
+		var date = $(this).parent().parent().children().eq(4).text();
+		var replyContent = $(this).parent().parent().children().eq(5).text();
+		var replyDate = $(this).parent().parent().children().eq(6).text();
+		var code = $(this).parent().parent().children().last().text();
+		
+	    $('div.modal').modal();
+		
+		$(".ptype").val(ptype);
+		$(".code").val(code);
+		$(".date").val(date);
+		$(".writer").val(writer);
+		$(".title").val(title);
+		$(".content").text(content);
+		$(".replyDate").text("답변 날짜: " + replyDate);
+		$(".replyContent").text(replyContent);
+	});
+   	
+   	
+   	function typeChange(type){
 		$(".type").attr("id", type);
+		
 		pageChange("1", "", type);
-	};
+	}
 	
 	function onclickPage(value, type){
-		var url = type;        
-		var userId = $("#search").val();
+		
+		var url = type;
+		
+		console.log(url);
 		$.ajax({
    			url: url,
    			type: "get",
-   			data:{"newCurrentPage":value, "userId":userId},
+   			data:{"newCurrentPage":value},
    			success:function(data){
 	   
-	       		var list = data.map.list;
+	       		var list = data.map.clist;
 	       		var pi = data.map.pi;
 				$(".values").html("");
 	       
-				for(var i = 0; i < list.length; i++){
-					$(".values").append("<tr><td>"+list[i].reporter+"</td><td>"+list[i].target+"</td><td>"+list[i].content+"</td><td>"+list[i].reportSum+"</td><td>"+list[i].reportDate+"</td><td><button class='btn btn-default detail'>자세히 보기</button></td><td style='display: none'>"+list[i].screen+"</td></tr>");
-  				}
+	      		for(var i = 0; i < list.length; i++){
+	      			$(".values").append("<tr><td>"+list[i].bwriter+"</td><td>"+list[i].b_type+"</td><td>"+list[i].b_title+"</td><td>"+list[i].b_content+"</td><td>"+list[i].b_create_date+"</td><td>"+list[i].content+"</td><td>"+list[i].create_date+"</td><td class='detailTd'><button class='btn btn-default detail'>자세히 보기</button></td></tr>");
+	      		}
 	      		
 	      		$(".pageul").children().removeClass('active');
 	      		$("#cu"+value).addClass('active');
@@ -324,103 +338,72 @@ tr, th {
 	}
 	
 	function pageChange(pagenum, value, type){
-		var page = Number(pagenum);
-		var url = type;		
-		var userId = $("#search").val();
-		
-		console.log("page: " + page);
-		console.log("url: " + url);
-		console.log("userId: " + userId);
-		
-		if(page >= 1 && page <= $("#maxPage").val()){
-  			if(value === 'plus'){
-  				if(page == $("#maxPage").val()){
-  					return;
-  				}
-  				page += 1;
-  			}else if(value === 'minus'){
-  				if(page === 1){
-  					return;
-  				}
-  				page -= 1;
-  			}
-  			
-  			$.ajax({
-  				url: url,
-  				type: "get",
-  				data:{"newCurrentPage":page, "userId": userId},
-  				success:function(data){
-	  				var list = data.map.list;
-	  				var pi = data.map.pi;
-		  				
-	  				if(list.length > 0){
-		  				$(".values").html("");
-		  				
-		  				for(var i = 0; i < list.length; i++){
-			  				$(".values").append("<tr><td>"+list[i].reporter+"</td><td>"+list[i].target+"</td><td>"+list[i].content+"</td><td>"+list[i].reportSum+"</td><td>"+list[i].reportDate+"</td><td><button class='btn btn-default detail'>자세히 보기</button></td><td style='display: none'>"+list[i].screen+"</td></tr>");
-		  				}
-		  				
-		  				$(".pageul").html("");
-	    	      		$(".pageul").append("<li class='page-item'><a class='page-link back'>이전</a></li>");
-	    	      		
-	    	      		console.log(pi);
-	    	      		
-	    	      		for(var i = pi.startPage; i <= pi.endPage; i++){
-	    	      			if(i == pi.currentPage){
-	    	      				$(".pageul").append("<li class='page-item active' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
-	    	      			}else {
-	    	      				$(".pageul").append("<li class='page-item' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
-	    	      			}
-	    	      		}
-	    	      		
-	    	      		$(".pageul").append("<li class='page-item'><a class='page-link next'>다음</a></li>");
-	    	      		$(".page-item").attr("onclick", "return onclickPage($(this).text(), $('.type').attr('id'))");
-	    	      		$(".back").attr("onclick", "return pageChange($('.active').children().text(),'minus', $('.type').attr('id'))");
-	    	      		$(".next").attr("onclick", "return pageChange($('.active').children().text(),'plus', $('.type').attr('id'))");
-	    	      		$("#maxPage").attr("value", pi.maxPage);
-	    	      		
-	    	      		if(userId != ""){
-		  					$("#all").remove();
-		  					$(".pageul").append("<br/><button class='btn btn-default' onclick='location.reload()' id='all'>전체보기</button>");
-		  				}
-	  				}else {
-	  					alert("해당 유저의 정보가 없습니다.\n아이디를 확인해주세요.");
-    	       			$("#search").focus();
+        var page = Number(pagenum);
+        var url = type;  
+        var userId = $("#search").val();
+        
+        console.log("url: "+url);
+        console.log("page: " + page);
+        console.log("userId: " + userId);
+        if(page >= 1 && page <= $("#maxPage").val()){
+             if(value === 'plus'){
+                if(page == $("#maxPage").val()){
+                   return;
+                }
+                page += 1;
+             }else if(value === 'minus'){
+                if(page === 1){
+                   return;
+                }
+                page -= 1;
+             }
+             
+             $.ajax({
+                url: url,
+                type: "get",
+                data:{"newCurrentPage":page, "userId":userId},
+                success:function(data){
+                	var list = data.map.clist;
+    	       		var pi = data.map.pi;
+    	       		console.log(pi.currentPage);
+    	       		console.log(list);
+    	       		
+    	       		
+    				$(".values").html("");
+    	       
+    	      		for(var i = 0; i < list.length; i++){
+    	      			$(".values").append("<tr><td>"+list[i].bwriter+"</td><td>"+list[i].b_type+"</td><td>"+list[i].b_title+"</td><td>"+list[i].b_content+"</td><td>"+list[i].b_create_date+"</td><td>"+list[i].content+"</td><td>"+list[i].create_date+"</td><td class='detailTd'><button class='btn btn-default detail'>자세히 보기</button></td></tr>");
+    	      		}
+    	      		
+					$(".pageul").html("");
+    	      		$(".pageul").append("<li class='page-item'><a class='page-link back'>이전</a></li>");
+    	      		
+    	      		for(var i = pi.startPage; i <= pi.endPage; i++){
+    	      			if(i == pi.currentPage){
+    	      				$(".pageul").append("<li class='page-item active' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
+    	      			}else {
+    	      				$(".pageul").append("<li class='page-item' id='cu" + i + "'><a class='page-link' id='page'>" + i + "</a></li>");
+    	      			}
+    	      		}
+    	      		$(".pageul").append("<li class='page-item'><a class='page-link next'>다음</a></li>");
+
+    	      		$(".page-item").attr("onclick", "return onclickPage($(this).text(), $('.type').attr('id'))");
+    	      		$(".back").attr("onclick", "return pageChange($('.active').children().text(),'minus', $('.type').attr('id'))");
+    	      		$(".next").attr("onclick", "return pageChange($('.active').children().text(),'plus', $('.type').attr('id'))");
+    	      		$("#maxPage").attr("value", pi.maxPage);
+    	      		
+    	      		if(userId != ""){
+	  					$("#all").remove();
+	  					$(".pageul").append("<br/><button class='btn btn-default' onclick='location.reload()' id='all'>전체보기</button>");
 	  				}
-	  				
-  				},
-  				error:function(data){
-  					console.log("에러!");
-  				}
-  			});
-			return false;
-		}
-	};
-	
-	$(document).on("click", ".detail", function(){
-		var writer = $(this).parent().parent().children().eq(0).text();
-		var title = $(this).parent().parent().children().eq(1).text();
-		var content = $(this).parent().parent().children().eq(2).text();
-		var date = $(this).parent().parent().children().eq(4).text();
-		var screen = "/mt/resources/uploadFiles/" + $(this).parent().parent().children().last().text();
-		
-	    $('div.modal').modal();
-		
-		$(".writer").val(writer);
-		$(".title").val(title);
-		$(".date").val(date);
-		$(".content").text(content);
-		$(".screen").attr("src", screen);
-		
-	});
-	
-	function go(){
-		var target = $(".title").val();
-		
-		
-		  
-	}
-	
-    </script>
+                },
+                error:function(data){
+                   console.log("에러!");
+                }
+             });
+              return false;
+           }
+    }
+   	</script>
 </body>
 </html>

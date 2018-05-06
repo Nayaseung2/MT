@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.kh.mt.admin.model.vo.Contact;
 import com.kh.mt.admin.model.vo.Report;
 import com.kh.mt.admin.model.vo.Revenue;
+import com.kh.mt.admin.model.vo.SuccessContact;
 import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
@@ -100,5 +101,15 @@ public interface AdminDao {
 	ArrayList<Report> sReportUserList(PageInfo pi, String userId);
 
 	int refusal(String wdCode);
+
+	int successContactCount();
+
+	HashMap<String, Object> typeCount();
+
+	ArrayList<SuccessContact> successContactList(PageInfo pi);
+
+	int searchSuccessContact(String userId);
+
+	ArrayList<SuccessContact> searchSuccessContactUser(String userId, PageInfo pi);
 
 }

@@ -10,6 +10,7 @@ import com.kh.mt.admin.model.dao.AdminDao;
 import com.kh.mt.admin.model.vo.Contact;
 import com.kh.mt.admin.model.vo.Report;
 import com.kh.mt.admin.model.vo.Revenue;
+import com.kh.mt.admin.model.vo.SuccessContact;
 import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
@@ -321,6 +322,32 @@ public class AdminSerivceImpl implements AdminService{
 	@Override
 	public int refusal(String wdCode) {
 		return ad.refusal(wdCode);
+	}
+
+	@Override
+	public int successContactCount() {
+		
+		return ad.successContactCount();
+	}
+
+	@Override
+	public HashMap<String, Object> typeCount() {
+		return ad.typeCount();
+	}
+
+	@Override
+	public ArrayList<SuccessContact> successContactList(PageInfo pi) {
+		return ad.successContactList(pi);
+	}
+
+	@Override
+	public int searchSuccessContact(String userId) {
+		return ad.searchSuccessContact(userId);
+	}
+
+	@Override
+	public ArrayList<SuccessContact> searchSuccessContactUser(String userId, PageInfo pi) {
+		return ad.searchSuccessContactUser(userId, pi);
 	}
 
 

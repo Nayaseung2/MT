@@ -96,10 +96,13 @@ th, td {
                             <a href="reportMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 신고</a>
                         </li>
                         <li>
-                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 완료된 신고 내역</a>
+                            <a href="sReport.ad"><i class="fa fa-edit fa-fw"></i> 신고 내역</a>
                         </li>
                        	<li>
-                            <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
+                            <a href="contactMg.ad"><i class="fa fa-edit fa-fw"></i> 들어온 문의</a>
+                        </li>
+                        <li>
+                            <a href="successContact.ad"><i class="fa fa-edit fa-fw"></i> 문의 내역</a>
                         </li>
                     </ul>
                 </div>

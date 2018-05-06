@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.kh.mt.admin.model.vo.Contact;
 import com.kh.mt.admin.model.vo.Report;
 import com.kh.mt.admin.model.vo.Revenue;
+import com.kh.mt.admin.model.vo.SuccessContact;
 import com.kh.mt.admin.model.vo.Withdrawal;
 import com.kh.mt.common.PageInfo;
 import com.kh.mt.member.model.vo.Member;
@@ -107,6 +108,16 @@ public interface AdminService {
 	int sReportUserSearch(String userId); //신고 처리완료된 회원 리스트카운트 조회
 
 	ArrayList<Report> sReportUserList(PageInfo pi, String userId); //신고처리 완료된 회원 리스트 조회
+
+	int successContactCount(); //처리 완료된 문의내역 갯수
+
+	HashMap<String, Object> typeCount();
+
+	ArrayList<SuccessContact> successContactList(PageInfo pi); //처리 완료된 문의내역 리스트 
+
+	int searchSuccessContact(String userId); //처리완료된문의 회원찾기
+
+	ArrayList<SuccessContact> searchSuccessContactUser(String userId, PageInfo pi); // 처리완료된문의 회원찾기
 
 } 
  
