@@ -10,7 +10,7 @@ public class LiveBj {
 	private String mid;
 	private String nickname;
 	private String f_rename;
-	private int like;
+	private String like;
 	private String starttime;
 	private String jcode;
 	private String introduce;
@@ -22,7 +22,7 @@ public class LiveBj {
 		super();
 	}
 	public LiveBj(String cate, String bsTitle, String bsContent, String mid, String nickname, String f_rename,
-			int like, String starttime, String jcode, String introduce, String v_state, String v_href,
+			String like, String starttime, String jcode, String introduce, String v_state, String v_href,
 			int v_viewers) {
 		super();
 		this.cate = cate;
@@ -75,10 +75,10 @@ public class LiveBj {
 	public void setF_rename(String f_rename) {
 		this.f_rename = f_rename;
 	}
-	public int getLike() {
+	public String getLike() {
 		return like;
 	}
-	public void setLike(int like) {
+	public void setLike(String like) {
 		this.like = like;
 	}
 	public String getStarttime() {

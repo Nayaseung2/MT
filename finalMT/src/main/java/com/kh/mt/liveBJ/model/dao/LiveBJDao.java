@@ -32,7 +32,7 @@ public interface LiveBJDao {
 
 	int insertSingo(SqlSessionTemplate sqlSession, Board b);
 
-	ArrayList insertBJBlackMember(SqlSessionTemplate sqlSession, BJBlackMember bm);
+	int insertBJBlackMember(SqlSessionTemplate sqlSession, BJBlackMember bm);
 
 	int insertGudock(SqlSessionTemplate sqlSession, Gudock gd);
 
@@ -47,6 +47,8 @@ public interface LiveBJDao {
 	ArrayList<String> selectFan(String href3);
 
 	int selectCount();
+
+	ArrayList<BJBlackMember> selectBlackMemberList(BJBlackMember bm);
 
 
 }

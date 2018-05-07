@@ -2,14 +2,15 @@ package com.kh.mt.board.model.service;
 
 import java.util.ArrayList;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.mt.board.model.dao.BoardDao;
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
-import com.kh.mt.board.model.vo.Reply;
 import com.kh.mt.common.PageInfo;
+import com.kh.mt.reply.model.vo.ReplyVo;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -92,11 +93,11 @@ public class BoardServiceImpl implements BoardService{
 		
 		return gList;
 	}
-	/*@Override
-	public int insertReply(Reply re) {
+	@Override
+	public int insertReply(ReplyVo re) {
 		int result = bd.insertReply(re);
 		return result;
-	}*/
+	}
 	
 	// 방송국 - 내 게시판 글 수정
 	@Override
@@ -116,6 +117,16 @@ public class BoardServiceImpl implements BoardService{
 		
 		BSmyBoardModifyP = bd.BSmyBoardModifyP(f);
 		
+	}
+	@Override
+	public int selectReplyCount(Board b) {
+		int count = bd.selectReplyCount(b);
+		return count;
+	}
+	@Override
+	public ArrayList<ReplyVo> selectReplyList(Board b, PageInfo pi) {
+		ArrayList<ReplyVo> list = bd.selectReplyList(b, pi);
+		return list;
 	}
 	
 

@@ -288,17 +288,16 @@
             </div>
          </div>
       </div> 
-      <div id="fan" style="display:none;">
-      </div>
+      <div id="fan" style="display:none;"></div>
+	<div id="blackMemberList"style="display:none;"></div>
      
       
       <input id="maxViewer" class="maxViewer" type="hidden" value="0"/>
-    <input id="bjJCode" class="bjJCode" type="hidden" value="${bjJ.jcode}"/>
+    <input id="bjJCode" class="bjJCode" type="text" value="${bjJ.jcode}"/>
 	<input id="bjId1" class="bjId1" type="hidden"/>
 	<input id="mid" type="hidden" value="${loginUser.mId}"/>
 	<input id="myId" type="hidden" value="${loginUser.mId}"/>
 	<input id="nickName" type="hidden" value="${loginUser.nickName}"/>
-	<div id="blackMemberList" style="display:none"></div>
 	<div id="room-urls" style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
 	<jsp:include page="../common/footer.jsp"/>
 
@@ -392,15 +391,12 @@
             window.onload = function() {
             	 $('#stop-broadcast').attr('disabled', true);
             	var jCode = $("#bjJCode").val();
-            	console.log("jCode"+jCode);
                 connection.openOrJoin(document.getElementById('broadcast-id').value, function(isRoomExists, roomid) {
                     if(!isRoomExists) {
                         showRoomURL(roomid);
                     }
                 });
                 var loginUser = "${loginUser.mId}";
-                console.log(loginUser == null);
-                console.log(loginUser == "");
                 if(loginUser == ""){
                 	$("#buttons").css({"display":"none"});
                 	$(".panel-footer").css({"display":"none"});
@@ -442,6 +438,11 @@
             };
             /* connection.videosContainer = document.getElementById('newDiv2'); */
             connection.videosContainer = document.getElementById("video-preview");
+            function appendBlack(){
+            	connection.connectSocket(function() {
+            		 blackAllconnection();
+            	});
+            };
             connection.onstream = function(event) {
                 if(document.getElementById(event.streamid)) {
                     var existing = document.getElementById(event.streamid);
@@ -471,7 +472,7 @@
                 connection.connectSocket(function() {
                 	numberOfUsers = connection.getAllParticipants().length;
 	                viewerCount(numberOfUsers);
-       		        console.log(numberOfUsers+"명이다!");
+	                blackAllconnection();
        		        if(numberOfUsers === "0"){
        		        	$("#viewers").text(0 +" 명");
        		        	var maxViewers = $("#maxViewer").val();
@@ -479,6 +480,7 @@
        		        		$("#maxViewer").val(numberOfUsers);
        		        	}
        		        }
+       		    
                 });
                 
             };
@@ -506,7 +508,6 @@
             	var bool = 1;
             	var userid = "${loginUser.mId}";
             	for(var i in fan){
-					console.log("fan[i]"+fan[i]);	            		
             		if(fan[i] == userid){
 					bool=2;	
             		break;
@@ -523,30 +524,9 @@
             		this.value = '';
             		BJblack();
             	}
-               /* connection.send("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+this.value);
-               appendDIV("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+this.value);
-                this.value = '';
-                BJblack(); */
+              
             };
-            //피치쏘기
-            /* document.getElementById("peach").onclick = function(){
-
-            	var myId = document.getElementById("myId").value;
-            	console.log("쉬벨"+myId);
-            	var url = "peach.lb";
-            	$.ajax({
-            		url:url,
-            		type:"post",
-            		data:{"mId":myId},
-            		success:function(data){
-            			alert("당신의 보유 피치 수는 : "+data.peach);
-            			console.log("당신의 보유 피치 수는 : "+data.peach);
-            		},
-            		error:function(data){
-            			
-            		}
-            	});
-            } */
+            
             
             document.getElementById("peach").onclick = function(){
             	 var userid = document.getElementById("myId");
@@ -558,8 +538,6 @@
             	if(userpeach = 0){
             		
             	}
-            	/* console.log("기리리잇"+"${loginUser.peach}");
-            	console.log("기리리잇"+bjnickName); */
             	
             }; 
             document.getElementById("btn-chat").onclick = function(){
@@ -569,13 +547,13 @@
             	var bool = 1;
             	var userid = "${loginUser.mId}";
             	for(var i in fan){
-					console.log("fan[i]"+fan[i]);
-					console.log(fans);
             		if(fan[i] == userid){
 					bool=2;	
             		break;
             		}
             	}
+            	
+            	
             	if(bool == 1){
  	           		connection.send("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+text11.value);
             		appendDIV("<i class='fa fa-github-alt fa-fw'></i><div class='dropdown1'><li><strong class='primary-font'>"+"${loginUser.nickName} : "+"</strong><ul><li><button id='singo' class='singo122' onclick='singo(this);'>신고하기</button></li><li><button id='black' class='black' onclick='CchungjaBlack(this)'>블랙하기</button></li></ul></li></div>"+text11.value);
@@ -725,7 +703,6 @@
 	      $('#stop-broadcast').attr('disabled', false);
 	   })
    $(function(){
-	    console.log("href: "+$(location).attr('href'));
 	    //현재 url전체
 	    var href1 = $(location).attr('href');
 	    //url 나눈거
@@ -750,15 +727,11 @@
 	    		$("#content1").text(data.bj.bsContent);
 	    		$("#viewers").text(data.bj.v_viewers+" 명");
 	    		var bool = "${loginUser.mId}" == data.bj.mid;
-	    		console.log(bool+"투루펄스");
 	    		if(loginUserMid === data.bj.mid){
 	    			$("#open-or-join-cam").css({"display":"inline","margin-top":"15px"});
 		    		$("#open-or-join").css({"display":"inline","margin-top":"15px"});
 		    		$("#stop-broadcast").css({"display":"inline","margin-top":"15px"});
 	    		}
-	    		console.log(data.fanlist.length);
-	    		console.log(data.fanlist);
-	    		console.log(data.fanlist[0].mId);
 	    		for(var i =0; i < data.fanlist.length; i++){
 	    			var fan = data.fanlist[i].mId;
 		    		$("#fan").append(fan+", ");
@@ -783,15 +756,11 @@
 		    		$("#bjId1").val(data.bj.mid);
 		    		$("#viewers").text(data.bj.v_viewers+" 명");
 		    		var bool = "${loginUser.mId}" == data.bj.mid;
-		    		console.log(bool+"투루펄스");
 		    		if(loginUserMid === data.bj.mid){
 		    			$("#open-or-join-cam").css({"display":"inline","margin-top":"15px"});
 			    		$("#open-or-join").css({"display":"inline","margin-top":"15px"});
 			    		$("#stop-broadcast").css({"display":"inline","margin-top":"15px"});
 		    		}
-		    		console.log(data.fanlist.length);
-		    		console.log(data.fanlist);
-		    		console.log(data.fanlist[0].mId);
 		    		for(var i =0; i < data.fanlist.length; i++){
 		    			var fan = data.fanlist[i].mId;
 			    		$("#fan").append(fan+", ");
@@ -806,13 +775,10 @@
    
    function peach(){
 	   var userId = document.getElementById('mid').value;
-	   var peachNum = document.getElementById("peachNum").value;
+	   var peachNum =  $("#peachNum").val();
 	   var bjId = document.getElementById("bjId").value;
 	   var userPeach = $("#peachNumber").val();
 	   var num =userPeach-peachNum;
-	   console.log(userPeach+"내꺼");
-	   console.log(peachNum+"줄거");
-	   console.log(num);
 	   if(userPeach < peachNum){
 		   alert("피치갯수가 모자랍니다");
 	   }else if(peachNum == "0"){
@@ -847,8 +813,6 @@
 	            var bool = 1;
 	            
 	            for(var i in fan){
-					console.log("fan[i]"+fan[i]);
-					console.log(fans);
 	            	if(fan[i] == userId){
 					bool=2;	
 	            	break;
@@ -865,9 +829,7 @@
 	   var singoja = $('#singoja').val();
 	   var singoMem = $("#singoMem").val();
 	   var singoContent = $("#singoContent").val();
-	   console.log("1 : "+singoja);
-	   console.log("1 : "+singoMem);
-	   console.log("1 : "+singoContent);
+	 
 	  
 	   $.ajax({
 		   url:"textsingo.lb",
@@ -903,31 +865,21 @@
 			$(".singo1").modal();
 			var text = $(value).parent("li").parent("ul").parent("li").children("strong").text();
 			var text1 = $(value).parent("li").parent("ul").parent("li").parent("div").parent("div").text();
-			console.log(this);
 			var text3 = text.replace(':','');
 			var text2 = text1.replace('신고하기블랙하기','');
-			console.log("이거다1"+text);
-			console.log("이거다2"+text2);
 			$(".singoContent").val(text2);
 			$(".singoMem").val(text3);
 		}; 
 		function BJblack(){
 			var userId = "${loginUser.mId}";
 			var bjId = $("#bjId1").val();
-			console.log("으익"+userId);
-			console.log("으익"+bjId);
-			console.log(userId === bjId);
-			console.log(userId == bjId);
 			if(userId === bjId){
 				$(".black").css({"display":"inline" , "background":"white" , "color":"black" , "border":"none" , "position":"absolute" , "height":"20px" , "font-size":"0.6em" , "cursor":"pointer" , "transition":"800ms ease all","outline":"none"});
 			}
 		}
 		function CchungjaBlack(value){
 			var text1 = $(value).parent("li").parent("ul").parent("li").parent("div").parent("div").text();
-			console.log("시부레 : "+text1);
 			var str = text1.split(" : ");
-			/* console.log(str[0]+"3");
-			console.log(str[1]+"3"); */
 			var adminbj = $(".bjId1").val();
 			$(".blackCChungja").modal();
 			$(".adminbj").val(adminbj);
@@ -945,14 +897,31 @@
 				 },
 				 success:function(data){
 					$(".close").click();
+					appendBlack();
 					alert("블랙하기 완료");
-					for(var i = 0; i< data.bmArr.length; i++){
-						$("#blackMemberList").text($("#blackMemberList").text()+", "+data.bmArr[i].bjMember);
-						console.log("마리아 : " + data.bmArr[i].bjMember);		
-					}
+					
 				 }
 			});	
+			blackAllconnection();
 		};
+		function blackAllconnection(){
+			var adminbj = $(".adminbj").val();
+			$.ajax({
+				url:"bjBlackMemberList.lb",
+				type:"POST",
+				data:{"adminbj":adminbj},
+				success:function(data){
+					var black112 ="${loginUser.mcode}";					
+					for(var i = 0; i< data.bmArr.length; i++){
+						if(data.bmArr[i].blackMember === black112){
+							$("#buttons").css({"display":"none"});
+		                	$(".panel-footer").css({"display":"none"});
+						};
+					}
+				}
+			});
+		}
+		
 		$("#BJSinggo").click(function(){
 			location.href="${contextPath}/helpreport.hp";
 		});
@@ -961,9 +930,6 @@
 			var reder_mCode = "${loginUser.mId}";
 			
 			var tt = document.getElementById("gudock").innerHTML;
-			console.log($("#gudock").text());
-			console.log(tt);
-			/* $("#gudock").text("구독취소하기"); */
 			var before = '<i align="center" class="fa fa-thumbs-o-up"></i>&nbsp;&nbsp;구독하기';
 			var after = '<i align="center" class="fa fa-thumbs-o-up"></i>구독취소하기';
 			$.ajax({
@@ -981,8 +947,6 @@
 					}
 				}
 			});
-			console.log("1"+BJ_mCode);
-			console.log("2"+reder_mCode);
 		});
 		
 		

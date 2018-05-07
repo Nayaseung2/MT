@@ -72,6 +72,7 @@ public class LiveBJFrontController {
 	public ModelAndView JDBCInfo2(ModelAndView mv,String href3, String jCode){
 		LiveBj bj1 = new LiveBj();
 		bj1.setJcode(jCode);
+		System.out.println("1 : "+jCode);
 		bj1.setMid(href3);
 		//fan
 		ArrayList<String> list = ls.selectFan(href3);
@@ -164,6 +165,7 @@ public class LiveBJFrontController {
 		f.setF_mcode(bj.getMid());
 		
 		String bjJcode = ls.insertBSCotent(bj);
+		System.out.println("2 : "+bjJcode);
 		ls.insertBSTitleImg(f);
 		bj.setJcode(bjJcode);
 		model.addAttribute("bjJ", bj);
@@ -201,12 +203,22 @@ public class LiveBJFrontController {
 	public ModelAndView insertBJBlackMember(ModelAndView mv, String adminbj, String blackMember){
 		
 		BJBlackMember bm = new BJBlackMember();
+		System.out.println(blackMember);
 		bm.setBjMember(adminbj);
 		bm.setBlackMember(blackMember);
 		
-		ArrayList bmArr = ls.insertBJBlackMember(bm);
+		int result= ls.insertBJBlackMember(bm);
 		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	@RequestMapping(value="bjBlackMemberList.lb")
+	public ModelAndView selectBlackMemberList(ModelAndView mv, String adminbj){
+		BJBlackMember bm = new BJBlackMember();
+		bm.setBjMember(adminbj);
+		ArrayList<BJBlackMember> bmArr = ls.selectBlackMemberList(bm);
 		mv.addObject("bmArr", bmArr);
+		mv.setViewName("jsonView");
 		return mv;
 	}
 	

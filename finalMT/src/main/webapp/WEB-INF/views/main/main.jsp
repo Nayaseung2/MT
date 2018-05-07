@@ -41,7 +41,7 @@
                     
                         <div class="single-video">
                             <div class="video-img">
-                                <a href="https://localhost:3000">
+                                <a href="https://${ip}:8443/mt/testLiveBj.lb#${item.v_href}">
 								<img class="lazy" data-src="${contextPath }/resources/bsTitleImages/${item.f_rename}" alt="Video" style="width:260px; height:180px;"/>
 								 <noscript>
 									<img src="${contextPath }/resources/images/thumbnails/1.jpg" alt="video" />
@@ -98,7 +98,7 @@
                 <div class="col-sm-6 col-md-3 themeix-half"  style="height:285px; width:271.97px;">
                     <div class="single-video">
                         <div class="video-img">
-                                <a href="https://localhost:8443/mt/testLiveBj.lb#${item.v_href}">
+                                <a href="https://${ip}:8443/mt/testLiveBj.lb#${item.v_href}">
 								<img class="lazy" alt="Video" src="${contextPath }/resources/bsTitleImages/${item.f_rename}" style="display: inline; width:260px; height:180px;">
 								 <noscript>
 									&lt;img src="${contextPath }/resources/images/thumbnails/6.jpg" alt="video" /&gt;

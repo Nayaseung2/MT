@@ -2,10 +2,11 @@ package com.kh.mt.board.model.service;
 
 import java.util.ArrayList;
 
+
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
-import com.kh.mt.board.model.vo.Reply;
 import com.kh.mt.common.PageInfo;
+import com.kh.mt.reply.model.vo.ReplyVo;
 
 public interface BoardService {
 
@@ -39,7 +40,11 @@ public interface BoardService {
 	// 방송국 - 내 게시판 글 수정(사진)
 	void BSmyBoardModifyP(BoardFile f);
 
-	//int insertReply(Reply re);
+	int insertReply(ReplyVo re);
+
+	int selectReplyCount(Board b);
+
+	ArrayList<ReplyVo> selectReplyList(Board b, PageInfo pi);
 
 
 

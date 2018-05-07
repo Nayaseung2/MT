@@ -213,8 +213,8 @@
 					<td class="tdClass"><b>댓글 쓰기</b></td>
 					<td colspan="5">
 						<br>
-						<textarea cols="65%" rows="2" placeholder="댓글을 입력하세요." style="resize:none;"></textarea>
-						<button id="replyContent" class="okay"style="float:right; height:45px;" onclick="reply();">댓글쓰기</button>
+						<textarea id="replyContent" cols="65%" rows="2" placeholder="댓글을 입력하세요." style="resize:none;"></textarea>
+						<button class="okay"style="float:right; height:45px;" onclick="reply();">댓글쓰기</button>
 						<br><br>
 					</td>
 				</tr>
@@ -223,8 +223,27 @@
 			<input type="hidden" id="bCode" value="${hmap.mbListDetail.b_code}">
 			<br>
 			<h4 style="margin-left:92px;">댓글</h4>
-			<div style="border: solid rgba(235, 104, 100, 0.9) 1px; width:780px; height:200px; margin-left:92px;">
-			
+			<div id="reply" style="border: solid rgba(235, 104, 100, 0.9) 1px; width:780px; height:200px; margin-left:92px;">
+			 	<table style=" width:780px; height:200px;" align="center">
+			 		<tr>
+			 			<th colspan="5" text-align="center">작성자</th>
+			 			<th colspan="20" text-align="center">내용</th>
+			 			<th colspan="5" text-align="center">작성일</th>
+			 		</tr>
+			 		<c:forEach var="list" items="${hmap.list}">
+						<tr>
+							<td colspan="5" text-align="center">
+								<div text-align="center">${list.r_writer}</div>
+							</td>
+							<td colspan="20" text-align="center">	
+								<div text-align="center">${list.r_content}</div>
+							</td>
+							<td colspan="5" text-align="center">
+								<div text-align="center">${list.r_create_date}</div>
+							</td>
+						</tr>	 	
+			 		</c:forEach>
+			 	</table>
 			<div id="pagingArea" align="center">
 		        <ul class="pagination pageul">
 		           <li class="page-item"><a class="page-link" onclick="return pageChange($('.active').children().text(),'minus')">이전</a></li>
@@ -278,25 +297,88 @@
 				location.href="${ contextPath }/BSmyBoard.board?mId=" + mId;
 			}
 			
+			
+			function onclickPage(value){
+				var url = "BSmyBoardDetail.board"; 
+				$.ajax({
+		   			url: url,
+		   			type: "get",
+		   			data:{"newCurrentPage":value},
+		   			success:function(data){
+			       		var list = data.map.list;
+			       		var pi = data.map.pi;
+						$("#reply").html("");
+						for(var i = 0; i < list.length; i++){
+							$("#reply").append('<tr><td colspan="5" text-align="center"><div text-align="center">${list.r_writer}</div></td><td colspan="20" text-align="center"><div text-align="center">${list.r_content}</div></td><td colspan="5" text-align="center"><div text-align="center">${list.r_create_date}</div></td></tr>');
+			      		}
+			      		$(".pageul").children().removeClass('active');
+			      		$("#cu"+value).addClass('active');
+			      		$("#maxPage").attr("value", pi.maxPage);
+		   			},
+		   			error:function(data){
+		      			console.log("에러!");
+		   			}
+				});
+		 		return false;
+			 };
+			function pageChange(pagenum, value){
+		        var page = Number(pagenum);
+		        var url = "BSmyBoardDetail.board";         
+		        console.log(page)
+		        if(page >= 1 && page <= $("#maxPage").val()){
+		             if(value === 'plus'){
+		                if(page == $("#maxPage").val()){
+		                   return;
+		                }
+		                page += 1;
+		             }else if(value === 'minus'){
+		                if(page === 1){
+		                   return;
+		                }
+		                page -= 1;
+		             }
+		             
+		             $.ajax({
+		                url: url,
+		                type: "get",
+		                data:{"newCurrentPage":page},
+		                success:function(data){
+		                	var list = data.map.list;
+		    	       		var pi = data.map.pi;
+		    				$("#reply").html("");
+		    	      		for(var i = 0; i < list.length; i++){
+		    	      			$("#reply").append('<tr><td colspan="5" text-align="center"><div text-align="center">${list.r_writer}</div></td><td colspan="20" text-align="center"><div text-align="center">${list.r_content}</div></td><td colspan="5" text-align="center"><div text-align="center">${list.r_create_date}</div></td></tr>');
+		    	      		}
+		    	      		$(".pageul").children().removeClass('active');
+		    	      		$("#cu"+page).addClass('active');
+		    	      		$("#maxPage").attr("value", pi.maxPage);
+		                },
+		                error:function(data){
+		                   console.log("에러!");
+		                }
+		             });
+		              return false;
+		           }
+		        };
 			function reply(){
-				var replyContent = $("replyContent").text();
+				var replyContent = $("#replyContent").val();
+				console.log(replyContent);
 				var writer = "${loginUser.mId}";
 				var boardno = "${ hmap.mbListDetail.b_code }";
-				
-				/* $.ajax({
+				$.ajax({
 					url:"insertReply.board",
 					type:"post",
 					data:{
 						"replyContent":replyContent,
 						"writer":writer,
-						"boardno":Boardno
+						"boardno":boardno
 					},
 					success:function(data){
-						
+						$("#replyContent").val("");
+						alert("댓들 작성완료");
 					}
-				}); */
-					
-			}
+				});
+			};
 		</script>
 
 </div>
