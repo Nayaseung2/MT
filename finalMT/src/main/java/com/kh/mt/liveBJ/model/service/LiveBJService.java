@@ -30,7 +30,7 @@ public interface LiveBJService {
 
 	int insertSingo(Board b);
 
-	ArrayList insertBJBlackMember(BJBlackMember bm);
+	int insertBJBlackMember(BJBlackMember bm);
 
 	int insertGudock(Gudock gd);
 
@@ -45,6 +45,8 @@ public interface LiveBJService {
 	ArrayList<String> selectFan(String href3);
 
 	int selectCount();
+
+	ArrayList<BJBlackMember> selectBlackMemberList(BJBlackMember bm);
 
 
 

@@ -2,6 +2,7 @@ package com.kh.mt.board.model.dao;
 
 import java.util.ArrayList;
 
+
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
-import com.kh.mt.board.model.vo.Reply;
 import com.kh.mt.common.PageInfo;
+import com.kh.mt.reply.model.vo.ReplyVo;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -120,12 +121,26 @@ public class BoardDaoImpl implements BoardDao {
 	}
 	
 
-}
-
-	/*@Override
-	public int insertReply(Reply re) {
+	@Override
+	public int insertReply(ReplyVo re) {
 		int result = sqlSession.insert("Board.insertReply", re);
 		return result;
-	}*/
+	}
+
+	@Override
+	public int selectReplyCount(Board b) {
+		int count = sqlSession.selectOne("Board.selectReplyCount", b);
+		return count;
+	}
+
+	@Override
+	public ArrayList<ReplyVo> selectReplyList(Board b, PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		ArrayList<ReplyVo> list = (ArrayList)sqlSession.selectList("Board.selectReplyList", b, rowBounds);
+		return list;
+	}
+}
+
 
 

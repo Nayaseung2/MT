@@ -28,6 +28,7 @@ public class LiveBJDaoImpl implements LiveBJDao{
 	@Override
 	public String insertBSCotent(SqlSessionTemplate sqlSession, LiveBj bj) {
 		int result = sqlSession.insert("LiveBJ.insertBSCotent",bj);
+		System.out.println("DaoImpl : "+bj);
 		String bjJcode = "";
 		if(result == 1){
 			bjJcode = sqlSession.selectOne("LiveBJ.selectBjJcode", bj);
@@ -43,7 +44,13 @@ public class LiveBJDaoImpl implements LiveBJDao{
 	@Override
 	public ArrayList<LiveBj> allBJ(SqlSessionTemplate sqlSession) {
 		ArrayList<LiveBj> list = (ArrayList)sqlSession.selectList("LiveBJ.allBJ");
-		return list;
+		ArrayList<LiveBj> list1 = new ArrayList();
+		if(list.size()>20){
+			for(int i=13; i<=20 ; i++){
+				list1.add(list.get(i));
+			}
+		}
+		return list1;
 	}
 	@Override
 	public int startBrod(SqlSessionTemplate sqlSession, String roomid,String mid, String bjJCode) {
@@ -81,13 +88,11 @@ public class LiveBJDaoImpl implements LiveBJDao{
 		return result;
 	}
 	@Override
-	public ArrayList insertBJBlackMember(SqlSessionTemplate sqlSession, BJBlackMember bm) {
+	public int insertBJBlackMember(SqlSessionTemplate sqlSession, BJBlackMember bm) {
 		int result = sqlSession.insert("BJBlackMember.blackMemberInsert",bm);
-		ArrayList bmArr = new ArrayList();
-		if(result == 1){
-			bmArr = (ArrayList) sqlSession.selectList("BJBlackMember.selectBlackMembers", bm);
-		}
-		return bmArr;
+		
+		
+		return result;
 	}
 	@Override
 	public int insertGudock(SqlSessionTemplate sqlSession, Gudock gd) {
@@ -141,6 +146,13 @@ public class LiveBJDaoImpl implements LiveBJDao{
 		ArrayList<LiveBj> list = (ArrayList)sqlSession.selectList("LiveBJ.scroll");
 		int count = list.size();
 		return count;
+	}
+	@Override
+	public ArrayList<BJBlackMember> selectBlackMemberList(BJBlackMember bm) {
+		ArrayList<BJBlackMember> bmArr = new ArrayList();
+		
+		bmArr = (ArrayList)sqlSession.selectList("BJBlackMember.selectBlackMembers", bm);
+		return bmArr;
 	}
 	
 }

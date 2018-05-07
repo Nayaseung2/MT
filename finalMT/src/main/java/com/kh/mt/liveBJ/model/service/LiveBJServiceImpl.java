@@ -89,10 +89,10 @@ public class LiveBJServiceImpl implements LiveBJService{
 
 
 	@Override
-	public ArrayList insertBJBlackMember(BJBlackMember bm) {
+	public int insertBJBlackMember(BJBlackMember bm) {
 		
-		ArrayList bmArr = ld.insertBJBlackMember(sqlSession, bm); 
-		return bmArr;
+		int result = ld.insertBJBlackMember(sqlSession, bm); 
+		return result;
 	}
 
 
@@ -142,6 +142,13 @@ public class LiveBJServiceImpl implements LiveBJService{
 	public int selectCount() {
 		int count = ld.selectCount();
 		return count;
+	}
+
+
+	@Override
+	public ArrayList<BJBlackMember> selectBlackMemberList(BJBlackMember bm) {
+		ArrayList<BJBlackMember> list = ld.selectBlackMemberList(bm); 
+		return list;
 	}
 
 

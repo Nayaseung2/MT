@@ -45,8 +45,8 @@
   		SELECT J.INTRODUCE,J.V_TITLE,J.V_CONTENT,J.V_STARTTIME,J.V_LIKE,J.V_CATE,J.MCODE,J.V_JCODE,J.V_STATE,J.V_HREF,J.V_VIEWERS,U.F_RENAME,M.M_NICKNAME FROM JDBC J JOIN MEMBER M ON(J.MCODE=M.MID) JOIN UPLOADFILE U ON(U.F_MCODE=J.MCODE)  WHERE U.FROM_CODE='BSTitleImg' AND J.V_JCODE=U.FILE_CODE AND J.MCODE=#{mid} AND V_JCODE = #{jcode}
   		</select>
 
-		<select id="selectBjJcode" resultType="string">
-		SELECT V_JCODE FROM (SELECT ROWNUM, V_JCODE FROM JDBC WHERE mcode = #{mid} and ROWNUM = 1 order by v_jcode desc)
+		<select id="selectBjJcode" parameterType="LiveBJ" resultType="string">
+		SELECT V_JCODE FROM JDBC WHERE mcode = #{mid} and V_TITLE = #{bsTitle} and V_CONTENT = #{bsContent} and V_CATE = #{cate}
 		</select>
 		
 		<!-- 방송시작 인서트 -->
@@ -71,8 +71,8 @@
 		JOIN MEMBER M ON(J.MCODE=M.MID) 
 		JOIN UPLOADFILE U ON(U.F_MCODE=J.MCODE) 
 		WHERE U.FROM_CODE='BSTitleImg' 
-		AND J.V_JCODE=U.FILE_CODE AND J.V_STATE='Y' 
-		AND ROWNUM between 13 and 20
+		AND J.V_JCODE=U.FILE_CODE 
+		AND J.V_STATE='Y' 
 		ORDER BY V_VIEWERS DESC
   		</select>
   		
@@ -96,7 +96,7 @@
 		WHERE U.FROM_CODE='BSTitleImg' 
 		AND J.V_JCODE=U.FILE_CODE AND J.V_STATE='Y' 
 		and rownum between 1 and 12
-		ORDER BY V_LIKE DESC  		
+		ORDER BY V_LIKE DESC		
   		</select>
   		<!-- 추천수 불러오기 -->
 		<select id='UpBJ' resultMap='allBJSET'>

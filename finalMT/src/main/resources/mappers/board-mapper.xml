@@ -26,13 +26,15 @@
   			<result property="f_mcode" column="F_MCODE"/>
   			<result property="upload_date" column="UPLOAD_DATE"/>
   		</resultMap>
-  		<!-- <resultMap type="Reply" id="ReplyResultSet" >
-  			<result property="replyContent" column="FILEPATH"/>
-  			<result property="writer" column="F_MCODE"/>
-  			<result property="Boardno" column="UPLOAD_DATE"/>
-  			<result property="writer" column="F_MCODE"/>
-  			<result property="Boardno" column="UPLOAD_DATE"/>
-  		</resultMap> -->
+  		
+  		<resultMap type="Reply" id="ReplyResultSet" >
+  			<result property="b_code" column="B_CODE"/>
+  			<result property="r_code" column="R_CODE"/>
+  			<result property="r_content" column="R_CONTENT"/>
+  			<result property="r_writer" column="R_WRITER"/>
+  			<result property="r_create_date" column="R_CREATE_DATE"/>
+  			<result property="r_like" column="R_LIKE"/>
+  		</resultMap>
   		
 	<insert id="insertBoard">
 		INSERT INTO BOARD
@@ -114,5 +116,16 @@
 							WHERE F_MCODE = #{ f_mcode } AND TO_CHAR(UPLOAD_DATE, 'yyyy-MM-dd hh24:mi:ss') = #{ upload_date }) 
 	</update>
 	
+	<insert id="insertReply" parameterType="Reply">
+		INSERT INTO REPLY VALUES(#{b_code}, SEQ_R_CODE.NEXTVAL, #{r_content}, #{r_writer}, SYSDATE, 0)
+	</insert>
+	
+	<select id="selectReplyCount" parameterType="Board"  resultType="_int">
+	SELECT COUNT(*) FROM REPLY WHERE B_CODE = #{b_code}
+	</select>
+	
+	<select id="selectReplyList" parameterType="Board" resultMap="ReplyResultSet">
+	SELECT B_CODE, R_CODE, R_CONTENT, R_WRITER, R_CREATE_DATE, R_LIKE FROM REPLY WHERE  B_CODE = #{b_code}	
+	</select>
 	
 </mapper>

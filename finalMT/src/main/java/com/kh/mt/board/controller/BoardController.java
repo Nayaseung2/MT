@@ -1,6 +1,7 @@
 package com.kh.mt.board.controller;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,8 +20,8 @@ import com.kh.mt.JDBC.model.vo.JDBC;
 import com.kh.mt.board.model.service.BoardService;
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
-import com.kh.mt.board.model.vo.Reply;
 import com.kh.mt.common.PageInfo;
+import com.kh.mt.reply.model.vo.ReplyVo;
 
 @Controller
 public class BoardController {
@@ -160,7 +161,7 @@ public class BoardController {
 
 	// 방송국 - 내 게시판 상세보기
 	@RequestMapping(value="BSmyBoardDetail.board")
-	public ModelAndView showHelpCenterNoticeDetail(ModelAndView mv, String bwriter, String b_code) {
+	public ModelAndView showHelpCenterNoticeDetail(ModelAndView mv, String bwriter, String b_code, String newCurrentPage) {
 
 		mv.setViewName("JDBC/BSmyBoardDetail");
 
@@ -185,8 +186,11 @@ public class BoardController {
 		hmap.put("mbListDetailP", mbListDetailP);
 		
 		//댓글페이징
-		//hmap.put(key, value);
-		//pageInfo pi = addUserPage(newCurrentPage, count)
+		int count = bs.selectReplyCount(b);
+		PageInfo pi = addUserPage(newCurrentPage, count);
+		hmap.put("pi", pi);
+		ArrayList<ReplyVo> list = bs.selectReplyList(b, pi);
+		hmap.put("list", list);
 		
 		mv.addObject("hmap", hmap);
 		
@@ -261,7 +265,7 @@ public class BoardController {
 		int endPage = 0;
 		int listCount = 0;
 
-		limit = 5;
+		limit = 4;
 			
 		listCount = count; 
 			
@@ -272,28 +276,38 @@ public class BoardController {
 		maxPage = (int)((double)listCount / limit + 0.9);
 		
 		startPage = (((int)((double)currentPage / limit + 0.9 -1)) * limit) +1;
-		
+		System.out.println("startPage"+startPage);
 		endPage = startPage + limit -1;
 			
 		if(maxPage < endPage){
 			endPage = maxPage;
 		}
+		System.out.println("currentPage"+currentPage);
+		System.out.println("listCount"+listCount);
+		System.out.println("limit"+limit);
+		System.out.println("maxPage"+maxPage);
+		System.out.println("startPage"+startPage);
+		System.out.println("endPage"+endPage);
 		
 		return new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 	}
 	
-	/*@RequestMapping(value="insertReply.board")
+	@RequestMapping(value="insertReply.board")
 	public ModelAndView BSmyBoardDelete(ModelAndView mv, String replyContent, String writer, String boardno){
 		
-		Reply re = new Reply();
-		re.setBoardno(boardno);
-		re.setReplyContent(replyContent);
-		re.setWriter(writer);
+		ReplyVo re = new ReplyVo();
+		re.setB_code(boardno);
+		re.setR_content(replyContent);
+		re.setR_writer(writer);
+		System.out.println(boardno);
+		System.out.println(replyContent);
+		System.out.println(writer);
+		System.out.println(re);
 		int result = bs.insertReply(re);
 		
 		mv.setViewName("JDBC/BSmyBoardDetail");
 		return mv;
-	}*/
+	}
 	
 	
 	
