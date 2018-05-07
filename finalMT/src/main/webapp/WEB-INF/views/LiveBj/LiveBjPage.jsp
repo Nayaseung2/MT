@@ -298,7 +298,7 @@
 	<input id="mid" type="hidden" value="${loginUser.mId}"/>
 	<input id="myId" type="hidden" value="${loginUser.mId}"/>
 	<input id="nickName" type="hidden" value="${loginUser.nickName}"/>
-	<div id="room-urls" style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
+	<div id="room-urls" style="text-align: center;display: none;background:#FFA500; margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
 	<jsp:include page="../common/footer.jsp"/>
 
    
@@ -781,7 +781,7 @@
 	   var bjId = document.getElementById("bjId").value;
 	   var userPeach = $("#peachNumber").val();
 	   var num =userPeach-peachNum;
-	   
+	   //gudqusghks
 	   if(userPeach < peachNum){
 		   alert("피치갯수가 모자랍니다");
 	   }else if(peachNum == "0"){
