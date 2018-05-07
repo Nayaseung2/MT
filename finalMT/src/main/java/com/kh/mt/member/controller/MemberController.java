@@ -90,7 +90,7 @@ public class MemberController {
 				out.println("<script>alert('" + loginUser.getmName() + "님, 환영합니다!');</script>");
 	            out.flush();
 
-				mv.setViewName("main/main");
+				mv.setViewName("main/foword");
 				//return "allBJ.lb";
 				//mv.setViewName("../../allBJ.lb");
 			}else{
@@ -112,7 +112,7 @@ public class MemberController {
 	public String logout(SessionStatus status,HttpServletRequest request){
 		//status.setComplete();
 		request.getSession().invalidate();
-		return "main/main";
+		return "main/foword";
 	}
 	//회원가입
 	@RequestMapping(value="joinMember.me")

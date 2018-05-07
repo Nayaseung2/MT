@@ -25,11 +25,14 @@ public class PayController {
 	
 	//pay 페이지
 	@RequestMapping("payform.pay")
-	public ModelAndView PayForm(ModelAndView mv, String mcode){
+	public ModelAndView PayForm(ModelAndView mv, String mcode, HttpServletRequest request){
 		System.out.println(mcode);			
 		int peach = ps.selectPeach(mcode);		
 		System.out.println("컨트롤러  peach"+peach);
 		mv.addObject("peach", peach);
+		HttpSession session = request.getSession();
+		((Member)session.getAttribute("loginUser")).setPeach(peach);
+						
 		mv.setViewName("pay/payform");
 		return mv;
 	}
