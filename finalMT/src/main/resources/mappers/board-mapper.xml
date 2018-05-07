@@ -41,9 +41,9 @@
 		VALUES(SEQ_BCODE.NEXTVAL||'myBoard',#{bwriter},'myBoard',#{b_title},#{b_content},#{bwriter},SYSDATE,SYSDATE,0,'Y')
 	</insert>
 	
-	<insert id="insertBoardFile">
+	<insert id="insertBoardFile" parameterType="Boardfile">
 		INSERT INTO UPLOADFILE
-  			VALUES(#{from_code},#{f_orname},#{f_rename},#{filepath},#{f_mcode},SYSDATE,SEQ_FILECODE.NEXTVAL)
+  		VALUES(SEQ_BCODE.CURRVAL||'myBoard', #{f_orname},#{f_rename},#{filepath},#{f_mcode},SYSDATE,SEQ_FILECODE.NEXTVAL)
 	</insert>
 	
 	<!-- 방명록 insert -->
@@ -84,13 +84,15 @@
 	<select id="mbListDetailP" resultMap="BoardFileResultSet">
 		SELECT *
 		FROM UPLOADFILE
-		WHERE F_MCODE = #{ f_mcode } AND TO_CHAR(UPLOAD_DATE, 'yyyy-MM-dd hh24:mi:ss') = #{ upload_date } 
+		WHERE FROM_CODE = #{ from_code }
 	</select>
 	
 	<!-- 방송국 - 내 게시판 글 삭제 -->
-	<delete id="mbListDelete">
-		DELETE FROM BOARD WHERE B_CODE = #{ b_code }
-	</delete>
+	<update id="mbListDelete">
+		UPDATE BOARD
+		SET B_STATUS = 'N'
+		WHERE B_CODE = #{ b_code }
+	</update>
 	
 	<!-- 방송국 - 방명록 목록 -->
 	<select id="gList" resultMap="BoardResultSet">
@@ -108,12 +110,10 @@
 	</update>
 	
 	<!-- 방송국 - 내 게시글 수정(사진) -->
-	<update id="BSmyBoardModifyP">
+	<update id="BSmyBoardModifyP" parameterType="Boardfile">
 		UPDATE UPLOADFILE
-		SET (F_ORNAME, F_RENAME, FILEPATH, UPLOAD_DATE) = (#{ f_orname }, #{ f_rename }, #{ filepath }, SYSDATE)
-		WHERE UPLOAD_DATE IN (SELECT *
-							FROM UPLOADFILE
-							WHERE F_MCODE = #{ f_mcode } AND TO_CHAR(UPLOAD_DATE, 'yyyy-MM-dd hh24:mi:ss') = #{ upload_date }) 
+		SET F_ORNAME = #{ f_orname }, F_RENAME = #{ f_rename }, FILEPATH = #{ filepath }, UPLOAD_DATE = SYSDATE
+		WHERE FROM_CODE = #{ from_code }
 	</update>
 	
 	<insert id="insertReply" parameterType="Reply">
@@ -127,5 +127,12 @@
 	<select id="selectReplyList" parameterType="Board" resultMap="ReplyResultSet">
 	SELECT B_CODE, R_CODE, R_CONTENT, R_WRITER, R_CREATE_DATE, R_LIKE FROM REPLY WHERE  B_CODE = #{b_code}	
 	</select>
+	
+	<!-- 방송국 - 방명록 삭제 -->
+	<update id="BSguestDelte">
+		UPDATE BOARD
+		SET B_STATUS = 'N'
+		WHERE B_CODE = #{ b_code } AND B_TYPE = 'GuestBook'
+	</update>
 	
 </mapper>

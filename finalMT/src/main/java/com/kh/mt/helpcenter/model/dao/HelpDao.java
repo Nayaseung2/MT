@@ -47,5 +47,8 @@ public interface HelpDao {
 	// 공지글 수정하기
 	void helpnoticeModify(Board b);
 
+	// 공지글 삭제하기
+	void goDeleteNotice(String b_code);
+
 	
 }

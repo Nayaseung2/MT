@@ -88,7 +88,7 @@ public class BoardDaoImpl implements BoardDao {
 		
 		System.out.println("dao's b_code : " + b_code);
 
-		int result = sqlSession.delete("Board.mbListDelete", b_code);
+		int result = sqlSession.update("Board.mbListDelete", b_code);
 		
 		return result;
 	}
@@ -139,6 +139,13 @@ public class BoardDaoImpl implements BoardDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
 		ArrayList<ReplyVo> list = (ArrayList)sqlSession.selectList("Board.selectReplyList", b, rowBounds);
 		return list;
+	}
+
+	// 방송국 - 방명록 삭제
+	@Override
+	public void BSguestDelte(String b_code) {
+
+		sqlSession.update("Board.BSguestDelte", b_code);
 	}
 }
 

@@ -165,7 +165,7 @@
 				<div align="center">
 					<img src="${ contextPath }/resources/images/delete.png" /> <br />
 					<br />
-					<h4>정상적으로 게시글이 삭제되었습니다.</h4>
+					<h4>게시글이 정상적으로 삭제되었습니다.</h4>
 				</div>
 				<br/>
 				<br/>

@@ -85,6 +85,13 @@
 		color:white;
 	}
 	
+	.dBtn {
+		width:50px;
+		height:30px;
+		background:	rgba(235, 104, 100, 0.3);
+		border:1px solid darkgray;
+	}
+	 
 	
 </style>
 <title>방송국 방명록 목록</title>
@@ -180,7 +187,7 @@
 	<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
 		<c:if test="${ hmap.gList[0] eq null}">
 			<br/><br/><br/><br/>
-			<h4 align="center"><b>등록된 방명록이 없습니다.</h4>
+			<h4 align="center"><b>등록된 방명록이 없습니다.</b></h4>
 		</c:if>
 	
 	</c:if>
@@ -201,12 +208,18 @@
 	<c:forEach var="item" items="${ hmap.gList }">
 		<table class="gListTable">
 			<tr>
-				<th><c:out value="${ item.bwriter }"/>&nbsp;&nbsp;&nbsp;&nbsp;
+				<th>
+					<input type="hidden" id="b_code" value="${ item.b_code }">
+					<c:out value="${ item.bwriter }"/>&nbsp;&nbsp;&nbsp;&nbsp;
 					<button id="gHome" onclick="location.href='${ contextPath }/bringJDBC.JDBC?mId=${ item.bwriter }'">
 						<img src="${ contextPath }/resources/images/house.png" width="25px"/>
 					</button>
 				</th>
-				<th>(${ item.b_create_date })</th>
+				<th>(${ item.b_create_date })
+					<c:if test="${ item.bwriter eq loginUser.mId || item.v_code eq jdbcInfo.mid }">
+						&nbsp;&nbsp;<button class="dBtn" onclick="goDelete();">삭제</button>
+					</c:if>
+				</th>
 			</tr>
 			<tr>
 				<td colspan="2">${ item.b_content }</td>
@@ -220,6 +233,12 @@
 		function goWrite(){
 			
 			location.href="${ contextPath }/insertGuestBook1.board";
+		}
+		
+		function goDelte(){
+			
+			var b_code = $("#b_code").val();
+			location.href="${ contextPath }/BSguestDelte.board?b_code=" + b_code;
 		}
 		
 		function gHome(){

@@ -46,6 +46,9 @@ public interface BoardService {
 
 	ArrayList<ReplyVo> selectReplyList(Board b, PageInfo pi);
 
+	// 방송국 - 방명록 삭제
+	void BSguestDelte(String b_code);
+
 
 
 }

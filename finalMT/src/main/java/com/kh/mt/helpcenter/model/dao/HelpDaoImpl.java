@@ -149,4 +149,11 @@ public class HelpDaoImpl implements HelpDao{
 		sqlSession.update("QnA.helpnoticeModify", b);
 	}
 
+	// 공지글 삭제하기
+	@Override
+	public void goDeleteNotice(String b_code) {
+
+		sqlSession.delete("QnA.goDeleteNotice", b_code);
+	}
+
 }

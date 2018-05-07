@@ -10,10 +10,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style type="text/css">
-	.BSContainer{ width:100%;height:1500px;}
+	.BSContainer{ width:100%;height:1700px;}
 	.icon{width:850px;height:80px;margin-left:160px;}
 	.BSframe{border:1px solid black;margin-left:auto;margin-right:auto;
-		border-radius:10px;width:1200px;height:1200px;}
+		border-radius:10px;width:1200px;height:1450px;}
 	.showBSname{width:1200px;height:150px;background: rgba(235, 104, 100, 0.5);border-radius:5px 5px 0px 0px;}	
 	.profileImg{width:100px;height:80px;margin-left:70px; padding-top: auto; padding-bottom: auto;}
 	.BStitle{position:relative;left:100px;bottom:60px;width: 250px; padding-left:40%;}
@@ -30,8 +30,8 @@
 		cursor:pointer;}
 	.bottomBox td{border-bottom:1px dotted lightgray;}
 	.bottom{color:black; text-decoration:none; margin-left:15px;}
-	.showRightPart{position:relative; width:940px; 
-	left:240px;bottom:640px;background-color: rgba(255, 245, 244, 0.9);}
+	.showRightPart{position:relative; width:940px;  height: 1250px;
+	left:240px;bottom:640px;background-color: rgba(255, 245, 244, 0.7);}
 	
 	.equal{
 		width:20px;
@@ -94,7 +94,17 @@
 		 height: 40px;"
 	}
 	
+	.rTable {
+		border-bottom: 2px solid #F08080;
+		text-align: center;
+	}
 	
+	.rTable th {
+		text-align: center;
+		border-top: 2px solid #F08080;
+		border-bottom: 2px solid #F08080;
+		height: 40px;
+	}
 	
 	
 </style>
@@ -204,8 +214,8 @@
 						<br/><br/>
 						${ hmap.mbListDetail.b_content }
 						<br/><br/>
-						<img src="${ contextPath }/resources/BoardFile/${ hmap.mbListDetailP.f_rename }" style="padding-left: 5%; max-height:180px;" />
-						<br/>
+						<img src="${ contextPath }/resources/BoardFile/${ hmap.mbListDetailP.f_rename }" style="padding-left: 5%; max-height:180px; max-width:300px" />
+						<br/><br/><br/>
 					</td>
 				</tr>
 				<tfoot>
@@ -214,17 +224,29 @@
 					<td colspan="5">
 						<br>
 						<textarea id="replyContent" cols="65%" rows="2" placeholder="댓글을 입력하세요." style="resize:none;"></textarea>
-						<button class="okay"style="float:right; height:45px;" onclick="reply();">댓글쓰기</button>
+						<button class="okay"style="float:right; height:48px;" onclick="reply();">댓글쓰기</button>
 						<br><br>
 					</td>
 				</tr>
 				</tfoot>
 			</table>
-			<input type="hidden" id="bCode" value="${hmap.mbListDetail.b_code}">
+			<br/><br/>
+			
+			<div style="display: block;">
+				<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
+					<div align="right" style="padding-right: 70px;">
+						<button type="button" class="okay" onclick="modifyBtn();">수정하기</button>
+						<button type="button" class="okay" onclick="deleteBtn();">삭제하기</button>
+					</div>
+				</c:if>
+		</div>
+			<input type="hidden" id="bwriter" name="bwriter" value="${hmap.mbListDetail.bwriter}">
+			<input type="hidden" id="bCode" name="b_code" value="${hmap.mbListDetail.b_code}">
 			<br>
-			<h4 style="margin-left:92px;">댓글</h4>
-			<div id="reply" style="border: solid rgba(235, 104, 100, 0.9) 1px; width:780px; height:200px; margin-left:92px;">
-			 	<table style=" width:780px; height:200px;" align="center">
+			<br/>
+			<h4 style="margin-left:92px;"><b>댓글</b></h4>
+			<div id="reply" style=" width:780px; height:200px; margin-left:92px;">
+			 	<table style=" width:780px; height:200px;" align="center" class="rTable">
 			 		<tr>
 			 			<th colspan="5" text-align="center">작성자</th>
 			 			<th colspan="20" text-align="center">내용</th>
@@ -244,6 +266,7 @@
 						</tr>	 	
 			 		</c:forEach>
 			 	</table>
+			 	<br/><br/><br/>
 			<div id="pagingArea" align="center">
 		        <ul class="pagination pageul">
 		           <li class="page-item"><a class="page-link" onclick="return pageChange($('.active').children().text(),'minus')">이전</a></li>
@@ -263,17 +286,7 @@
 		</div>
 		<br/>
 		<br/>
-
-		<div style="display: block;">
-			<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
-				<div align="right" style="padding-right: 70px;">
-					<button type="button" class="okay" onclick="modifyBtn();">수정하기</button>
-					<button type="button" class="okay" onclick="deleteBtn();">삭제하기</button>
-				</div>
-			</c:if>
-		</div>
-
-		<br/>
+		<br/><br/><br/><br/><br/><br/><br/>
 		<div align="center">
 			<button type="button" class="okay2" onclick="listBtn();">목록으로</button>
 		</div>
@@ -281,8 +294,11 @@
 		
 			function modifyBtn(){
 				
-				var b_code = "${ hmap.mbListDetail.b_code }";
-				location.href="${ contextPath }/BSmodify.board?b_code=" + b_code;
+				var b_code = $("#bCode").val();
+				var bwriter = $("#bwriter").val();
+				console.log(b_code);
+				console.log(bwriter);
+				location.href="${ contextPath }/BSmodify.board?b_code=" + b_code + "&bwriter=" + bwriter;
 			}
 			
 			function deleteBtn(){

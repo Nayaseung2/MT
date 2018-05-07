@@ -34,7 +34,6 @@ public interface BoardDao {
 	// 방송국 - 방명록 목록
 	ArrayList<Board> gList(String mId);
 
-
 	// 방송국 - 내 게시판 글 수정(글)
 	int BSmyBoardModify(Board b);
 
@@ -46,6 +45,9 @@ public interface BoardDao {
 	int selectReplyCount(Board b);
 
 	ArrayList<ReplyVo> selectReplyList(Board b, PageInfo pi);
+
+	// 방송국 - 방명록 삭제
+	void BSguestDelte(String b_code);
 
 
 }
