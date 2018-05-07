@@ -129,5 +129,12 @@ public class BoardServiceImpl implements BoardService{
 		return list;
 	}
 	
+	// 방송국 - 방명록 삭제
+	@Override
+	public void BSguestDelte(String b_code) {
+
+		bd.BSguestDelte(b_code);
+	}
+	
 
 }

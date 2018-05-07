@@ -221,16 +221,21 @@
 	<table class="writeTable" >
 		<tr>
 			<th>제목</th>
-			<td><input type="text" name="b_title" id="b_title" size="90" style="height: 33px; border:1px solid lightgray;"></td>
+			<td>
+				<input type="text" name="b_title" id="b_title" size="90" 
+					value="${ m.b_title }"
+					style="height: 33px; border:1px solid lightgray;">
+			</td>
 		</tr>
 		<tr>
 			<th>내용</th>
 			<td colspan="3" style="height:330px;">
-				<textarea name="b_content" id="b_content" class="ckeditor" rows="30" cols="50">
+				<textarea name="b_content" id="b_content" class="ckeditor" rows="30" cols="50"><c:out value="${ m.b_content }"/>
 				</textarea>
 			</td>
 		</tr>
 	</table>
+	<input type="hidden" id="b_code" name="b_code" value="${ m.b_code }">
 	
 	<div class="fileRegiBtn">
 		<input id="fileName" class="form-control"  value="오른쪽 버튼을 눌러주세요" disabled="disabled" 

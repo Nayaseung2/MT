@@ -97,4 +97,10 @@
 		WHERE B_CODE = #{ b_code }
 	</update>
 	
+	<!-- 공지글 삭제하기 -->
+	<delete id="goDeleteNotice">
+		DELETE BOARD
+		WHERE B_CODE = #{ b_code }
+	</delete>
+	
 </mapper>

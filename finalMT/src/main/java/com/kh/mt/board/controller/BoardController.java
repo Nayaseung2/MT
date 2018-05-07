@@ -21,6 +21,7 @@ import com.kh.mt.board.model.service.BoardService;
 import com.kh.mt.board.model.vo.Board;
 import com.kh.mt.board.model.vo.BoardFile;
 import com.kh.mt.common.PageInfo;
+import com.kh.mt.helpcenter.model.vo.HelpMainVo;
 import com.kh.mt.reply.model.vo.ReplyVo;
 
 @Controller
@@ -52,17 +53,20 @@ public class BoardController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		System.out.println("b : " + b);
+		
+		//Board넣기
+		bs.insertBoard(b);
+
 		//게시판 파일 insert
 		BoardFile f = new BoardFile();
-		f.setFrom_code("BoardFile");
 		f.setF_orname(originalFileName);
 		f.setF_rename(changedName);
 		f.setFilepath(filePath);
 		f.setF_mcode(b.getBwriter());
 		bs.insertBoardFile(f);
 		
-		//Board넣기
-		bs.insertBoard(b);
 		return "JDBC/BSwriteSuccess";
 	}
 	
@@ -171,11 +175,8 @@ public class BoardController {
 		
 		Board mbListDetail = bs.mbListDetail(b);
 		
-		String crDate = mbListDetail.getB_create_date();
-		
 		BoardFile bf = new BoardFile();
-		bf.setF_mcode(bwriter);
-		bf.setUpload_date(crDate);
+		bf.setFrom_code(b_code);
 		
 		BoardFile mbListDetailP = bs.mbListDetailP(bf);
 		
@@ -198,17 +199,59 @@ public class BoardController {
 	}
 	
 	
-	// 방송국 - 내 게시판 글 수정하러 가기
+	// 방송국 - 내 게시판 글 수정하러 가기(조회)
 	@RequestMapping(value="BSmodify.board")
-	public String BSmodify(String b_code){
+	public String BSmodify(Model model, String b_code, String bwriter, HttpServletRequest request,
+							@RequestParam(name="Boardfile",required=false)MultipartFile photo){
+		
+		//System.out.println(b_code + "/" + bwriter);
+		
+		Board mbListDetail = null;
+		Board b = new Board();
+		b.setB_code(b_code);
+		b.setBwriter(bwriter);
+		
+		mbListDetail = bs.mbListDetail(b);
+		
+		//System.out.println("글 : " + mbListDetail);
+		
+		model.addAttribute("m", mbListDetail);
+		
+		/*String root = request.getSession().getServletContext().getRealPath("resources");
+		String filePath = root + "\\BoardFile";
+		String originalFileName=photo.getOriginalFilename();
+		String ext = originalFileName.substring(originalFileName.lastIndexOf('.'));
+		String changedName = authNum() + ext;
+		
+		try {
+			photo.transferTo(new File(filePath + "\\" + changedName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+*/
+		/*String bwriter = mbListDetail.getBwriter();
+		String crDate = mbListDetail.getB_create_date();
+		
+		BoardFile bf = new BoardFile();
+		bf.setF_mcode(bwriter);
+		bf.setUpload_date(crDate);
+		
+		BoardFile mbListDetailP = bs.mbListDetailP(bf);
+		
+		HashMap hmap = new HashMap();
+		hmap.put("mbListDetail", mbListDetail);
+		hmap.put("mbListDetailP", mbListDetailP);
+		
+		model.addAttribute(hmap);*/
 		
 		return "JDBC/BSmodify";
 	}
 	
 	// 방송국 - 내 게시판 글 수정
 	@RequestMapping(value="BSmyBoardModify.board")
-	public String BSmyBoardModify(Board b,Model model,@RequestParam(name="Boardfile",required=false)MultipartFile photo,HttpServletRequest request) {
-		
+	public String BSmyBoardModify(Model model, Board b, String b_code, String bwriter, HttpServletRequest request,
+							@RequestParam(name="Boardfile",required=false)MultipartFile photo){
+			
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String filePath = root + "\\BoardFile";
 		String originalFileName=photo.getOriginalFilename();
@@ -220,37 +263,51 @@ public class BoardController {
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
+
+		// 글 update
+		bs.BSmyBoardModify(b);
 		
-		// 게시판 파일 update
+		System.out.println(b_code);
+		System.out.println(bwriter);
+		
+		// update된 글 조회
+		Board updateB = new Board();
+		updateB.setB_code(b_code);
+		updateB.setBwriter(bwriter);
+		
+		Board ub = bs.mbListDetail(updateB);
+		
+		System.out.println("ub.getW : " + ub.getBwriter());
+		System.out.println("ub.getUD : " + ub.getB_update_date());
+		
+		
+		// 사진 update
 		BoardFile f = new BoardFile();
-		f.setFrom_code("BoardFile");
+		f.setFrom_code(b_code);
 		f.setF_orname(originalFileName);
 		f.setF_rename(changedName);
 		f.setFilepath(filePath);
-		f.setF_mcode(b.getBwriter());
+		f.setF_mcode(ub.getBwriter());
+		f.setUpload_date(ub.getB_update_date());
 		bs.BSmyBoardModifyP(f);
-		
-		// Board넣기
-		bs.BSmyBoardModify(b);
-		
-		return "JDBC/BSwriteSuccess";
-	}
-	
-	
-	
-	// 방송국 - 내 게시판 글 수정 완료
-	@RequestMapping(value="BSmyBoardModifySuccess.board")
-	public String BSmyBoardModifySuccess(String b_code){
 		
 		return "JDBC/BSmyBoardModifySuccess";
 	}
-		
-		
+	
 	// 방송국 - 내 게시판 글 삭제
 	@RequestMapping(value="BSmyBoardDelete.board")
 	public String BSmyBoardDelete(String b_code){
 		
 		bs.BSmyBoardDelete(b_code);
+		
+		return "JDBC/BSmyBoardDelete";
+	}
+	
+	// 방송국 - 방명록 삭제
+	@RequestMapping(value="BSguestDelte.board")
+	public String BSguestDelte(String b_code) {
+		
+		bs.BSguestDelte(b_code);
 		
 		return "JDBC/BSmyBoardDelete";
 	}

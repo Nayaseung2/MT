@@ -292,10 +292,10 @@ public class HelpController {
 				
 		nListDetail = hs.nListDetail(b_code);
 		
-		System.out.println("controller's nListDetail : " + nListDetail);
+		//System.out.println("controller's nListDetail : " + nListDetail);
 		
 		model.addAttribute(nListDetail);
-		System.out.println(model.toString());
+		//System.out.println(model.toString());
 		
 		return "helpcenter/helpNoticeModify";
 	}
@@ -309,6 +309,15 @@ public class HelpController {
 		return "helpcenter/helpModifySuccess";
 	}
 	
+	// 공지글 삭제하기
+	@RequestMapping(value="goDeleteNotice.hp")
+	public String goDeleteNotice(String b_code) {
+		
+		hs.goDeleteNotice(b_code);
+		
+		return "helpcenter/helpDeleteSuccess";
+			
+	}
 
 
 }

@@ -237,7 +237,8 @@ table {
 					
 					function goDelete(){
 						
-						location.href="${ contextPath }/goDeleteNotice.hp";	
+						var b_code = $("#b_code").val();
+						location.href="${ contextPath }/goDeleteNotice.hp?b_code=" + b_code;	
 					}
 				
 				</script>

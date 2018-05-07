@@ -124,5 +124,12 @@ public class HelpServiceImpl implements HelpService{
 		hd.helpnoticeModify(b);
 	}
 
+	// 공지글 삭제하기
+	@Override
+	public void goDeleteNotice(String b_code) {
+
+		hd.goDeleteNotice(b_code);
+	}
+
 	
 }
