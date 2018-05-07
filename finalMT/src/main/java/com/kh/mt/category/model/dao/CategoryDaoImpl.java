@@ -33,9 +33,7 @@ public class CategoryDaoImpl implements CategoryDao{
 		ArrayList<LiveBj> list= new ArrayList<>();
 		for(int i =0; i<list1.size();i++){
 			String mid = list1.get(i).getMid();
-			System.out.println("bJ id: "+mid);
 			LiveBj bj = sqlSession.selectOne("LiveBJ.EatInfo", mid);
-			System.out.println("bj to String : "+bj);
 			list.add(bj);
 		}
 		return list;
@@ -49,13 +47,9 @@ public class CategoryDaoImpl implements CategoryDao{
 		ArrayList<LiveBj> list= new ArrayList<>();
 		for(int i =0; i<list1.size();i++){
 			String mid = list1.get(i).getMid();
-			System.out.println("bJ id: "+mid);
 			LiveBj bj = sqlSession.selectOne("LiveBJ.GameInfo", mid);
-			System.out.println("bj to String : "+bj);
 			list.add(bj);
 		}
-		System.out.println("list뭐냐"+ list);
-		//ArrayList<LiveBj> list = (ArrayList)sqlSession.selectList("LiveBJ.Game");
 		return list;
 	}
 
@@ -67,9 +61,7 @@ public class CategoryDaoImpl implements CategoryDao{
 		ArrayList<LiveBj> list= new ArrayList<>();
 		for(int i =0; i<list1.size();i++){
 			String mid = list1.get(i).getMid();
-			System.out.println("bJ id: "+mid);
 			LiveBj bj = sqlSession.selectOne("LiveBJ.TalkInfo", mid);
-			System.out.println("bj to String : "+bj);
 			list.add(bj);
 		}
 		return list;
@@ -83,9 +75,7 @@ public class CategoryDaoImpl implements CategoryDao{
 		ArrayList<LiveBj> list= new ArrayList<>();
 		for(int i =0; i<list1.size();i++){
 			String mid = list1.get(i).getMid();
-			System.out.println("bJ id: "+mid);
 			LiveBj bj = sqlSession.selectOne("LiveBJ.SportInfo", mid);
-			System.out.println("bj to String : "+bj);
 			list.add(bj);
 		}
 		return list;
@@ -99,9 +89,7 @@ public class CategoryDaoImpl implements CategoryDao{
 		ArrayList<LiveBj> list= new ArrayList<>();
 		for(int i =0; i<list1.size();i++){
 			String mid = list1.get(i).getMid();
-			System.out.println("bJ id: "+mid);
 			LiveBj bj = sqlSession.selectOne("LiveBJ.MusicInfo", mid);
-			System.out.println("bj to String : "+bj);
 			list.add(bj);
 		}
 		return list;
@@ -115,9 +103,7 @@ public class CategoryDaoImpl implements CategoryDao{
 		ArrayList<LiveBj> list= new ArrayList<>();
 		for(int i =0; i<list1.size();i++){
 			String mid = list1.get(i).getMid();
-			System.out.println("bJ id: "+mid);
 			LiveBj bj = sqlSession.selectOne("LiveBJ.etcInfo", mid);
-			System.out.println("bj to String : "+bj);
 			list.add(bj);
 		}
 		return list;
@@ -131,9 +117,7 @@ public class CategoryDaoImpl implements CategoryDao{
 		ArrayList<LiveBj> list= new ArrayList<>();
 		for(int i =0; i<list1.size();i++){
 			String mid = list1.get(i).getMid();
-			System.out.println("bJ id: "+mid);
 			LiveBj bj = sqlSession.selectOne("LiveBJ.GudockInfo", mid);
-			System.out.println("bj to String : "+bj);
 			list.add(bj);
 		}
 		return list;

@@ -28,7 +28,6 @@ public class LiveBJDaoImpl implements LiveBJDao{
 	@Override
 	public String insertBSCotent(SqlSessionTemplate sqlSession, LiveBj bj) {
 		int result = sqlSession.insert("LiveBJ.insertBSCotent",bj);
-		System.out.println("DaoImpl : "+bj);
 		String bjJcode = "";
 		if(result == 1){
 			bjJcode = sqlSession.selectOne("LiveBJ.selectBjJcode", bj);

@@ -41,10 +41,12 @@ public class LiveBJFrontController {
 	
 	//시청자가 방의 정보 가저오기
 	@RequestMapping(value="JDBCInfo.lb")
-	public ModelAndView JDBCInfo(HttpServletRequest request, ModelAndView mv,String href3, String mId){
+	public ModelAndView JDBCInfo(HttpServletRequest request, ModelAndView mv,String href3, String bjJcode){
 		LiveBj bj = ls.JDBCInfo(href3);
+		System.out.println("곰토토1"+href3);
+		System.out.println("토토"+bj);
 		String bjid = bj.getMid();
-		
+		System.out.println("곰토토2"+bjJcode);
 		ArrayList<String> list = ls.selectFan(bjid);
 		
 		ArrayList<Member> fanlist = new ArrayList<>();
@@ -52,8 +54,15 @@ public class LiveBJFrontController {
 			Member mem = new Member();
 			mem.setmId(list.get(i));
 			fanlist.add(mem);
-		};;
+		};
+		
+		BJBlackMember bm = new BJBlackMember();
+		
+		bm.setBjMember(bj.getJcode());
+		System.out.println("시청자"+bm.getBjMember());
+		ArrayList<BJBlackMember> bmArr = ls.selectBlackMemberList(bm);
 		mv.setViewName("jsonView");
+		mv.addObject("bmArr", bmArr);
 		mv.addObject("bj", bj);
 		mv.addObject("fanlist", fanlist);
 		
@@ -72,8 +81,8 @@ public class LiveBJFrontController {
 	public ModelAndView JDBCInfo2(ModelAndView mv,String href3, String jCode){
 		LiveBj bj1 = new LiveBj();
 		bj1.setJcode(jCode);
-		System.out.println("1 : "+jCode);
 		bj1.setMid(href3);
+		System.out.println(jCode);
 		//fan
 		ArrayList<String> list = ls.selectFan(href3);
 		ArrayList<Member> fanlist = new ArrayList<>();
@@ -83,9 +92,15 @@ public class LiveBJFrontController {
 			fanlist.add(mem);
 		};
 		
+		BJBlackMember bm = new BJBlackMember();
+		bm.setBjMember(jCode);
 		
+		System.out.println("시청자5"+bm.getBjMember());
+		ArrayList<BJBlackMember> bmArr = ls.selectBlackMemberList(bm);
+		System.out.println("시청자bmArr"+bmArr);
 		LiveBj bj = ls.JDBCInfo2(bj1);
 		mv.setViewName("jsonView");
+		mv.addObject("bmArr", bmArr);
 		mv.addObject("bj", bj);
 		mv.addObject("fanlist", fanlist);
 		
@@ -212,15 +227,7 @@ public class LiveBJFrontController {
 		
 		return mv;
 	}
-	@RequestMapping(value="bjBlackMemberList.lb")
-	public ModelAndView selectBlackMemberList(ModelAndView mv, String adminbj){
-		BJBlackMember bm = new BJBlackMember();
-		bm.setBjMember(adminbj);
-		ArrayList<BJBlackMember> bmArr = ls.selectBlackMemberList(bm);
-		mv.addObject("bmArr", bmArr);
-		mv.setViewName("jsonView");
-		return mv;
-	}
+	
 	
 	//구독 있으면 삭제 없으면 삽입
 	@RequestMapping(value="gudockins.lb")

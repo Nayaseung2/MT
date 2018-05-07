@@ -288,12 +288,12 @@
             </div>
          </div>
       </div> 
-      <div id="fan" style="display:none;"></div>
-	<div id="blackMemberList"style="display:none;"></div>
+    <div id="fan" style="display:none;"></div>
+	<div id="blackMemberList" style="display:none;"></div>
      
-      
-      <input id="maxViewer" class="maxViewer" type="hidden" value="0"/>
-    <input id="bjJCode" class="bjJCode" type="text" value="${bjJ.jcode}"/>
+    <input type="hidden" class="userMcode" value="${loginUser.mcode}">
+    <input id="maxViewer" class="maxViewer" type="hidden" value="0"/>
+    <input id="bjJCode" class="bjJCode" type="hidden" value="${bjJ.jcode}"/>
 	<input id="bjId1" class="bjId1" type="hidden"/>
 	<input id="mid" type="hidden" value="${loginUser.mId}"/>
 	<input id="myId" type="hidden" value="${loginUser.mId}"/>
@@ -378,16 +378,7 @@
                     oneway: true
                 });
             };
-           /*  document.getElementById('open-room').onclick = function() {
-                disableInputButtons();
-                connection.open(document.getElementById('broadcast-id').value, function() {
-                    showRoomURL(connection.sessionid);
-                });
-            };
-            document.getElementById('join-room').onclick = function() {
-                disableInputButtons();
-                connection.join(document.getElementById('broadcast-id').value);
-            }; */
+          
             window.onload = function() {
             	 $('#stop-broadcast').attr('disabled', true);
             	var jCode = $("#bjJCode").val();
@@ -421,10 +412,7 @@
                 });
             };
             // by default, socket.io server is assumed to be deployed on your own URL
-            //connection.socketURL = 'http://localhost:9001/';
-            connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
-            // comment-out below line if you do not have your own socket.io server
-            // connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+          	connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
             connection.socketMessageEvent = 'audio-video-screen-demo';
             connection.session = {
                	audio: true,
@@ -436,21 +424,14 @@
                 OfferToReceiveAudio: true,
                 OfferToReceiveVideo: true
             };
-            /* connection.videosContainer = document.getElementById('newDiv2'); */
             connection.videosContainer = document.getElementById("video-preview");
-            function appendBlack(){
-            	connection.connectSocket(function() {
-            		 blackAllconnection();
-            	});
-            };
+            
             connection.onstream = function(event) {
                 if(document.getElementById(event.streamid)) {
                     var existing = document.getElementById(event.streamid);
                     existing.parentNode.removeChild(existing);
                 }
-                
                 var width = parseInt(connection.videosContainer.clientWidth) - 10;
-                
                 if(event.stream.isScreen === true) {
                     width = connection.videosContainer.clientWidth - 10;
                 }
@@ -460,29 +441,25 @@
                     width: width,
                     showOnMouseEnter: false
                 });
-
                 connection.videosContainer.appendChild(mediaElement);
                 setTimeout(function() {
                     mediaElement.media.play();
                 }, 5000);
                 mediaElement.id = event.streamid;
-                
                 //시청자수
                 var numberOfUsers = connection.getAllParticipants().length;
                 connection.connectSocket(function() {
                 	numberOfUsers = connection.getAllParticipants().length;
 	                viewerCount(numberOfUsers);
-	                blackAllconnection();
        		        if(numberOfUsers === "0"){
        		        	$("#viewers").text(0 +" 명");
-       		        	var maxViewers = $("#maxViewer").val();
-       		        	if(maxViewers < numberOfUsers){
-       		        		$("#maxViewer").val(numberOfUsers);
-       		        	}
+       		        }
+       		        var maxViewers = $("#maxViewer").val();
+       		        if(maxViewers < numberOfUsers){
+       		        	$("#maxViewer").val(numberOfUsers);
        		        }
        		    
                 });
-                
             };
             connection.onExtraDataUpdated = function(event) {
             	var numberOfUsers = connection.getAllParticipants().length;
@@ -495,7 +472,6 @@
                 }
             };
             
-        	
         	/*  채팅코드  */ 
         	 document.getElementById('btn-input').onkeyup = function(e) {
                 if (e.keyCode != 13) return;
@@ -524,9 +500,20 @@
             		this.value = '';
             		BJblack();
             	}
-              
+            	var loginUserMcode =$(".userMcode").val();
+	           	var black2 = $("#blackMemberList").text();
+	            var black1 = black2.split(", ");
+	            console.log("안녕");
+	            console.log(loginUserMcode);
+	            console.log(black2);
+	            console.log(black1);
+	            for(var i in black1){
+	            	if(black1[i] == loginUserMcode){
+	            		$("#buttons").css({"display":"none"});
+	                   	$(".panel-footer").css({"display":"none"});
+	            	}
+	            }
             };
-            
             
             document.getElementById("peach").onclick = function(){
             	 var userid = document.getElementById("myId");
@@ -565,6 +552,19 @@
             		text11.value ='';
             		BJblack();
             	}
+            	var loginUserMcode = $(".userMcode").val();
+	            var black2 = $("#blackMemberList").text();
+	            var black1 = black2.split(", ");
+	            console.log("안녕");
+	            console.log(loginUserMcode);
+	            console.log(black2);
+	            console.log(black1);
+	            for(var i in black1){
+	            	if(black1[i] == loginUserMcode){
+	            		$("#buttons").css({"display":"none"});
+	                   	$(".panel-footer").css({"display":"none"});
+	            	}
+	            }
             };
             
             function appendDIV(event) {
@@ -578,17 +578,14 @@
            		var chat_span = document.createElement('span');
            		chat_span.setAttribute("class","chat-img pull-left");
            		var chat_body = document.createElement('div');
-           		/* chat_body.setAttribute("style","align:left"); */
            		chat_body.setAttribute('id', 'chat-body');
            		chat_body.setAttribute('class', 'chat-body clearfix');
            		var chat_header = document.createElement('div');
-           		/* chat_header.setAttribute("style","align:left"); */
            		chat_header.setAttribute("class", "header");
            		chat_header.setAttribute("id", "chat-header");
         		var chat_small = document.createElement('small');
         		chat_small.setAttribute('class', "text-muted");
         		chat_small.setAttribute('id', 'chat_box');
-        		/* chat_small.setAttribute("style","text-indent:5px;"); */
         		chatContainer.append(chatli);
         		chatli.append(chat_span);
         		chatli.append(chat_body);
@@ -600,9 +597,9 @@
              	div.setAttribute("style","align:left");
                 div.innerHTML = event.data || event;
                 chat_small.append(div);
-              div.tabIndex = 0;
-              //div.focus();
-              BJblack();
+              	div.tabIndex = 0;
+              	//div.focus();
+              	BJblack();
                 document.getElementById('btn-input').focus();
                 if(event.data) {
                     connection.Translator.TranslateText(event.data, function(event) {
@@ -612,7 +609,7 @@
                 } 
             }
             
-               connection.onmessage = appendDIV;
+            connection.onmessage = appendDIV;
             
             // ......................................................
             // ......................Handling Room-ID................
@@ -628,7 +625,6 @@
                 roomURLsDiv.innerHTML = html;
                 roomURLsDiv.style.display = 'block';
             }
-            
             
             (function() {
                 var params = {},
@@ -683,25 +679,25 @@
             }
    </script>
    <script>
-   $("#open-or-join-cam").click(function(){
-	      var roomid = document.getElementById('broadcast-id').value;
-	      var mid = document.getElementById('mid').value;
-	      var bjJCode = document.getElementById('bjJCode').value;
-	     $('#open-or-join-cam').attr('disabled', true);
-	      $.ajax({
-	         url:"startBrod.lb",
-	         type:"POST",
-	         data:{
-	            roomid:roomid,
-	            mid:mid,
-	            bjJCode:bjJCode
-	         },
-	         success:function(data){
-	            console.log("성공");
-	         }
-	      });
-	      $('#stop-broadcast').attr('disabled', false);
-	   })
+	$("#open-or-join-cam").click(function(){
+		var roomid = document.getElementById('broadcast-id').value;
+	    var mid = document.getElementById('mid').value;
+	    var bjJCode = document.getElementById('bjJCode').value;
+	    $('#open-or-join-cam').attr('disabled', true);
+	   	$.ajax({
+	    	url:"startBrod.lb",
+	    	type:"POST",
+	    	data:{
+	    		roomid:roomid,
+	       		mid:mid,
+	        	bjJCode:bjJCode
+	    	},
+	     	success:function(data){
+	    		console.log("성공");
+	    	}
+	    });
+	    $('#stop-broadcast').attr('disabled', false);
+	});
    $(function(){
 	    //현재 url전체
 	    var href1 = $(location).attr('href');
@@ -710,75 +706,82 @@
 	    //실질적으로 필요한 url
 	    var href3 = '';
 	    var bjJcode = $("#bjJCode").val();
-	    /* var BJmId = "${bjJ.jcode}"; */
+	   
 	    if(href2.length!=1){
-	    href3 = href2[1];
-	    $.ajax({
-	    	url:'JDBCInfo.lb',
-	    	type:'post',
-	    	data:{
-	    		href3:href3,
-	    	},
-	    	success:function(data){
-	    		var loginUserMid = "${loginUser.mId}";	
-	    		$("#bjId1").val(data.bj.mid);
-	    		$("#title1").text(data.bj.bsTitle);
-	    		$("#nick1").text(data.bj.nickname);
-	    		$("#content1").text(data.bj.bsContent);
-	    		$("#viewers").text(data.bj.v_viewers+" 명");
-	    		var bool = "${loginUser.mId}" == data.bj.mid;
-	    		if(loginUserMid === data.bj.mid){
-	    			$("#open-or-join-cam").css({"display":"inline","margin-top":"15px"});
-		    		$("#open-or-join").css({"display":"inline","margin-top":"15px"});
-		    		$("#stop-broadcast").css({"display":"inline","margin-top":"15px"});
-	    		}
-	    		for(var i =0; i < data.fanlist.length; i++){
-	    			var fan = data.fanlist[i].mId;
-		    		$("#fan").append(fan+", ");
-	    		}
-	    	}
-	    });
-	    }else{
-	     href3 = document.getElementById('mid').value; 
-	     var jCode = $("#bjJCode").val();
+	   		href3 = href2[1];
 	    	$.ajax({
-		    	url:'JDBCInfo2.lb',
-		    	type:'post',
-		    	data:{
-		    		href3:href3,
-		    		"jCode":jCode
-		    	},
-		    	success:function(data){
-					var loginUserMid = "${loginUser.mId}";	    		
-		    		$("#title1").text(data.bj.bsTitle);
-		    		$("#nick1").text(data.bj.nickname);
-		    		$("#content1").text(data.bj.bsContent);
-		    		$("#bjId1").val(data.bj.mid);
-		    		$("#viewers").text(data.bj.v_viewers+" 명");
-		    		var bool = "${loginUser.mId}" == data.bj.mid;
-		    		if(loginUserMid === data.bj.mid){
-		    			$("#open-or-join-cam").css({"display":"inline","margin-top":"15px"});
-			    		$("#open-or-join").css({"display":"inline","margin-top":"15px"});
-			    		$("#stop-broadcast").css({"display":"inline","margin-top":"15px"});
+	    		url:'JDBCInfo.lb',
+	    		type:'post',
+	    		data:{
+	    			href3:href3,
+	    			"bjJcode":bjJcode
+	    		},
+	    		success:function(data){
+	    			var loginUserMid = "${loginUser.mId}";	
+	    			$("#bjId1").val(data.bj.mid);
+	    			$("#title1").text(data.bj.bsTitle);
+	    			$("#nick1").text(data.bj.nickname);
+	    			$("#content1").text(data.bj.bsContent);
+	    			$("#viewers").text(data.bj.v_viewers+" 명");
+	    			var bool = "${loginUser.mId}" == data.bj.mid;
+	    			if(loginUserMid === data.bj.mid){
+	    				$("#open-or-join-cam").css({"display":"inline","margin-top":"15px"});
+		    			$("#open-or-join").css({"display":"inline","margin-top":"15px"});
+		    			$("#stop-broadcast").css({"display":"inline","margin-top":"15px"});
+	    			}
+	    			for(var i =0; i < data.fanlist.length; i++){
+	    				var fan = data.fanlist[i].mId;
+		    			$("#fan").append(fan+", ");
+	    			}
+	    			for(var i = 0; i< data.bmArr.length; i++){
+						var blackM = data.bmArr[i].blackMember;
+	    				$("#blackMemberList").append(blackM+", ");
+					}
+	    		}
+	    	});
+	    }else{
+	    	href3 = document.getElementById('mid').value; 
+	    	
+	    		$.ajax({
+		    		url:'JDBCInfo2.lb',
+		    		type:'post',
+		    		data:{
+		    			href3:href3,
+		    			"jCode":bjJcode
+		    		},
+		    		success:function(data){
+						var loginUserMid = "${loginUser.mId}";	    		
+		    			$("#title1").text(data.bj.bsTitle);
+		    			$("#nick1").text(data.bj.nickname);
+		    			$("#content1").text(data.bj.bsContent);
+		    			$("#bjId1").val(data.bj.mid);
+		    			$("#viewers").text(data.bj.v_viewers+" 명");
+		    			var bool = "${loginUser.mId}" == data.bj.mid;
+		    			if(loginUserMid === data.bj.mid){
+		    				$("#open-or-join-cam").css({"display":"inline","margin-top":"15px"});
+			    			$("#open-or-join").css({"display":"inline","margin-top":"15px"});
+			    			$("#stop-broadcast").css({"display":"inline","margin-top":"15px"});
+		    			}
+		    			for(var i =0; i < data.fanlist.length; i++){
+		    				var fan = data.fanlist[i].mId;
+			    			$("#fan").append(fan+", ");
+		    			}
+		    			for(var i = 0; i< data.bmArr.length; i++){
+							var blackM = data.bmArr[i].blackMember;
+		    				$("#blackMemberList").append(blackM+", ");
+						}
 		    		}
-		    		for(var i =0; i < data.fanlist.length; i++){
-		    			var fan = data.fanlist[i].mId;
-			    		$("#fan").append(fan+", ");
-		    		}
-		    	}
-		    });
-	    }
-	    
-	});
+		    	});
+	    	}
+		});
    
-   
-   
-   function peach(){
+	function peach(){
 	   var userId = document.getElementById('mid').value;
 	   var peachNum =  $("#peachNum").val();
 	   var bjId = document.getElementById("bjId").value;
 	   var userPeach = $("#peachNumber").val();
 	   var num =userPeach-peachNum;
+	   
 	   if(userPeach < peachNum){
 		   alert("피치갯수가 모자랍니다");
 	   }else if(peachNum == "0"){
@@ -793,7 +796,6 @@
 	           "peachNum":peachNum,
 	           "bjId":bjId
 	         },
-	         
 	         success:function(data){
 	        	 $(".close").click();
 	        	 var text111 = "";
@@ -807,30 +809,26 @@
 	             $("#peachNumber").val(num);
 	             $("#peachNum").value="";
 	             
-	             
-	            var fans = $("#fan").text();
-	            var fan = fans.split(", ");
-	            var bool = 1;
-	            
-	            for(var i in fan){
+	             var fans = $("#fan").text();
+	             var fan = fans.split(", ");
+	             var bool = 1;
+	             for(var i in fan){
 	            	if(fan[i] == userId){
 					bool=2;	
 	            	break;
 	            	}
-	            }if(bool == 1){
+	             }if(bool == 1){
 		            $("#fan").append(userId+", ");
-	            }
-	         }
-	         
-	   	});
+	             }
+	          }
+	   	   });
 	   }
-   }
+   };
    function singogo(){
 	   var singoja = $('#singoja').val();
 	   var singoMem = $("#singoMem").val();
 	   var singoContent = $("#singoContent").val();
 	 
-	  
 	   $.ajax({
 		   url:"textsingo.lb",
 		   type:"POST",
@@ -876,7 +874,7 @@
 			if(userId === bjId){
 				$(".black").css({"display":"inline" , "background":"white" , "color":"black" , "border":"none" , "position":"absolute" , "height":"20px" , "font-size":"0.6em" , "cursor":"pointer" , "transition":"800ms ease all","outline":"none"});
 			}
-		}
+		};
 		function CchungjaBlack(value){
 			var text1 = $(value).parent("li").parent("ul").parent("li").parent("div").parent("div").text();
 			var str = text1.split(" : ");
@@ -897,30 +895,12 @@
 				 },
 				 success:function(data){
 					$(".close").click();
-					appendBlack();
+					
 					alert("블랙하기 완료");
 					
 				 }
 			});	
-			blackAllconnection();
 		};
-		function blackAllconnection(){
-			var adminbj = $(".adminbj").val();
-			$.ajax({
-				url:"bjBlackMemberList.lb",
-				type:"POST",
-				data:{"adminbj":adminbj},
-				success:function(data){
-					var black112 ="${loginUser.mcode}";					
-					for(var i = 0; i< data.bmArr.length; i++){
-						if(data.bmArr[i].blackMember === black112){
-							$("#buttons").css({"display":"none"});
-		                	$(".panel-footer").css({"display":"none"});
-						};
-					}
-				}
-			});
-		}
 		
 		$("#BJSinggo").click(function(){
 			location.href="${contextPath}/helpreport.hp";
@@ -949,7 +929,6 @@
 			});
 		});
 		
-		
 		function viewerCount(value){
 			var bjId9 = $("#bjId1").val();
 			var viewers = value;
@@ -964,7 +943,7 @@
 					$("#viewers").text(value +" 명");
 				}
 			});
-		}
+		};
 	</script>
 
 </body>
