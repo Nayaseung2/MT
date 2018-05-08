@@ -718,7 +718,8 @@
 	    			"bjJcode":bjJcode
 	    		},
 	    		success:function(data){
-	    			var loginUserMid = "${loginUser.mId}";	
+	    			var loginUserMid = "${loginUser.mId}";
+	    			var admin =  "admin";
 	    			$("#bjId1").val(data.bj.mid);
 	    			$("#title1").text(data.bj.bsTitle);
 	    			$("#nick1").text(data.bj.nickname);
@@ -726,6 +727,11 @@
 	    			$("#viewers").text(data.bj.v_viewers+" 명");
 	    			$('#bsTitleImg').attr("src","${contextPath }/resources/bsTitleImages/"+data.bj.f_rename);
 	    			var bool = "${loginUser.mId}" == data.bj.mid;
+	    			
+	    			if(loginUserMid === admin){
+	    				$("#stop-broadcast").css({"display":"inline","margin-top":"15px"});
+	    				$("#stop-broadcast").attr('disabled', false);
+	    			}
 	    			if(loginUserMid === data.bj.mid){
 	    				$("#open-or-join-cam").css({"display":"inline","margin-top":"15px"});
 		    			$("#open-or-join").css({"display":"inline","margin-top":"15px"});
@@ -752,7 +758,8 @@
 		    			"jCode":bjJcode
 		    		},
 		    		success:function(data){
-						var loginUserMid = "${loginUser.mId}";	    		
+						var loginUserMid = "${loginUser.mId}";	
+						var admin = "admin";
 		    			$("#title1").text(data.bj.bsTitle);
 		    			$("#nick1").text(data.bj.nickname);
 		    			$("#content1").text(data.bj.bsContent);
@@ -760,11 +767,15 @@
 		    			$("#viewers").text(data.bj.v_viewers+" 명");
 		    			$('#bsTitleImg').attr("src","${contextPath }/resources/bsTitleImages/"+data.bj.f_rename);
 		    			var bool = "${loginUser.mId}" == data.bj.mid;
-		    			if(loginUserMid === data.bj.mid){
-		    				$("#open-or-join-cam").css({"display":"inline","margin-top":"15px"});
-			    			$("#open-or-join").css({"display":"inline","margin-top":"15px"});
-			    			$("#stop-broadcast").css({"display":"inline","margin-top":"15px"});
+		    			if(loginUserMid === admin){
+		    				$("#stop-broadcast").css({"display":"inline","margin-top":"15px"});
+		    				$("#stop-broadcast").attr('disabled', false);
 		    			}
+		    			if(loginUserMid === data.bj.mid){
+	    					$("#open-or-join-cam").css({"display":"inline","margin-top":"15px"});
+		    				$("#open-or-join").css({"display":"inline","margin-top":"15px"});
+		    				$("#stop-broadcast").css({"display":"inline","margin-top":"15px"});
+	    				}
 		    			for(var i =0; i < data.fanlist.length; i++){
 		    				var fan = data.fanlist[i].mId;
 			    			$("#fan").append(fan+", ");
