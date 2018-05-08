@@ -194,6 +194,7 @@
 		WHERE B_TYPE LIKE 'personal%'
 		AND B_CODE NOT IN (SELECT B_CODE FROM REPLY)
 		AND B_STATUS = 'Y'
+		ORDER BY B_CREATE_DATE DESC
   	</select>
   	
   	<select id="contactTypeCount" parameterType="java.lang.String" resultType="_int">
@@ -210,6 +211,7 @@
 		WHERE B_TYPE = 'personal/'||#{type}
 		AND B_CODE NOT IN (SELECT B_CODE FROM REPLY)
 		AND B_STATUS = 'Y'
+		ORDER BY B_CREATE_DATE DESC
   	</select>
   	
   	<select id="searchContact" parameterType="java.lang.String" resultType="_int">
