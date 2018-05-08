@@ -26,13 +26,13 @@ public class CategoryController {
 	//즐겨찾기 페이지
 	@RequestMapping("good.cg")
 	public ModelAndView Good(ModelAndView mv, String mId, String newCurrentPage){
-		int count = cs.selectCountGudck(mId);
-		
-		PageInfo pi = addUserPage(newCurrentPage, count);
-		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<LiveBj> list = cs.GudockBJ(mId,pi);
-		map.put("list", list);
+		int count = cs.selectCountGudck(mId);
+		PageInfo pi = addUserPage(newCurrentPage, count);
+		if(count != 0){
+			ArrayList<LiveBj> list = cs.GudockBJ(mId,pi);
+			map.put("list", list);
+		}
 		map.put("pi", pi);
 		
 		mv.addObject("map", map);
