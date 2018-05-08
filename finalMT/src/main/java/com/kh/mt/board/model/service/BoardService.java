@@ -49,6 +49,8 @@ public interface BoardService {
 	// 방송국 - 방명록 삭제
 	void BSguestDelte(String b_code);
 
+	int boardReplyCount(String b_code); //해당 게시글의 댓글 수
+
 
 
 }

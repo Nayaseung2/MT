@@ -147,6 +147,11 @@ public class BoardDaoImpl implements BoardDao {
 
 		sqlSession.update("Board.BSguestDelte", b_code);
 	}
+
+	@Override
+	public int boardReplyCount(String b_code) {
+		return sqlSession.selectOne("Board.boardReplyCount", b_code);
+	}
 }
 
 

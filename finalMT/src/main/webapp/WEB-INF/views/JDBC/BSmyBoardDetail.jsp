@@ -247,11 +247,14 @@
 			<h4 style="margin-left:92px;"><b>댓글</b></h4>
 			<div id="reply" style=" width:780px; height:200px; margin-left:92px;">
 			 	<table style=" width:780px; height:200px;" align="center" class="rTable">
-			 		<tr>
+			 		<thead>
+			 		<tr class="first">
 			 			<th colspan="5" text-align="center">작성자</th>
 			 			<th colspan="20" text-align="center">내용</th>
 			 			<th colspan="5" text-align="center">작성일</th>
 			 		</tr>
+			 		</thead>
+			 		<tbody class="tbody">
 			 		<c:forEach var="list" items="${hmap.list}">
 						<tr>
 							<td colspan="5" text-align="center">
@@ -265,16 +268,17 @@
 							</td>
 						</tr>	 	
 			 		</c:forEach>
+			 		</tbody>
 			 	</table>
 			 	<br/><br/><br/>
 			<div id="pagingArea" align="center">
 		        <ul class="pagination pageul">
 		           <li class="page-item"><a class="page-link" onclick="return pageChange($('.active').children().text(),'minus')">이전</a></li>
-		               <c:forEach var="p" begin="${map.pi.startPage}" end="${map.pi.endPage == 0? 1 : map.pi.endPage }">
-		                  <c:if test="${p eq map.pi.currentPage }">
+		               <c:forEach var="p" begin="${ hmap.pi.startPage}" end="${hmap.pi.endPage == 0? 1 : hmap.pi.endPage }">
+		                  <c:if test="${p eq hmap.pi.currentPage }">
 		                     <li class="page-item active" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text())">${ p }</a></li>
 		                  </c:if>
-		                  <c:if test="${p ne map.pi.currentPage }">
+		                  <c:if test="${p ne hmap.pi.currentPage }">
 		                     <li class="page-item" id="cu${ p }"><a class="page-link" id="page" onclick="return onclickPage($(this).text())">${ p }</a></li>
 		                  </c:if>
 		               </c:forEach>
@@ -290,6 +294,7 @@
 		<div align="center">
 			<button type="button" class="okay2" onclick="listBtn();">목록으로</button>
 		</div>
+		<input type="hidden" id="maxPage" value="${ hmap.pi.maxPage }"/>
 		<script>
 		
 			function modifyBtn(){
@@ -315,17 +320,21 @@
 			
 			
 			function onclickPage(value){
-				var url = "BSmyBoardDetail.board"; 
+				var url = "replyPage.board";
+				var b_code = $("#bCode").val();
+				
 				$.ajax({
 		   			url: url,
 		   			type: "get",
-		   			data:{"newCurrentPage":value},
+		   			data:{"newCurrentPage":value, "b_code":b_code },
 		   			success:function(data){
 			       		var list = data.map.list;
 			       		var pi = data.map.pi;
-						$("#reply").html("");
+						$(".tbody").html("");
+						console.log(list);
+						console.log(pi);
 						for(var i = 0; i < list.length; i++){
-							$("#reply").append('<tr><td colspan="5" text-align="center"><div text-align="center">${list.r_writer}</div></td><td colspan="20" text-align="center"><div text-align="center">${list.r_content}</div></td><td colspan="5" text-align="center"><div text-align="center">${list.r_create_date}</div></td></tr>');
+							$(".tbody").append('<tr><td colspan="5" text-align="center"><div text-align="center">'+list[i].r_writer+'</div></td><td colspan="20" text-align="center"><div text-align="center">'+list[i].r_content+'</div></td><td colspan="5" text-align="center"><div text-align="center">'+list[i].r_create_date+'</div></td></tr>');
 			      		}
 			      		$(".pageul").children().removeClass('active');
 			      		$("#cu"+value).addClass('active');
@@ -339,7 +348,8 @@
 			 };
 			function pageChange(pagenum, value){
 		        var page = Number(pagenum);
-		        var url = "BSmyBoardDetail.board";         
+		        var url = "replyPage.board";       
+		        var b_code = $("#bCode").val();
 		        console.log(page)
 		        if(page >= 1 && page <= $("#maxPage").val()){
 		             if(value === 'plus'){
@@ -357,13 +367,13 @@
 		             $.ajax({
 		                url: url,
 		                type: "get",
-		                data:{"newCurrentPage":page},
+		                data:{"newCurrentPage":page, "b_code":b_code},
 		                success:function(data){
 		                	var list = data.map.list;
 		    	       		var pi = data.map.pi;
-		    				$("#reply").html("");
+		    				$(".tbody").html("");
 		    	      		for(var i = 0; i < list.length; i++){
-		    	      			$("#reply").append('<tr><td colspan="5" text-align="center"><div text-align="center">${list.r_writer}</div></td><td colspan="20" text-align="center"><div text-align="center">${list.r_content}</div></td><td colspan="5" text-align="center"><div text-align="center">${list.r_create_date}</div></td></tr>');
+		    	      			$(".tbody").append('<tr><td colspan="5" text-align="center"><div text-align="center">'+list[i].r_writer+'</div></td><td colspan="20" text-align="center"><div text-align="center">'+list[i].r_content+'</div></td><td colspan="5" text-align="center"><div text-align="center">'+list[i].r_create_date+'</div></td></tr>');
 		    	      		}
 		    	      		$(".pageul").children().removeClass('active');
 		    	      		$("#cu"+page).addClass('active');
@@ -391,7 +401,10 @@
 					},
 					success:function(data){
 						$("#replyContent").val("");
-						alert("댓들 작성완료");
+						
+						$(".tbody").children().last().remove();
+						$(".tbody").prepend('<tr><td colspan="5" text-align="center"><div text-align="center">'+writer+'</div></td><td colspan="20" text-align="center"><div text-align="center">'+replyContent+'</div></td><td colspan="5" text-align="center"><div text-align="center">'+data.date+'</div></td></tr>');
+						
 					}
 				});
 			};

@@ -125,7 +125,7 @@
 	</select>
 	
 	<select id="selectReplyList" parameterType="Board" resultMap="ReplyResultSet">
-	SELECT B_CODE, R_CODE, R_CONTENT, R_WRITER, R_CREATE_DATE, R_LIKE FROM REPLY WHERE  B_CODE = #{b_code}	
+	SELECT B_CODE, R_CODE, R_CONTENT, R_WRITER, R_CREATE_DATE, R_LIKE FROM REPLY WHERE  B_CODE = #{b_code} ORDER BY R_CREATE_DATE DESC
 	</select>
 	
 	<!-- 방송국 - 방명록 삭제 -->
@@ -135,4 +135,10 @@
 		WHERE B_CODE = #{ b_code } AND B_TYPE = 'GuestBook'
 	</update>
 	
+	<!-- 해당 게시글 총 댓글 수  -->
+	<select id="boardReplyCount" parameterType="java.lang.String" resultType="_int">
+		SELECT COUNT(*)
+		FROM REPLY
+		WHERE B_CODE = #{b_code}
+	</select>
 </mapper>
