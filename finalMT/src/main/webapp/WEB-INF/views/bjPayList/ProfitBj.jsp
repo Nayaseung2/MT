@@ -66,7 +66,7 @@
 												<td>${i.count}</td>
 												<td>${list2.from_mcode }</td>
 												<td>${list2.to_mcode}</td>
-												<td>${list2.peachcount }</td>
+												<td>${list2.peachcount }개</td>
 												<td>${list2.send_date }</td>
 											</tr>
 										
@@ -124,7 +124,7 @@
   					$("tbody").html("");
   					
   					for(var i = 0; i < list.length; i++){
-  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].from_mcode+"</td><td>"+list[i].to_mcode+"</td><td>"+list[i].peachcount+"</td><td>"+list[i].send_date+"</td></tr>");
+  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].from_mcode+"</td><td>"+list[i].to_mcode+"</td><td>"+list[i].peachcount+"개</td><td>"+list[i].send_date+"</td></tr>");
   					}
   					$(".pageul").children().removeClass('active');
   					$("#cu"+value).addClass('active');
@@ -167,7 +167,7 @@
   					$("tbody").html("");
   					
   					for(var i = 0; i < list.length; i++){
-  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].from_mcode+"</td><td>"+list[i].to_mcode+"</td><td>"+list[i].peachcount+"</td><td>"+list[i].send_date+"</td></tr>");
+  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].from_mcode+"</td><td>"+list[i].to_mcode+"</td><td>"+list[i].peachcount+"개</td><td>"+list[i].send_date+"</td></tr>");
   					}
   					$(".pageul").children().removeClass('active');
   					$("#cu"+page).addClass('active');
