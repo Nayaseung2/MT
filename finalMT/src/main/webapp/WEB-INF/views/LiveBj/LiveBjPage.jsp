@@ -266,12 +266,12 @@
                <hr>
                <table>
                   <tr>
-                     <td rowspan="3" style=" width: 15%; height:  15%; padding-right: 15px;">
-                      <a href="#"><img alt="" src="${contextPath}/resources/images/bjSemple/bj1.jpg" style="border-radius: 50px;"></a> 
+                     <td rowspan="3" style=" width: 25%; height:  15%; padding-right: 15px;">
+                      <a href="#"><img id="bsTitleImg" alt="" src="${contextPath}/resources/images/bjSemple/bj1.jpg" style="border-radius: 50px; width:300px; height:180px;"></a> 
                      </td>
-                     <td><h1 id='title1'></h1></td>
+                     <td style="width:679px;"><h1 id='title1'></h1></td>
                      <td>
-                     	<h1 id="viewers" row="3" style="color:blue">0 명</h1>
+                     	<h1 id="viewers" style="color:blue">0 명</h1>
                      </td>
                   </tr>
                   <tr>
@@ -298,7 +298,7 @@
 	<input id="mid" type="hidden" value="${loginUser.mId}"/>
 	<input id="myId" type="hidden" value="${loginUser.mId}"/>
 	<input id="nickName" type="hidden" value="${loginUser.nickName}"/>
-	<div id="room-urls" style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
+	<div id="room-urls" style="text-align: center;display: none;background:#FFA500; margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
 	<jsp:include page="../common/footer.jsp"/>
 
    
@@ -413,6 +413,7 @@
             };
             // by default, socket.io server is assumed to be deployed on your own URL
           	connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+          	// connection.socketURL = "https://192.168.30.103:443/";
             connection.socketMessageEvent = 'audio-video-screen-demo';
             connection.session = {
                	audio: true,
@@ -723,6 +724,7 @@
 	    			$("#nick1").text(data.bj.nickname);
 	    			$("#content1").text(data.bj.bsContent);
 	    			$("#viewers").text(data.bj.v_viewers+" 명");
+	    			$('#bsTitleImg').attr("src","${contextPath }/resources/bsTitleImages/"+data.bj.f_rename);
 	    			var bool = "${loginUser.mId}" == data.bj.mid;
 	    			if(loginUserMid === data.bj.mid){
 	    				$("#open-or-join-cam").css({"display":"inline","margin-top":"15px"});
@@ -756,6 +758,7 @@
 		    			$("#content1").text(data.bj.bsContent);
 		    			$("#bjId1").val(data.bj.mid);
 		    			$("#viewers").text(data.bj.v_viewers+" 명");
+		    			$('#bsTitleImg').attr("src","${contextPath }/resources/bsTitleImages/"+data.bj.f_rename);
 		    			var bool = "${loginUser.mId}" == data.bj.mid;
 		    			if(loginUserMid === data.bj.mid){
 		    				$("#open-or-join-cam").css({"display":"inline","margin-top":"15px"});
@@ -781,7 +784,7 @@
 	   var bjId = document.getElementById("bjId").value;
 	   var userPeach = $("#peachNumber").val();
 	   var num =userPeach-peachNum;
-	   
+	   //gudqusghks
 	   if(userPeach < peachNum){
 		   alert("피치갯수가 모자랍니다");
 	   }else if(peachNum == "0"){

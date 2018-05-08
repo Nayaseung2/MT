@@ -146,7 +146,7 @@
 <table class="bottomBox">
 	<tr>
 		<td>
-			<p><a class="bottom">구독중인 BJ</a></p>
+			<p><a class="bottom"href="${ contextPath }/bjJDBC.JDBC?mid=${jdbcInfo.mid}">구독중인 BJ</a></p>
 		</td>
 	</tr>
 	<tr> 	
@@ -158,7 +158,7 @@
 	<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
 		<tr>
 			<td>
-				<p><a class="bottom">수익관리</a></p>
+				<p><a class="bottom" href="bjPayMain.bjp?mcode=${loginUser.mcode}">수익관리</a></p>
 			</td>
 		</tr>
 	</c:if>
@@ -177,7 +177,7 @@
 	<table class="gListTable">
 		<tr>
 			<th>${ loginUser.mId }&nbsp;&nbsp;&nbsp;&nbsp;
-				<button id="gHome"><img src="${ contextPath }/resources/images/house.png" width="25px"/></button>
+				<button type="button" id="gHome"><img src="${ contextPath }/resources/images/house.png" width="25px"/></button>
 			</th>
 		</tr>
 		<tr>
@@ -199,7 +199,7 @@
 	function gHome(){
 		
 		var mId = "${ loginUser.mId }";
-		location.href="${ contextPath }/bringJDBC.JDBC?mId=" + mId;
+		location.href="${ contextPath }/bjJDBC.JDBC?mid=" + mId;
 		
 	}
 	

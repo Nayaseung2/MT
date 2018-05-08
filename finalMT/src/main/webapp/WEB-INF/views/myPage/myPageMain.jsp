@@ -258,6 +258,10 @@ ul.tabs li.active {
 				    <!-- .tab_container -->
 				</div>
 					<!-- #container -->
+				<div align="right" style="padding-right: 350px;">
+					<button class="btn btn-danger" style="font-size: 18px; font-family: 'Hanna', sans-serif;"
+							onclick="goBack();">뒤로가기</button>
+				</div>
 			</div>
 		</div>
 		
@@ -271,6 +275,11 @@ ul.tabs li.active {
 		</div>
 
 		<script>
+		
+			function goBack(){
+	  			
+	  			location.href="${ contextPath }/myPageChoise.mp";
+	  		}
 		
 			$(function () {
 	

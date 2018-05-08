@@ -43,7 +43,7 @@
 	.okay2{
 		width:100px;
 		height:30px;
-		background:rgba(235, 104, 100, 0.9);
+		background:rgba(235, 104, 100, 0.7);
 		border:none;
 		color:white;
 	}
@@ -80,7 +80,7 @@ console.log("${jdbcInfo.jdbc_name }");
 </c:if>
 <div class="BStitle">
 <c:if test="${!empty jdbcInfo.jdbc_name }">
-<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">${jdbcInfo.jdbc_name }</a></label><br>
+<label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/bjJDBC.JDBC?mid=${jdbcInfo.mid}">${jdbcInfo.jdbc_name }</a></label><br>
 </c:if>
 <c:if test="${empty jdbcInfo.jdbc_name }">
 <label class="BStext" style="font-size: 25px;"><a id="BStexta"href="${ contextPath }/myBroadcastStation.JDBC">모두의 TV</a></label><br>
@@ -126,7 +126,7 @@ console.log("${jdbcInfo.jdbc_name }");
 <table class="bottomBox">
 	<tr>
 		<td>
-			<p><a class="bottom">구독중인 BJ</a></p>
+			<p><a class="bottom" href="${ contextPath }/bjJDBC.JDBC?mid=${jdbcInfo.mid}">구독중인 BJ</a></p>
 		</td>
 	</tr>
 	<tr> 	
@@ -140,7 +140,7 @@ console.log("${jdbcInfo.jdbc_name }");
 	<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
 		<tr>
 			<td>
-				<p><a class="bottom">수익관리</a></p>
+				<p><a class="bottom" href="bjPayMain.bjp?mcode=${loginUser.mcode}">수익관리</a></p>
 			</td>
 		</tr>
 	</c:if>
@@ -150,23 +150,23 @@ console.log("${jdbcInfo.jdbc_name }");
 <div class="showRightPart">
 <div class="favoriteBJ">
 <label style="font-size:20px;">현재 구독중인 BJ</label>
-<br><br><br>
+<br><br>
 
 <script>
 </script>
 <br>
 <div>
-<table>
+<table style="margin-left: 40px;"> 
 	<c:forEach var="i" items="${Gudock}">
 		<c:forEach var="j" items="${ i.value}">
 			<tr>
-				<td>
-					<img src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${j.f_rename}"style="width:160px; height:160px; border: 3px solid rgba(235, 104, 100, 0.9); border-radius: 80px; -moz-border-radius: 80px; -khtml-border-radius: 80px; -webkit-border-radius: 80px;">
+				<td style="padding-bottom: 15px; padding-right: 10px;">
+					<img src="<%= request.getContextPath() %>/resources/jdbcStationFileLogo/${j.f_rename}"style="width:130px; height:130px; border: 3px solid rgba(235, 104, 100, 0.5); border-radius: 80px; -moz-border-radius: 80px; -khtml-border-radius: 80px; -webkit-border-radius: 80px;">
 				</td>
 				<td>
-					<label class="BStext" style="color:black;"><a id="BStexta"href="#" style="color:black;">${j.jdbc_name}</a></label><br><br>
-					<label class="BStext" style="color:black;">${j.jdbc_nickName}</label><br><br>
-					<button type="button" class="okay2"><a href="bjJDBC.JDBC?mid=${j.f_mcode}" style="color:white;">방송국 가기</a></button>
+					<label class="BStext" style="color:black;"><a id="BStexta"href="#" style="color:black; font-size: 16px;">${j.jdbc_name}</a></label><br>
+					<label class="BStext" style="color:black;">${j.jdbc_nickName}</label><br>
+					<button type="button" class="okay2" style=" border-radius: 20px;"><a href="bjJDBC.JDBC?mid=${j.f_mcode}" style="color:white;">방송국 가기</a></button>
 				</td>
 			</tr>			
 		</c:forEach>

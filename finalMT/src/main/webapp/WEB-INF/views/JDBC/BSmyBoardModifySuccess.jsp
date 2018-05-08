@@ -138,7 +138,7 @@
 <table class="bottomBox">
 	<tr>
 		<td>
-			<p><a class="bottom">구독중인 BJ</a></p>
+			<p><a class="bottom" href="${ contextPath }/bjJDBC.JDBC?mid=${jdbcInfo.mid}">구독중인 BJ</a></p>
 		</td>
 	</tr>
 	<tr> 	
@@ -150,7 +150,7 @@
 	<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
 		<tr>
 			<td>
-				<p><a class="bottom">수익관리</a></p>
+				<p><a class="bottom" href="bjPayMain.bjp?mcode=${loginUser.mcode}">수익관리</a></p>
 			</td>
 		</tr>
 	</c:if>
@@ -172,11 +172,13 @@
 				<div align="center">
 					<button class="okay" onclick="goMain();">방송국 메인으로</button>
 				</div>
+				<input type="hidden" id="mId" value="${ loginUser.mId }">
 
 				<script>
 					function goMain() {
 
-						location.href = "myBroadcastStation.JDBC";
+						var mId = $("#mId").val();
+						location.href = "${ contextPath }/bjJDBC.JDBC?mid=" + mId;
 					}
 				</script>
 				<br /> <br />

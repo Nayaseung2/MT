@@ -61,11 +61,12 @@ public class JDBCController {
 	@RequestMapping(value = "bjJDBC.JDBC")
 	public String bjJDBC(String mid, Model model, HttpServletRequest request) {
 		//방송국 정보 불러오기
-		
+		System.out.println("보이루"+mid);
 		JDBC j = js.selectForShow(mid);
+		
 		HashMap<Integer,ArrayList<JDBCInfo>> gu = js.selectGudock(mid);
 		model.addAttribute("Gudock", gu);
-		System.out.println("gu"+gu);
+		System.out.println("gu= "+gu);
 		Member m = new Member();
 		String nickName = js.selectNickName(mid);
 		m.setNickName(nickName);
@@ -185,7 +186,8 @@ public class JDBCController {
 		JDBCLogoFile f2 = null;
 		f2=js.selectJDBCLogo(f);
 		session.setAttribute("jdbcLogoFile", f2);
-		return "JDBC/myBroadcastStation";
+		return "JDBC/BSmenageSuccess";
+		/*return "JDBC/myBroadcastStation";*/
 	}
 	//방송하러 가기 
 	@RequestMapping(value = "bangsonggo.JDBC")

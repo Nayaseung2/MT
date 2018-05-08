@@ -55,12 +55,12 @@
 				<br/>
 				<br/>
 				<div>
-					<img src="${ contextPath }/resources/images/myPage/list.png" width="100px"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<img src="${ contextPath }/resources/images/myPage/edit.png" width="100px"/>
+					<a href="${ contextPath }/myPageList.mp?mId=${ loginUser.mId }"><img src="${ contextPath }/resources/images/myPage/list.png" width="100px"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="${ contextPath }/myPageMain.mp"><img src="${ contextPath }/resources/images/myPage/edit.png" width="100px"/></a>
 				</div>
 				<br/>
 				<div>
-					<a class="aText" href="${ contextPath }/myPageList.mp?mId=${ loginUser.mId }">내 문의 내역</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a class="aText" href="${ contextPath }/myPageList.mp?mId=${ loginUser.mId }">내 문의 내역</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<a class="aText" href="${ contextPath }/myPageMain.mp">정보 수정 / 탈퇴</a>
 				</div>
 			</div>	
