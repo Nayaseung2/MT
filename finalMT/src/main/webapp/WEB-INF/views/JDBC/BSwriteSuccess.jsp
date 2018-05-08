@@ -139,7 +139,7 @@
 <table class="bottomBox">
 	<tr>
 		<td>
-			<p><a class="bottom">구독중인 BJ</a></p>
+			<p><a class="bottom" href="${ contextPath }/bjJDBC.JDBC?mid=${jdbcInfo.mid}">구독중인 BJ</a></p>
 		</td>
 	</tr>
 	<tr> 	
@@ -151,7 +151,7 @@
 	<c:if test="${ loginUser.mId eq jdbcInfo.mid }">
 		<tr>
 			<td>
-				<p><a class="bottom">수익관리</a></p>
+				<p><a class="bottom" href="bjPayMain.bjp?mcode=${loginUser.mcode}">수익관리</a></p>
 			</td>
 		</tr>
 	</c:if>
@@ -178,7 +178,7 @@
 					function goMain() {
 
 						var mId = "${ jdbcInfo.mid }";
-						location.href = "bringJDBC.JDBC?mId=" + mId;
+						location.href = "${ contextPath }/bjJDBC.JDBC?mid=" + mId;
 					}
 				</script>
 				<br /> <br />

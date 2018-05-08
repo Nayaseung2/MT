@@ -98,9 +98,10 @@
 	</update>
 	
 	<!-- 공지글 삭제하기 -->
-	<delete id="goDeleteNotice">
-		DELETE BOARD
-		WHERE B_CODE = #{ b_code }
-	</delete>
+	<update id="goDeleteNotice">
+		UPDATE BOARD
+		SET B_STATUS = 'N'
+		WHERE B_CODE = #{ b_code } AND B_TYPE = 'notice'
+	</update>
 	
 </mapper>

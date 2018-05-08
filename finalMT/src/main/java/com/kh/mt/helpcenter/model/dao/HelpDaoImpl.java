@@ -153,7 +153,7 @@ public class HelpDaoImpl implements HelpDao{
 	@Override
 	public void goDeleteNotice(String b_code) {
 
-		sqlSession.delete("QnA.goDeleteNotice", b_code);
+		sqlSession.update("QnA.goDeleteNotice", b_code);
 	}
 
 }

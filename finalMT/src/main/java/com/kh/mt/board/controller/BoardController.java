@@ -304,8 +304,8 @@ public class BoardController {
 	}
 	
 	// 방송국 - 방명록 삭제
-	@RequestMapping(value="BSguestDelte.board")
-	public String BSguestDelte(String b_code) {
+	@RequestMapping(value="BSguestDelete.board")
+	public String BSguestDelete(String b_code) {
 		
 		bs.BSguestDelte(b_code);
 		

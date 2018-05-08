@@ -65,6 +65,11 @@
 	margin-bottom: 2%;
 }
 
+#mId, #qTitle, #qContent {
+	border-radius: 10px;
+	padding-left: 10px;
+}
+
 .tableList {
 	padding-left: 2%;
 }
@@ -97,6 +102,8 @@ input[type="radio"]+label:hover {
 input[type="radio"]+label {
 	font-weight: 400;
 	font-size: 14px;
+	font-family: 'Hanna', sans-serif;
+	text-align: center;
 }
 
 input[type="radio"]+label span {
@@ -117,7 +124,6 @@ input[type="radio"]+label span {
 
 input[type="radio"]:checked+label {
 	color: #F08080;
-	font-weight: 700;
 }
 
 input[type="radio"]:checked+label span {
@@ -225,7 +231,7 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 				<form action="helpanswer.hp" method="post" name="personalForm">
 					<table class="qTable" align="center">
 						<tr>
-							<td colspan="3" style="height: 70px;">
+							<td colspan="3" style="height: 70px; padding-left: 110px;">
 								<input type="radio" name="qRadio" id="qRadio1" value="계정">
 									<label for="qRadio1" style="font-size: 20px;"> <span></span> 계정관련 </label>
 								<input type="radio" name="qRadio" id="qRadio2" value="방송시청">
@@ -255,7 +261,7 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 						<tr>
 							<td class="tableList">제목</td>
 							<td colspan="3">
-								<input type="text" name="qTitle" id="qTitle" size="52px" style="height:50px; border:3px solid hsl(0, 100%, 90%);"/>
+								<input type="text" name="qTitle" id="qTitle" size="50px" style="height:50px; border:3px solid hsl(0, 100%, 90%);"/>
 							</td>
 						</tr>	
 						<tr>
