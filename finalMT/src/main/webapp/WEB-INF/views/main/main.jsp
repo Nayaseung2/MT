@@ -195,7 +195,7 @@
 							console.log("list.size"+ list.length);
 							if(list.length == 0){
 								console.log("잉");
-								$(".row000").append("<h2>방송중인 BJ가 없습니다</h2>");
+								
 							}else{
 								console.log("잉");
 								var num2 = num1 + 1;
