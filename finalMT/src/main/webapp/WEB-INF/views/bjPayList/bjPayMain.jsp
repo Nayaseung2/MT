@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge"><fmt:formatNumber value="${wdSuccese}" type="number"/>원</div>
-                                    <div>출금 완료된 금랙 </div>
+                                    <div>출금 완료된 금액 </div>
                                 </div>
                             </div>
                         </div>

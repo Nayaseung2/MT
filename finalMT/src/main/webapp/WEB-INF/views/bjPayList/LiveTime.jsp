@@ -9,8 +9,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://code.highcharts.com/js/highcharts.js"></script>
-<script src="https://code.highcharts.com/js/modules/exporting.js"></script>
+
 <style type="text/css">
 
 #container {
@@ -30,7 +29,8 @@
 <body>
 <jsp:include page="../common/menubar.jsp"/>
 	<jsp:include page="bjPayleftnev.jsp"/>
-
+<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	<div class="wrapper">
 		<div id="page-wrapper" style="padding-top: 50px;">
 			<div class="row">

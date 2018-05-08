@@ -64,7 +64,7 @@
 											<tr>
 												<td>${i.count}</td>
 												<td>${list2.wd_date }</td>
-												<td>${list2.price}</td>
+												<td><fmt:formatNumber value="${list2.price}" groupingUsed="true"/>원</td>
 												<c:if test="${list2.status == 'Y'}">
 													<td>승인 완료</td>
 												</c:if>
@@ -133,11 +133,11 @@
   					for(var i = 0; i < list.length; i++){
   						
 	  					if(list[i].status == 'Y'){
-	  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].wd_date+"</td><td>"+list[i].price+"</td><td>"+"승인완료"+"</td><td>"+list[i].account+"</td></tr>");
+	  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].wd_date+"</td><td>"+addComma(list[i].price)+"원</td><td>"+"승인완료"+"</td><td>"+list[i].account+"</td></tr>");
 	  					}else if(list[i].status == 'N'){
-	  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].wd_date+"</td><td>"+list[i].price+"</td><td>"+"승인요청중"+"</td><td>"+list[i].account+"</td></tr>");
+	  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].wd_date+"</td><td>"+addComma(list[i].price)+"원</td><td>"+"승인요청중"+"</td><td>"+list[i].account+"</td></tr>");
 	  					}else if(list[i].status == 'A'){
-	  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].wd_date+"</td><td>"+list[i].price+"</td><td>"+"승인거절"+"</td><td>"+list[i].account+"</td></tr>");
+	  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].wd_date+"</td><td>"+addComma(list[i].price)+"원</td><td>"+"승인거절"+"</td><td>"+list[i].account+"</td></tr>");
 	  					}
   					}
   					$(".pageul").children().removeClass('active');
@@ -183,11 +183,11 @@
   					for(var i = 0; i < list.length; i++){
   						
 	  					if(list[i].status == 'Y'){
-	  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].wd_date+"</td><td>"+list[i].price+"</td><td>"+"승인완료"+"</td><td>"+list[i].account+"</td></tr>");
+	  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].wd_date+"</td><td>"+addComma(list[i].price)+"원</td><td>"+"승인완료"+"</td><td>"+list[i].account+"</td></tr>");
 	  					}else if(list[i].status == 'N'){
-	  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].wd_date+"</td><td>"+list[i].price+"</td><td>"+"승인요청중"+"</td><td>"+list[i].account+"</td></tr>");
+	  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].wd_date+"</td><td>"+addComma(list[i].price)+"원</td><td>"+"승인요청중"+"</td><td>"+list[i].account+"</td></tr>");
 	  					}else if(list[i].status == 'A'){
-	  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].wd_date+"</td><td>"+list[i].price+"</td><td>"+"승인거절"+"</td><td>"+list[i].account+"</td></tr>");
+	  						$("tbody").append("<tr><td>"+i+"</td><td>"+list[i].wd_date+"</td><td>"+addComma(list[i].price)+"원</td><td>"+"승인거절"+"</td><td>"+list[i].account+"</td></tr>");
 	  					}
   					}
   					$(".pageul").children().removeClass('active');
@@ -254,6 +254,11 @@
 	        ]
 	    }]
 	});
+
+	function addComma(num) {
+		var regexp = /\B(?=(\d{3})+(?!\d))/g;
+		return num.toString().replace(regexp, ',');
+	}
 	</script>
 	
 	</c:if>
