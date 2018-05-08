@@ -13,12 +13,12 @@ public class ReplyVo implements java.io.Serializable {
 	private String r_code;
 	private String r_content;
 	private String r_writer;
-	private Date r_create_date;
+	private String r_create_date;
 	private int r_like;
 	
 	public ReplyVo() {}
 
-	public ReplyVo(String b_code, String r_code, String r_content, String r_writer, Date r_create_date, int r_like) {
+	public ReplyVo(String b_code, String r_code, String r_content, String r_writer, String r_create_date, int r_like) {
 		super();
 		this.b_code = b_code;
 		this.r_code = r_code;
@@ -44,7 +44,7 @@ public class ReplyVo implements java.io.Serializable {
 		return r_writer;
 	}
 
-	public Date getR_create_date() {
+	public String getR_create_date() {
 		return r_create_date;
 	}
 
@@ -68,7 +68,7 @@ public class ReplyVo implements java.io.Serializable {
 		this.r_writer = r_writer;
 	}
 
-	public void setR_create_date(Date r_create_date) {
+	public void setR_create_date(String r_create_date) {
 		this.r_create_date = r_create_date;
 	}
 

@@ -135,6 +135,10 @@ public class BoardServiceImpl implements BoardService{
 
 		bd.BSguestDelte(b_code);
 	}
+	@Override
+	public int boardReplyCount(String b_code) {
+		return bd.boardReplyCount(b_code);
+	}
 	
 
 }

@@ -46,7 +46,7 @@ public class BJPayListController {
 		//아이디 조회  
 		//로그기록 조회
 		String mId = bjp.SelectMid(mcode);
-		File path = new File("C:/Users/sosoc/git/MT/finalMT/src/main/resources/BSLogs/");
+		File path = new File("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/BSLogs/");
 		File[] fileList = path.listFiles() ;
 		 BufferedReader reader = null;
 		 String line = null;
@@ -580,7 +580,7 @@ public class BJPayListController {
 		int SeeUserY = 0;
 		
 		//로그기록 조회
-		File path = new File("C:/Users/sosoc/git/MT/finalMT/src/main/resources/BSLogs/");
+		File path = new File("C:/Users/JoSeongSik/git/MT/finalMT/src/main/resources/BSLogs/");
 		File[] fileList = path.listFiles() ;
 		 BufferedReader reader = null;
 		 String line = null;

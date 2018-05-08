@@ -182,22 +182,18 @@ public class MyPageController {
 		
 		response.setContentType("text/html; charset=utf-8");
 		
+		System.out.println(nickName);
+		
 		String DBnickName = ms.overlapCheck(nickName);
 		
-			try {
 				
 				if(nickName.equals(DBnickName)){
 					
 					mv.addObject("false");
-					response.getWriter().print("중복되는 닉네임이 있습니다. 다른 닉네임을 입력해주세요.");
-					
 				}else{
 					
 					mv.addObject("success");
 				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 			
 		mv.setViewName("jsonView");
 		

@@ -49,5 +49,7 @@ public interface BoardDao {
 	// 방송국 - 방명록 삭제
 	void BSguestDelte(String b_code);
 
+	int boardReplyCount(String b_code); //해당 게시글의 총 댓글수
+
 
 }

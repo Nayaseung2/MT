@@ -299,8 +299,7 @@ ul.tabs li.active {
 			    /* page 1 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
 			    
 			    /* 닉네임 중복확인 후 변경 */
-			    $("#nickCheck").click(function(){
-			    	
+			    $(document).on("click", "#nickCheck", function(){
 			    	var nickName = $("#nickName").val();
 			    	var mId = $("#mId").val();
 			    	
@@ -315,23 +314,19 @@ ul.tabs li.active {
 			    		location.reload();
 			    		
 			    	} else {
-			    		
 						$.ajax({
 							url:"overlapCheck.mp",
 							type:"post",
 							data:{"nickName": nickName, 
 									"mId": mId},
 							success:function(data){
-
-								console.log(data.string);
 								
 								if(data.string === "success"){
 									
-									console.log(nickName);
 									alert("닉네임이 변경됐습니다.");
 									location.href="changeNick.mp?mId=" + mId + "&nickName=" + nickName;
 									
-								} else {
+								} else if(data.string === "false"){
 									
 									alert("중복되는 닉네임이 존재합니다.");
 									location.reload();
