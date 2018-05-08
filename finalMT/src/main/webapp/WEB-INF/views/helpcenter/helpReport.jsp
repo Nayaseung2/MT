@@ -61,6 +61,14 @@
 	margin-bottom: 2%;
 }
 
+#mId, #bullyId, #rContent {
+	border-radius: 10px;
+}
+
+#rContent {
+	padding-left: 10px;
+}
+
 .tableList {
 	padding-left: 2%;
 }

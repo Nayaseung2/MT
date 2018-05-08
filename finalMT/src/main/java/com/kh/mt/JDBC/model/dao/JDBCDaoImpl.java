@@ -80,6 +80,7 @@ public class JDBCDaoImpl implements JDBCDao{
 		ArrayList<Gudock> gulist = new ArrayList<>(); 
 		Gudock gu = new Gudock();
 		gu.setReder_mCode(mid);
+		System.out.println("gu = " + gu);
 		gulist = (ArrayList)sqlSession.selectList("JDBC1.selectGudockList", gu);
 		System.out.println("gulist: " + gulist);
 		HashMap<Integer,ArrayList<JDBCInfo>> hmap = new LinkedHashMap<Integer,ArrayList<JDBCInfo>>();

@@ -181,8 +181,18 @@ table {
 				</div>
 			</div>
 			
+			<div align="right" style="padding-right: 500px;">
+				<button class="btn btn-danger" style="font-size: 18px; font-family: 'Hanna', sans-serif;"
+							onclick="goBack();">뒤로가기</button>
+			</div>
+			
     <input type="hidden" value="${ hmap.pi.maxPage }" id="maxPage"/>
   	<script>
+  		
+  		function goBack(){
+  			
+  			location.href="${ contextPath }/myPageChoise.mp";
+  		}
   	
  	 	function onclickPage(value){
  	 		
@@ -226,30 +236,6 @@ table {
 	              return false;
 	           }
 	        
-
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
   		function pageChange(value){
   			
   			var page = Number($("#page").text());
@@ -265,11 +251,6 @@ table {
 	  				page += 1;
 	  				
 	  			}else if(value === 'minus'){
-	  				
-	  				/* if(page === 1){
-	  					
-	  					return;
-	  				} */
 	  				
 	  				page -= 1;
 	  			}
@@ -300,15 +281,9 @@ table {
 										 + "</td></tr>");
 		                   }
 	  					
-	  					/* $("#page").text(page);
-	  					$("#maxPage").attr("value", pi.maxPage); */
-	  					
 	  					 $(".pageul").children().removeClass('active');
 	  	                 $("#cu"+page).addClass('active');
 	  	                 $("#maxPage").attr("value", pi.maxPage);
-
-	  					
-	  					
 	  				},
 	  				error:function(data){
 	  					console.log("에러!");
