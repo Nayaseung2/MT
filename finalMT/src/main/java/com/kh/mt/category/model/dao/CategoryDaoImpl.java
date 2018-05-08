@@ -113,13 +113,20 @@ public class CategoryDaoImpl implements CategoryDao{
 	public ArrayList<LiveBj> GudockBJ(SqlSessionTemplate sqlSession, String mId, PageInfo pi) {
 		int offset = (pi.getCurrentPage() -1) * pi.getLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
-		ArrayList<LiveBj> list1 = (ArrayList)sqlSession.selectList("LiveBJ.Gudock", mId, rowBounds);
+		ArrayList<String> list2 = (ArrayList)sqlSession.selectList("LiveBJ.selectGuockBJ", mId, rowBounds);
+		ArrayList<LiveBj> list1 = new ArrayList<>();
+		for(int i =0; i< list2.size();i++){
+			mId = list2.get(i);
+			LiveBj bj = sqlSession.selectOne("LiveBJ.Gudock", mId);
+			list1.add(bj);
+		}
 		ArrayList<LiveBj> list= new ArrayList<>();
 		for(int i =0; i<list1.size();i++){
 			String mid = list1.get(i).getMid();
 			LiveBj bj = sqlSession.selectOne("LiveBJ.GudockInfo", mid);
 			list.add(bj);
 		}
+		System.out.println(list);
 		return list;
 	}
 
@@ -158,7 +165,18 @@ public class CategoryDaoImpl implements CategoryDao{
 
 	@Override
 	public int selectCountGudck(SqlSessionTemplate sqlSession, String mId) {
-		int count = sqlSession.selectOne("LiveBJ.selectCountGudck", mId);
+		ArrayList<String> list = (ArrayList)sqlSession.selectList("LiveBJ.selectGuockBJ", mId);
+		int count = 0;
+		if(list != null){
+			for(int i = 0 ; i<list.size();i++){
+				String mcode = list.get(i);
+				int num = sqlSession.selectOne("LiveBJ.selectCountGudck", mcode);
+				if(num == 1){
+					count++;
+				}
+			}
+		}
+		System.out.println("count"+count);
 		return count;
 	}
 			
