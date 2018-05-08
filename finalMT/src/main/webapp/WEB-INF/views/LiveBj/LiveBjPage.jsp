@@ -780,9 +780,9 @@
    
 	function peach(){
 	   var userId = document.getElementById('mid').value;
-	   var peachNum =  $("#peachNum").val();
+	   var peachNum =  Number($("#peachNum").val());
 	   var bjId = document.getElementById("bjId").value;
-	   var userPeach = $("#peachNumber").val();
+	   var userPeach = Number($("#peachNumber").val());
 	   var num =userPeach-peachNum;
 	   //gudqusghks
 	   if(userPeach < peachNum){
@@ -810,7 +810,7 @@
 	             connection.send(text111);
 	             appendDIV(text111);
 	             $("#peachNumber").val(num);
-	             $("#peachNum").value="";
+	             $("#peachNum").val("");
 	             
 	             var fans = $("#fan").text();
 	             var fan = fans.split(", ");
